@@ -1,0 +1,40 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block title %}
+Groupes - {{ parent() }}
+{% endblock %}
+
+{% block fos_user_content %}
+     
+<h1><span class="fui-user"></span> Gestion des Groupes</h1>
+<div class="col-sm-9">
+	<form id="editForm" class="form-horizontal well" action="{{ path('fos_user_group_edit', {'groupname': groupname} ) }}" {{ form_enctype(form) }} method="POST" class="fos_user_group_edit">
+	    {{ form_row(form.name, {'label' : 'Nom du Groupe'}) }}
+	    {{ form_rest(form)}}
+
+	</form>
+</div>
+
+<div class="col-md-3">
+    <div class="well">
+        <a id="submitForm" class="btn btn-embossed btn-primary btn-block" href="#">
+            <span class="fui-check-inverted"></span>  Mettre à jour
+        </a>
+        <a class="btn btn-embossed btn-inverse btn-block " href="{{ path('fos_user_group_list') }}">
+            <span class="fui-list-bulleted"></span> Back to the list
+        </a>
+        <a class="btn btn-embossed btn-danger btn-block"  href="{{ path('fos_user_group_delete', {groupname: groupname }) }}"><span class="fui-cross"></span> Supprimer</a>
+    </div>
+</div>
+
+{% endblock fos_user_content %}
+
+{% block javascripts %}
+{{ parent() }}
+<script> 
+    (function($) {
+        $('#submitForm').on('click', function () {
+            $('#editForm').submit();
+        });
+    })(jQuery);
+</script>
+{% endblock %}

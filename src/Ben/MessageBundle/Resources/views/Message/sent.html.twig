@@ -1,0 +1,31 @@
+{% extends 'FOSMessageBundle::layout.html.twig' %}
+
+{% block breadcrumb %} 
+<ul id="breadcrumbtrail">
+    <li class="home" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+        <a href="{{ path('home') }}" itemprop="url"><span itemprop="title"><i class="icon-home"></i> Accueil</span></a>
+        <div class="divider"></div>
+    </li>
+    <li class="home" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+        <a href="{{ path('fos_message_inbox') }}" itemprop="url"><span itemprop="title"><i class="icon-envelope"></i> Messages Privés</span></a>
+        <div class="divider"></div>
+    </li>
+    <li class="home" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+        <span itemprop="title"><i class="icon-share"></i> Envoyées</span>
+    </li>
+</ul>
+{% endblock %}
+
+{% block message_content %}
+            <div class="content-warper">
+                <div id="comments">
+                    <div class="comments-header threads">
+                        <h1 class="mytitle"><div class="mail-badge dark hspan"></div>Boite d'envoie</h1>
+                        <br>
+                    </div>
+{% include 'FOSMessageBundle:Message:threads_list.html.twig' with {'threadpage': threads} %}
+                </div>
+            </div>
+{% endblock %}
+
+

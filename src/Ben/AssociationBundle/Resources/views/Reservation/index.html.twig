@@ -1,0 +1,199 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+{% block body %}
+<h1><span class="fui-book"></span> Liste des réservations</h1>
+    <form id="jsForm" role="form" method="post" action="">
+        <input id="pagenumber" type="hidden" name="page" value="1">         
+          <div class="row">
+            <div class="col-lg-5 form-group">
+              <div class="input-group">
+                <input type="text" name="keyword" class="form-control" placeholder="Search">
+                <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><span class="fui-search"></span></button>
+                </div>
+              </div>
+            </div><!-- /.col-lg-6 -->     
+            <div class="col-lg-7">
+              <div class="btn-group pull-right">              
+                <button class="btn btn-primary "><span class="fui-gear"></span> Action</button>
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                  <span class="caret"></span>
+                </button>
+                <span class="dropdown-arrow dropdown-arrow-inverse"></span>
+                <ul class="dropdown-menu dropdown-inverse">
+                      <li><a href="#"><span class="fui-cross"></span> Annuler</a></li>
+                      <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> Exporter</a></li>
+                      <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="fui-search"></span> Recherche avancée</a></li>
+                      <li class="divider"></li>
+                      <li><a href="#" id="js-delete"><span class="fui-trash"></span> Supprimer</a></li>
+                </ul>
+              </div>
+            </div>
+        </div><!-- /.row --> 
+        <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th><label class="checkbox no-label toggle-all" for="checkbox-table-1"><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" value="" id="checkbox-table-1" data-toggle="checkbox"></label></th>
+                <th>Adhérent</th>
+                <th>Chambre</th>
+                <th>Logement</th>
+                <th>Date Début</th>
+                <th>Date Fin</th>
+                <th>Staut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="dataContainer"></tbody>
+        </table>
+        <div class="caption">
+          <strong>Total:</strong> <em>{{ entitiesLength }} Réservations</em>
+        </div>
+    
+    </tbody>
+</table>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" id="closeModal" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Recherche avancée</h4>
+              </div>
+              <div class="modal-body">     
+                <div class="form-group">
+                    <label class="col-md-5 control-label" for="number">Date Début:</label>
+                    <div class="form-group col-md-7">
+                        <div class="input-group">
+                          <span class="input-group-btn">
+                            <button class="btn" type="button"><span class="fui-calendar"></span></button>
+                          </span>
+                          <input type="text" class="form-control has-datepicker" name="date-from" id="date-from" value="" placeholder="Date Début">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label" for="floor">Date Fin:</label>
+                    <div class="form-group col-md-7">
+                        <div class="input-group">
+                          <span class="input-group-btn">
+                            <button class="btn" type="button"><span class="fui-calendar"></span></button>
+                          </span>
+                          <input type="text" class="form-control has-datepicker" name="date-to" id="date-to" value="" placeholder="Date Fin">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label" for="floor">Filtrer par:</label>
+                    <div class="col-md-5">
+                      <select id="js-group" name="group" class="primary select-block">
+                        <option value="0">Filtrer par groupe</option>
+                        {% for group in groups %}
+                        <option value="{{ group.id }}">{{ group.name }}</option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label" for="floor">Nombre de ligne par page :</label>
+                    <div class="col-md-5">
+                       <select id="js-perpage" name="perpage" class="select-block small">
+                        <option value="3" {% if app_config.rows_per_page == 3 %}selected{% endif %}>3</option>
+                        <option value="20" {% if app_config.rows_per_page == 20 %}selected{% endif %}>20</option>
+                        <option value="50" {% if app_config.rows_per_page == 50 %}selected{% endif %}>50</option>
+                        <option value="100" {% if app_config.rows_per_page == 100 %}selected{% endif %}>100</option>
+                      </select>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="modalSearch" class="btn btn-primary btn-embossed">Recherche</button>
+              </div>
+            </div>
+          </div>
+        </div>
+</form>   
+{% endblock body %}
+{% block javascripts %}
+{{ parent() }}
+<script> 
+    (function($) {
+
+      /* helper functions */
+      function getCheckedRows () {
+        var entities = [];
+        dataContainer.find('input:checkbox:checked').each(function() {
+          entities.push($(this).val());
+        });
+        return entities.join(',');
+      }
+      function init(){
+        pageInput.val('1');
+        dateFromInput.val('');
+        dateToInput.val('');
+        groupBtn.val('0');
+        checkboxBtn.prop("checked",false);
+        jsFormUrl = '{{ path('reservation_ajax') }}';
+      }
+      function ajaxPost(action) {
+        form.addClass('working');
+        $.ajax({ 
+          type: "POST", 
+          data: form.serialize(),
+          url: jsFormUrl, 
+          success: function(data){ 
+            form.removeClass('working');
+            init();
+            if(!action){
+              dataContainer.empty().hide().html(data).fadeIn();
+            }else ajaxPost();
+          },
+          error:function(){
+              alert('service denied');
+              form.removeClass('working');
+          }
+        });
+        return false;
+      }
+
+      /* ajax dashboard*/
+      var form = $('#jsForm'),
+          dataContainer = form.find('#dataContainer');
+          deleteBtn = form.find('#js-delete'),
+          dateFromInput = form.find('#date-from'),
+          dateToInput = form.find('#date-to'),
+          groupBtn = form.find('#js-group'),
+          pageInput = form.find('#pagenumber'),
+          perPageBtn = form.find('#js-perpage'),
+          jsFormUrl = '',
+          checkboxBtn = form.find("input:checkbox"),
+          modalSearchBtn = form.find('#modalSearch'),
+          closeModal = form.find('#closeModal');
+
+      /* pagination */    
+      form.on('click', '.js-page', function(){
+          pageInput.val($(this).data('page'));
+          ajaxPost();
+      });
+
+      /* delete an entity */
+      deleteBtn.on('click', function(){
+        jsFormUrl='{{ path('ben_remove_reservations') }}';
+        ajaxPost('delete');
+      });
+      modalSearchBtn.on('click', function () {
+          closeModal.trigger('click');
+          ajaxPost();
+      });
+      form.on('submit', ajaxPost);
+
+      /* submit the form after loading the page*/
+      init();
+      setTimeout(ajaxPost, 1);
+    })(jQuery);
+</script>
+{% endblock %}
+
+

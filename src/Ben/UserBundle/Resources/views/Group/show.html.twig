@@ -1,0 +1,39 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block title %}
+Paramètres - {{ parent() }}
+{% endblock %}
+
+{% block fos_user_content %}
+     
+<div class="col-md-12">
+    <h1><span class="fui-myspace"></span> Groupe {{ group.getName() }}</h1>
+</div>
+{% for entity in group.getUsers() %}
+	<div class="col-md-4">
+                <div class="box">
+                    <header>
+                    <img class="avatar" src="{{ asset( entity.profile.image.getwebpath)}}"/>
+                    <ul class="list-unstyled pull-right text-inverse">
+                    	<li><strong>Identifiant :</strong> {{ entity.username }}</li>
+                    	<li><strong>Email :</strong> <a class="text-inverse" href="mailto:{{ entity.email }}">{{ entity.email }}</a></li>
+                        <li><strong>Etat du compte :</strong> {{ entity.enabled }}</li>
+                    </ul>
+                    <div class="clearfix"></div>
+                    </header>
+                    <ul class="list-group">
+	                    <li class="list-group-item"><strong>Nom :</strong> {{ entity.profile.fullName }}</li>
+                        <li class="list-group-item"><strong>CIN :</strong> {{ entity.profile.cin }}</li>
+	                    <li class="list-group-item"><strong>Sexe :</strong> {{ entity.profile.gender }}</li>
+	                    <li class="list-group-item"><strong>Date de naissance :</strong> {{ entity.profile.birdDay|date('Y-m-d') }}</li>
+	                    <li class="list-group-item"><strong>Adresse :</strong> {{ entity.profile.address }}</li>
+	                    <li class="list-group-item"><strong>Profession :</strong> {{ entity.profile.job }}</li>
+                        <li class="list-group-item"><strong>Date d'inscription : </strong> {{ entity.created|time_ago_in_words }}</li>
+                        <li class="list-group-item"><strong>Dernière connexion : </strong> {% if entity.lastLogin is not null%}{{ entity.lastLogin|distance_of_time_in_words }}{% else %} jamais connécté{% endif %}</li>
+                        
+                    </ul>
+                </div>
+            </div>
+{% endfor %}
+
+
+{% endblock fos_user_content %}

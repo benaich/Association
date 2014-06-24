@@ -1,0 +1,12 @@
+
+<form action="{{ path('fos_user_group_new') }}" {{ form_enctype(form) }} method="POST" class="col-md-4 well special-form">
+<h3> Ajout d'un groupe</h3>
+  <div id="js-input" class="form-group">
+    <label for="exampleInputEmail1">Nom du Groupe</label>
+    {{ form_widget(form.name, {'attr' : {'class':'form-control'}}) }}
+  </div>
+
+    {{ form_rest(form)}}
+
+    <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-plus"></span> Ajouter</button>
+</form>

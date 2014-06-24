@@ -1,0 +1,50 @@
+rooms:
+    pattern:  /
+    defaults: { _controller: "BenAssociationBundle:Rooms:index" }
+
+ben_rooms_ajax:
+    pattern:  /roomslist
+    defaults: { _controller: BenAssociationBundle:Rooms:ajaxList }
+    requirements: { _method: post }
+rooms_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "BenAssociationBundle:Rooms:show" }
+rooms_free:
+    pattern:  /free/{ids}
+    defaults: { _controller: "BenAssociationBundle:Rooms:free" }
+rooms_ajax:
+    pattern:  /roomslist/{floor}
+    defaults: { _controller: BenAssociationBundle:Rooms:ajaxFilterList }
+
+rooms_new:
+    pattern:  /new
+    defaults: { _controller: "BenAssociationBundle:Rooms:new" }
+
+rooms_create:
+    pattern:  /create
+    defaults: { _controller: "BenAssociationBundle:Rooms:create" }
+    requirements: { _method: post }
+
+rooms_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BenAssociationBundle:Rooms:edit" }
+
+rooms_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BenAssociationBundle:Rooms:update" }
+    requirements: { _method: post }
+rooms_enable:
+    pattern:  /enable/{etat}
+    defaults: { _controller: "BenAssociationBundle:Rooms:enable" , etat: 1}
+    requirements: { _method: post }
+rooms_export:
+    pattern:  /export.{_format}
+    defaults: { _controller: "BenAssociationBundle:Rooms:export", _format: json}
+rooms_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BenAssociationBundle:Rooms:delete" }
+    requirements: { _method: post }
+ben_remove_rooms:
+    pattern:  /delete
+    defaults: { _controller: "BenAssociationBundle:Rooms:removeEntities" }
+    requirements: { _method: post }

@@ -1,0 +1,14 @@
+parameters:
+#    ben_association.example.class: ben\AssociationBundle\Example
+
+services:
+    ben.twig.time_ago:
+        class: Ben\AssociationBundle\Twig\TimeAgoExtension
+        arguments: ["@translator"]
+        tags:
+        - { name: twig.extension }
+    ben.twig.extension.config:
+        class: Ben\AssociationBundle\Twig\ConfigExtension
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+        - { name: twig.extension }

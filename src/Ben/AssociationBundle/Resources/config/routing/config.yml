@@ -1,0 +1,30 @@
+config:
+    pattern:  /
+    defaults: { _controller: "BenAssociationBundle:config:index" }
+
+config_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "BenAssociationBundle:config:show" }
+
+config_new:
+    pattern:  /new
+    defaults: { _controller: "BenAssociationBundle:config:new" }
+
+config_create:
+    pattern:  /create
+    defaults: { _controller: "BenAssociationBundle:config:create" }
+    requirements: { _method: post }
+
+config_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BenAssociationBundle:config:edit" }
+
+config_update:
+    pattern:  /update
+    defaults: { _controller: "BenAssociationBundle:config:update" }
+    requirements: { _method: post }
+
+config_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BenAssociationBundle:config:delete" }
+    requirements: { _method: post }

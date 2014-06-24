@@ -1,0 +1,15 @@
+{% extends 'FOSMessageBundle::layout.html.twig' %}
+
+
+{% block message_content %}
+
+<div class="content-warper">
+    <div id="comments">
+        <div class="comments-header threads">
+            <h1 class="mytitle"><div class="mail-badge dark hspan"></div>Boite de réception</h1>
+            <br>
+        </div>
+{% include 'FOSMessageBundle:Message:threads_list.html.twig' with {'threadpage': threads} %}
+    </div>
+</div>
+{% endblock %}

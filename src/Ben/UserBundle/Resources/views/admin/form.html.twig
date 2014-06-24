@@ -1,0 +1,68 @@
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab1"><span class="fui-user"></span> Identité</a></li>
+      <li><a href="#tab2"><span class="fui-book"></span> Informations de contact</a></li>
+      <li><a href="#tab3"><span class="fui-myspace"></span> Informations relatives à L'association</a></li>
+    </ul> <!-- /tabs -->
+	<div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Photo</label>
+                <div class="col-sm-4">
+                  <img class="myavatar col-md-4" src="{{ asset( entity.profile.image.getwebpath)}}">
+                </div>
+              </div>
+              {{ form_row(form.profile.image.file, { 'label': ' '}) }}
+              {{ form_row(form.profile.family_name, { 'label': 'Nom'}) }}
+             {{ form_row(form.profile.first_name, { 'label': 'Prenom'}) }}
+              {{ form_row(form.profile.gender, { 'label': 'Genre'}) }}
+              {{ form_row(form.profile.bird_day, { 'label': 'Date de naissance'}) }}
+
+              {{ form_row(form.profile.job, { 'label': 'Profession'}) }}
+        </div><!-- /tab1 -->
+
+				<div class="tab-pane" id="tab2">
+               {{ form_row(form.profile.address, { 'label': 'Adresse'}) }}
+               {{ form_row(form.profile.post_code, { 'label': 'Code Postal'}) }}
+              {{ form_row(form.profile.city, { 'label': 'Ville'}) }}
+              {{ form_row(form.profile.contry, { 'label': 'Pays'}) }}
+              {{ form_row(form.profile.tel, { 'label': 'Tél'}) }}
+              {{ form_row(form.profile.gsm, { 'label': 'GSM'}) }}
+             {{ form_row(form.email, { 'label': 'Courriel'}) }}
+              {{ form_row(form.profile.facebook, { 'label': 'facebook'}) }}
+             {{ form_row(form.profile.twitter, { 'label': 'twitter'}) }}
+               {{ form_row(form.profile.google, { 'label': 'google'}) }}
+               {{ form_row(form.profile.website, { 'label': 'Site Web'}) }}
+				</div><!-- /tab2 -->
+
+        <div class="tab-pane" id="tab3">
+              {{ form_row(form.enabled, { 'label': 'Compte actif'}) }}
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Statut</label>
+                <div class="col-sm-4">
+                  <select name="classe" class="input-sm info ">
+                      <option value="1">Président</option>
+                      <option value="10">Vice-président</option>
+                      <option value="2">Trésorier</option>
+                      <option value="3">Secrétaire</option>
+                      <option value="4">Membre actif</option>
+                      <option value="5">Membre bienfaiteur</option>
+                      <option value="6">Membre fondateur</option>
+                      <option value="7">Ancien membre</option>
+                      <option value="8">Personne morale</option>
+                      <option value="9" selected="selected">Non membre</option>
+                      <option value="11">admin</option>
+                  </select>
+                </div>
+              </div>
+              {{ form_row(form.username, { 'label': 'Identifiant'}) }}
+              {{ form_row(form.plainpassword, { 'label': 'Mot de passe'}) }}
+              {{ form_row(form.profile.description, { 'label': 'Autres informations'}) }}
+              {{ form_row(form.groups, { 'label': 'Groupes'}) }}
+       {{ form_rest(form) }}
+      </div><!-- /tab3 -->
+
+   	</div> <!-- /tab-content -->
+</div>
+
+            

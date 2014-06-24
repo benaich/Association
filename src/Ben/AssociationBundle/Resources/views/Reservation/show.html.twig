@@ -1,0 +1,64 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+{% block body %}
+<h1>Reservation</h1>
+<div class="col-sm-9">
+<table>
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Adherent</th>
+            <td>
+                <img class="img40" src="{{ asset( entity.user.profile.image.getwebpath)}}"/>
+                <a href="{{ path('ben_show_user', { 'id': entity.user.id }) }}">{{ entity.user.profile.firstName }} {{ entity.user.profile.familyName }}</a>
+            </td>
+        </tr>
+        <tr>
+            <th>CIN</th>
+            <td>{{ entity.user.profile.cin }}</td>
+        </tr>
+        <tr>
+            <th>Logement</th>
+            <td>{{ entity.room.hotel.name }} {{ entity.room.hotel.address }}</td>
+        </tr>
+        <tr>
+            <th>Adresse</th>
+            <td>{{ entity.room.hotel.address }}</td>
+        </tr>
+        <tr>
+            <th>N° de Pavé</th>
+            <td>{{ entity.room.floor }}</td>
+        </tr>
+        <tr>
+            <th>N° de chambre</th>
+            <td>{{ entity.room.number }}</td>
+        </tr>
+        <tr>
+            <th>Date_from</th>
+            <td>{{ entity.datefrom|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Date_to</th>
+            <td>{{ entity.dateto|date('Y-m-d H:i:s') }}</td>
+        </tr>
+    </tbody>
+</table>
+</div> 
+<div class="col-md-3">
+    <form action="{{ path('reservation_delete', { 'id': entity.id }) }}" method="post" class="well">
+    {{ form_widget(delete_form) }}
+    <a id="submitEditForm" class="btn btn-embossed btn-primary btn-block" href="{{ path('reservation_edit', { 'id': entity.id }) }}">
+        <span class="fui-new"></span> Mettre à jour
+    </a>
+    <a class="btn btn-embossed btn-inverse btn-block " href="{{ path('reservation') }}">
+        <span class="fui-list-bulleted"></span> Back to the list
+    </a>
+    <button type="submit" class="btn btn-embossed btn-danger btn-block"><span class="fui-cross"></span> Supprimer </button>
+</form>
+</div>
+{% endblock body %}

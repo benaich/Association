@@ -1,0 +1,58 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+{% block body %}
+<div class="col-md-12"><h1><span class="fui-time"></span>  Evenement</h1></div>
+
+<div class="col-sm-9">
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ entity.name }}</td>
+        </tr>
+        <tr>
+            <th>Date_from</th>
+            <td>{{ entity.datefrom|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Date_to</th>
+            <td>{{ entity.dateto|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ entity.description }}</td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td>{{ entity.type }}</td>
+        </tr>
+        <tr>
+            <th>Groupes Invités</th>
+            <td>
+                <ul>{% for group in entity.groups %}<li>{{ group}}</li>{% endfor %}</ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div> 
+
+<div class="col-md-3">
+    <form action="{{ path('event_delete', { 'id': entity.id }) }}" method="post" class="well">
+    {{ form_widget(delete_form) }}
+    <a id="submitEditForm" class="btn btn-embossed btn-primary btn-block" href="{{ path('event_edit', { 'id': entity.id }) }}">
+        <span class="fui-new"></span> Mettre à jour
+    </a>
+    <a class="btn btn-embossed btn-inverse btn-block " href="{{ path('event') }}">
+        <span class="fui-list-bulleted"></span> Back to the list
+    </a>
+    <button type="submit" class="btn btn-embossed btn-danger btn-block"><span class="fui-cross"></span> Supprimer </button>
+</form>
+</div>
+{% endblock body %}
+

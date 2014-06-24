@@ -1,0 +1,71 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <link href="{{ asset('css/fullcalendar.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="col-md-12"><h1><span class="fui-calendar"></span>  Calendrier des évenements</h1></div>
+      <div class="col-md-12">
+        <div id="calendar" class="well"></div>
+      </div>
+{% endblock body %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('js/fullcalendar.min.js') }}"></script><!-- Full Calendar -->
+<script> 
+    (function($) {
+
+    /* calendar */
+    var date = new Date();
+    var d = date.getDate();
+    var m = date.getMonth();
+    var y = date.getFullYear();
+    
+    var calendar = $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      selectable: true,
+      selectHelper: true,
+      select: function(start, end, allDay) {
+        var title = prompt('Event Title:');
+        if (title) {
+          calendar.fullCalendar('renderEvent',
+            {
+              title: title,
+              start: start,
+              end: end,
+              allDay: allDay
+            },
+            true // make the event "stick"
+          );
+        }
+        calendar.fullCalendar('unselect');
+      },
+      editable: true,
+      events: [
+      {% for entity in entities %}
+        {
+          id: {{ entity.id }},
+          title: '{{ entity.name }}',
+          start: new Date({{ entity.datefrom|date('Y') }}, {{ entity.datefrom|date('m') }}-1, {{ entity.datefrom|date('d') }}),
+          end: new Date({{ entity.dateto|date('Y') }}, {{ entity.dateto|date('m') }}-1, {{ entity.dateto|date('d') }}),
+          url: '{{ path('event_show', { 'id': entity.id }) }}'
+        }{{ loop.last ? '' : ',' }}
+      {% endfor %}
+      ]
+    });
+    })(jQuery);
+</script>
+{% endblock %}
+
+
+

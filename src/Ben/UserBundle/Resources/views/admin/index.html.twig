@@ -1,0 +1,241 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+{% block body %}
+
+<div class="col-md-12">
+<h1><span class="fui-user"></span> Gestion des membres</h1>
+        <form  id="jsForm" role="form" method="post" action="">
+            <input id="pagenumber" type="hidden" name="searchParam[page]" value="1"> 
+            <div class="row">
+              <div class="col-md-5">
+                  <div class="form-group">
+                     <div class="input-group">                                     
+                        <input type="text" name="searchParam[keyword]" class="form-control" placeholder="Search">
+                       <span class="input-group-btn">
+                             <button type="submit" class="btn"><span class="fui-search"></span></button>
+                         </span>
+                     </div>
+                  </div>
+              </div>
+              <div class="col-lg-7">
+                <div class="btn-group pull-right">              
+                  <button class="btn btn-primary" data-toggle="modal" data-target="#searchModal"><span class="fui-gear"></span> Recherche avancée</button>
+                  <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                  </button>
+                  <span class="dropdown-arrow dropdown-arrow-inverse"></span>
+                  <ul class="dropdown-menu dropdown-inverse">
+                    <li><a href="#" class="js-enable" data-action="1"><span class="fui-check"></span> Activer</a></li>
+                    <li><a href="#" class="js-enable" data-action="0"><span class="fui-cross"></span> Désctiver</a></li>
+                    <li class="dropdown-submenu">
+                        <a href="#"><span class="fui-user"></span> Promote user</a>
+                        <ul class="dropdown-menu"><span class="fui-play"></span>
+                            <li><a href="#" class="js-promote" data-action="admin">Admin</a></li>
+                            <li><a href="#" class="js-promote" data-action="user">User</a></li>
+                        </ul>
+                    </li>
+                      <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> Exporter</a></li>
+                      <li><a href="#" id="js-badge" ><span class="fui-credit-card"></span> Cartes de Membres</a></li>
+                      <li><a href=""><span class="fui-tag"></span> Etiquettes</a></li>
+                      <li class="divider"></li>
+                    <li><a href="#" id="js-delete"><span class="fui-trash"></span> Supprimer</a></li>
+                  </ul>
+                </div>
+              </div><!-- /.col-lg-2 -->
+            </div><!-- /.row -->
+
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th class="col-sm-1"><label class="checkbox no-label toggle-all" for="checkbox-table-1"><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" value="" id="checkbox-table-1" data-toggle="checkbox"></label></th>
+                        <th class="col-sm-3">Nom</th>
+                        <th class="col-sm-3">Email</th>
+                        <th class="col-sm-2">Statut</th>
+                        <th class="col-sm-2">Type de compte</th>
+                        <th class="col-sm-2">action</th>
+                    </tr>
+                </thead>
+                <tbody id="dataContainer"></tbody>
+            </table>
+            <div>
+              <em><strong>Total:</strong> {{ entitiesLength }} Adhérents</em>
+              <a name="remove" href="{{ path('ben_new_user') }}" class="btn btn-embossed btn-primary btn-wide pull-right"><span class="fui-plus"></span> Ajouter un adhérent</a>
+            </div>
+
+            {% include "BenUserBundle:admin:search.html.twig" %}
+        </form>
+
+</div>
+         <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" id="myModalLabel">Profil</h4>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer text-center">
+                <button type="button" class="btn btn-primary btn-embossed pull-left" data-dir="prev">Prev</button>
+                <a href="#" id="more" class="btn btn-primary btn-embossed">Plus d'info</a>
+                <button type="button" class="btn btn-primary btn-embossed pull-right" data-dir="next">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+{% endblock body %}
+
+ {% block javascripts %}
+{{ parent() }}
+<script> 
+    (function($) {
+
+      /* helper functions */
+      function getUrl(id){
+        var url = '{{ path('ben_show_user', {'id': 1111 }) }}';
+        return url.replace("1111", id);
+      }
+      function updateLink (link) {
+        moreBtn.attr('href', link);
+      }
+      function getCheckedRows () {
+        var users = [];
+        dataContainer.find('input:checkbox:checked').each(function() {
+          users.push($(this).val());
+        });
+        return users.join(',');
+      }
+      function init(){
+        pageInput.val('1');
+        //groupInput.val('0');
+        checkboxBtn.prop("checked",false);
+        jsFormUrl = '{{ path('ben_users_ajax') }}';
+        profiles = form.find('div.myprofile > div');
+        closeBtn.trigger('click');
+      }
+      function ajaxPost(action) {
+        console.log(form.serialize());
+        form.addClass('working');
+        $.ajax({ 
+          type: "POST", 
+          data: form.serialize(),
+          url: jsFormUrl, 
+          success: function(data){ 
+            form.removeClass('working');
+            if(!action){
+              dataContainer.empty().hide().html(data).fadeIn();
+              init();
+            }
+            else{
+              init();
+              ajaxPost();
+            }
+          },
+          error:function(){
+              alert('service denied');
+              form.removeClass('working');
+          }
+        });
+        return false;
+      }
+
+      /* profile navigation */
+      var form = $('#jsForm'),
+          modal = $('#myModal'),
+          modalBody = modal.find('.modal-body'),
+          navBtn = modal.find('button'),
+          moreBtn = modal.find('#more'),
+          profiles = [],
+          dir = 'next',
+          link = '',
+          index=0;
+      
+      form.on('click', '.showuser', function(){
+        var id = $(this).data('id'),
+            index = $(this).data('index')-1,
+            data = profiles[index];
+        modalBody.html(data);
+        updateLink(getUrl(id));
+      });
+
+      navBtn.on('click', function(){
+        var index = modal.find('.userinfo').data('index')-1,
+            dir = $(this).data('dir');
+        index = (dir == 'next') ? index+1 : index-1;
+        modalBody.hide().html(profiles[index]).fadeIn();
+        updateLink(getUrl(modal.find('.userinfo').data('id')));
+      });
+
+      /* ajax dashboard*/
+      var enableBtn = form.find('.js-enable'),
+          dataContainer = form.find('#dataContainer');
+          promoteBtn = form.find('.js-promote'),
+          deleteBtn = form.find('#js-delete'),
+          pageInput = form.find('#pagenumber'),
+          perPageBtn = form.find('#js-perpage'),
+          printBadgeBtn = form.find('#js-badge'),
+          searchBtn = form.find('#js-search'),
+          closeBtn = $('#searchModal').find('.close'),
+          jsFormUrl = '',
+          checkboxBtn = form.find("input:checkbox");
+
+
+      /* print badge */    
+      printBadgeBtn.on('click', function(){
+          var url = '{{ path('ben_pdf', {'users': 1111 }) }}',
+              users = getCheckedRows();
+          users = (users==='')? 'all':users; 
+          url = url.replace("1111", users);
+          window.location.href = url;
+      });
+
+      /* pagination */    
+      form.on('click', '.js-page', function(){
+          pageInput.val($(this).data('page'));
+          ajaxPost();
+      });
+      /* advanced search */
+      searchBtn.on('click', function () {
+        closeBtn.trigger('click');
+        ajaxPost();
+      });
+
+      /* enable or disable a user*/
+      enableBtn.on('click', function(){
+        var url = '{{ path('ben_enable_users', {'etat': 1111 }) }}',
+            etat = $(this).data('action');
+        jsFormUrl = url.replace("1111", etat);
+        ajaxPost('enable');
+      });
+
+      /* promote a user */
+      promoteBtn.on('click', function(){
+        var url='{{ path('ben_promote_users', {'role': 1111 }) }}',
+            etat = $(this).data('action');
+        jsFormUrl = url.replace("1111", etat);
+        ajaxPost('promote');
+      });
+
+      /* delete a user */
+      deleteBtn.on('click', function(){
+        jsFormUrl='{{ path('ben_remove_users') }}';
+        ajaxPost('delete');
+      });
+      form.on('submit', ajaxPost);
+
+      /* submit the form after loading the page*/
+      init();
+      setTimeout(ajaxPost, 1);
+
+      /* dropdown sub menu */
+      $('.dropdown-submenu').hover(function() {
+        $(this).find('.dropdown-menu').toggleClass('open');
+      });
+    })(jQuery);
+</script>
+{% endblock %}

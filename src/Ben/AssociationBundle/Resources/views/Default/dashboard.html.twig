@@ -1,0 +1,37 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+{% block body %}
+<h4><span class="fui-user"></span> Gestion des membres</h4>
+<p>Hello {{ name }}!</p>
+{% endblock body %}
+
+ {% block javascripts %}
+{{ parent() }}
+<script> 
+    (function($) {
+        
+        // Custom Selects
+        $("select.info").selectpicker({style: 'btn-primary'});
+
+       $(".showuser").click(function(){
+            profile = $(this).parents('tr').find('div.myprofile').html();
+            $('.modal-body').html(profile);
+        });
+
+        // users profile navigation
+        var button= $('.modal-footer button'),
+            modal = $('div.modal-body')
+            profiles = $('div.myprofile > div')
+            dir = 'next',
+            i=0;
+        button.on('click', function(){
+            dir = $(this).data('dir');
+            i = modal.find('.userinfo').data('index');
+            i = (dir == 'next') ? i+1 : i-1;
+            modal.hide().html(profiles[i]).fadeIn();
+        })
+    })(jQuery);
+</script>
+{% endblock %}

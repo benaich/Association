@@ -1,0 +1,39 @@
+reservation:
+    pattern:  /
+    defaults: { _controller: "BenAssociationBundle:Reservation:index" }
+
+reservation_ajax:
+    pattern:  /ajaxlist
+    defaults: { _controller: BenAssociationBundle:Reservation:ajaxList }
+    requirements: { _method: post }
+reservation_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "BenAssociationBundle:Reservation:show" }
+
+reservation_new:
+    pattern:  /new/{id}
+    defaults: { _controller: "BenAssociationBundle:Reservation:new" }
+
+reservation_create:
+    pattern:  /create
+    defaults: { _controller: "BenAssociationBundle:Reservation:create" }
+    requirements: { _method: post }
+
+reservation_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BenAssociationBundle:Reservation:edit" }
+
+reservation_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BenAssociationBundle:Reservation:update" }
+    requirements: { _method: post }
+
+reservation_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BenAssociationBundle:Reservation:delete" }
+    requirements: { _method: post }
+
+ben_remove_reservations:
+    pattern:  /removeEntities
+    defaults: { _controller: "BenAssociationBundle:Reservation:removeEntities" }
+    requirements: { _method: post }

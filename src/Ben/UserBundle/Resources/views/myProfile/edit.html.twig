@@ -1,0 +1,58 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block title %}
+Profile - {{ parent() }}
+{% endblock %}
+
+{% block fos_user_content %}
+
+<h1><span class="fui-user"></span> Profile</h1>
+<form class="form-horizontal well" action="{{ path('ben_profile_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab1"><span class="fui-user"></span> Identité</a></li>
+      <li><a href="#tab2"><span class="fui-book"></span> Informations de contact</a></li>
+      <li><a href="#tab3"><span class="fui-myspace"></span> Réseaux sociaux</a></li>
+    </ul> <!-- /tabs -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+            <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Photo </label>
+                <div class="col-sm-4">
+                    <img class="myavatar col-md-4" src="{{ asset( entity.image.getwebpath)}}">
+                </div>
+            </div>
+        {{ form_row(form.image.file, { 'label': ' '}) }}
+        {{ form_row(form.family_name) }}
+        {{ form_row(form.first_name) }}
+        {{ form_row(form.gender) }}
+        {{ form_row(form.bird_day) }}
+        {{ form_row(form.job) }}
+        </div><!-- /tab1 -->
+        <div class="tab-pane" id="tab2">
+        {{ form_row(form.address) }}
+        {{ form_row(form.post_code) }}
+        {{ form_row(form.city) }}
+        {{ form_row(form.contry) }}
+        {{ form_row(form.tel) }}
+        {{ form_row(form.gsm) }}
+        </div><!-- /tab2 -->
+        <div class="tab-pane" id="tab3">
+        {{ form_row(form.facebook) }}
+        {{ form_row(form.twitter) }}
+        {{ form_row(form.google) }}
+        {{ form_row(form.website) }}
+
+        {{ form_rest(form) }}
+        </div><!-- /tab3 -->
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-4 col-sm-4">
+        <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-new"></span> Mettre à jours</button>
+
+<a href="{{ path('ben_show_user', {'id': app.user.id }) }}" class="btn btn-default btn-embossed"><span class="fui-search"> voir mon profile</a>
+      </div>
+    </div>
+</form>
+
+{% endblock fos_user_content %}

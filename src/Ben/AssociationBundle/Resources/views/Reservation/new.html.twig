@@ -1,0 +1,70 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+{% block body %}
+<h1>Reservation creation</h1>
+
+<form class="form-horizontal" id="ajaxForm" action="{{ path('reservation_create') }}" method="post" {{ form_enctype(form) }}>
+     {{ form_row(form.date_from) }}
+     {{ form_row(form.date_to) }}
+     {{ form_row(form.user) }}
+
+	<div class="form-group">
+		<label class="col-md-4 control-label" for="">Pavé</label>
+		<div class="col-md-4">
+			<select name="pave-number" id="pave-number" class="input-md primary">
+				<option value="0"> Selectionner un pavé</option>	
+				{% for item in floors %}
+					<option value="{{item.floor}}">Pavé n° {{item.floor}} </option>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+     {{ form_row(form.room) }}
+
+	
+    <div class="form-group">
+      <div class="col-md-offset-4 col-md-4">
+        <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-check-inverted"></span> Ajouter</button>
+
+      </div>
+      {{ form_rest(form) }}
+    </div>
+</form>	
+
+{% endblock body %}
+
+{% block javascripts %}
+{{ parent() }}
+<script> 
+    (function($) {
+    	var form = $('#ajaxForm'),
+    		roomSelect = form.find('#ben_associationbundle_reservationtype_room'),
+    		paveSelect = form.find('#pave-number'),
+    		roomDiv = roomSelect.closest('.form-group').hide();
+    	paveSelect.on('change', function () {
+    		var url = '{{ path('rooms_ajax', {'floor': 1111 }) }}',
+    			html ='';
+        	url = url.replace("1111", this.value);
+    		$.ajax({  
+	          url: url, 
+	          dataType : 'json',
+	          success: function(data){ 
+	            form.removeClass('working');
+	            $.each(data, function(i, v){
+	            	html += '<option value="'+v.id+'">Chambre n° '+v.number+' </option>'
+	            });
+	            roomSelect.html(html);
+	            roomDiv.slideDown(500);
+	          },
+	          error:function(){
+	              alert('service denied');
+	              form.removeClass('working');
+	          }
+	        });
+    	});
+    })(jQuery);
+</script>
+{% endblock %}
+

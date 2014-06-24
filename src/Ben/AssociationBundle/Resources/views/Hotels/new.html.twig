@@ -1,0 +1,36 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+{% block body %}
+<h1><span class="fui-home"></span> Ajout d'un logement </h1>
+<div class="col-sm-9">
+    <form id="createForm" class="form-horizontal well" action="{{ path('hotels_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        
+    </form>
+</div>  
+
+<div class="col-md-3">
+    <div class="well">
+        <a id="submitForm" class="btn btn-embossed btn-primary btn-block" href="#">
+            <span class="fui-new"></span> Ajouter
+        </a>
+        <a class="btn btn-embossed btn-inverse btn-block " href="{{ path('hotels') }}">
+            <span class="fui-list-bulleted"></span> Back to the list
+        </a>
+    </div>
+</div>
+
+{% endblock body %}
+
+{% block javascripts %}
+{{ parent() }}
+<script> 
+    (function($) {
+        $('#submitForm').on('click', function () {
+            $('#createForm').submit();
+        });
+    })(jQuery);
+</script>
+{% endblock %}

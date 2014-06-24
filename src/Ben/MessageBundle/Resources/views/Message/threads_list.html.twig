@@ -1,0 +1,32 @@
+
+<ul class="comment-list threadslist">
+        {% for thread in threads %}
+                            {% if app.user ==  thread.createdBy %}{% set sender=thread.lastMessage.sender %}
+                            {% else %}{% set sender=thread.createdBy %}
+                            {% endif %}
+        <li class="comment-item {% if not fos_message_is_read(thread)%}newmessage{% endif %}" id="message_{{ thread.id }}">
+            <div class="img-40 img-rounded pull-left">
+                <a href="{{ path('profile_public', { 'name': sender, 'id': sender.id }) }}" class="mytooltip" title="{{ sender }}" style="display:block;"><img src="{{ sender.avatar }}"></a>
+            </div>
+            <div class="col-right">
+                <div class="user-label">
+                    <p class="pull-right muted"><small>{{ thread.lastMessage.createdAt|time_ago_in_words }}</small><br>
+                        <small> &nbsp;&nbsp;&nbsp;&nbsp;{{ thread.messages|length }} {% if thread.messages|length == 1  %}message{% else %}messages{% endif %}</small>
+                    </p>
+                    <h6><a href="{{  path('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}" class="link-main">{{ thread.subject }}</a></h6>
+                </div>
+                <div class="body-content" >
+                    <p class="muted"><small>{{ thread.lastMessage.body }}</small> ...</p>
+                </div>
+            </div>
+        </li>
+        {% else %}
+        <li class="comment-item">
+            <div class="col-right">
+                <div class="body-content" >
+                    <p>Pas encore de messages</p>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>

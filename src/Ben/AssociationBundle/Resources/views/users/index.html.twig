@@ -1,0 +1,177 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+{% block body %}
+<h4><span class="fui-user"></span> Gestion des membres</h4>
+        <form  id="jsForm" role="form" method="post" action="">
+            <div class="row">
+              <div class="col-lg-6 form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search">
+                  <div class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="fui-search"></span></button>
+                  </div><!-- /btn-group -->
+                </div><!-- /input-group -->
+              </div><!-- /.col-lg-6 -->
+
+              <div class="col-lg-3">
+                <div class="btn-group">              
+                  <button class="btn btn-primary "><span class="fui-myspace"></span> Filtrer par groupe</button>
+                  <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                  </button>
+                  <span class="dropdown-arrow dropdown-arrow-inverse"></span>
+                  <ul class="dropdown-menu dropdown-inverse">
+                    <li><a href="#fakelink">Groupe A</a></li>
+                    <li><a href="#fakelink">Groupe B</a></li>
+                  </ul>
+                </div>
+              </div><!-- /.col-lg-3 -->
+
+              <div class="col-lg-3">
+                <div class="btn-group">              
+                  <button class="btn btn-primary "><span class="fui-gear"></span> Action</button>
+                  <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                  </button>
+                  <span class="dropdown-arrow dropdown-arrow-inverse"></span>
+                  <ul class="dropdown-menu dropdown-inverse">
+                                <li><a href=""><span class="fui-check"></span> Activer</a></li>
+                                <li><a href=""><span class="fui-cross"></span> Désctiver</a></li>
+                                <li class="dropdown-submenu">
+                                    <a href="#"><span class="fui-user"></span> Promote user</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Admin</a></li>
+                                        <li><a href="#">User</a></li>
+                                    </ul>
+                                  </li>
+                                  <li><a href="" id="btnApprouver"><span class="fui-export"></span> Exporter</a></li>
+                                  <li><a href="" id="btnApprouver"><span class="fui-credit-card"></span> Cartes de Membres</a></li>
+                                  <li><a href="" id="btnApprouver"><span class="fui-tag"></span> Etiquettes</a></li>
+                                  <li class="divider"></li>
+                                <li><a href="#" id="btnSupprimer"><span class="fui-trash"></span> Supprimer</a></li>
+                  </ul>
+                </div>
+              </div><!-- /.col-lg-3 -->
+            </div><!-- /.row -->
+
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th class="col-sm-1"><label class="checkbox no-label toggle-all" for="checkbox-table-1"><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" value="" id="checkbox-table-1" data-toggle="checkbox"></label></th>
+                        <th class="col-sm-3">Nom</th>
+                        <th class="col-sm-3">Email</th>
+                        <th class="col-sm-2">Statut</th>
+                        <th class="col-sm-2">action</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><label class="checkbox no-label" for="checkbox-table-2"><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
+                        <span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" name="checketd[]" value="1232" id="checkbox-table-2" data-toggle="checkbox"></label></td>
+                    <td>
+                        <img class="img40" src="{{ asset('upload/img/user1.jpeg') }}"/>
+                        <em class="text-muted"> Benaich mohamed</em>
+                        <span class="fui-radio-unchecked text-primary pull-right"></span>
+                        <div class="myprofile hide"> 
+                            <div class="row"> 
+                            <img class="myavatar col-md-4" src="{{ asset('upload/img/user1.jpeg') }}">
+                            <ul class="list-unstyled col-md-8 userinfo" data-index="0">
+                                <li><strong>Nom :</strong> ben
+                                </li><li><strong>Preom :</strong>  med
+                                </li><li><strong>Date de naissance :</strong>  2013-05-24
+                                </li><li><strong>Sexe :</strong>  <img class="iconecategorie" src="img/man.png">
+                                </li><li><strong>Adresse :</strong>  lot charaf
+                                </li><li><strong>Ville :</strong> salé
+                                </li><li><strong>Etablissement :</strong> zzzzzz
+                                </li><li><strong>Siteweb :</strong> www.tacharok.ma
+                                </li><li><strong>Facebook :</strong> Facebook
+                                </li><li><strong>Google :</strong> Google
+                                </li><li><strong>Twitter :</strong> Twitter
+                                </li><li><strong>Biographie :</strong> Après avoir appris sur Internet quoi de plus normal que de partager à son tour ? Passionné par le web depuis un peu plus de 5 ans maintenant j'aime partager mes compétences et mes découvertes avec les personnes qui ont cette même passion pour le web
+                            </li></ul>
+                            </div>
+                        </div>
+                    </td>
+                    <td><a href="mailto:benaich.med@gmail.com">benaich.med@gmail.com</a></td>
+                    <td>Membre fondateur</td>
+                        <td>
+                            <a class="btn btn-embossed btn-primary showuser btn-xs" href="#" data-toggle="modal" data-target="#myModal"><span class="fui-search"></span></a>
+                            <a class="btn btn-embossed btn-info btn-xs" href="" data-toggle="tooltip" title="modifier"><span class="fui-new"></span></a>
+                            <a class="btn btn-embossed btn-danger btn-xs" href="" data-toggle="tooltip" title="Supprimer"><span class="fui-cross"></span></a>
+                        </td>
+                    </tr>
+                 </tbody>
+                </table>
+                <div class="text-center">
+                <div class="pagination pagination-sm">
+                    <ul>
+                      <li class="previous"><a href="#fakelink" class="fui-arrow-left"></a></li>
+                      <li class=""><a href="#fakelink">1</a></li>
+                      <li><a href="#fakelink">2</a></li>
+                      <li><a href="#fakelink">3</a></li>
+                      <li><a href="#fakelink">4</a></li>
+                      <li class="next"><a href="#fakelink" class="fui-arrow-right"></a></li>
+                    </ul>
+                </div>
+              <!-- /pagination -->
+              </div>
+                    <p class="text-center btn-area">
+                         <a href="upload/pdf/etiquettes1.pdf" class="btn btn-embossed btn-info "><span class="fui-tag"></span> Générer les étiquettes</a>
+                         <a href="upload/pdf/carte1.pdf" class="btn btn-embossed btn-inverse"><span class="fui-credit-card"></span> Générer les Cartes de Membres</a>
+
+                <a name="remove" href="inscription.html" class="btn btn-embossed btn-primary btn-wide pull-right"><span class="fui-plus-inverted"></span> Ajouter un adhérent</a>
+                    </p>
+        </form>
+
+         <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" id="myModalLabel">Profil</h4>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-embossed pull-left" data-dir="prev">Prev</button>
+                <button type="button" class="btn btn-primary btn-embossed pull-right" data-dir="next">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+{% endblock body %}
+
+ {% block javascripts %}
+{{ parent() }}
+<script> 
+    (function($) {
+        
+        // Custom Selects
+        $("select.info").selectpicker({style: 'btn-primary'});
+
+       $(".showuser").click(function(){
+            profile = $(this).parents('tr').find('div.myprofile').html();
+            $('.modal-body').html(profile);
+        });
+
+        // users profile navigation
+        var button= $('.modal-footer button'),
+            modal = $('div.modal-body')
+            profiles = $('div.myprofile > div')
+            dir = 'next',
+            i=0;
+        button.on('click', function(){
+            dir = $(this).data('dir');
+            i = modal.find('.userinfo').data('index');
+            i = (dir == 'next') ? i+1 : i-1;
+            modal.hide().html(profiles[i]).fadeIn();
+        })
+    })(jQuery);
+</script>
+{% endblock %}

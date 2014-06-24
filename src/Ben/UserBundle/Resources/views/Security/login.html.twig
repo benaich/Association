@@ -1,0 +1,48 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Login - {{ parent() }}
+{% endblock %}
+
+{% block container %}
+<body class="sign-in-bg">
+
+    <div class="sign-in">
+        <div class="sign-in-head text-center">
+            <h1>Association bayti</h1>
+        </div>
+        <div class="sign-in-form">
+            <h5 class="text-center" >Connexion</h5>
+            {% if error %}
+                <div class="alert alert-error fade in">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong><i class="icon-warning-sign"></i> erreur : </strong> {{ error|trans({}, 'FOSUserBundle') }}
+                </div>
+            {% endif %} 
+            <form action="{{ path("fos_user_security_check") }}" method="post">
+                <div class="form-group">
+                    <div class="input-group input-group-lg">
+                      <span class="input-group-addon"><span class="fui-user"></span></span>
+                      <input type="text" class="form-control" placeholder="Login/E-mail" name="_username" value="{{ last_username }}" required="required" autofocus="true" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group input-group-lg">
+                      <span class="input-group-addon"><span class="fui-lock"></span></span>
+                       <input type="password" class="form-control" id="password" name="_password" required="required" placeholder="Password"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox primary checked" for="checkbox6">
+                    <span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" checked="checked" name="_remember_me" value="on" id="checkbox6" data-toggle="checkbox">
+                    Garder ma session active
+                  </label>
+                </div>
+               <p class="text-center btn-area">
+              <button type="submit" class="btn btn-primary btn-wide btn-huge" href="adherents.html">Login</button>
+              </p>
+            </form>
+        </div>
+    </div>
+  </body>
+{% endblock container %}

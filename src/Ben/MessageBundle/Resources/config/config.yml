@@ -1,0 +1,5 @@
+#fos_message
+fos_message:
+        db_driver: orm
+        thread_class: Ben\MessageBundle\Entity\Thread
+        message_class: Ben\MessageBundle\Entity\Message

@@ -1,0 +1,176 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+{% block body %}
+<h1><span class="fui-gear"></span> Préférences</h1>
+<form class="form-horizontal well" action="{{ path('config_update')}}" method="POST" enctype="multipart/form-data">        
+        <div class="tabbable">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#tab1"><span class="fui-list-bulleted"></span> Général</a></li>
+              <li><a href="#tab2"><span class="fui-twitter"></span> Réseaux sociaux</a></li>
+              <li><a href="#tab3"><span class="fui-gear"></span> Paramètres</a></li>
+              <li><a href="#tab4"><span class="fui-credit-card"></span> Cartes</a></li>
+            </ul> <!-- /tabs -->
+
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab1">
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Logo</label>
+                <div class="col-sm-4">
+                  <img class="myavatar col-md-4" src="{{ asset( app_config.org_logo )}}">
+                </div>
+              </div>              
+              {{ form_row(imgform.file, { 'label': ' '}) }}
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Nom de l'association</label>
+                <div class="col-sm-4">
+                  <input type="text" name="config[org_name]" value="{{app_config.org_name}}" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Description de l'association</label>
+                <div class="col-sm-4">
+                  <textarea rows="3" name="config[org_description]" placeholder="ajouter une description..." class="form-control">{{app_config.org_description}}</textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Adresse</label>
+                <div class="col-sm-4">
+                  <input type="text" name="config[org_address]" value="{{app_config.org_address}}" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Code Postal</label>
+                <div class="col-sm-4">
+                  <input type="text" name="config[org_cp]" value="{{app_config.org_cp}}" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Ville</label>
+                <div class="col-sm-4">
+                  <input type="text" name="config[org_city]" value="{{app_config.org_city}}" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Pays</label>
+                <div class="col-sm-4">
+                  <input type="text" name="config[org_contry]" value="{{app_config.org_contry}}" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Tél </label>
+                <div class="col-sm-4">
+                  <input type="text" name="config[org_tel]" value="{{app_config.org_tel}}" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">GSM </label>
+                <div class="col-sm-4">
+                  <input type="text" name="config[org_gsm]" value="{{app_config.org_gsm}}" class="form-control">
+                </div>
+              </div>
+            </div><!-- /tab1 -->
+              <div class="tab-pane" id="tab2">
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Adresse email </label>
+                <div class="col-sm-4">
+                  <input type="text" name="config[org_email]" value="{{app_config.org_email}}" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Site Web </label>
+                <div class="col-sm-4">
+                  <input type="text" name="config[org_website]" value="{{app_config.org_website}}" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Google+ </label>
+                <div class="col-sm-4">
+                  <input type="text" name="config[org_google]" value="{{app_config.org_google}}" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Facebook </label>
+                <div class="col-sm-4">
+                  <input type="text" name="config[org_facebook]" value="{{app_config.org_facebook}}" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Twitter </label>
+                <div class="col-sm-4">
+                  <input type="text" name="config[org_twitter]" value="{{app_config.org_twitter}}" class="form-control">
+                </div>
+              </div>
+              </div><!-- /tab2 -->
+              <div class="tab-pane" id="tab3">
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Latitude </label>
+                <div class="col-sm-4">
+                  <input type="text" name="config[org_map_lat]" value="{{app_config.org_map_lat}}" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Longuitude </label>
+                <div class="col-sm-4">
+                  <input type="text" name="config[org_map_lng]" value="{{app_config.org_map_lng}}" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Langue par défaut </label>
+                <div class="col-sm-4">
+                  <select name="config[org_lang]" value="{{app_config.org_lang}}" class="input-sm info">
+                        <option {% if app_config.org_lang =="fr_FR" %}selected="selected"{% endif %} value="fr_FR" selected="selected">Français</option>
+                        <option {% if app_config.org_lang =="en_US" %}selected="selected"{% endif %} value="en_US" >English</option>
+                    </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Lignes / Page </label>
+                <div class="col-sm-4">
+                  <select name="config[rows_per_page]" class="input-sm info">
+                        <option {% if app_config.rows_per_page =="3" %}selected="selected"{% endif %} value="3">3</option>
+                        <option {% if app_config.rows_per_page =="10" %}selected="selected"{% endif %} value="10">10</option>
+                        <option {% if app_config.rows_per_page =="20" %}selected="selected"{% endif %} value="20">20</option>
+                        <option {% if app_config.rows_per_page =="30" %}selected="selected"{% endif %} value="30">30</option>
+                        <option {% if app_config.rows_per_page =="50" %}selected="selected"{% endif %} value="50">50</option>
+                    </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Auto-Enregistrement actif ?</label>
+                <div class="col-sm-4">
+                  <input type="checkbox" name="config[org_signup]" {% if app_config.org_signup %}checked="checked"{% endif %} data-toggle="switch" />
+                </div>
+              </div>
+              </div><!-- /tab3 -->
+              <div class="tab-pane" id="tab4">
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Texte du bandeau </label>
+                <div class="col-sm-4">
+                  <input type="text" name="config[org_slogan]" value="{{app_config.org_slogan}}" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">badge css </label>
+                <div class="col-sm-4">
+                  <textarea rows="3" name="config[org_carte_css]" value="{{app_config.org_carte_css}}" placeholder="ajouter une description..." class="form-control">{{app_config.org_carte_css}}</textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Permettre aux membres d'imprimer leurs carte ? </label>
+                <div class="col-sm-4">
+                  <input type="checkbox" name="config[print_permission]" {% if app_config.print_permission %}checked="checked"{% endif %} data-toggle="switch" />
+                </div>
+              </div>
+              </div><!-- /tab4 -->
+            </div> <!-- /tab-content -->
+          </div>
+              <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-4">
+                  <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-check-inverted"></span> Mettre à jour</button>
+                </div>
+              </div>
+</form>
+   
+{% endblock body %}

@@ -1,0 +1,33 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <style type="text/css"> {{ app_config.org_carte_css}} </style>
+ {% endblock %}
+
+{% block header %}{% endblock %}
+{% block body %}
+
+{% for entity in entities %}
+    <div class="box mybadge printed-badge">
+      <img class="pull-left pic" src="{{ asset( entity.profile.image.getwebpath)}}"/>
+      <img class="pull-right logo" src="{{ asset(app_config.org_logo) }}"/>
+      <h2>Bayti</h2>
+      <ul class="list-unstyled">
+          <li><strong>{{ entity.profile.firstName }} {{ entity.profile.familyName }}</strong></li>
+          <li>{{ entity.email }}</li>
+      </ul>
+      <div class="footer label-primary">
+         <span>{{ app_config.org_slogan }}</span>
+          <span class="pull-right">{{"now"|date('Y')}}</span>
+      </div>
+    </div>  
+{% endfor %}
+
+       
+
+
+{% endblock body %}

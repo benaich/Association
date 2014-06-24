@@ -1,0 +1,51 @@
+
+                {% for entity in entities %}
+                    <tr>
+                        <td><label class="checkbox no-label" for="checkbox-table-2"><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
+                        <span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" name="users[]" value="{{ entity.id }}" id="checkbox-table-2" data-toggle="checkbox"></label></td>
+                      <td>
+                        <img class="img40" src="{{ asset( entity.profile.image.getwebpath)}}"/>
+                        <em class="text-muted"> {{ entity.profile.firstName }} {{ entity.profile.familyName }}</em>
+                        <span class="{% if entity.enabled %}text-primary{% else %}text-default{% endif %} fui-radio-unchecked pull-right"></span>
+                        <div class="myprofile hide"> 
+                        <div class="row">
+                          <img class="myavatar col-md-4" src="{{ asset( entity.profile.image.getwebpath)}}">
+                          <ul class="list-unstyled col-md-8 userinfo" data-index="{{ loop.index }}" data-id="{{ entity.id }}">
+                              <li><strong>Id :</strong> {{ entity.id }}</li>
+                              <li><strong>Nom :</strong> {{ entity.profile.familyName }}</li>
+                              <li><strong>Preom :</strong>  {{ entity.profile.firstName }}</li>
+                              <li><strong>Date de naissance :</strong>  {{ entity.profile.birdDay|date('Y-m-d') }}</li>
+                              <li><strong>Sexe :</strong>  {% if entity.profile.gender == 'homme' %}
+                              <span class="man"></span>
+                              {% elseif entity.profile.gender == 'femme' %}
+                              <span class="woman"></span>
+                              {% else %} N/A
+                              {% endif %}
+                              </li>
+                              <li><strong>Adresse :</strong>  {{ entity.profile.address }}</li>
+                              <li><strong>Ville :</strong> {{ entity.profile.city }}</li>
+                              <li><strong>Siteweb :</strong> {{ entity.profile.website }}</li>
+                              <li><strong>Biographie :</strong> {{ entity.profile.description }}</li>
+                              <li><strong>Social Links: </strong>
+                                <ul class="social">
+                                    <li><a href="{{ entity.profile.facebook }}"><span class="fui-facebook text-info"></span></a></li>
+                                    <li><a href="{{ entity.profile.google }}"><span class="fui-googleplus text-danger"></span></a></li>
+                                    <li><a href="{{ entity.profile.twitter }}"><span class="fui-twitter text-info"></span></a></li>
+                                </ul>
+                              </li>
+                            </ul>
+                        </div>
+                        </div>
+                    </td>
+                    <td><a href="mailto:{{ entity.email }}">{{ entity.email }}</a></td>
+                    <td>{{ entity.status }}</td>
+                    <td>{{ entity.role }}</td>
+                        <td>
+                            <a class="btn btn-embossed btn-primary showuser btn-xs" data-index="{{ loop.index }}" data-id="{{ entity.id }}" href="#" data-toggle="modal" data-target="#myModal"><span class="fui-search"></span></a>
+                            <a class="btn btn-embossed btn-info btn-xs" href="{{ path('ben_edit_user', {id: entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="fui-new"></span></a>
+                            <a class="btn btn-embossed btn-danger btn-xs"  href="{{ path('ben_new_user', {id: entity.id }) }}" data-toggle="tooltip" title="Supprimer"><span class="fui-cross"></span></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                
+{% include "BenAssociationBundle:Default:pagination.html.twig" %}

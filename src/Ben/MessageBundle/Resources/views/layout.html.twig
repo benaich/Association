@@ -1,0 +1,23 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+
+{% block headband %}
+<section class="headband">
+    <div class="mycontainer unit">
+        <h1><div class="mail-badge hspan"></div>Messages Privés</h1>
+        <p>Ouverte 24h/24</p> 
+    </div>
+</section>
+{% endblock %}
+
+{% block body %}
+
+<section>
+    <div class="mycontainer">
+        <article class="myarticle">
+        {% block message_content %}{% endblock %}
+        </article>
+        {% include "BenMessageBundle:Message:sidebar.html.twig" %}
+            </div>
+</section>
+
+ {% endblock body %}

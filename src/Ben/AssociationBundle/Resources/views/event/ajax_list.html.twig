@@ -1,0 +1,30 @@
+{% for entity in entities %}
+        <tr>
+            <td><label class="checkbox no-label" for="checkbox-table-2"><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
+            <span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" name="entities[]" value="{{ entity.id }}" id="checkbox-table-2" data-toggle="checkbox"></label></td>
+            <td>{{ entity.name }}</td>
+            <td>{{ entity.description }}</td>
+            <td>
+                <ul class="list-unstyled">
+                {% if entity.datefrom %}
+                   <li>{{ entity.datefrom|date('Y-m-d') }}</li>
+                {% endif %}
+                {% if entity.dateto %}
+                    <li>{{ entity.dateto|date('Y-m-d') }}</li>
+                {% endif %}
+                </ul>
+            </td>
+            <td>{{ entity.type }}</td>
+            <td>
+                <ul>{% for group in entity.groups %}<li>{{ group}}</li>{% endfor %}</ul>
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a class="btn btn-embossed btn-primary btn-xs" href="{{ path('event_show', { 'id': entity.id }) }}" data-toggle="tooltip" title="Afficher"><span class="fui-search"></span></a>
+                    <a class="btn btn-embossed btn-info btn-xs" href="{{ path('event_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="fui-new"></span></a>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+
+{% include "BenAssociationBundle:Default:pagination.html.twig" %}

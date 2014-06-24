@@ -1,0 +1,89 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+{% block body %}
+
+<div class="col-md-12"><h1>Chambre N° {{ entity.number }}</h1></div>
+
+<div class="col-sm-9">
+<table>
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>N° de la chambre    </th>
+            <td>{{ entity.number }}</td>
+        </tr>
+        <tr>
+            <th>N° d'étage</th>
+            <td>{{ entity.floor }}</td>
+        </tr>
+        <tr>
+            <th>Logement</th>
+            <td>{{ entity.hotel.name }}</td>
+        </tr>
+        <tr>
+            <th>Nombre de lit</th>
+            <td>{{ entity.maxpersons }}</td>
+        </tr>
+        <tr>
+            <th>Disponible</th>
+            <td>{{ entity.available }}</td>
+        </tr>
+        <tr>
+            <th>Chambre pour</th>
+            <td>{{ entity.type }}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{{ entity.status }}</td>
+        </tr>
+    </tbody>
+</table>
+</div> 
+<div class="col-md-3">
+    <form action="{{ path('rooms_delete', { 'id': entity.id }) }}" method="post" class="well">
+    {{ form_widget(delete_form) }}
+    <a id="submitEditForm" class="btn btn-embossed btn-primary btn-block" href="{{ path('rooms_edit', { 'id': entity.id }) }}">
+        <span class="fui-new"></span> Mettre à jour
+    </a>
+    <a class="btn btn-embossed btn-info btn-block " href="{{ path('rooms_free', { 'ids': entity.id }) }}">
+        <span class="fui-check-inverted"></span> Liberer cette chambre
+    </a>
+    <a class="btn btn-embossed btn-inverse btn-block " href="{{ path('rooms') }}">
+        <span class="fui-list-bulleted"></span> Back to the list
+    </a>
+    <button type="submit" class="btn btn-embossed btn-danger btn-block"><span class="fui-cross"></span> Supprimer </button>
+    </form>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-12"><h3>List des personnes dans cette chambres</h3></div>
+{% for reservation in entity.reservations %}
+{% set user = reservation.user %}
+    <div class="col-md-4">
+        <div class="box">
+            <header>
+            <img class="avatar" src="{{ asset( user.profile.image.getwebpath)}}"/>
+            <ul class="list-unstyled pull-right text-inverse">
+                <li><strong>Identifiant :</strong> {{ user.username }}</li>
+                <li><strong>Email :</strong> <a class="text-inverse" href="mailto:{{ user.email }}" >{{ user.email }}</a></li>
+                <li><strong>Etat du compte :</strong> {{ user.enabled }}</li>
+            </ul>
+            <div class="clearfix"></div>
+            </header>
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Nom :</strong> <a href="{{ path('ben_show_user', { 'id': user.id }) }}"  data-toggle="tooltip" title="Plus d'info">{{ user.profile.fullName }}</a></li>
+                <li class="list-group-item"><strong>CIN :</strong> {{ user.profile.cin }}</li>
+                <li class="list-group-item"><strong>Sexe :</strong> {{ user.profile.gender }}</li>
+                <li class="list-group-item"><strong>Date de debut de reservation : </strong> {{ reservation.datefrom|date('Y-m-d') }}</li>
+                <li class="list-group-item"><strong>Date de fin de reservation : </strong> {{ reservation.dateto|date('Y-m-d') }}</li>
+            </ul>
+        </div>
+    </div>
+    {% else %}
+    <p>Pas encore de personnes dans cette chambre</p>
+{% endfor %}
+{% endblock body %}

@@ -1,0 +1,39 @@
+event:
+    pattern:  /
+    defaults: { _controller: "BenAssociationBundle:event:index" }
+ben_event_ajax:
+    pattern:  /eventslist
+    defaults: { _controller: BenAssociationBundle:event:ajaxList }
+    requirements: { _method: post }
+event_calendar:
+    pattern:  /calendar
+    defaults: { _controller: "BenAssociationBundle:event:calendar" }
+event_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "BenAssociationBundle:event:show" }
+event_new:
+    pattern:  /new
+    defaults: { _controller: "BenAssociationBundle:event:new" }
+
+event_create:
+    pattern:  /create
+    defaults: { _controller: "BenAssociationBundle:event:create" }
+    requirements: { _method: post }
+
+event_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BenAssociationBundle:event:edit" }
+
+event_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BenAssociationBundle:event:update" }
+    requirements: { _method: post }
+
+event_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BenAssociationBundle:event:delete" }
+    requirements: { _method: post }
+ben_remove_events:
+    pattern:  /delete
+    defaults: { _controller: "BenAssociationBundle:event:removeEntities" }
+    requirements: { _method: post }

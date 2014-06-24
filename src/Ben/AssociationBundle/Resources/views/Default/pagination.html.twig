@@ -1,0 +1,23 @@
+{% if entities|length > nombreParPage %}
+<tr class="mypagination">
+    <td colspan="10">
+      <div class="text-center">
+        <div class="pagination ">
+          <ul>
+            {% if page != 1 %}
+            <li class="previous"><a href="#" class="fui-arrow-left js-page" data-page="{{ page-1 }}"></a></li>
+            {% endif %}
+            {% for p in range(1, nombrePage) %}
+            <li{% if p == page %} class="active"{% endif %}>
+              <a href="#" class="js-page" data-page="{{ p }}" >{{ p}}</a>
+            </li>
+            {% endfor %}
+            {% if page != nombrePage %}
+              <li class="next"><a href="#" class="fui-arrow-right js-page" data-page="{{ page+1 }}"></a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </td>
+</tr>
+{% endif %}

@@ -1,0 +1,23 @@
+Ben_association_homepage:
+    pattern:  /
+    defaults: { _controller: BenAssociationBundle:Default:index }
+
+BenAssociationBundle_rooms:
+    resource: "@BenAssociationBundle/Resources/config/routing/rooms.yml"
+    prefix:   /rooms
+
+BenAssociationBundle_config:
+        resource: "@BenAssociationBundle/Resources/config/routing/config.yml"
+        prefix:   /config
+
+BenAssociationBundle_event:
+        resource: "@BenAssociationBundle/Resources/config/routing/event.yml"
+        prefix:   /event
+
+BenAssociationBundle_hotels:
+        resource: "@BenAssociationBundle/Resources/config/routing/hotels.yml"
+        prefix:   /hotels
+
+BenAssociationBundle_reservation:
+        resource: "@BenAssociationBundle/Resources/config/routing/reservation.yml"
+        prefix:   /reservation

@@ -1,0 +1,40 @@
+<nav class="menu hidden-print">
+    <div class="menu-profile">
+            <img src="{{ asset( app.user.profile.image.getwebpath)}}" alt="">
+            <div class="menu-profile-hover">
+                <h1>{{ app.user.username }}</h1>
+                <p><span class="fui-location text-warning"></span> {{ app.user.profile.address }}</p>
+                <a href="{{ path('fos_user_security_logout') }}" title=""><span class="fui-power"></span></a>
+                <div class="menu-profile-btns">
+                <h3>
+                    <span class="fui-home btn-info"></span>
+                    <a href="{{ path('Ben_association_homepage') }}" title="">Home</a>
+                </h3>
+                <h3>    
+                    <span class="fui-user btn-primary"></span>
+                    <a href="{{ path('ben_profile_edit', { 'name': app.user.username}) }}" title="">PROFILE</a>
+                </h3>
+                <h3>
+                    <span class="fui-mail btn-danger"></span>
+                    <a href="{{ path('fos_message_inbox') }}" title="">INBOX</a>
+                </h3>
+                <h3>
+                    <span class="fui-lock btn-inverse "></span>
+                    <a href="{{ path('fos_user_profile_edit') }}" title="">Réglage</a>
+                </h3> 
+                    
+                </div>
+            </div>
+    </div>
+    <ul>
+        <li><a href="{{ path('ben_users') }}"><span class="fui-user block"></span> Adhérents</a></li>
+        <li><a href="{{ path('fos_user_group_list') }}"><span class="fui-myspace block"></span> Groupes</a></li>
+        <li><a href="{{ path('event') }}"><span class="fui-time block"></span> Evenements</a></li>
+        <li><a href="{{ path('reservation') }}"><span class="fui-book block"></span> reservation</a></li>
+        <li><a href="{{ path('hotels') }}"><span class="fui-home block"></span> Logement</a></li>
+        <li><a href="{{ path('rooms') }}"><span class="fui-tag block"></span> chambres</a></li>
+        <li><a href="{{ path('config') }}"><span class="fui-gear block"></span> Préférences</a></li>
+        <li><a href="{{ path('rooms') }}"><span class="fui-document block"></span> Historique</a></li>
+        <li><a href="{{ path('fos_user_security_logout') }}"><span class="fui-exit block"></span>  Déconnexion</a></li>
+    </ul>
+</nav>

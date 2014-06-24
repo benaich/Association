@@ -1,0 +1,78 @@
+    <!-- Modal advanced search -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="searchModalLabel">Recherche avancée</h4>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <label for="" class="col-md-5 control-label">N° CIN</label>
+            <div class="form-group col-md-7">
+              <input type="text" name="searchParam[cin]" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-md-5 control-label">Sexe</label>
+            <div class="col-md-7">
+              <select name="searchParam[gender]" class="primary select-block">
+                <option value=""></option>
+                <option value="homme">Homme</option>
+                <option value="femme">Femme</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+              <label class="col-md-5 control-label" for="floor">Date de naissance:</label>
+              <div class="form-group col-md-7">
+                  <div class="input-group">
+                    <span class="input-group-btn">
+                      <button class="btn" type="button"><span class="fui-calendar"></span></button>
+                    </span>
+                    <input type="text" class="form-control has-datepicker" name="searchParam[birdDay]" id="birdDay" value="" placeholder="Date de naissance">
+                  </div>
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="citySelect" class="col-md-5 control-label">Ville</label>
+            <div class="form-group col-md-7">
+              <input id="citySelect" type="text" name="searchParam[city]" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-md-5 control-label">Tél</label>
+            <div class="form-group col-md-7">
+              <input type="text" name="searchParam[tel]" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-md-5 control-label">Filtrer par groupe :</label>
+            <div class="col-md-7">
+              <select id="js-group" name="searchParam[group]" class="primary select-block">
+                <option value="0">Filtrer par groupe</option>
+                {% for group in groups %}
+                <option value="{{ group.id }}">{{ group.name }}</option>
+                  {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-md-5 control-label">Nombre de ligne par page :</label>
+            <div class="col-md-7">
+              <select id="js-perpage" name="searchParam[perPage]" class="primary select-block">
+                <option value="3" {% if app_config.rows_per_page == 3 %}selected{% endif %}>3</option>
+                <option value="20" {% if app_config.rows_per_page == 20 %}selected{% endif %}>20</option>
+                <option value="50" {% if app_config.rows_per_page == 50 %}selected{% endif %}>50</option>
+                <option value="100" {% if app_config.rows_per_page == 100 %}selected{% endif %}>100</option>
+              </select>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+      </div>
+      <div class="modal-footer">
+        <button id="js-search" type="button" class="btn btn-primary">Rechercher</button>
+      </div>
+    </div>
+  </div>
+</div>

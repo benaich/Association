@@ -1,0 +1,136 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <style type="text/css"> {{ app_config.org_carte_css}} </style>
+ {% endblock %}
+ 
+{% block body %}
+
+<div class="col-md-12">      
+    <div class="btn-group pull-right hidden-print">              
+      <button class="btn btn-primary "><span class="fui-gear"></span> Action</button>
+      <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+      </button>
+      <span class="dropdown-arrow dropdown-arrow-inverse"></span>
+      <ul class="dropdown-menu dropdown-inverse">
+        <li><a href="{{ path('ben_edit_user', {id: entity.id }) }}"><span class="fui-new"> Modifier</a></li>
+        <li><a href="{{ path('ben_pdf', {'users': entity.id }) }}"><span class="fui-credit-card"> Imprimer la carte</a></li>
+        <li><a id="btnPrint" href="#"><span class="glyphicon glyphicon-print"></span> imprimer la fiche</a></li>
+        <li><a href="{{ path('reservation_new', {'id': entity.id }) }}"><span class="fui-tag"> Reserver une chambre</a></li>
+        <li class="divider"></li>
+        <li><a href="{{ path('ben_new_user', {id: entity.id }) }}"><span class="fui-cross"></span> Supprimmer</a></li>
+      </ul>
+    </div>
+  <h1><span class="fui-user"></span> {{ entity.profile.firstName }} {{ entity.profile.familyName }} </h1>
+</div>
+
+            <div class="col-md-4">
+                <div class="box mybadge">
+                  <img class="pull-left pic" src="{{ asset( entity.profile.image.getwebpath)}}"/>
+                  <img class="pull-right logo" src="{{ asset(app_config.org_logo) }}"/>
+                  <h2>Bayti</h2>
+                  <ul class="list-unstyled">
+                      <li><strong>{{ entity.profile.firstName }} {{ entity.profile.familyName }}</strong></li>
+                      <li>{{ entity.email }}</li>
+                  </ul>
+                  <div class="footer label-primary">
+                     <span>{{ app_config.org_slogan }}</span>
+                      <span class="pull-right">{{"now"|date('Y')}}</span>
+                  </div>
+              </div>
+                <div class="box">
+                    <header>
+                      <h3><span class="glyphicon glyphicon-file"></span> Informations générale</h3>
+                    </header>
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Username :</strong> {{ entity.username }}</li>
+                        <li class="list-group-item"><strong>Password :</strong> ******</li>
+                        <li class="list-group-item"><strong>adresse email :</strong> <a href="mailto:{{ entity.email }}">{{ entity.email }}</a></li>
+                        <li class="list-group-item"><strong>Etat du compte :</strong> {{ entity.enabled }}</li>
+                        <li class="list-group-item"><strong>Date d'inscription : </strong> {{ entity.created|time_ago_in_words }}</li>
+                        {% if entity.lastLogin is not null%}
+                        <li class="list-group-item"><strong>Dernière connexion : </strong> {{ entity.lastLogin|time_ago_in_words }}</li>
+                        {% endif %}
+                        <li class="list-group-item"><strong>Responsablité : </strong>
+                          <ul>{% for role in entity.roles %}<li>{{ role}}</li>{% endfor %}</ul>
+                        </li>
+                        <li class="list-group-item"><strong>Groupes : </strong>
+                          <ul>{% for group in entity.groups %}<li>{{ group}}</li>{% endfor %}</ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="box">
+                <header>
+                    <h3><span class="fui-user"></span> information association</h3>
+                </header>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Nom :</strong> {{ entity.profile.familyName }}</li>
+                    <li class="list-group-item"><strong>Preom :</strong>  {{ entity.profile.firstName }}</li>
+                    <li class="list-group-item"><strong>Sexe :</strong> {{ entity.profile.gender }}</li>
+                    <li class="list-group-item"><strong>Date de naissance :</strong> {{ entity.profile.birdDay|date('Y-m-d') }}</li>
+                    <li class="list-group-item"><strong>Adresse :</strong> {{ entity.profile.address }}</li>
+                    <li class="list-group-item"><strong>Ville :</strong> {{ entity.profile.city }}</li>
+                    <li class="list-group-item"><strong>Code postal :</strong> {{ entity.profile.postCode }}</li>
+                    <li class="list-group-item"><strong>Pay :</strong> {{ entity.profile.contry }}</li>
+                    <li class="list-group-item"><strong>Profession :</strong> {{ entity.profile.job }}</li>
+                    <li class="list-group-item"><strong>A propos :</strong> {{ entity.profile.description }}</li>
+                </ul>
+              </div>
+            </div> 
+
+
+    <div class="col-md-4">
+        <div class="box">
+            <header>
+                <h3><span class="fui-book"></span> Informations de contact</h3>
+            </header>
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Tél :</strong> {{ entity.profile.tel }}</li>
+                <li class="list-group-item"><strong>Gsm :</strong> {{ entity.profile.gsm }}</li>
+                <li class="list-group-item"><strong>facebook :</strong> {{ entity.profile.facebook }}</li>
+                <li class="list-group-item"><strong>twitter :</strong> {{ entity.profile.twitter }}</li>
+                <li class="list-group-item"><strong>Google+ :</strong> {{ entity.profile.google }}</li>
+                <li class="list-group-item"><strong>Siteweb :</strong> {{ entity.profile.website }}</li>
+            </ul>
+        </div>
+        <div class="box">
+            <header>
+                <h3><span class="fui-home"></span> Informations de logement</h3>
+            </header>
+            {% if entity.reservations|length %}
+            <ul class="list-group">
+            {% set last = entity.reservations|length -1 %}
+            {% set reservation = entity.reservations[last] %}
+                <li class="list-group-item"><strong>Date début :</strong> {{ reservation.dateFrom|date('Y-m-d') }}  </li>
+                <li class="list-group-item"><strong>Date fin :</strong> {{ reservation.dateTo|date('Y-m-d') }} </li>
+                <li class="list-group-item"><strong>Numero de chambre :</strong> {{ reservation.room.number }} </li>
+                <li class="list-group-item"><strong>Numero de pavé :</strong> {{ reservation.room.floor }} </li>
+            </ul>
+            {% endif %}
+        </div>
+
+        <ul class="social hidden-print">
+            <li><a href="{{ entity.profile.facebook }}"><span class="fui-facebook"></span></a></li>
+            <li><a href="{{ entity.profile.twitter }}"><span class="fui-twitter"></span></a></li>
+            <li><a href="{{ entity.profile.google }}"><span class="fui-googleplus"></span></a></li>
+        </ul>                
+    </div> 
+
+
+{% endblock body %}
+
+ {% block javascripts %}
+{{ parent() }}
+<script> 
+    (function($) {
+    })(jQuery);
+</script>
+{% endblock %}

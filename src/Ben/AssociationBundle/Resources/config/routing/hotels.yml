@@ -1,0 +1,30 @@
+hotels:
+    pattern:  /
+    defaults: { _controller: "BenAssociationBundle:Hotels:index" }
+
+hotels_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "BenAssociationBundle:Hotels:show" }
+
+hotels_new:
+    pattern:  /new
+    defaults: { _controller: "BenAssociationBundle:Hotels:new" }
+
+hotels_create:
+    pattern:  /create
+    defaults: { _controller: "BenAssociationBundle:Hotels:create" }
+    requirements: { _method: post }
+
+hotels_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BenAssociationBundle:Hotels:edit" }
+
+hotels_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BenAssociationBundle:Hotels:update" }
+    requirements: { _method: post }
+
+hotels_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BenAssociationBundle:Hotels:delete" }
+    requirements: { _method: post }
