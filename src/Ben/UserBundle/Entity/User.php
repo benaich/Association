@@ -45,7 +45,7 @@ class User extends BaseUser implements ParticipantInterface {
     protected $profile;
     
     /**
-    * @ORM\ManyToOne(targetEntity="Ben\AssociationBundle\Entity\Satus",inversedBy="users")
+    * @ORM\ManyToOne(targetEntity="Ben\AssociationBundle\Entity\Status",inversedBy="users")
     * @ORM\JoinColumn(name="user_id",referencedColumnName="id", nullable=true)
     */
     private $status;

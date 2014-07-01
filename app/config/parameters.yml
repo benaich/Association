@@ -1,0 +1,25 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     BenAssociation
+    database_user:     root
+    database_password: ~
+
+    sqlite_driver:     pdo_sqlite
+    sqlite_path:       %kernel.root_dir%/sqlite.db
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    locale:            fr
+    secret:            2d998d0f6assdda91f1d33f7f7dba8a6
+    nombreParPage:     8
+    adminPaginator:     3
+    domaine_name:     bayti.com
+    nice_name:     Bayti
+    webmaster:     no-replay@bayti.com
+    appfolder:     Association
+    asset_url:     http://127.0.0.1/Association/web/
+

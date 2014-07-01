@@ -21,3 +21,7 @@ BenAssociationBundle_hotels:
 BenAssociationBundle_reservation:
         resource: "@BenAssociationBundle/Resources/config/routing/reservation.yml"
         prefix:   /reservation
+
+BenAssociationBundle_status:
+        resource: "@BenAssociationBundle/Resources/config/routing/status.yml"
+        prefix:   /status

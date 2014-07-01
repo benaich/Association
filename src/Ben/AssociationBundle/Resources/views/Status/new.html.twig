@@ -1,0 +1,22 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+{% block body %}
+<h1>Status creation</h1>
+
+<form action="{{ path('status_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('status') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock body %}

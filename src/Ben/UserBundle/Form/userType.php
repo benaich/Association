@@ -17,6 +17,7 @@ class userType extends AbstractType
             ->add('enabled', 'checkbox', array('required' => false))
             ->add('profile' , new profileType())
             ->add('groups', null, array('expanded' => "true", "multiple" => "true"))
+            ->add('status')
             ;
     }
 

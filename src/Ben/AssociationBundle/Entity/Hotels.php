@@ -63,7 +63,6 @@ class Hotels
      */
     private $description;
 
-
     /**
     * @ORM\OneToMany(targetEntity="Ben\AssociationBundle\Entity\Rooms", mappedBy="hotel", cascade={"remove", "persist"})
     */

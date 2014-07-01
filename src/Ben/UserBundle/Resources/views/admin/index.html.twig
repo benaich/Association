@@ -29,17 +29,14 @@ Tableau de bord | {{ parent() }}
                   <ul class="dropdown-menu dropdown-inverse">
                     <li><a href="#" class="js-enable" data-action="1"><span class="fui-check"></span> Activer</a></li>
                     <li><a href="#" class="js-enable" data-action="0"><span class="fui-cross"></span> Désctiver</a></li>
-                    <li class="dropdown-submenu">
-                        <a href="#"><span class="fui-user"></span> Promote user</a>
-                        <ul class="dropdown-menu"><span class="fui-play"></span>
-                            <li><a href="#" class="js-promote" data-action="admin">Admin</a></li>
-                            <li><a href="#" class="js-promote" data-action="user">User</a></li>
-                        </ul>
-                    </li>
-                      <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> Exporter</a></li>
-                      <li><a href="#" id="js-badge" ><span class="fui-credit-card"></span> Cartes de Membres</a></li>
-                      <li><a href=""><span class="fui-tag"></span> Etiquettes</a></li>
-                      <li class="divider"></li>
+                    <li class="divider"></li>
+                    <li><a href="#" class="js-promote" data-action="admin"><span class="fui-user"></span> Admin</a></li>
+                    <li><a href="#" class="js-promote" data-action="user"><span class="fui-user"></span> User</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> Exporter</a></li>
+                    <li><a href="#" id="js-badge" ><span class="fui-credit-card"></span> Cartes de Membres</a></li>
+                    <li><a href=""><span class="fui-tag"></span> Etiquettes</a></li>
+                    <li class="divider"></li>
                     <li><a href="#" id="js-delete"><span class="fui-trash"></span> Supprimer</a></li>
                   </ul>
                 </div>
@@ -49,7 +46,7 @@ Tableau de bord | {{ parent() }}
             <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
-                        <th class="col-sm-1"><label class="checkbox no-label toggle-all" for="checkbox-table-1"><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" value="" id="checkbox-table-1" data-toggle="checkbox"></label></th>
+                        <th><label class="checkbox no-label toggle-all" for="checkbox-table-1"><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" value="" id="checkbox-table-1" data-toggle="checkbox"></label></th>
                         <th class="col-sm-3">Nom</th>
                         <th class="col-sm-3">Email</th>
                         <th class="col-sm-2">Statut</th>
@@ -59,6 +56,7 @@ Tableau de bord | {{ parent() }}
                 </thead>
                 <tbody id="dataContainer"></tbody>
             </table>
+
             <div>
               <em><strong>Total:</strong> {{ entitiesLength }} Adhérents</em>
               <a name="remove" href="{{ path('ben_new_user') }}" class="btn btn-embossed btn-primary btn-wide pull-right"><span class="fui-plus"></span> Ajouter un adhérent</a>

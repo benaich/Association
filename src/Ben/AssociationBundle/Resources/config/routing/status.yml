@@ -1,0 +1,30 @@
+status:
+    pattern:  /
+    defaults: { _controller: "BenAssociationBundle:Status:index" }
+
+status_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "BenAssociationBundle:Status:show" }
+
+status_new:
+    pattern:  /new
+    defaults: { _controller: "BenAssociationBundle:Status:new" }
+
+status_create:
+    pattern:  /create
+    defaults: { _controller: "BenAssociationBundle:Status:create" }
+    requirements: { _method: post }
+
+status_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BenAssociationBundle:Status:edit" }
+
+status_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BenAssociationBundle:Status:update" }
+    requirements: { _method: post }
+
+status_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BenAssociationBundle:Status:delete" }
+    requirements: { _method: post }

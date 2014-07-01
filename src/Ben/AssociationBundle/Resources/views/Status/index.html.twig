@@ -1,0 +1,53 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+{% block body %}
+<h1>Liste des status</h1>
+
+<div class="col-md-7">
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Titre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ entity.name }}</td>
+                <td><a href="{{ path('status_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span> modifier</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="col-md-5">
+<form action="{{ path('status_create') }}" class="form-horizontal well" method="post" {{ form_enctype(form) }}>
+    <div class="form-group">
+        <div class="col-md-4"><strong>Nom du status</strong></div>
+        {{ form_widget(form.name) }}
+    </div>
+
+    {{ form_rest(form) }}
+    <div class="form-group">
+      <div class="col-sm-offset-4 col-sm-6">
+        <button type="submit" name="subvalider" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Ajouter</button>
+      </div>
+    </div>
+</form>
+</div>
+
+{% endblock body %}
+{% block javascripts %}
+{{ parent() }}
+<script> 
+    (function($) {
+        $('#ben_statustype_name').parent().removeClass('col-md-4').addClass('col-md-8');
+    })(jQuery);
+</script>
+{% endblock %}
