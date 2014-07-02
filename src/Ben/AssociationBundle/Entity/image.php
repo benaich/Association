@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Ben\AssociationBundle\Entity\image
  *
- * @ORM\Table()
+ * @ORM\Table(name="image")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
  */

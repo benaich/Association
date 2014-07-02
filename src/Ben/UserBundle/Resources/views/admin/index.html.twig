@@ -4,8 +4,7 @@ Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
 
-<div class="col-md-12">
-<h1><span class="fui-user"></span> Gestion des membres</h1>
+<h2><span class="fui-user"></span> Gestion des membres</h2>
         <form  id="jsForm" role="form" method="post" action="">
             <input id="pagenumber" type="hidden" name="searchParam[page]" value="1"> 
             <div class="row">
@@ -27,17 +26,18 @@ Tableau de bord | {{ parent() }}
                   </button>
                   <span class="dropdown-arrow dropdown-arrow-inverse"></span>
                   <ul class="dropdown-menu dropdown-inverse">
+                    <li><a href="{{ path('ben_new_user') }}"><span class="fui-plus"></span> Ajouter un adhérent</a></li>
                     <li><a href="#" class="js-enable" data-action="1"><span class="fui-check"></span> Activer</a></li>
-                    <li><a href="#" class="js-enable" data-action="0"><span class="fui-cross"></span> Désctiver</a></li>
+                    <li><a href="#" class="js-enable" data-action="0"><span class="glyphicon glyphicon-ban-circle"></span> Désctiver</a></li>
                     <li class="divider"></li>
-                    <li><a href="#" class="js-promote" data-action="admin"><span class="fui-user"></span> Admin</a></li>
-                    <li><a href="#" class="js-promote" data-action="user"><span class="fui-user"></span> User</a></li>
+                    <li><a href="#" class="js-promote" data-action="admin"><span class="glyphicon glyphicon-star text-warning"></span> Admin</a></li>
+                    <li><a href="#" class="js-promote" data-action="user"><span class="glyphicon glyphicon-user"></span> User</a></li>
                     <li class="divider"></li>
                     <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> Exporter</a></li>
                     <li><a href="#" id="js-badge" ><span class="fui-credit-card"></span> Cartes de Membres</a></li>
                     <li><a href=""><span class="fui-tag"></span> Etiquettes</a></li>
                     <li class="divider"></li>
-                    <li><a href="#" id="js-delete"><span class="fui-trash"></span> Supprimer</a></li>
+                    <li><a href="#" id="js-delete"><span class="glyphicon glyphicon-trash"></span> Supprimer</a></li>
                   </ul>
                 </div>
               </div><!-- /.col-lg-2 -->
@@ -59,13 +59,11 @@ Tableau de bord | {{ parent() }}
 
             <div>
               <em><strong>Total:</strong> {{ entitiesLength }} Adhérents</em>
-              <a name="remove" href="{{ path('ben_new_user') }}" class="btn btn-embossed btn-primary btn-wide pull-right"><span class="fui-plus"></span> Ajouter un adhérent</a>
             </div>
 
             {% include "BenUserBundle:admin:search.html.twig" %}
         </form>
-
-</div>
+        
          <!-- Modal -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">

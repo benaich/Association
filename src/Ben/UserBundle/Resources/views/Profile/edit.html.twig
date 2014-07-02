@@ -5,8 +5,7 @@ Paramètres - {{ parent() }}
 
 {% block fos_user_content %}
 
-<h1><span class="fui-gear"></span> Reglages Compte</h1>
-<div class="well">
+<h2><span class="fui-gear"></span> Reglages Compte</h2>
 {% include "FOSUserBundle:ChangePassword:changePassword.html.twig" %}
 <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="form-horizontal">
 <fieldset>
@@ -24,6 +23,5 @@ Paramètres - {{ parent() }}
     </div>
 </fieldset>
 </form>
-</div>
 
 {% endblock fos_user_content %}

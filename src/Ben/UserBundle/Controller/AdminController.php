@@ -67,7 +67,7 @@ class AdminController extends Controller
             $entity->addGroup($this->container->get('fos_user.group_manager')->findGroupByName('Adhérents'));
 
             $this->getDoctrine()->getManager()->flush();
-            $this->get('session')->getFlashBag()->add('success', "Vos modifications ont été enregistrées.");
+            $this->get('session')->getFlashBag()->add('success', "Adhérent ajouté avec succée.");
             return $this->redirect($this->generateUrl('ben_show_user', array('id' => $entity->getId())));
         }
         $this->get('session')->getFlashBag()->add('error', "Il y a des erreurs dans le formulaire soumis !");
@@ -105,10 +105,10 @@ class AdminController extends Controller
         $form = $this->createForm(new userType(), $user);
         $form->bind($request);
         /* check if user has admin role */
-        if (array_search('ROLE_ADMIN', $user->getRoles()) !== false ){
+        /*if (array_search('ROLE_ADMIN', $user->getRoles()) !== false ){
             $this->get('session')->getFlashBag()->add('Unauthorized access', "impossible de modifier un super utilisateur de cette interface");
             return $this->redirect($this->generateUrl('ben_users'));
-        }
+        }*/
         if ($form->isValid()) {
             $em->updateUser($user, false);
             $user->getProfile()->getImage()->manualRemove($user->getProfile()->getImage()->getAbsolutePath());
@@ -250,31 +250,34 @@ class AdminController extends Controller
                 ));
     }
 
-    public function pdfAction($users)
+    /**
+     * export to pdf
+     * @Secure(roles="ROLE_USER")
+     */
+    public function toPdfAction($users)
     {
         if(!$users)
             return $this->redirect($this->generateUrl('ben_users'));
-        // var_dump($users); die();
-        $pageUrl = $this->generateUrl('ben_badge_user', array('users'=>$users), true); // use absolute path!
-        return new Response(
-            $this->get('knp_snappy.pdf')->getOutput($pageUrl),
-            200,
-            array(
-                'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => 'attachment; filename="file.pdf"'
-            )
-        );
-    }
-
-
-    public function showBadgeAction($users)
-    {
         $em = $this->getDoctrine()->getManager();
+
         if($users != 'all'){
             $users_id = explode(',', $users);
             $entities = $em->getRepository('BenUserBundle:user')->findUserById($users_id);
         }
         else $entities = $em->getRepository('BenUserBundle:user')->findAll();
-        return $this->render('BenUserBundle:admin:badge.html.twig', array('entities' => $entities));
+
+        $now = new \DateTime;
+        $now = $now->format('d-m-Y_H-i');
+        $html = $this->renderView('BenUserBundle:admin:badge.html.twig', array(
+            'entities' => $entities));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="file'.$now.'.pdf"'
+            )
+        );
     }
 }

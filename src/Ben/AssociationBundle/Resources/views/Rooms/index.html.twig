@@ -3,7 +3,7 @@
 Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
-<h1><span class="fui-tag"></span> List des chambres</h1>
+<h2><span class="fui-tag"></span> List des chambres</h2>
  <form id="jsForm" role="form" method="post" action="">
     <input id="pagenumber" type="hidden" name="page" value="1"> 
     <div class="row">
@@ -40,11 +40,11 @@ Tableau de bord | {{ parent() }}
         <thead>
         <tr>
             <th><label class="checkbox no-label toggle-all" for="checkbox-table-1"><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" value="" id="checkbox-table-1" data-toggle="checkbox"></label></th>
-            <th>N° de la chambre</th>
-            <th>N° d'étage</th>
+            <th>Chambre</th>
+            <th>Etage</th>
             <th>Logement</th>
-            <th>Nombre de lit</th>
-            <th>Disponible</th>
+            <th>Capacité</th>
+            <th>Libre</th>
             <th>Chambre pour</th>
             <th>Status</th>
             <th>Actions</th>

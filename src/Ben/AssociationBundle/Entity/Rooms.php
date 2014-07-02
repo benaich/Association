@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Ben\AssociationBundle\Entity\Rooms
  *
- * @ORM\Table()
+ * @ORM\Table(name="rooms")
  * @ORM\Entity(repositoryClass="Ben\AssociationBundle\Entity\RoomsRepository")
  */
 class Rooms
@@ -37,25 +37,18 @@ class Rooms
     private $floor;
 
     /**
-     * @var integer $max_persons
+     * @var integer $max
      *
-     * @ORM\Column(name="max_persons", type="integer")
+     * @ORM\Column(name="max", type="integer")
      */
-    private $max_persons;
+    private $max;
 
     /**
-     * @var integer $available
+     * @var integer $free
      *
-     * @ORM\Column(name="available", type="integer")
+     * @ORM\Column(name="free", type="integer")
      */
-    private $available;
-
-    /**
-     * @var string $status
-     *
-     * @ORM\Column(name="status", type="string", length=255)
-     */
-    private $status;
+    private $free;
 
     /**
      * @var string $type
@@ -119,49 +112,26 @@ class Rooms
     }
 
     /**
-     * Set max_persons
+     * Set max
      *
-     * @param integer $max_persons
+     * @param integer $max
      * @return room
      */
-    public function setMaxPersons($max_persons)
+    public function setMax($max)
     {
-        $this->max_persons = $max_persons;
+        $this->max = $max;
     
         return $this;
     }
 
     /**
-     * Get max_persons
+     * Get max
      *
      * @return integer 
      */
-    public function getMaxPersons()
+    public function getMax()
     {
-        return $this->max_persons;
-    }
-
-    /**
-     * Set status
-     *
-     * @param string $status
-     * @return room
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return string 
-     */
-    public function getStatus()
-    {
-        return $this->status;
+        return $this->max;
     }
 
     /**
@@ -234,26 +204,72 @@ class Rooms
     }
 
     /**
-     * Set available
+     * + free
      *
-     * @param integer $available
+     * @param integer $free
      * @return Rooms
      */
-    public function setAvailable($available)
+    public function plusFree()
     {
-        $this->available = $available;
+        $this->free++;
     
         return $this;
     }
 
     /**
-     * Get available
+     * - free
+     *
+     * @param integer $free
+     * @return Rooms
+     */
+    public function minusFree()
+    {
+        $this->free--;
+    
+        return $this;
+    }
+
+    /**
+     * is free
      *
      * @return integer 
      */
-    public function getAvailable()
+    public function isFree()
     {
-        return $this->available;
+        return ($this->free > 0);
+    }
+
+    /**
+     * Set free
+     *
+     * @param integer $free
+     * @return Rooms
+     */
+    public function setFree($free)
+    {
+        $this->free = $free;
+    
+        return $this;
+    }
+
+    /**
+     * Get free
+     *
+     * @return integer 
+     */
+    public function getFree()
+    {
+        return $this->free;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string 
+     */
+    public function getStatus()
+    {
+        return ($this->free > 0) ? 'ouverte' : 'réservé';
     }
 
     /**
@@ -302,9 +318,8 @@ class Rooms
            'id' => $this->getId(),
            'number' => $this->getNumber(),
            'floor' => $this->getFloor(),
-           'maxPersons' => $this->getMaxPersons(),
-           'available' => $this->getAvailable(),
-           'status' => $this->getStatus(),
+           'max' => $this->getMax(),
+           'free' => $this->getfree(),
            'type' => $this->getType(),
            );
     }

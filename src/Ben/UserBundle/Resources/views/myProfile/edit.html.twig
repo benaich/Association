@@ -5,8 +5,8 @@ Profile - {{ parent() }}
 
 {% block fos_user_content %}
 
-<h1><span class="fui-user"></span> Profile</h1>
-<form class="form-horizontal well" action="{{ path('ben_profile_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+<h2><span class="fui-user"></span> Profile</h2>
+<form class="form-horizontal" action="{{ path('ben_profile_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
 <div class="tabbable">
     <ul class="nav nav-tabs">
       <li class="active"><a href="#tab1"><span class="fui-user"></span> Identité</a></li>

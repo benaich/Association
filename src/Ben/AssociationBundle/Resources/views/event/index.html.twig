@@ -5,8 +5,7 @@ Tableau de bord | {{ parent() }}
 
 {% block body %}
 
-<div class="col-md-12"><h1><span class="fui-time"></span>  Liste des évenements</h1></div>
-<div class="col-md-12">
+<h2><span class="fui-time"></span>  Liste des évenements</h2>
       <form id="jsForm" role="form" method="post" action="">
         <input id="pagenumber" type="hidden" name="page" value="1"> 
           <div class="row">
@@ -42,8 +41,8 @@ Tableau de bord | {{ parent() }}
             <tr>
                 <th><label class="checkbox no-label toggle-all" for="checkbox-table-1"><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" value="" id="checkbox-table-1" data-toggle="checkbox"></label></th>
                 <th>Evenement</th>
-                <th class="col-sm-4">Description</th>
-                <th>Date</th>
+                <th>Date début</th>
+                <th>Date fin</th>
                 <th>Type</th>
                 <th>Groupes</th>
                 <th>Actions</th>
@@ -117,7 +116,6 @@ Tableau de bord | {{ parent() }}
           </div>
         </div>
 </form>
-</div>
 
    
 {% endblock body %}

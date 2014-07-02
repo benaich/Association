@@ -6,7 +6,7 @@
                       <td>
                         <img class="img40" src="{{ asset( entity.profile.image.getwebpath)}}"/>
                         <em class="text-muted"> {{ entity.profile.firstName }} {{ entity.profile.familyName }}</em>
-                        <span class="{% if entity.enabled %}text-primary{% else %}text-default{% endif %} fui-radio-unchecked pull-right"></span>
+                        <span class="{% if entity.enabled %}text-primary{% else %}text-danger{% endif %} fui-radio-unchecked pull-right"></span>
                         <div class="myprofile hide"> 
                         <div class="row">
                           <img class="myavatar col-md-4" src="{{ asset( entity.profile.image.getwebpath)}}">

@@ -1,20 +1,31 @@
-{% extends "BenAssociationBundle::layout.html.twig" %}
-{% block title %}
-Tableau de bord | {{ parent() }}
-{% endblock %}
-
-{% block stylesheet %}
-    {{ parent() }}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Badge</title>
+    {% set addr = 'http://' ~ app.request.server.get('SERVER_ADDR') %} 
+    <link href="{{ addr ~ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ addr ~ asset('css/main.css') }}" rel="stylesheet"><!-- Loading my css -->
     <style type="text/css"> {{ app_config.org_carte_css}} </style>
- {% endblock %}
+</head>
+<body>
+<header class="print-header hide">
+  <div class="col-xs-1"><img src="{{ addr ~asset(app_config.org_logo) }}" alt="logo"/></div>
+  <div class="col-xs-8">
+  <div class="title">
+    <h1>{{ app_config.org_name }}</h1>  
+  </div>
+  </div>
+  <div class="clearfix"></div>
+</header>
 
-{% block header %}{% endblock %}
-{% block body %}
-
-{% for entity in entities %}
+  <h3><span class="glyphicon glyphicon-user"></span> Badges des adhérants</h3>
+  <h3></h3>
+  <div>
+    {% for entity in entities %}
     <div class="box mybadge printed-badge">
-      <img class="pull-left pic" src="{{ asset( entity.profile.image.getwebpath)}}"/>
-      <img class="pull-right logo" src="{{ asset(app_config.org_logo) }}"/>
+      <img class="pull-left pic" src="{{ addr ~ asset( entity.profile.image.getwebpath)}}"/>
+      <img class="pull-right logo" src="{{ addr ~ asset(app_config.org_logo) }}"/>
       <h2>Bayti</h2>
       <ul class="list-unstyled">
           <li><strong>{{ entity.profile.firstName }} {{ entity.profile.familyName }}</strong></li>
@@ -25,9 +36,11 @@ Tableau de bord | {{ parent() }}
           <span class="pull-right">{{"now"|date('Y')}}</span>
       </div>
     </div>  
-{% endfor %}
-
-       
-
-
-{% endblock body %}
+  {% endfor %}
+    <div class="clearfix"></div>
+  </div>
+  <div class="pull-right">
+      Fait à {{ app_config.org_city }} le {{ 'now'|date('d/m/Y')}}
+  </div>
+</body>
+</html>

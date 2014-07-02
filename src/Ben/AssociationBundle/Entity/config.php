@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Ben\AssociationBundle\Entity\config
  *
- * @ORM\Table()
+ * @ORM\Table(name="config")
  * @ORM\Entity(repositoryClass="Ben\AssociationBundle\Entity\configRepository")
  */
 class config

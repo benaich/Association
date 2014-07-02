@@ -57,7 +57,7 @@ ben_profile_update:
 
 ben_pdf:
     pattern:  /pdf/{users}
-    defaults: { _controller: "BenUserBundle:Admin:pdf"}
+    defaults: { _controller: "BenUserBundle:Admin:toPdf"}
 
 ben_badge_user:
     pattern:  /badge/{users}

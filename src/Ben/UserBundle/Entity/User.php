@@ -148,9 +148,13 @@ class User extends BaseUser implements ParticipantInterface {
         return $this->profile;
     }
 
-    public function avatar()
-    {
-        return 'img';
+    /**
+     * Get avatar
+     *
+     * @return string 
+     */
+    public function getAvatar() {
+        return $this->getProfile()->getImage()->getwebpath();
     }
 
     /**

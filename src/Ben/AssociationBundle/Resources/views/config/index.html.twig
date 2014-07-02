@@ -3,8 +3,8 @@
 Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
-<h1><span class="fui-gear"></span> Préférences</h1>
-<form class="form-horizontal well" action="{{ path('config_update')}}" method="POST" enctype="multipart/form-data">        
+<h2><span class="fui-gear"></span> Préférences</h2>
+<form class="form-horizontal" action="{{ path('config_update')}}" method="POST" enctype="multipart/form-data">        
         <div class="tabbable">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab1"><span class="fui-list-bulleted"></span> Général</a></li>

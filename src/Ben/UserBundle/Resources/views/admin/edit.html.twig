@@ -3,9 +3,9 @@
 Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
-<div class="col-md-12">      
-	<h1><span class="fui-user"></span> Edit user</h1>
-	<form class="form-horizontal well" action="{{ path('ben_update_user', {id: entity.id})}}" method="POST" role="form" {{ form_enctype(form) }}>
+
+  <h2><span class="fui-user"></span> Modification d'un adhérent</h2>     
+	<form class="form-horizontal" action="{{ path('ben_update_user', {id: entity.id})}}" method="POST" role="form" {{ form_enctype(form) }}>
 		{% include "BenUserBundle:admin:form.html.twig" %}
 
 
@@ -17,7 +17,6 @@ Tableau de bord | {{ parent() }}
     </div>
 
 	</form> 
-</div>
 {% endblock body %}
 
  {% block javascripts %}

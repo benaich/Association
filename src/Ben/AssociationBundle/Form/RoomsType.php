@@ -13,9 +13,8 @@ class RoomsType extends AbstractType
         $builder
             ->add('number')
             ->add('floor')
-            ->add('max_persons')
-            ->add('status', 'choice', array('choices' => array('open' => 'Ouvert','closed' => 'Fermé'),
-                    'required' => false,))
+            ->add('max')
+            ->add('free')
             ->add('type', 'choice', array('choices' => array('homme' => 'Homme','femme' => 'Femme'),
                     'required' => false,))
             ->add('hotel')

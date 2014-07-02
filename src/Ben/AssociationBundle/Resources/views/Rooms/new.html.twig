@@ -5,33 +5,15 @@ Tableau de bord | {{ parent() }}
 {% block body %}
 <h1>Rooms creation</h1>
 
-<div class="col-sm-9">
-    <form id="createForm" class="form-horizontal well" action="{{ path('rooms_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        
-    </form>
-</div>  
+<form id="createForm" class="form-horizontal" action="{{ path('rooms_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
 
-<div class="col-md-3">
-    <div class="well">
-        <a id="submitForm" class="btn btn-embossed btn-primary btn-block" href="#">
-            <span class="fui-new"></span> Ajouter
-        </a>
-        <a class="btn btn-embossed btn-inverse btn-block " href="{{ path('rooms') }}">
-            <span class="fui-list-bulleted"></span> Back to the list
-        </a>
+    <div class="form-group">
+      <div class="col-md-offset-4 col-md-4">
+        <button type="submit" class="btn btn-embossed btn-primary"><span class="glyphicon glyphicon-plus"></span> Ajouter</button>
+      </div>
     </div>
-</div>
+            
+</form>
 
 {% endblock body %}
-
-{% block javascripts %}
-{{ parent() }}
-<script> 
-    (function($) {
-        $('#submitForm').on('click', function () {
-            $('#createForm').submit();
-        });
-    })(jQuery);
-</script>
-{% endblock %}

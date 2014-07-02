@@ -3,9 +3,9 @@
 Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
-<h1><span class="fui-home"></span> Logements: {{ entity.name }}</h1>
-
-<div class="col-sm-9">
+<h2><span class="fui-home"></span> Logement: {{ entity.name }}</h2>
+<div class="row">
+    <div class="col-sm-9">
 <table class="table table-hover table-bordered">
     <tbody>
         <tr>
@@ -50,5 +50,6 @@ Tableau de bord | {{ parent() }}
     </a>
     <button type="submit" class="btn btn-embossed btn-danger btn-block"><span class="fui-cross"></span> Supprimer </button>
 </form>
+</div>
 </div>
 {% endblock body %}

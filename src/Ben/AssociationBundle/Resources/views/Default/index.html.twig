@@ -10,10 +10,9 @@ Tableau de bord | {{ parent() }}
  {% endblock %}
 
 {% block body %}
-<div class="col-md-12"><h1><span class="fui-gear"></span> Tableau de bord</h1></div>
-
-<div class="col-md-5">
-	<div class="col-md-6">
+<h2><span class="glyphicon glyphicon-dashboard"></span> Tableau de bord</h2>
+<div class="row">
+	<div class="col-md-2">
 	<div class="stat-boxes widget-body">
 		<a href="#"><span class="fui-user ben-icone btn-primary"></span></a>
 		<h3 class="ticker--one">{{ counter.user }}</h3>
@@ -21,7 +20,7 @@ Tableau de bord | {{ parent() }}
 		<div class="clearfix"></div>		
 	</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-2">
 		<div class="stat-boxes widget-body">
 			<a href="#"><span class="fui-myspace ben-icone btn-primary"></span></a>
 			<h3 class="ticker--one">{{ counter.group }}</h3>
@@ -29,7 +28,7 @@ Tableau de bord | {{ parent() }}
 			<div class="clearfix"></div>		
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-2">
 		<div class="stat-boxes widget-body">
 			<a href="#"><span class="fui-time ben-icone btn-primary"></span></a>
 			<h3 class="ticker--one">{{ counter.event }}</h3>
@@ -37,7 +36,7 @@ Tableau de bord | {{ parent() }}
 			<div class="clearfix"></div>		
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-2">
 		<div class="stat-boxes widget-body">
 			<a href="#"><span class="fui-book ben-icone btn-primary"></span></a>
 			<h3 class="ticker--one">{{ counter.reservation }}</h3>
@@ -45,7 +44,7 @@ Tableau de bord | {{ parent() }}
 			<div class="clearfix"></div>		
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-2">
 		<div class="stat-boxes widget-body">
 			<a href="#"><span class="fui-home ben-icone btn-primary"></span></a>
 			<h3 class="ticker--one">{{ counter.hotels }}</h3>
@@ -53,7 +52,7 @@ Tableau de bord | {{ parent() }}
 			<div class="clearfix"></div>		
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-2">
 		<div class="stat-boxes widget-body">
 			<a href="#"><span class="fui-tag ben-icone btn-primary"></span></a>
 			<h3 class="ticker--one">{{ counter.rooms }}</h3>
@@ -62,10 +61,10 @@ Tableau de bord | {{ parent() }}
 		</div>
 	</div>
 </div>			
-<div class="col-md-7">
+<div class="row">
     <div class="box widget-body">
         <header>
-        	<h3><span class="fui-user"></span> Google Map 
+        	<h3><span class="glyphicon glyphicon-globe"></span> Google Map 
         	<i class="js-toggle pull-right fui-arrow-right"></i></h3>
         </header>
 		<div class="map-warper">

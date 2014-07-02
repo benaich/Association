@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Ben\UserBundle\Entity\profile
  *
- * @ORM\Table()
+ * @ORM\Table(name="profile")
  * @ORM\Entity(repositoryClass="Ben\UserBundle\Entity\profileRepository")
  */
 class profile
@@ -181,7 +181,7 @@ class profile
      */
     public function getFullName()
     {
-        return $this->family_name.' '.$this->family_name;
+        return $this->family_name.' '.$this->first_name;
     }
 
     /**

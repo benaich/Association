@@ -28,9 +28,52 @@
 {% block container %}
 <body>
 {% block header %}
-    <header class="header hidden-print">
-        <div class="logo">
-            <img src="{{ asset(app_config.org_logo) }}" alt="logo" style="width: 50px; height: 40px;"/>
+<header class="visible-print print-header hide">
+  <div class="col-xs-1"><img src="{{ asset(app_config.org_logo) }}" alt="logo"/></div>
+  <div class="col-xs-8">
+  <div class="title">
+    <h1>{{ app_config.org_name }}</h1>  
+  </div>
+  </div>
+  <div class="clearfix"></div>
+</header>
+    <header id="adminbar" class="header hidden-print">
+        <div id="logo"><img src="{{ asset(app_config.org_logo) }}" alt="logo" class="img-small"> <span>{{ app_config.org_name }}</span></div>
+        <div class="dropdown pull-right user-profile">
+          <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
+          <img class="img-small" src="{{ asset( app.user.avatar)}}" alt="{{ app.user.username }}">
+          {{ app.user.profile.fullName }} <span class="glyphicon glyphicon-chevron-down"></span></a>
+            <ul class="dropdown-menu">
+                <li>
+                    <div class="navbar-content">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <img src="{{ asset( app.user.avatar)}}" alt="Alternate Text" class="img-responsive" />
+                                <div class="clearfix"></div>
+                                <p></p>
+                            </div>
+                            <div class="col-md-7">
+                                <span>{{ app.user.username }}</span>
+                                <p class="text-muted small">{{ app.user.email }}</p>
+                                <div class="divider"></div>
+                                <a href="{{ path('ben_profile_edit', { 'name': app.user.username}) }}" class="btn btn-primary btn-sm">Afficher mon profil</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="navbar-footer">
+                        <div class="navbar-footer-content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-default btn-sm">Compte</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-sm pull-right">Déconnexion</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </header>
 

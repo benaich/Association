@@ -5,15 +5,13 @@
             <td>{{ entity.number }}</td>
             <td>{{ entity.floor }}</td>
             <td><a href="{{ path('hotels_show', { 'id': entity.hotel.id }) }}">{{ entity.hotel.name }}</a></td>
-            <td>{{ entity.maxpersons }}</td>
-            <td>{{ entity.available }}</td>
+            <td>{{ entity.max }}</td>
+            <td>{{ entity.free }}</td>
             <td>{{ entity.type }}</td>
             <td>{{ entity.status }}</td>
             <td>
-                <div class="btn-group">
-                    <a class="btn btn-embossed btn-primary btn-xs" href="{{ path('rooms_show', { 'id': entity.id }) }}" data-toggle="tooltip" title="Afficher"><span class="fui-search"></span></a>
-                    <a class="btn btn-embossed btn-info btn-xs" href="{{ path('rooms_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="fui-new"></span></a>
-                </div>
+                <a class="btn btn-embossed btn-primary btn-xs" href="{{ path('rooms_show', { 'id': entity.id }) }}" data-toggle="tooltip" title="Afficher"><span class="fui-search"></span></a>
+                <a class="btn btn-embossed btn-info btn-xs" href="{{ path('rooms_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="fui-new"></span></a>
             </td>
         </tr>
     {% endfor %}
