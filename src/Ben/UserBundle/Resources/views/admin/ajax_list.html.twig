@@ -28,9 +28,9 @@
                               <li><strong>Biographie :</strong> {{ entity.profile.description }}</li>
                               <li><strong>Social Links: </strong>
                                 <ul class="social">
-                                    <li><a class="btn-social-facebook" href="{{ entity.profile.facebook }}"><span class="fui-facebook"></span></a></li>
-                                    <li><a class="btn-social-googleplus" href="{{ entity.profile.google }}"><span class="fui-googleplus"></span></a></li>
-                                    <li><a class="btn-social-twitter" href="{{ entity.profile.twitter }}"><span class="fui-twitter"></span></a></li>
+                                    <li><a href="{{ entity.profile.facebook }}"><span class="fui-facebook text-info"></span></a></li>
+                                    <li><a href="{{ entity.profile.google }}"><span class="fui-googleplus text-danger"></span></a></li>
+                                    <li><a href="{{ entity.profile.twitter }}"><span class="fui-twitter text-info"></span></a></li>
                                 </ul>
                               </li>
                             </ul>
@@ -43,7 +43,6 @@
                         <td>
                             <a class="btn btn-embossed btn-primary showuser btn-xs" data-index="{{ loop.index }}" data-id="{{ entity.id }}" href="#" data-toggle="modal" data-target="#myModal"><span class="fui-search"></span></a>
                             <a class="btn btn-embossed btn-info btn-xs" href="{{ path('ben_edit_user', {id: entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="fui-new"></span></a>
-                            <a class="btn btn-embossed btn-danger btn-xs"  href="{{ path('ben_new_user', {id: entity.id }) }}" data-toggle="tooltip" title="Supprimer"><span class="fui-cross"></span></a>
                         </td>
                     </tr>
                 {% endfor %}

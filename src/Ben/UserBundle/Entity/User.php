@@ -196,9 +196,21 @@ class User extends BaseUser implements ParticipantInterface {
      */
     public function hasReservation()
     {
-        return false;
+        if(!count($this->reservations)) return false;
+        return true ;
         // return ($this->reservations->lastEelement()->status === 'valide') ;
     }
+
+
+    /**
+     * Get reservations
+     *
+     * @return Ben\AssociationBundle\Entity\Reservation 
+     */
+    public function getReservation()
+    {
+        return $this->reservations->last();
+    } 
 
     /**
      * Set status

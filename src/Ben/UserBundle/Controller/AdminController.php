@@ -36,7 +36,7 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $searchParam = $request->get('searchParam');
         $template='BenUserBundle:admin:ajax_list.html.twig';
-        $entities = $em->getRepository('BenUserBundle:user')->getUsersBy($searchParam);
+        $entities = $em->getRepository('BenUserBundle:user')->search($searchParam);
         $pagination = (new Paginator())->setItems(count($entities), $searchParam['perPage'])->setPage($searchParam['page'])->toArray();
         return $this->render($template, array(
                     'entities' => $entities,
@@ -253,6 +253,25 @@ class AdminController extends Controller
     }
 
     /**
+     * export to xml
+     * @Secure(roles="ROLE_MANAGER")
+     */    
+    public function toXmlAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        $entities = $em->getRepository('BenUserBundle:user')->getUsers();
+        // return $this->render('BenUserBundle:admin:list.xml.twig', array('entities' => $entities));
+
+        $response = $this->render('BenUserBundle:admin:list.xml.twig',array(
+                    'entities' => $entities,
+                    ));
+         $response->headers->set('Content-Type', 'text/xml');
+         // $response->headers->set('Content-Disposition', 'attachment; filename="contacts.xml"');
+
+        return $response;
+    }
+    /**
      * export to pdf
      * @Secure(roles="ROLE_USER")
      */
@@ -281,5 +300,94 @@ class AdminController extends Controller
                 'Content-Disposition'   => 'attachment; filename="file'.$now.'.pdf"'
             )
         );
+    }
+
+    /**
+     * export to excel
+     * @Secure(roles="ROLE_USER")
+     */
+    public function toExcelAction($status)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('BenUserBundle:user')->findAll();
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+
+        $phpExcelObject->getProperties()->setCreator("ben");
+       $phpExcelObject->setActiveSheetIndex(0)
+            ->setCellValue("A1", "id")
+            ->setCellValue("B1", "nom d'utilisateur")
+            ->setCellValue("C1", "nom")
+            ->setCellValue("D1", "prenom")
+            ->setCellValue("E1", "ci")
+            ->setCellValue("F1", "email")
+            ->setCellValue("G1", "Sexe")
+            ->setCellValue("H1", "Date de naissance")
+            ->setCellValue("I1", "Adresse")
+            ->setCellValue("J1", "Ville")
+            ->setCellValue("K1", "Code postal")
+            ->setCellValue("L1", "Pays")
+            ->setCellValue("M1", "Profession")
+            ->setCellValue("N1", "A propos")
+            ->setCellValue("O1", "Tél")
+            ->setCellValue("P1", "Gsm")
+            ->setCellValue("Q1", "Revenu des parents")
+            ->setCellValue("R1", "Année d'obtention du bac")
+            ->setCellValue("S1", "Note du Baccalauréat")
+            ->setCellValue("T1", "Nombre des fréres/soeurs")
+            ->setCellValue("U1", "Note de lgement")
+            ->setCellValue("V1", "Etat")
+            ->setCellValue("W1", "Comportement")
+            ->setCellValue("X1", "Remarque")
+            ->setCellValue("Y1", "Date 'inscription");
+       $i=2;
+       foreach ($entities as $entity) {
+            $university = ($entity->getEtablissement()) ? $entity->getEtablissement()->getName() : '';
+           $phpExcelObject->setActiveSheetIndex(0)
+                ->setCellValue("A$i", $entity->getId())
+                ->setCellValue("B$i", $entity->getNDossier())
+                ->setCellValue("C$i", $entity->getFamilyName())
+                ->setCellValue("D$i", $entity->getFirstName())
+                ->setCellValue("E$i", $entity->getCin())
+                ->setCellValue("F$i", $entity->getCne())
+                ->setCellValue("G$i", $entity->getPassport())
+                ->setCellValue("H$i", $entity->getCarteSejour())
+                ->setCellValue("I$i", $entity->getBirdDay()->format('d/m/Y'))
+                ->setCellValue("J$i", $entity->getGender())
+                ->setCellValue("K$i", $entity->getAncientete())
+                ->setCellValue("L$i", $entity->getContry())
+                ->setCellValue("M$i", $entity->getCity())
+                ->setCellValue("N$i", $university)
+                ->setCellValue("O$i", $entity->getDiplome())
+                ->setCellValue("P$i", $entity->getNiveauEtude())
+                ->setCellValue("Q$i", $entity->getParentsRevenu())
+                ->setCellValue("R$i", $entity->getObtentionBac())
+                ->setCellValue("S$i", $entity->getExellence())
+                ->setCellValue("T$i", $entity->getBroSisNumber())
+                ->setCellValue("U$i", $entity->getNote())
+                ->setCellValue("V$i", $entity->getStatus())
+                ->setCellValue("W$i", $entity->getConditionSpecial())
+                ->setCellValue("X$i", $entity->getRemarque())
+                ->setCellValue("Y$i", $entity->getCreated()->format('d/m/Y'));
+            $i++;
+       }
+
+       $phpExcelObject->getActiveSheet()->setTitle('Liste des adhérents');
+
+       // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+       $phpExcelObject->setActiveSheetIndex(0);
+
+        // create the writer
+        $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel5');
+        // create the response
+        $response = $this->get('phpexcel')->createStreamedResponse($writer);
+        // adding headers
+        $now = new \DateTime;
+        $now = $now->format('d-m-Y_H-i');
+        $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
+        $response->headers->set('Content-Disposition', "attachment;filename=members-$now.xls");
+        $response->headers->set('Pragma', 'public');
+        $response->headers->set('Cache-Control', 'maxage=1');
+
+        return $response;        
     }
 }

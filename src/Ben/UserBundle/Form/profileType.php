@@ -16,6 +16,7 @@ class profileType extends AbstractType
             ->add('bird_day', 'date', array('widget' => 'single_text'))
             ->add('gender', 'choice', array('choices' => array('homme' => 'Homme','femme' => 'Femme'),
                     'required' => false,))
+            ->add('cin')
             ->add('address')
             ->add('post_code')
             ->add('city')

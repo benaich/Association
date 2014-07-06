@@ -33,9 +33,10 @@ Tableau de bord | {{ parent() }}
                     <li><a href="#" class="js-promote" data-action="admin"><span class="glyphicon glyphicon-star text-warning"></span> Admin</a></li>
                     <li><a href="#" class="js-promote" data-action="user"><span class="glyphicon glyphicon-user"></span> User</a></li>
                     <li class="divider"></li>
-                    <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> Exporter</a></li>
-                    <li><a href="#" id="js-badge" ><span class="fui-credit-card"></span> Cartes de Membres</a></li>
-                    <li><a href=""><span class="fui-tag"></span> Etiquettes</a></li>
+                    <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> Exporter vers csv</a></li>
+                    <li><a href="{{ path('ben_export_xml') }}"><span class="fui-export"></span> Exporter vers xml</a></li>
+                    <li><a href="#" id="js-badge" ><span class="fui-credit-card"></span> Cartes des Membres</a></li>
+                    <li><a href=""><span class="fui-tag"></span> Etiquettes de repas</a></li>
                     <li class="divider"></li>
                     <li><a href="#" id="js-delete"><span class="glyphicon glyphicon-trash"></span> Supprimer</a></li>
                   </ul>

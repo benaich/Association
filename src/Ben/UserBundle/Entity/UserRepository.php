@@ -56,7 +56,7 @@ class UserRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getUsersBy($searchParam) {
+    public function search($searchParam) {
         extract($searchParam);        
         $qb = $this->createQueryBuilder('u')
                 ->leftJoin('u.profile', 'p')

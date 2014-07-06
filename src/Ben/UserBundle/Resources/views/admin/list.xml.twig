@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<association>
+	{% for entity in entities %}
+	 <person id="{{ entity.id }}" etat="{% if entity.enabled %}1{% else %}0{% endif %}">
+	 	<identifiant>{{ entity.username }}</identifiant>
+	 	<prenom>{{ entity.profile.firstName }}</prenom>
+	 	<nom>{{ entity.profile.familyName }}</nom>
+	 	<email>{{ entity.email }}</email>
+	 	<naissance>{{ entity.profile.birdDay|date('Y-m-d') }}</naissance>
+	 	<sexe>{{ entity.profile.gender }}</sexe>
+	 	<profession>{{ entity.profile.job }}</profession>
+	 	<ville>{{ entity.profile.city }}</ville>
+	 	<adresse>{{ entity.profile.address }}</adresse>
+	 	<status>{{ entity.status }}</status>
+		<created>{{ entity.created|date('Y-m-d') }}</created>
+		<role>{{ entity.role }}</role>
+		<groupes>
+			{% for group in entity.groups %}
+			<group>{{ group }}</group>
+			{% endfor %}
+		</groupes>
+		{% if entity.hasreservation %}
+		<reservation>
+			<from>{{ entity.reservation.dateFrom|date('Y-m-d') }}</from>
+			<to>{{ entity.reservation.dateTo|date('Y-m-d') }}</to>
+			<chambre>{{ entity.reservation.room.number }}</chambre>
+			<etage>{{ entity.reservation.room.floor }}</etage>
+			<logement>{{ entity.reservation.room.hotel.name }}</logement>
+		</reservation>
+		{% endif %}
+	 </person>
+	 {% endfor %} 
+</association>
