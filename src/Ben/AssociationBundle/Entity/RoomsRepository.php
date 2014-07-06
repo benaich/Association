@@ -21,33 +21,40 @@ class RoomsRepository extends EntityRepository
 		 
 		 return $qb->getArrayResult();
 	}
-    public function findSome($nombreParPage, $page, $keyword, $number, $floor, $bedNumber, $gender, $status) {   
-    // var_dump($keyword, $number, $floor, $status);die();    
+    public function search($nombreParPage, $page, $keyword, $searchEntity) {      
        $qb = $this->createQueryBuilder('r')
                 ->leftJoin('r.hotel', 'h')
                 ->addSelect('h')
                 ->andWhere('h.name like :keyword or h.city like :keyword or h.description like :keyword')
                 ->setParameter('keyword', '%'.$keyword.'%');
 
-        if(!empty($number)){
-        	$qb->andWhere('r.number = :number')
-               ->setParameter('number', $number);
-        }
-        if(!empty($floor)){
-        	$qb->andWhere('r.floor = :floor')
-               ->setParameter('floor', $floor);
-        }
-        if(!empty($bedNumber)){
-          $qb->andWhere('r.max_persons = :max_persons')
-               ->setParameter('max_persons', $bedNumber);
-        }
-        if(!empty($gender)){
-          $qb->andWhere('r.type = :type')
-               ->setParameter('type', $gender);
-        }
-        if(!empty($status)){
-        	$qb->andWhere('r.status = :status')
-               ->setParameter('status', $status);
+        if($searchEntity){
+          extract($searchEntity); 
+          if(!empty($name)){
+          	$qb->andWhere('r.number = :name')
+                 ->setParameter('name', $name);
+          }
+          if(!empty($block)){
+            $qb->andWhere('h.name like :block')
+                 ->setParameter('block', '%'.$block.'%');
+          }
+          if(!empty($floor)){
+          	$qb->andWhere('r.floor = :floor')
+                 ->setParameter('floor', $floor);
+          }
+          if(!empty($max)){
+            $qb->andWhere('r.max = :max')
+                 ->setParameter('max', $max);
+          }
+          if(!empty($gender)){
+            $qb->andWhere('r.type = :type')
+                 ->setParameter('type', $gender);
+          }
+
+          if(!empty($status)){
+              if($status === 'free') $qb->andWhere('r.free > 0');
+              elseif($status === 'notfree') $qb->andWhere('r.free = 0');
+          }
         }
                 
         $qb->setFirstResult(($page - 1) * $nombreParPage)

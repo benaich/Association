@@ -56,6 +56,16 @@ class Thread extends BaseThread {
         $meta->setThread($this);
         parent::addMetadata($meta);
     }
+    public function getMetadata()
+    {
+        return  $this->metadata;
+    }
+    public function getParticipant()
+    {
+        $participant = $this->messages->last()->getSender();
+        // if($participant == $this->createdBy) if($this->messages[1])$participant = $this->messages[1]->getSender();
+        return $participant;     
+    }
 
 }
 

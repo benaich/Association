@@ -23,7 +23,7 @@ class ProfileController extends BaseController
         $process = $formHandler->process($user);
         if ($process) {
             $this->setFlash('fos_user_success', 'profile.flash.updated');
-            return new RedirectResponse($this->container->get('router')->generate('home'));
+            return new RedirectResponse($this->container->get('router')->generate('fos_user_profile_edit'));
         }
         
         // newsletter

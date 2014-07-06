@@ -75,9 +75,9 @@ class GroupController extends BaseController
             return new RedirectResponse($url);
         }
 
-        return $this->container->get('templating')->renderResponse('FOSUserBundle:Group:new.html.'.$this->getEngine(), array(
-            'form' => $form->createview(),
-        ));
+        $groups = $this->container->get('fos_user.group_manager')->findGroups();
+        return $this->container->get('templating')->renderResponse('FOSUserBundle:Group:list.html.'.$this->getEngine(),
+         array('groups' => $groups, 'form' => $form->createview()));
     }
 
     /**

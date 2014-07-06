@@ -3,7 +3,7 @@
 Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
-<h1>Rooms creation</h1>
+<h2><span class="fui-tag block"></span> Ajout d'une chambre</h2>
 
 <form id="createForm" class="form-horizontal" action="{{ path('rooms_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}

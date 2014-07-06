@@ -1,89 +1,46 @@
 {% extends 'FOSMessageBundle::layout.html.twig' %}
 
-{% block breadcrumb %} 
-<ul id="breadcrumbtrail">
-    <li class="home" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-        <a href="{{ path('home') }}" itemprop="url"><span itemprop="title"><i class="icon-home"></i> Accueil</span></a>
-        <div class="divider"></div>
-    </li>
-    <li class="home" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-        <a href="{{ path('fos_message_inbox') }}" itemprop="url"><span itemprop="title"><i class="icon-envelope"></i> Messages Privés</span></a>
-        <div class="divider"></div>
-    </li>
-    <li class="home" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-        <span itemprop="title">{{ thread.subject }}</span>
-    </li>
-</ul>
-{% endblock %}
-
-{% block headband %}
-<section class="headband">
-    <div class="mycontainer unit">
-        <h1><div class="mail-badge hspan"></div>{{ thread.subject }}</h1>
-        <footer>
-            <span><i class="icon-time icon-white"></i> {{ thread.createdAt|time_ago_in_words }}</span>
-            <span><i class="icon-envelope icon-white"></i> {{ thread.messages|length }} Messages</span>
-            <span><i class="icon-user icon-white"></i> {{ thread.createdBy }}</span>
-        </footer>
-    </div>
-</section>
-{% endblock %}
-
 {% block message_content %}
+<header>
+<form id="deleteform" class="pull-right" action="{{ url('fos_message_thread_delete', {'threadId': thread.id}) }}" method="post">
+    <button type="submit" class="btn btn-xs btn-danger">supprimer ce message</button>
+</form>
+    <h1><span class="glyphicon glyphicon-envelope"></span> {{ thread.subject }}</h1>
+    <ul class="meta list-unstyled">
+        <li><span class="glyphicon glyphicon-time"></span> {{ thread.createdAt|time_ago_in_words }} </li>
+        <li><span class="glyphicon glyphicon-envelope"></span> {{ thread.messages|length }} Messages </li>
+        <li><span class="glyphicon glyphicon-user"></span> {{ thread.createdBy }}</li>
+    </ul>
+</header>
 
-<div class="content-warper">
-    <div id="comments">
-        <ul class="comment-list">
+    <ul class="threadslist">
     {% for message in thread.messages %}
-                <li class="comment-item" id="message_{{ message.id }}">
-                    <div class="img-40 img-rounded pull-left">
-                        <a href="#"><img src="{{ message.sender.avatar }}"></a>
-                    </div>
-                    <div class="col-right">
-                        <div class="user-label">
-                            <p class="pull-right muted"><small>{{ message.createdAt|time_ago_in_words }}</small></p>
-                            <h6><a href="{{ path('profile_public', { 'name': message.sender, 'id': message.sender.id }) }}" class="link-main">{{ message.sender }}</a> </h6>
-                        </div>
-                        <div class="body-content" >
-                            <p>{{ message.body }}</p>
-                        </div>
-                    </div>
-                </li>
-
-{% endfor %}
-            </ul>
-            <div class="comment-form-wrapper first messageform">	
-                <form class="comment-form row-fluid js-coment" action="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}" method="post">
-                    <div class="span1 ">
-                        <div class="img-40 img-rounded pull-left">
-                            <img src="{{ app.user.avatar }}" alt="{{ app.user }}">
-                        </div>
-                    </div>
-                    <div class="span9 row-fluid">
-                        <div class="control-group ">
-                            <div class="controls">
-                                <textarea id="comment_body" name="message[body]" required="required" class="span12" placeholder="Laisser un commentaire *"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                {{ form_widget(form._token) }}
-                    <div class="span2">
-                        <button type="submit" class="btn btn-info">OK <i class="icon-share icon-white"></i></button>
-                    </div>
-                </form>
+        <li class="thread-item" id="message_{{ message.id }}">
+            <div class="col-md-2">
+                <a href="{{ path('ben_show_user', { 'id': message.sender.id }) }}" title="{{ message.sender }}">
+                <img src="{{ asset( message.sender.avatar)}}" class="img-responsive img-circle"></a>
             </div>
-        </div>
+            <div class="col-md-10">
+                <div class="message-label">
+                    <p class="pull-right muted"><small>{{ message.createdAt|time_ago_in_words }}</small></p>
+                    <h6><a href="{{  path('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}" class="link-main">{{ message.sender }}</a></h6>
+                </div>
+                <p class="muted">{{ message.body }}</p>
+            </div>
+            <div class="clearfix"></div>
+        </li>
+    {% endfor %}
+    </ul>
+    <div class="thread-form-wrapper">	
+        <form class="thread-form js-coment" action="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}" method="post">
+            <div class="col-md-10">
+                <textarea id="comment_body" rows="3" name="message[body]" required="required" class="form-control" placeholder="Laisser un message *"></textarea>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-sm btn-primary">send <span class="glyphicon glyphicon-share"></span></button>
+            </div>
+            <div class="clearfix"></div>
+        {{ form_widget(form._token) }}
+        </form>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-            {{ parent() }}
-                {% javascripts 
-                '@BenBlogBundle/Resources/public/js/autoresize.jquery.js'output='js/autoresize.js' %}
-    <script src="{{ asset_url }}"></script>
-                {% endjavascripts %}
-    <script>
-            //autoresise plugin
-            $("textarea").autoResize();
-        </script>
 {% endblock %}

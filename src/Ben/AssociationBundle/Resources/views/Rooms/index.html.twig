@@ -5,6 +5,7 @@ Tableau de bord | {{ parent() }}
 {% block body %}
 <h2><span class="fui-tag"></span> List des chambres</h2>
  <form id="jsForm" role="form" method="post" action="">
+      <input type="hidden" name="source" value="room"> 
     <input id="pagenumber" type="hidden" name="page" value="1"> 
     <div class="row">
         <div class="col-md-5">
@@ -19,19 +20,16 @@ Tableau de bord | {{ parent() }}
         </div>
         <div class="col-lg-7">
           <div class="btn-group pull-right">              
-            <button class="btn btn-primary "><span class="fui-gear"></span> Action</button>
+            <button href="#" data-toggle="modal" data-target="#myModal" class="btn btn-primary "><span class="fui-search"></span> Recherche avancée</button>
             <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
               <span class="caret"></span>
             </button>
             <span class="dropdown-arrow dropdown-arrow-inverse"></span>
             <ul class="dropdown-menu dropdown-inverse">
                   <li><a href="{{ path('rooms_new') }}"><span class="fui-plus"></span> Ajouter</a></li>
-                  <li><a href="#" class="js-enable" data-action="1"><span class="fui-check"></span> Activer</a></li>
-                  <li><a href="#" class="js-enable" data-action="0"><span class="fui-cross"></span> Désctiver</a></li>
-                  <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> Exporter</a></li>
-                  <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="fui-search"></span> Recherche avancée</a></li>
+                  <li><a href="{{ path('room_new_multiple') }}"><span class="fui-plus"></span> Ajout Multiple</a></li>
                   <li class="divider"></li>
-                  <li><a href="#" id="js-delete"><span class="fui-trash"></span> Supprimer</a></li>
+                  <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> Exporter vers Excel</a></li>
             </ul>
           </div>
         </div>
@@ -39,14 +37,12 @@ Tableau de bord | {{ parent() }}
     <table class="table table-hover table-bordered">
         <thead>
         <tr>
-            <th><label class="checkbox no-label toggle-all" for="checkbox-table-1"><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" value="" id="checkbox-table-1" data-toggle="checkbox"></label></th>
             <th>Chambre</th>
             <th>Etage</th>
             <th>Logement</th>
+            <th>Chambre pour</th>
             <th>Capacité</th>
             <th>Libre</th>
-            <th>Chambre pour</th>
-            <th>Status</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -68,7 +64,7 @@ Tableau de bord | {{ parent() }}
                     <label class="col-md-5 control-label" for="number">N° de la chambre</label>
                     <div class="col-md-7">
                        <div class="form-group">
-                        <input type="text" name="number" class="form-control spinner input-spinner input-sm" id="number">
+                        <input type="text" name="searchEntity[name]" class="form-control spinner input-spinner input-sm" id="number">
                         </div>
                     </div>
                 </div>
@@ -76,22 +72,30 @@ Tableau de bord | {{ parent() }}
                     <label class="col-md-5 control-label" for="floor">N° d'étage</label>
                     <div class="col-md-7">
                        <div class="form-group">
-                        <input type="text" name="floor" class="form-control spinner input-spinner input-sm" id="floor">
+                        <input type="text" name="searchEntity[floor]" class="form-control spinner input-spinner input-sm" id="floor">
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-5 control-label" for="bednumber">Nombre de lits</label>
+                    <label class="col-md-5 control-label" for="bednumber">Capacité</label>
                     <div class="col-md-7">
                        <div class="form-group">
-                        <input type="text" name="bednumber" class="form-control spinner input-spinner input-sm" id="bednumber">
+                        <input type="text" name="searchEntity[max]" class="form-control spinner input-spinner input-sm" id="bednumber">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label" for="gender">Logement</label>
+                    <div class="col-md-5">
+                       <div class="form-group">
+                        <input type="text" name="searchEntity[block]" class="form-control input-sm">
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-5 control-label" for="js-filter">Status </label>
                     <div class="col-md-5">
-                      <select id="js-filter" name="filter" class="select-block small">
+                      <select id="js-filter" name="searchEntity[status]" class="select-block small">
                             <option value="">All</option>
                             <option value="open">Ouvert</option>
                             <option value="closed">Fermé</option>
@@ -101,7 +105,7 @@ Tableau de bord | {{ parent() }}
                 <div class="form-group">
                     <label class="col-md-5 control-label" for="gender">Chambre pour</label>
                     <div class="col-md-5">
-                      <select id="gender" name="gender" class="select-block small">
+                      <select id="gender" name="searchEntity[gender]" class="select-block small">
                             <option value="">Tout</option>
                             <option value="homme">Homme</option>
                             <option value="femme">Femme</option>
@@ -122,7 +126,7 @@ Tableau de bord | {{ parent() }}
                 <div class="clearfix"></div>
               </div>
               <div class="modal-footer">
-                <button type="button" id="modalSearch" class="btn btn-primary btn-embossed">Recherche</button>
+                <button type="button" id="modalSearch" class="btn btn-primary btn-embossed"><span class="fui-search"></span> Recherche</button>
               </div>
             </div>
           </div>
@@ -143,7 +147,6 @@ Tableau de bord | {{ parent() }}
         filterInput.val('');
         bedInput.val('');
         genderInput.val('');
-        checkboxBtn.prop("checked",false);
         jsFormUrl = '{{ path('ben_rooms_ajax') }}';
       }
       function ajaxPost(action) {
@@ -155,9 +158,7 @@ Tableau de bord | {{ parent() }}
           success: function(data){ 
             form.removeClass('working');
             init();
-            if(!action){
-              dataContainer.empty().hide().html(data).fadeIn();
-            }else ajaxPost();
+            dataContainer.empty().hide().html(data).fadeIn();
           },
           error:function(){
               alert('service denied');
@@ -171,7 +172,6 @@ Tableau de bord | {{ parent() }}
       var form = $('#jsForm'),
           jsFormUrl = '',
           dataContainer = form.find('#dataContainer');
-          deleteBtn = form.find('#js-delete'),
           pageInput = form.find('#pagenumber'),
           numberInput = form.find('#number'),
           floorInput = form.find('#floor'),
@@ -179,8 +179,6 @@ Tableau de bord | {{ parent() }}
           genderInput = form.find('#gender'),
           filterInput = form.find('#js-filter'),
           perPageBtn = form.find('#js-perpage'),
-          enableBtn = form.find('.js-enable'),
-          checkboxBtn = form.find('input:checkbox'),
           modalSearchBtn = form.find('#modalSearch'),
           closeModal = form.find('#closeModal');
 
@@ -190,18 +188,6 @@ Tableau de bord | {{ parent() }}
           ajaxPost();
       });
 
-      /* enable or disable */
-      enableBtn.on('click', function(){
-        var url = '{{ path('rooms_enable', {'etat': 1111 }) }}',
-            etat = $(this).data('action');
-        jsFormUrl = url.replace("1111", etat);
-        ajaxPost('enable');
-      });
-
-      deleteBtn.on('click', function(){
-        jsFormUrl='{{ path('ben_remove_rooms') }}';
-        ajaxPost('delete');
-      });
       modalSearchBtn.on('click', function () {
           closeModal.trigger('click');
           ajaxPost();
@@ -210,7 +196,7 @@ Tableau de bord | {{ parent() }}
 
       /* submit the form after loading the page*/
       init();
-      setTimeout(ajaxPost, 1);
+      ajaxPost();
     })(jQuery);
 </script>
 {% endblock %}

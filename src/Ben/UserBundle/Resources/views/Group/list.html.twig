@@ -24,7 +24,7 @@ Paramètres - {{ parent() }}
             <td>{{ entity.getName() }}</td>
             <td>{{ entity.getUsers()|length }}</td>
             <td>
-                <a class="btn btn-embossed btn-primary showuser btn-xs" href="{{ path('fos_user_group_show', {groupname: entity.name }) }}" ><span class="fui-search"></span></a>
+                <a class="btn btn-embossed btn-primary showuser btn-xs" href="{{ path('fos_user_group_show', {groupname: entity.name }) }}" data-toggle="tooltip" title="afficher"><span class="fui-search"></span></a>
                 <a class="btn btn-embossed btn-info btn-xs" href="{{ path('fos_user_group_edit', {groupname: entity.name }) }}" data-toggle="tooltip" title="modifier"><span class="fui-new"></span></a>
                 <a class="btn btn-embossed btn-danger btn-xs"  href="{{ path('fos_user_group_delete', {groupname: entity.name }) }}" data-toggle="tooltip" title="Supprimer"><span class="fui-cross"></span></a>
             </td>

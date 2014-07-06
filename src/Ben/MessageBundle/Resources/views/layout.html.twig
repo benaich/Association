@@ -1,23 +1,36 @@
 {% extends "BenAssociationBundle::layout.html.twig" %}
-
-{% block headband %}
-<section class="headband">
-    <div class="mycontainer unit">
-        <h1><div class="mail-badge hspan"></div>Messages Privés</h1>
-        <p>Ouverte 24h/24</p> 
-    </div>
-</section>
-{% endblock %}
-
+{% set route = app.request.attributes.get('_route') %} 
 {% block body %}
+<h2><span class="glyphicon glyphicon-envelope"></span> Messages Privés</h2>
+<div class="row">
+    <div class="col-md-4">
+        <div class="inbox-panel box">           
+          <header>
+          <div class="row">
+              <div class="col-md-5"><img class="img-responsive img-circle" src="{{ asset( app.user.avatar)}}" alt=""></div>
+              <div class="col-md-7">
+                  <h3><i>{{ app.user.profile.firstName }}</i> {{ app.user.profile.familyName }}</h3>
+                <a href="{{ path('ben_profile_edit', { 'name': app.user.username}) }}" title=""><span class="glyphicon glyphicon-user"></span> Profile</a>
+                <a href="{{ path('fos_user_profile_edit') }}" title=""><span class="glyphicon glyphicon-cog"></span> Setting</a>
+              </div>
+          </div>
+          </header> 
+          <div class="list-group">
+              <a class="list-group-item {% if route == 'fos_message_inbox' %}active{% endif %}" href="{{ path('fos_message_inbox') }}"><span class="glyphicon glyphicon-inbox"></span> INBOX <span class="badge label-danger">{{ fos_message_nb_unread() }}</span></a>
+              <a class="list-group-item {% if route == 'fos_message_sent' %}active{% endif %}" href="{{ path('fos_message_sent') }}"><span class="glyphicon glyphicon-send"></span> Envoyée</a>
+              <a class="list-group-item {% if route == 'fos_message_deleted' %}active{% endif %}" href="{{ path('fos_message_deleted') }}"><span class="glyphicon glyphicon-trash"></span> Trash</a>
+              <a class="list-group-item {% if route == 'fos_message_thread_new' %}active{% endif %}" href="{{ path('fos_message_thread_new') }}"><span class="glyphicon glyphicon-plus-sign"></span> Nouveau message</a>
+          </div>
+        </div>
+    </div>
 
-<section>
-    <div class="mycontainer">
-        <article class="myarticle">
-        {% block message_content %}{% endblock %}
-        </article>
-        {% include "BenMessageBundle:Message:sidebar.html.twig" %}
-            </div>
-</section>
 
+    <div class="col-md-8">
+        <div class="content-warper">
+            {% block message_content %}{% endblock %}
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+    
  {% endblock body %}

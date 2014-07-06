@@ -1,17 +1,20 @@
 {% for entity in entities %}
         <tr>
-            <td><label class="checkbox no-label" for="checkbox-table-2"><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span>
-            <span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" name="entities[]" value="{{ entity.id }}" id="checkbox-table-2" data-toggle="checkbox"></label></td>
             <td>{{ entity.number }}</td>
             <td>{{ entity.floor }}</td>
-            <td><a href="{{ path('hotels_show', { 'id': entity.hotel.id }) }}">{{ entity.hotel.name }}</a></td>
+            <td>{{ entity.hotel.name }}</td>
+            <td>{{ entity.type }}</td>
             <td>{{ entity.max }}</td>
             <td>{{ entity.free }}</td>
-            <td>{{ entity.type }}</td>
-            <td>{{ entity.status }}</td>
-            <td>
-                <a class="btn btn-embossed btn-primary btn-xs" href="{{ path('rooms_show', { 'id': entity.id }) }}" data-toggle="tooltip" title="Afficher"><span class="fui-search"></span></a>
-                <a class="btn btn-embossed btn-info btn-xs" href="{{ path('rooms_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="fui-new"></span></a>
+            <td class="hidden-print">
+                <div class="text-center">
+                {% if source == 'room' %}
+                    <a class="btn btn-embossed btn-primary btn-xs" href="{{ path('rooms_show', { 'id': entity.id }) }}" data-toggle="tooltip" title="Afficher"><span class="fui-search"></span></a>
+                    <a class="btn btn-embossed btn-info btn-xs" href="{{ path('rooms_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="fui-new"></span></a>
+                {% else %}
+                <a class="btn btn-info btn-xs js-check" href="#" data-id="{{ entity.id }}"><span class="glyphicon glyphicon-check"></span> ok</a>
+                </div>
+                {% endif %}
             </td>
         </tr>
     {% endfor %}

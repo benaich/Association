@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="reservation")
  * @ORM\Entity(repositoryClass="Ben\AssociationBundle\Entity\ReservationRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Reservation
 {
@@ -54,6 +55,8 @@ class Reservation
     * @ORM\JoinColumn(name="room_id",referencedColumnName="id", nullable=false)
     */
     private $room;
+
+    private $oldroom;
 
     /************ constructeur ************/
 
@@ -188,5 +191,36 @@ class Reservation
     public function getRoom()
     {
         return $this->room;
+    }
+
+    /**
+     * Set oldroom
+     *
+     * @param int $oldroom
+     * @return Reservation
+     */
+    public function setOldroom($oldroom)
+    {
+        $this->oldroom = $oldroom;
+    
+        return $this;
+    }
+
+    /**
+     * Get oldroom
+     *
+     * @return int 
+     */
+    public function getOldroom()
+    {
+        return $this->oldroom;
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function freeRoom()
+    {
+        $this->room->plusFree();
     }
 }

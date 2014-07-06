@@ -8,7 +8,8 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 
 use Ben\AssociationBundle\Entity\event;
 use Ben\AssociationBundle\Form\eventType;
-use DateTime;
+
+use Ben\AssociationBundle\Pagination\Paginator;
 
 /**
  * event controller.
@@ -51,11 +52,11 @@ class eventController extends Controller
 
         $template='BenAssociationBundle:event:ajax_list.html.twig';
         $entities = $em->getRepository('BenAssociationBundle:event')->findSome($perPage, $page, $keyword, $group, $dateFrom, $dateTo);
+        $pagination = (new Paginator())->setItems(count($entities), $perPage)->setPage($page)->toArray();
         return $this->render($template, array(
                     'entities' => $entities,
-                    'nombreParPage' => $perPage,
-                    'nombrePage' => ceil(count($entities) / $perPage),
-                    'page' => $page));
+                    'pagination' => $pagination,
+                    ));
     }
 
     /**

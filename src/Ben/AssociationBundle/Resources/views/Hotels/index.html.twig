@@ -23,7 +23,7 @@ Tableau de bord | {{ parent() }}
 <table class="table table-hover table-bordered">
     <thead>
         <tr>
-            <th>Id</th>
+            <th>#</th>
             <th>Name</th>
             <th>Category</th>
             <th>Address</th>
@@ -35,17 +35,15 @@ Tableau de bord | {{ parent() }}
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td><a href="{{ path('hotels_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ loop.index }}</td>
             <td>{{ entity.name }}</td>
             <td>{{ entity.category }}</td>
             <td>{{ entity.address }}</td>
             <td>{{ entity.city }}</td>
             <td>{{ entity.postcode }}</td>
             <td>
-                <div class="btn-group">
-                    <a class="btn btn-embossed btn-primary btn-xs" href="{{ path('hotels_show', { 'id': entity.id }) }}" data-toggle="tooltip" title="Afficher"><span class="fui-search"></span></a>
-                    <a class="btn btn-embossed btn-info btn-xs" href="{{ path('hotels_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="fui-new"></span></a>
-                </div>
+                <a class="btn btn-embossed btn-primary btn-xs" href="{{ path('hotels_show', { 'id': entity.id }) }}" data-toggle="tooltip" title="Afficher"><span class="fui-search"></span></a>
+                <a class="btn btn-embossed btn-info btn-xs" href="{{ path('hotels_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="fui-new"></span></a>
             </td>
         </tr>
     {% endfor %}

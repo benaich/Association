@@ -25,19 +25,14 @@ class ChangePasswordController extends BaseController
         if ($process) {
             $this->setFlash('fos_user_success', 'change_password.flash.success');
 
-            return new RedirectResponse($this->container->get('router')->generate('home'));
+            return new RedirectResponse($this->container->get('router')->generate('fos_user_profile_edit'));
         }
 
         $form = $this->container->get('fos_user.profile.form');
-        
-        // newsletter
-        $em = $this->container->get('doctrine')->getManager();
-        $newsletter = $em->getRepository('BenBlogBundle:newsletter')->findOneByEmail($user->getEmail());
 
         return $this->container->get('templating')->renderResponse(
             'FOSUserBundle:Profile:edit.html.'.$this->container->getParameter('fos_user.template.engine'),
             array('form' => $form->createView(),
-                'newsletter' => $newsletter,
                 'passwordform' => $passwordform->createView())
         );
     }

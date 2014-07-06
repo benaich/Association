@@ -41,6 +41,21 @@ class MessageController extends Controller
     }
 
     /**
+     * Displays the authenticated participant deleted threads
+     *
+     * @return Response
+     * @Secure(roles="IS_AUTHENTICATED_REMEMBERED")
+     */
+    public function deletedAction()
+    {
+        $threads = $this->getProvider()->getDeletedThreads();
+
+        return $this->render('FOSMessageBundle:Message:deleted.html.twig', array(
+            'threads' => $threads
+        ));
+    }
+
+    /**
      * Displays a thread, also allows to reply to it
      *
      * @param string $threadId the thread id
@@ -77,6 +92,7 @@ class MessageController extends Controller
         $formHandler = $this->container->get('fos_message.new_thread_form.handler');
 
         if ($message = $formHandler->process($form)) {
+            $this->get('session')->getFlashBag()->add('success', "message envoyé avec succée.");
             return $this->redirect($this->generateUrl('fos_message_thread_view', array(
             'threadId' => $message->getThread()->getId()
                     )));
@@ -98,6 +114,22 @@ class MessageController extends Controller
     {
         $thread = $this->getProvider()->getThread($threadId);
         $this->container->get('fos_message.deleter')->markAsDeleted($thread);
+        $this->container->get('fos_message.thread_manager')->saveThread($thread);
+
+        return $this->redirect($this->generateUrl('fos_message_inbox'));
+    }
+    
+    /**
+     * Undeletes a thread
+     * 
+     * @param string $threadId
+     * 
+     * @return RedirectResponse
+     */
+    public function undeleteAction($threadId)
+    {
+        $thread = $this->getProvider()->getThread($threadId);
+        $this->container->get('fos_message.deleter')->markAsUndeleted($thread);
         $this->container->get('fos_message.thread_manager')->saveThread($thread);
 
         return $this->redirect($this->generateUrl('fos_message_inbox'));

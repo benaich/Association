@@ -11,7 +11,7 @@
                         <div class="row">
                           <img class="myavatar col-md-4" src="{{ asset( entity.profile.image.getwebpath)}}">
                           <ul class="list-unstyled col-md-8 userinfo" data-index="{{ loop.index }}" data-id="{{ entity.id }}">
-                              <li><strong>Id :</strong> {{ entity.id }}</li>
+                              <li><strong>Identifiant :</strong> {{ entity.username }}</li>
                               <li><strong>Nom :</strong> {{ entity.profile.familyName }}</li>
                               <li><strong>Preom :</strong>  {{ entity.profile.firstName }}</li>
                               <li><strong>Date de naissance :</strong>  {{ entity.profile.birdDay|date('Y-m-d') }}</li>
@@ -28,9 +28,9 @@
                               <li><strong>Biographie :</strong> {{ entity.profile.description }}</li>
                               <li><strong>Social Links: </strong>
                                 <ul class="social">
-                                    <li><a href="{{ entity.profile.facebook }}"><span class="fui-facebook text-info"></span></a></li>
-                                    <li><a href="{{ entity.profile.google }}"><span class="fui-googleplus text-danger"></span></a></li>
-                                    <li><a href="{{ entity.profile.twitter }}"><span class="fui-twitter text-info"></span></a></li>
+                                    <li><a class="btn-social-facebook" href="{{ entity.profile.facebook }}"><span class="fui-facebook"></span></a></li>
+                                    <li><a class="btn-social-googleplus" href="{{ entity.profile.google }}"><span class="fui-googleplus"></span></a></li>
+                                    <li><a class="btn-social-twitter" href="{{ entity.profile.twitter }}"><span class="fui-twitter"></span></a></li>
                                 </ul>
                               </li>
                             </ul>

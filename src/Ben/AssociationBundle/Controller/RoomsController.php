@@ -14,6 +14,9 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 use Ben\AssociationBundle\Entity\Rooms;
 use Ben\AssociationBundle\Form\RoomsType;
+use Ben\UserBundle\Entity\User;
+
+use Ben\AssociationBundle\Pagination\Paginator;
 
 /**
  * Rooms controller.
@@ -44,20 +47,16 @@ class RoomsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $perPage = $request->get('perpage');
         $page = $request->get('page');
+        $source = $request->get('source');
         $keyword = $request->get('keyword');
-        $number = $request->get('number');
-        $floor = $request->get('floor');
-        $status = $request->get('filter');
-        $bedNumber = $request->get('bednumber');
-        $gender = $request->get('gender');
-
-        $template='BenAssociationBundle:Rooms:ajax_list.html.twig';
-        $entities = $em->getRepository('BenAssociationBundle:Rooms')->findSome($perPage, $page, $keyword, $number, $floor, $bedNumber, $gender, $status);
-        return $this->render($template, array(
+        $searchEntity = $request->get('searchEntity');
+        $entities = $em->getRepository('BenAssociationBundle:Rooms')->search($perPage, $page, $keyword, $searchEntity);
+        $pagination = (new Paginator())->setItems(count($entities), $perPage)->setPage($page)->toArray();
+        return $this->render('BenAssociationBundle:Rooms:ajax_list.html.twig', array(
                     'entities' => $entities,
-                    'nombreParPage' => $perPage,
-                    'nombrePage' => ceil(count($entities) / $perPage),
-                    'page' => $page));
+                    'pagination' => $pagination,
+                    'source' => $source
+                    ));
     }
 
     /**
@@ -145,6 +144,77 @@ class RoomsController extends Controller
     }
 
     /**
+     * Displays a form to create a mutiple Rooms entity.
+     * @Secure(roles="ROLE_USER")
+     *
+     */
+    public function newMultipleAction()
+    {
+        $entity = new Rooms();
+        $form = $this->createFormBuilder($entity)
+                ->add('type', 'choice', array('choices' => array('homme' => 'Homme','femme' => 'Femme'),
+                    'required' => false,))
+                ->add('hotel', null, array('label'  => 'Logement'))
+            ->getForm();
+
+        return $this->render('BenAssociationBundle:Rooms:multiple.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        ));
+    }
+    /**
+     * Creates mutiple Room entity.
+     * @Secure(roles="ROLE_USER")
+     *
+     */
+    public function createMultipleAction(Request $request)
+    {
+        $block  = new Rooms();
+        $form = $this->createFormBuilder($block)
+                ->add('type', 'choice', array('choices' => array('homme' => 'Homme','femme' => 'Femme'),
+                    'required' => false,))
+                ->add('hotel', null, array('label'  => 'Logement'))
+            ->getForm();
+        $form->bind($request);
+
+        if($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $hotel = $block->getHotel();
+            $type = $block->getType();
+            $floors = $request->get('floor');
+            if(count($floors) > 0){
+                foreach ($floors as $key => $value ) {
+                    for ($i=1; $i <= $value['length'] ; $i++) { 
+                        $room  = new Rooms();
+                        $room_number = ($i<10) ? '0'.$i : $i;
+                        $room->setNumber($key.$room_number);
+                        $room->setMax($value['capacity']);
+                        $room->setFree($value['capacity']);
+                        $room->setFloor($key);
+                        $room->setType($type);
+                        $room->setHotel($hotel);
+                        $rooms[] = $room;
+                    }
+                    $key++;
+                }
+                foreach ($rooms as $room) {
+                    $em->persist($room);
+                }
+                $em->flush();
+            }
+            $this->get('session')->getFlashBag()->add('success', "Les chambres ont été ajouté avec succée.");
+            return $this->redirect($this->generateUrl('rooms'));
+        }
+
+        $this->get('session')->getFlashBag()->add('error', "Il y a des erreurs dans le formulaire soumis !");
+        return $this->render('BenAssociationBundle:Rooms:multiple.html.twig', array(
+            'entity' => $block,
+            'form'   => $form->createView(),
+        ));
+    }
+
+
+    /**
      * Displays a form to edit an existing Rooms entity.
      * @Secure(roles="ROLE_MANAGER")
      *
@@ -200,23 +270,6 @@ class RoomsController extends Controller
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
-    }
-
-    /**
-     * @Secure(roles="ROLE_MANAGER")
-     */
-    public function enableAction(Request $request, $etat)
-    {
-        $users = $request->get('entities');
-        $em = $this->getDoctrine()->getManager();
-        $etat = ($etat==1)? 'open' : 'closed';
-        foreach( $users as $id){
-            $entity = $em->getRepository('BenAssociationBundle:Rooms')->find($id);
-            $entity->setStatus($etat);
-            $em->persist($entity);
-        }
-        $em->flush();
-        return new Response('1');
     }
 
     /**

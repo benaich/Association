@@ -48,3 +48,12 @@ ben_remove_rooms:
     pattern:  /delete
     defaults: { _controller: "BenAssociationBundle:Rooms:removeEntities" }
     requirements: { _method: post }
+
+room_new_multiple:
+    pattern:  /new_multiple
+    defaults: { _controller: "BenAssociationBundle:Rooms:newMultiple" }
+
+room_create_multiple:
+    pattern:  /room_create_multiple
+    defaults: { _controller: "BenAssociationBundle:Rooms:createMultiple" }
+    requirements: { _method: post }

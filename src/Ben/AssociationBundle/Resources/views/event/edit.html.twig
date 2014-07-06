@@ -9,11 +9,10 @@ Tableau de bord | {{ parent() }}
 
     <div class="form-group">
       <div class="col-md-offset-4 col-md-4">
-        <button type="submit" class="btn btn-primary btn-embossed"><span class="glyphicon glyphicon-edit"></span> Modifier</button>
+        <button type="submit" class="btn btn-primary btn-embossed"><span class="glyphicon glyphicon-edit"></span> Ajouter</button>
         <button id="js-delete" class="btn btn-embossed btn-danger"><span class="fui-cross"></span> Supprimer </button>
       </div>
-    </div>
-            
+    </div> 
 </form>
 
 <form id="deleteForm" action="{{ path('event_delete', { 'id': entity.id }) }}" method="post">

@@ -15,6 +15,7 @@ class ReservationType extends AbstractType
             ->add('date_to', 'date', array('widget' => 'single_text'))
             ->add('user')
             ->add('room')
+            ->add('oldroom', 'hidden')
         ;
     }
 
@@ -27,6 +28,6 @@ class ReservationType extends AbstractType
 
     public function getName()
     {
-        return 'ben_associationbundle_reservationtype';
+        return 'ben_reservationtype';
     }
 }

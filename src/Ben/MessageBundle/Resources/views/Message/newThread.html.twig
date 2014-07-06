@@ -1,88 +1,55 @@
 {% extends 'FOSMessageBundle::layout.html.twig' %}
-{% block stylesheet %}
-{{ parent() }}
-            {% stylesheets 'bundles/benblog/css/autocomplete.css'
-                filter='cssrewrite'  output='css/autocomplete.css' %}
-                <link rel="stylesheet" href="{{ asset_url }}" />
-            {% endstylesheets %}
-{% endblock %}
-{% block breadcrumb %} 
-<ul id="breadcrumbtrail">
-    <li class="home" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-        <a href="{{ path('home') }}" itemprop="url"><span itemprop="title"><i class="icon-home"></i> Accueil</span></a>
-        <div class="divider"></div>
-    </li>
-    <li class="home" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-        <a href="{{ path('fos_message_inbox') }}" itemprop="url"><span itemprop="title"><i class="icon-envelope"></i> Messages Privés</span></a>
-        <div class="divider"></div>
-    </li>
-    <li class="home" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-        <span itemprop="title">Nouveau message</span>
-    </li>
-</ul>
-{% endblock %}
+
+    {% block stylesheet %}
+        {{ parent() }}
+        <link href="{{ asset('css/autocomplete.css') }}" rel="stylesheet">
+    {% endblock %}
 
 {% block message_content %}
 
-<div class="content-warper">
-    <div id="comments">
-        <div class="comments-header threads">
-            <h1 class="mytitle"><div class="mail-badge dark hspan"></div>Nouveau message</h1>
-            <br>
-        </div>
-    </div>
-    <div class="body">
 {% spaceless %}
-            <form class="formstyle messageform" id="newmessageform" action="{{ url('fos_message_thread_new') }}" method="post">
-                <div class="control-group {% if form_errors(form.recipient)|length >1 %}error{% endif %}">
-                    <label class="control-label">Envoyée à :</label>
-                    <div class="controls">
-               {{ form_widget(form.recipient) }}
-               {% if form_errors(form.recipient)|length >1 %}<span class="help-inline">{{ form_errors(form.recipient) }}</span>{% endif %}
-                        </div>
-                    </div>
-                    <div class="control-group {% if form_errors(form.subject)|length >1 %}error{% endif %}">
-                        <label class="control-label">Sujet :</label>
-                        <div class="controls">
-                {{ form_widget(form.subject) }}
-               {% if form_errors(form.subject)|length >1 %}<span class="help-inline">{{ form_errors(form.subject) }}</span>{% endif %}
-                            </div>
-                        </div>
-                        <div class="control-group {% if form_errors(form.body)|length >1 %}error{% endif %}">
-                            <label class="control-label">Message :</label>
-                            <div class="controls">
-        {{ form_widget(form.body) }}
-               {% if form_errors(form.body)|length >1 %}<span class="help-inline">{{ form_errors(form.body) }}</span>{% endif %}
-                                </div>
-                            </div>
-{{ form_rest(form) }}
-
-                            <div>
-                                <button  type="submit" class="btn btn-info">Envoyer <i class="icon-share icon-white"></i></button>
-                            </div>
-                        </form>
+    <header>
+        <h1><span class="glyphicon glyphicon-envelope"></span> Nouveau message</h1>
+    </header>
+    <div class="body">
+        
+    <form id="newmessageform" action="{{ url('fos_message_thread_new') }}" method="post">
+        <div class="form-group row">
+            <label class="col-md-12" for="message_recipient">Envoyée à</label>
+            <div class="col-md-8"> 
+                <input class="form-control" id="message_recipient" type="text" name="message[recipient]" required="required">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-12" for="message_subject">Sujet</label>
+            <div class="col-md-8"> 
+                <input class="form-control" id="message_subject" type="text" name="message[subject]" required="required">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="message_body">Message</label>
+            <div> 
+                <textarea rows="6" id="message_body" name="message[body]" required="required" class="form-control"></textarea>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-embossed btn-primary"><span class="glyphicon glyphicon-share"></span> Envoyer</button>  
+        {{ form_widget(form._token) }}  
+    </form>
+    </div>
 {% endspaceless %}
-
-                    </div>
-                </div>
 {% endblock %}
 {% block javascripts %}
         {{ parent() }}
-                {% javascripts 
-                '@BenBlogBundle/Resources/public/js/jquery-ui.min.js'
-                  output='js/jquery-ui.js' %}
-                <script src="{{ asset_url }}"></script>
-                {% endjavascripts %}
+
+    <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script>
    $(function (){
        $("#message_recipient").autocomplete({
                          source:'{{ path('fos_autocomplete') }}',
                          minLength: 2,
-                         search  : function(){$(this).addClass('working');},
-                         open    : function(){$(this).removeClass('working');}
+                         search  : function(){$(this).addClass('working-input');},
+                         open    : function(){$(this).removeClass('working-input');}
                      });
    });
         </script>
 {% endblock %}
-
-                    

@@ -11,6 +11,8 @@ use Ben\UserBundle\Form\userType;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Ben\UserBundle\Form\profileType;
 
+use Ben\AssociationBundle\Pagination\Paginator;
+
 class AdminController extends Controller
 {
     /**
@@ -35,11 +37,11 @@ class AdminController extends Controller
         $searchParam = $request->get('searchParam');
         $template='BenUserBundle:admin:ajax_list.html.twig';
         $entities = $em->getRepository('BenUserBundle:user')->getUsersBy($searchParam);
+        $pagination = (new Paginator())->setItems(count($entities), $searchParam['perPage'])->setPage($searchParam['page'])->toArray();
         return $this->render($template, array(
                     'entities' => $entities,
-                    'nombreParPage' => $searchParam['perPage'],
-                    'nombrePage' => ceil(count($entities) / $searchParam['perPage']),
-                    'page' => $searchParam['page']));
+                    'pagination' => $pagination,
+                    ));
     }
 
     /**

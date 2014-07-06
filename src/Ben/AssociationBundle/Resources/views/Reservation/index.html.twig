@@ -17,7 +17,7 @@ Tableau de bord | {{ parent() }}
             </div><!-- /.col-lg-6 -->     
             <div class="col-lg-7">
               <div class="btn-group pull-right">              
-                <button class="btn btn-primary "><span class="fui-gear"></span> Action</button>
+                <button class="btn btn-primary" href="#" data-toggle="modal" data-target="#myModal"><span class="fui-search"></span> Recherche avancée</button>
                 <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                   <span class="caret"></span>
                 </button>
@@ -25,7 +25,6 @@ Tableau de bord | {{ parent() }}
                 <ul class="dropdown-menu dropdown-inverse">
                       <li><a href="#"><span class="fui-cross"></span> Annuler</a></li>
                       <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> Exporter</a></li>
-                      <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="fui-search"></span> Recherche avancée</a></li>
                       <li class="divider"></li>
                       <li><a href="#" id="js-delete"><span class="fui-trash"></span> Supprimer</a></li>
                 </ul>

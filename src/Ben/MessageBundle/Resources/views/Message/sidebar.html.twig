@@ -1,16 +1,5 @@
-{% set threadpage = false %}
-{% if app.request.attributes.get('_route')=='fos_message_thread_view' %}
-{% set threadpage = true %}
-{% endif%}
-<div class="sidebar">
-    {% if threadpage %}<form id="deleteform" action="{{ url('fos_message_thread_delete', {'threadId': thread.id}) }}" method="post">{% endif %}
-        <ul class="nav nav-tabs nav-stacked">
-            <li><a href="{{ path('fos_message_inbox') }}"><i class="icon-inbox"></i> inbox</a></li>
-            <li><a href="{{ path('fos_message_sent') }}"><i class="icon-share"></i> Envoyée</a></li>
-            <li><a href="{{ path('fos_message_thread_new') }}"><i class="icon-plus-sign"></i> Nouveau message</a></li>
-            {% if threadpage %}<li><a type="submit" href="#" onclick="$('#deleteform').trigger('submit')"><i class="icon-trash"></i> Supprimer ce message</a></li>{% endif %}
-        </ul>
-    {% if threadpage %}</form>{% endif %}
-
-
-</div>
+<ul class="nav nav-tabs">
+   <li class="active"><a href="#tab1"><span class="fui-list-bulleted"></span> Inbox</a></li>
+    <li><a href="{{ path('fos_message_sent') }}"><span class="fui-share"></span> Envoyée</a></li>
+    <li><a href="{{ path('fos_message_thread_new') }}"><span class="fui-share"></span> Nouveau message</a></li>
+ </ul> <!-- /tabs -->

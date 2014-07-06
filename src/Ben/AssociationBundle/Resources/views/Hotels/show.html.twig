@@ -38,6 +38,13 @@ Tableau de bord | {{ parent() }}
         </tr>
     </tbody>
 </table>
+<h2><span class="fui-tag"></span> Liste des chambres dans ce logement</h2>
+<div class="room-widget col-md-12">
+    {% for item in entity.rooms %}
+        <div class="col-md-2 floor{{ item.floor }}" data-floor="{{ item.floor }}"><a href="{{ path('rooms_show', { 'id': item.id }) }}" class="btn btn-{% if item.isFree %}success{% else %}default{% endif %} btn-block">{{ item.number }} </a></div>
+    {% endfor %}
+</div>
+
 </div> 
 <div class="col-md-3">
     <form action="{{ path('hotels_delete', { 'id': entity.id }) }}" method="post" class="well">
@@ -53,3 +60,29 @@ Tableau de bord | {{ parent() }}
 </div>
 </div>
 {% endblock body %}
+{% block javascripts %}
+{{ parent() }}
+<script> 
+    (function($) {
+        var roomWidget = $('.room-widget'),
+            rooms = roomWidget.children();
+
+        rooms.sort(function(a,b){
+            var an = a.getAttribute('data-floor'),
+                bn = b.getAttribute('data-floor');
+
+            if(an > bn) {
+                return 1;
+            }
+            if(an < bn) {
+                return -1;
+            }
+            return 0;
+        });
+
+        rooms.detach().appendTo(roomWidget);
+        for (var i = 0; i < 6; i++)
+            $('.floor'+i).wrapAll('<div class="row"></div>').parent().prepend('<div class="col-md-12"><p class="bg-info">Etage N°'+i+'</p></div>');
+    })(jQuery);
+</script>
+{% endblock %}

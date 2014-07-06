@@ -38,6 +38,10 @@ class ThreadMetadata extends BaseThreadMetadata {
         $this->participant = $participant;
         return $this;
     }
+    public function getParticipant()
+    {
+        return $this->participant;
+    }
 
 }
 

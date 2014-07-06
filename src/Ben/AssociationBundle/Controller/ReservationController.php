@@ -9,6 +9,9 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Ben\AssociationBundle\Entity\Reservation;
 use Ben\AssociationBundle\Form\ReservationType;
 use Ben\UserBundle\Entity\User;
+
+use Ben\AssociationBundle\Pagination\Paginator;
+
 /**
  * Reservation controller.
  *
@@ -43,13 +46,12 @@ class ReservationController extends Controller
         $dateFrom = (empty($dateFrom)) ? null : new \DateTime($dateFrom);
         $dateTo = (empty($dateTo)) ? null : new \DateTime($dateTo);
 
-        $template='BenAssociationBundle:Reservation:ajax_list.html.twig';
         $entities = $em->getRepository('BenAssociationBundle:Reservation')->findSome($perPage, $page, $keyword, $group, $dateFrom, $dateTo);
-        return $this->render($template, array(
+        $pagination = (new Paginator())->setItems(count($entities), $perPage)->setPage($page)->toArray();
+        return $this->render('BenAssociationBundle:Reservation:ajax_list.html.twig', array(
                     'entities' => $entities,
-                    'nombreParPage' => $perPage,
-                    'nombrePage' => ceil(count($entities) / $perPage),
-                    'page' => $page));
+                    'pagination' => $pagination,
+                    ));
     }
     /**
      * Finds and displays a Reservation entity.
@@ -86,15 +88,12 @@ class ReservationController extends Controller
             return $this->redirect($this->generateUrl('ben_show_user', array('id' => $user->getId())));
         }
             
-        $em = $this->getDoctrine()->getManager();
         $entity = new Reservation();
         $entity->setUser($user);
-        $floors = $em->getRepository('BenAssociationBundle:Rooms')->getFloors();
         $form   = $this->createForm(new ReservationType(), $entity);
 
         return $this->render('BenAssociationBundle:Reservation:new.html.twig', array(
             'entity' => $entity,
-            'floors' => $floors,
             'form'   => $form->createView(),
         ));
     }
@@ -111,10 +110,12 @@ class ReservationController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
+            $entity->getRoom()->minusFree();
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('success', "Reservation effectué avec succée.");
             return $this->redirect($this->generateUrl('reservation_show', array('id' => $entity->getId())));
         }
 
@@ -129,22 +130,16 @@ class ReservationController extends Controller
      * @Secure(roles="ROLE_MANAGER")
      *
      */
-    public function editAction($id)
+    public function editAction(Reservation $entity)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('BenAssociationBundle:Reservation')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Reservation entity.');
-        }
+        $entity->setOldroom($entity->getRoom()->getId());
 
         $editForm = $this->createForm(new ReservationType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
         return $this->render('BenAssociationBundle:Reservation:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -154,30 +149,31 @@ class ReservationController extends Controller
      * @Secure(roles="ROLE_MANAGER")
      *
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, Reservation $entity)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('BenAssociationBundle:Reservation')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Reservation entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
         $editForm = $this->createForm(new ReservationType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            if ($entity->getOldroom() != $entity->getRoom()->getId()) {
+                $room = $em->getRepository('BenAssociationBundle:Rooms')->find($entity->getOldroom());
+                $room->plusFree();
+                $entity->getRoom()->minusFree();
+                $em->persist($room);
+            }
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('reservation_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add('success', "Action effectué avec succée.");
+            return $this->redirect($this->generateUrl('reservation_edit', array('id' => $entity->getId())));
         }
 
         return $this->render('BenAssociationBundle:Reservation:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

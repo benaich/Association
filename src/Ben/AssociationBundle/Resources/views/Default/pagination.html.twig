@@ -1,4 +1,4 @@
-{% if entities|length > nombreParPage %}
+{# {% if entities|length > nombreParPage %}
 <tr class="mypagination">
     <td colspan="10">
       <div class="text-center">
@@ -16,6 +16,24 @@
               <li class="next"><a href="#" class="fui-arrow-right js-page" data-page="{{ page+1 }}"></a></li>
             {% endif %}
           </ul>
+        </div>
+      </div>
+    </td>
+</tr>
+{% endif %} #}
+
+{% if pagination|length > 1 %}
+<tr class="mypagination hide-print">
+    <td colspan="10">
+      <div class="text-center">
+        <div class="pagination ">
+            <ul>
+              {% for p in pagination %}
+              <li{% if p.is_current %} class="active"{% endif %}>
+                <a href="#" class="js-page" data-page="{{ p.page_number }}" >{{ p.label }}</a>
+              </li>
+              {% endfor %}
+            </ul>
         </div>
       </div>
     </td>
