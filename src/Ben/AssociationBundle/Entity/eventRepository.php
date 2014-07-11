@@ -13,20 +13,23 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class eventRepository extends EntityRepository
 {
-    public function findSome($nombreParPage, $page, $keyword, $group, $dateFrom, $dateTo) {       
-       $qb = $this->createQueryBuilder('e')
+    public function search($searchParam) {
+        extract($searchParam);    
+        $qb = $this->createQueryBuilder('e')
                 ->leftJoin('e.groups', 'g')
                 ->addSelect('g')
                 ->andWhere('e.name like :keyword or e.description like :keyword or e.type like :keyword')
                 ->setParameter('keyword', '%'.$keyword.'%');
-        if($group)
+        if(!empty($group))
             $qb->andWhere('g.id = :group')->setParameter('group', $group);
-        if($dateFrom)
-            $qb->andWhere('e.date_from >= :dateFrom')->setParameter('dateFrom', $dateFrom);
-        if($dateTo)
-            $qb->andWhere('e.date_to <= :dateTo')->setParameter('dateTo', $dateTo);
-        $qb->setFirstResult(($page - 1) * $nombreParPage)
-        ->setMaxResults($nombreParPage);
+        if(!empty($date)){
+            $date = explode("-",$date);
+            $qb->andWhere('e.date_from between :d1 and :d2')
+            ->setParameter('d1', $date[0])
+            ->setParameter('d2', $date[1]);
+        }
+        $qb->setFirstResult(($page - 1) * $perPage)
+        ->setMaxResults($perPage);
         
        return new Paginator($qb->getQuery());
     }

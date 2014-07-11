@@ -59,7 +59,26 @@ class Message extends BaseMessage {
         $meta->setMessage($this);
         parent::addMetadata($meta);
     }
+    
+    public function getExcerpt($count = 60, $more = null ) {
+		if ( null === $more ) $more = '';
+		$str = $this->strip_all_tags( $this->body, true );
+		$excerpt = mb_substr( $str, 0, $count );
+		// remove part of an entity at the end
+		$excerpt = preg_replace( '/&[^;\s]{0,6}$/', '', $excerpt );
+		if ( $str != $excerpt )
+			$excerpt = trim( $excerpt ) . $more;
+		return $excerpt;
+	}
+	public function strip_all_tags($string, $remove_breaks = false) {
+		$string = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $string );
+		$string = strip_tags($string);
 
+		if ( $remove_breaks )
+			$string = preg_replace('/[\r\n\t ]+/', ' ', $string);
+
+		return trim( $string );
+	}
 }
 
 ?>

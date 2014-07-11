@@ -59,7 +59,51 @@ Tableau de bord | {{ parent() }}
           url: '{{ path('event_show', { 'id': entity.id }) }}'
         }{{ loop.last ? '' : ',' }}
       {% endfor %}
-      ]
+      ],
+      eventRender: function(event, element, view)
+      {
+          console.log("My Event: " + event.title);
+      },
+      eventClick: function(calEvent, jsEvent){
+          alert('hi');
+      },
+      eventDrop: function(event, delta) {
+          alert(event.title + ' was moved ' + delta + ' days\n' +
+              '(should probably update your database)');
+      },
+      eventMouseover: function( event, jsEvent, view ) { 
+          var item = $(this);
+          if(item.find('.nube').length == 0){
+              var info = '<span class="nube"><h2>'+event.title+'</h2><img src="'+event.avatar+'" /> <p class="text">'+event.name+'</p><p>'+event.start+' <br /> '+event.end+'</p><p><a href="/post.php?blogid='+event.id+'">read_more</a></p></span>';
+              item.append(info);
+          }
+          if(parseInt(item.css('top')) <= 200){
+              item.find('.nube').css({'top': 20,'bottom':'auto'});
+              item.parent().find('.fc-event').addClass('z0');
+          }
+          item.find('.nube').stop(true,true).fadeIn();
+      },
+      eventMouseout: function( event, jsEvent, view ) { 
+          var item = $(this);
+          item.find('.nube').stop(true,true).fadeOut();
+          alert(12);
+      },
+      dayClick: function(date, allDay, jsEvent, view) {
+
+          /*if (allDay) {
+              alert('Clicked on the entire day: ' + date);
+          }else{
+              alert('Clicked on the slot: ' + date);
+          }*/
+
+          alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+
+          alert('Current view: ' + view.name);
+
+          // change the day's background color just for fun
+          $(this).css('background-color', 'red');
+
+      }
     });
     })(jQuery);
 </script>

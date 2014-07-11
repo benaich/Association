@@ -1,15 +1,10 @@
 
 <ul class="threadslist">
     {% for thread in threads %}
-    {% set sender=thread.participant %}
+    {% set sender = thread.getParticipant(app.user) %}
     <li class="thread-item {% if not fos_message_is_read(thread)%}unread{% endif %}" id="message_{{ thread.id }}">
         <div class="col-md-2">
-        <div class="row">            
-        <div class="col-md-11">
-            <a href="{{ path('ben_show_user', { 'id': sender.id }) }}" title="{{ sender }}">
-            <img src="{{ asset( sender.avatar)}}" class="img-responsive img-thumbnail"></a>
-        </div>
-        </div>
+        <strong>{{ sender }}</strong>
         </div>
         <div class="col-md-10">
             <div class="message-label">
@@ -18,7 +13,7 @@
                 </p>
                 <h6><a href="{{  path('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}" class="link-main">{{ thread.subject }}</a></h6>
             </div>
-            <p class="muted"><small>{{ thread.lastMessage.body }}</small> ...</p>
+            <p class="muted"><small>{{ thread.lastMessage.excerpt }}</small> ...</p>
         </div>
         <div class="clearfix"></div>
     </li>

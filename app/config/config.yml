@@ -7,7 +7,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -32,7 +32,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ ]
+    bundles:        [BenAssociationBundle, FOSMessageBundle]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -57,18 +57,17 @@ doctrine:
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"
-    host:      "%mailer_host%"
+    # host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
-    spool:     { type: memory }
+    # spool:     { type: memory }
+    spool:
+        type: file
+        path: "%kernel.root_dir%/spool"
 
 #knp_snappy pdf bundle
 knp_snappy:
     pdf:
         enabled:    true
         binary:     C:/wkhtmltopdf/bin/wkhtmltopdf.exe
-        options:    []
-    image:
-        enabled:    true
-        binary:     /usr/local/bin/wkhtmltoimage
         options:    []

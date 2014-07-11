@@ -24,6 +24,7 @@ class Thread extends BaseThread {
 
     /**
      * @ORM\ManyToOne(targetEntity="Ben\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="createdBy_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $createdBy;
 
@@ -60,11 +61,20 @@ class Thread extends BaseThread {
     {
         return  $this->metadata;
     }
-    public function getParticipant()
+    public function getParticipant($current_user)
     {
-        $participant = $this->messages->last()->getSender();
-        // if($participant == $this->createdBy) if($this->messages[1])$participant = $this->messages[1]->getSender();
+        $participants = $this->getParticipants();
+        unset($participants[array_search($current_user, $participants)]);
+        $participant = ($participants) ? implode(' ', $participants) : $current_user;
         return $participant;     
+    }
+    public function getParticipants()
+    {
+        foreach ($this->metadata as $data) {
+               $participants[] = $data->getParticipant()->getUsername();
+           }
+        return $participants;
+        var_dump($participants);die();   
     }
 
 }

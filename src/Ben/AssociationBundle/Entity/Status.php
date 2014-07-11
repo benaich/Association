@@ -27,11 +27,20 @@ class Status
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-
+    
     /**
-    * @ORM\OneToMany(targetEntity="Ben\UserBundle\Entity\User", mappedBy="status")
+    * @ORM\OneToMany(targetEntity="Ben\AssociationBundle\Entity\Avancement", mappedBy="status", cascade={"remove", "persist"})
     */
-    private $users;
+    private $avancements;
+    
+    /************ constructeur ************/
+    
+    public function __construct()
+    {
+        $this->avancements = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /************ getters & setters  ************/
 
     /**
      * Get id
@@ -66,13 +75,41 @@ class Status
         return $this->name;
     }
 
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * Add avancements
+     *
+     * @param \Ben\AssociationBundle\Entity\Avancement $avancements
+     * @return Status
+     */
+    public function addAvancement(\Ben\AssociationBundle\Entity\Avancement $avancements)
+    {
+        $this->avancements[] = $avancements;
+    
+        return $this;
+    }
+
+    /**
+     * Remove avancements
+     *
+     * @param \Ben\AssociationBundle\Entity\Avancement $avancements
+     */
+    public function removeAvancement(\Ben\AssociationBundle\Entity\Avancement $avancements)
+    {
+        $this->avancements->removeElement($avancements);
+    }
+
+    /**
+     * Get avancements
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAvancements()
+    {
+        return $this->avancements;
     }
 }

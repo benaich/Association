@@ -17,6 +17,7 @@ class profileType extends AbstractType
             ->add('gender', 'choice', array('choices' => array('homme' => 'Homme','femme' => 'Femme'),
                     'required' => false,))
             ->add('cin')
+            ->add('barcode')
             ->add('address')
             ->add('post_code')
             ->add('city')
@@ -25,10 +26,13 @@ class profileType extends AbstractType
             ->add('gsm')
             ->add('job')
             ->add('description')
-            ->add('website')
-            ->add('facebook')
-            ->add('google')
-            ->add('twitter')
+            ->add('diplome', 'choice', array('choices' => array('BAC' => 'BAC','DEUG' => 'DEUG','LICENCE' => 'LICENCE','MASTER' => 'MASTER','DOCTORAT' => 'DOCTORAT'),
+                    'required' => false,))
+            ->add('expertise')
+            // ->add('website')
+            // ->add('facebook')
+            // ->add('google')
+            // ->add('twitter')
             ->add('image' , new \Ben\AssociationBundle\Form\imageType())
         ;
     }

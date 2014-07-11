@@ -6,7 +6,7 @@ Tableau de bord | {{ parent() }}
 <h2><span class="fui-home"></span> Logement: {{ entity.name }}</h2>
 <div class="row">
     <div class="col-sm-9">
-<table class="table table-hover table-bordered">
+<table class="table table-bordered table-striped">
     <tbody>
         <tr>
             <th>Id</th>
@@ -47,7 +47,7 @@ Tableau de bord | {{ parent() }}
 
 </div> 
 <div class="col-md-3">
-    <form action="{{ path('hotels_delete', { 'id': entity.id }) }}" method="post" class="well">
+    <form action="{{ path('hotels_delete', { 'id': entity.id }) }}" method="post">
     {{ form_widget(delete_form) }}
     <a id="submitEditForm" class="btn btn-embossed btn-primary btn-block" href="{{ path('hotels_edit', { 'id': entity.id }) }}">
         <span class="fui-new"></span> Mettre à jour

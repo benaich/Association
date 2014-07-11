@@ -26,12 +26,7 @@
           <div class="form-group">
               <label class="col-md-5 control-label" for="floor">Date de naissance:</label>
               <div class="form-group col-md-7">
-                  <div class="input-group">
-                    <span class="input-group-btn">
-                      <button class="btn" type="button"><span class="fui-calendar"></span></button>
-                    </span>
-                    <input type="text" class="form-control has-datepicker" name="searchParam[birdDay]" id="birdDay" value="" placeholder="Date de naissance">
-                  </div>
+                  <input id="rangepicker" type="text" class="form-control" name="searchParam[birdDay]" id="birdDay" value="" placeholder="Date de naissance">
               </div>
           </div>
           <div class="form-group">
@@ -41,9 +36,20 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="" class="col-md-5 control-label">Tél</label>
+            <label for="citySelect" class="col-md-5 control-label">Codebar</label>
             <div class="form-group col-md-7">
-              <input type="text" name="searchParam[tel]" class="form-control">
+              <input id="citySelect" type="text" name="searchParam[barcode]" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-md-5 control-label">Filtrer par Status :</label>
+            <div class="col-md-7">
+              <select name="searchParam[status]" class="primary select-block">
+                <option value="0">Filtrer par status</option>
+                {% for entity in status %}
+                <option value="{{ entity.id }}">{{ entity.name }}</option>
+                  {% endfor %}
+              </select>
             </div>
           </div>
           <div class="form-group">
@@ -51,9 +57,19 @@
             <div class="col-md-7">
               <select id="js-group" name="searchParam[group]" class="primary select-block">
                 <option value="0">Filtrer par groupe</option>
-                {% for group in groups %}
-                <option value="{{ group.id }}">{{ group.name }}</option>
+                {% for entity in groups %}
+                <option value="{{ entity.id }}">{{ entity.name }}</option>
                   {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-md-5 control-label">Filtrer par cotisation :</label>
+            <div class="col-md-7">
+              <select name="searchParam[cotisation]" class="primary select-block">
+                <option value="0">Tous</option>
+                <option value="1">Payé</option>
+                <option value="2">Non payé</option>
               </select>
             </div>
           </div>

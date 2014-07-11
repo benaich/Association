@@ -1,0 +1,30 @@
+cotisation:
+    pattern:  /
+    defaults: { _controller: "BenAssociationBundle:Cotisation:index" }
+
+cotisation_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "BenAssociationBundle:Cotisation:show" }
+
+cotisation_new:
+    pattern:  /{id}/new
+    defaults: { _controller: "BenAssociationBundle:Cotisation:new" }
+
+cotisation_create:
+    pattern:  /create
+    defaults: { _controller: "BenAssociationBundle:Cotisation:create" }
+    requirements: { _method: post }
+
+cotisation_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BenAssociationBundle:Cotisation:edit" }
+
+cotisation_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BenAssociationBundle:Cotisation:update" }
+    requirements: { _method: post }
+
+cotisation_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BenAssociationBundle:Cotisation:delete" }
+    requirements: { _method: post }

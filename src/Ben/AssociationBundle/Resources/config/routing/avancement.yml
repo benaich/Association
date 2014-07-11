@@ -1,0 +1,22 @@
+avancement_new:
+    pattern:  /{id}/new
+    defaults: { _controller: "BenAssociationBundle:Avancement:new" }
+
+avancement_create:
+    pattern:  /create
+    defaults: { _controller: "BenAssociationBundle:Avancement:create" }
+    requirements: { _method: post }
+
+avancement_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BenAssociationBundle:Avancement:edit" }
+
+avancement_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BenAssociationBundle:Avancement:update" }
+    requirements: { _method: post }
+
+avancement_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BenAssociationBundle:Avancement:delete" }
+    requirements: { _method: post }

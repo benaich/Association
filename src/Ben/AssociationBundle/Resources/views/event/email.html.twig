@@ -1,0 +1,2 @@
+
+{{ app_config.letter_invitation|replace({'{name}': user.profile.familyName ~ ' ' ~ user.profile.firstName, '{date}': entity.datefrom|date('Y-m-d'), '{time}': entity.datefrom|date('H:i'), '{body}': entity.description})|nl2br }}

@@ -25,7 +25,7 @@ class ResettingController extends BaseController {
         if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
             $flash = "Un nouveau mot de passe a déjà été demandé pour cet utilisateur dans les dernières 24 heures.";
             $this->setFlash('error', $flash);
-            return new RedirectResponse($this->container->get('router')->generate('home'));
+            return new RedirectResponse($this->container->get('router')->generate('Ben_association_homepage'));
         }
 
         if (null === $user->getConfirmationToken()) {
@@ -59,7 +59,7 @@ class ResettingController extends BaseController {
         }
         $flash = "Un e-mail a été envoyé à l'adresse " . $email . ". Il contient un lien sur lequel il vous faudra cliquer afin de réinitialiser votre mot de passe.";
         $this->setFlash('success', $flash);
-        return new RedirectResponse($this->container->get('router')->generate('home'));
+        return new RedirectResponse($this->container->get('router')->generate('Ben_association_homepage'));
     }
 
 }

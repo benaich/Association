@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Badge</title>
+    {% set addr = 'http://' ~ app.request.server.get('SERVER_ADDR') %} 
+    <link href="{{ addr ~ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ addr ~ asset('css/main.css') }}" rel="stylesheet"><!-- Loading my css -->
+    <style type="text/css"> {{ app_config.org_carte_css}} </style>
+</head>
+<body>
+<header class="print-header">
+  <div class="pull-right"><img src="{{ addr ~ asset(app_config.org_logo) }}" alt="logo"/></div>
+  <h1>{{ app_config.org_name }}</h1> 
+  <div class="clearfix"></div>
+</header>
+
+  <h3><span class="glyphicon glyphicon-user"></span> Etiquettes des adhérants</h3>
+  <h3></h3>
+  <div>
+    {% for entity in entities %}
+    <div class="box mybadge etiquette printed-badge">
+      <img class="pull-right logo" src="{{ addr ~ asset(app_config.org_logo) }}"/>
+      <div class="js-barcode">
+        <ul class="list-unstyled">
+          <li><strong>{{ entity.profile.fullName }}</strong></li>
+          <li><strong>{{ 'now'|date('d/m/Y')}}</strong></li>
+        </ul>
+      </div>
+      <div class="footer label-primary">
+          <span>Etiquette de repas</span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  {% endfor %}
+      <div class="clearfix"></div>
+  </div>
+  <div class="pull-right">
+      Fait à {{ app_config.org_city }} le {{ 'now'|date('d/m/Y')}}
+  </div>
+</body>
+</html>

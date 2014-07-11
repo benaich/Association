@@ -1,0 +1,13 @@
+   <div class="form-group ">
+		<label class="col-md-4 control-label" for="ben_congetype_user">Adhérant</label>
+		<div class="col-md-4">
+			<input id="ben_congetype_user" class="form-control disabled" disabled="disabled" type="text" name="unused" value="{{ entity.user.profile.fullName }}">
+		</div>
+	</div>
+	{{ form_row(form.date_from, { 'label': 'Date de début'}) }}
+	{{ form_row(form.date_to, { 'label': 'Date fin'}) }}
+	{{ form_row(form.user, { 'label': 'Adhérant'}) }}
+	{{ form_row(form.city, { 'label': 'Province'}) }}
+	{{ form_row(form.status, { 'label': 'Nom du status'}) }}
+	{{ form_rest(form) }} 
+      

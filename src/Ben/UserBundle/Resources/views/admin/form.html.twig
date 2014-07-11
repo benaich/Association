@@ -14,30 +14,33 @@
               </div>
               {{ form_row(form.profile.image.file, { 'label': ' '}) }}
               {{ form_row(form.profile.family_name, { 'label': 'Nom'}) }}
-             {{ form_row(form.profile.first_name, { 'label': 'Prenom'}) }}
+              {{ form_row(form.profile.first_name, { 'label': 'Prenom'}) }}
+              {{ form_row(form.profile.cin, { 'label': 'CIN'}) }}
+              {{ form_row(form.profile.barcode, { 'label': 'Codebar'}) }}
               {{ form_row(form.profile.gender, { 'label': 'Genre'}) }}
               {{ form_row(form.profile.bird_day, { 'label': 'Date de naissance'}) }}
-
               {{ form_row(form.profile.job, { 'label': 'Profession'}) }}
+              {{ form_row(form.profile.diplome, { 'label': 'Niveau d\'etude'}) }}
+              {{ form_row(form.profile.expertise, { 'label': 'Spécialité'}) }}
         </div><!-- /tab1 -->
 
 				<div class="tab-pane" id="tab2">
-               {{ form_row(form.profile.address, { 'label': 'Adresse'}) }}
-               {{ form_row(form.profile.post_code, { 'label': 'Code Postal'}) }}
+              {{ form_row(form.profile.address, { 'label': 'Adresse'}) }}
+              {{ form_row(form.profile.post_code, { 'label': 'Code Postal'}) }}
               {{ form_row(form.profile.city, { 'label': 'Ville'}) }}
               {{ form_row(form.profile.contry, { 'label': 'Pays'}) }}
               {{ form_row(form.profile.tel, { 'label': 'Tél'}) }}
               {{ form_row(form.profile.gsm, { 'label': 'GSM'}) }}
-             {{ form_row(form.email, { 'label': 'Courriel'}) }}
+              {{ form_row(form.email, { 'label': 'Courriel'}) }}
+             {#
               {{ form_row(form.profile.facebook, { 'label': 'facebook'}) }}
-             {{ form_row(form.profile.twitter, { 'label': 'twitter'}) }}
-               {{ form_row(form.profile.google, { 'label': 'google'}) }}
-               {{ form_row(form.profile.website, { 'label': 'Site Web'}) }}
+              {{ form_row(form.profile.twitter, { 'label': 'twitter'}) }}
+              {{ form_row(form.profile.google, { 'label': 'google'}) }}
+              {{ form_row(form.profile.website, { 'label': 'Site Web'}) }} #}
 				</div><!-- /tab2 -->
 
         <div class="tab-pane" id="tab3">
               {{ form_row(form.enabled, { 'label': 'Compte actif'}) }}
-              {{ form_row(form.status, { 'label': 'Statut'}) }}
               {{ form_row(form.username, { 'label': 'Identifiant'}) }}
               {{ form_row(form.plainpassword, { 'label': 'Mot de passe'}) }}
               {{ form_row(form.profile.description, { 'label': 'Autres informations'}) }}

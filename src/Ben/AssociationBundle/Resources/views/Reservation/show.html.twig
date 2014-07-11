@@ -15,7 +15,6 @@ Tableau de bord | {{ parent() }}
         <tr>
             <th>Adherent</th>
             <td>
-                <img class="img40" src="{{ asset( entity.user.profile.image.getwebpath)}}"/>
                 <a href="{{ path('ben_show_user', { 'id': entity.user.id }) }}">{{ entity.user.profile.firstName }} {{ entity.user.profile.familyName }}</a>
             </td>
         </tr>
@@ -51,7 +50,7 @@ Tableau de bord | {{ parent() }}
 </table>
 </div> 
 <div class="col-md-3">
-    <form action="{{ path('reservation_delete', { 'id': entity.id }) }}" method="post" class="well">
+    <form action="{{ path('reservation_delete', { 'id': entity.id }) }}" method="post">
     {{ form_widget(delete_form) }}
     <a id="submitEditForm" class="btn btn-embossed btn-primary btn-block" href="{{ path('reservation_edit', { 'id': entity.id }) }}">
         <span class="fui-new"></span> Mettre à jour

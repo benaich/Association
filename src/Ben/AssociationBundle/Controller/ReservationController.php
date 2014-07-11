@@ -33,26 +33,22 @@ class ReservationController extends Controller
                 'entitiesLength' => $entitiesLength[1]));
     }
 
+    /**
+     * @Secure(roles="ROLE_MANAGER")
+     */
     public function ajaxListAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $perPage = $request->get('perpage');
-        $page = $request->get('page');
-        $keyword = $request->get('keyword');
-        $group = $request->get('group');
+        $searchParam = $request->get('searchParam');
 
-        $dateFrom = $request->get('date-from');
-        $dateTo = $request->get('date-to');
-        $dateFrom = (empty($dateFrom)) ? null : new \DateTime($dateFrom);
-        $dateTo = (empty($dateTo)) ? null : new \DateTime($dateTo);
-
-        $entities = $em->getRepository('BenAssociationBundle:Reservation')->findSome($perPage, $page, $keyword, $group, $dateFrom, $dateTo);
-        $pagination = (new Paginator())->setItems(count($entities), $perPage)->setPage($page)->toArray();
+        $entities = $em->getRepository('BenAssociationBundle:Reservation')->search($searchParam);
+        $pagination = (new Paginator())->setItems(count($entities), $searchParam['perPage'])->setPage($searchParam['page'])->toArray();
         return $this->render('BenAssociationBundle:Reservation:ajax_list.html.twig', array(
                     'entities' => $entities,
                     'pagination' => $pagination,
                     ));
     }
+    
     /**
      * Finds and displays a Reservation entity.
      * @Secure(roles="ROLE_MANAGER")

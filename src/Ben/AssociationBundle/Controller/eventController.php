@@ -40,20 +40,11 @@ class eventController extends Controller
     public function ajaxListAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $perPage = $request->get('perpage');
-        $page = $request->get('page');
-        $keyword = $request->get('keyword');
-        $group = $request->get('group');
+        $searchParam = $request->get('searchParam');
 
-        $dateFrom = $request->get('date-from');
-        $dateTo = $request->get('date-to');
-        $dateFrom = (empty($dateFrom)) ? null : new \DateTime($dateFrom);
-        $dateTo = (empty($dateTo)) ? null : new \DateTime($dateTo);
-
-        $template='BenAssociationBundle:event:ajax_list.html.twig';
-        $entities = $em->getRepository('BenAssociationBundle:event')->findSome($perPage, $page, $keyword, $group, $dateFrom, $dateTo);
-        $pagination = (new Paginator())->setItems(count($entities), $perPage)->setPage($page)->toArray();
-        return $this->render($template, array(
+        $entities = $em->getRepository('BenAssociationBundle:event')->search($searchParam);
+        $pagination = (new Paginator())->setItems(count($entities), $searchParam['perPage'])->setPage($searchParam['page'])->toArray();
+        return $this->render('BenAssociationBundle:Event:ajax_list.html.twig', array(
                     'entities' => $entities,
                     'pagination' => $pagination,
                     ));
@@ -242,5 +233,63 @@ class eventController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('BenAssociationBundle:event')->findAll();
         return $this->render('BenAssociationBundle:event:calendar.html.twig', array('entities' => $entities));
+    }
+
+    /**
+     * Finds and displays a event entity.
+     * @Secure(roles="ROLE_MANAGER")
+     *
+     */
+    public function publishAction(Event $entity)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('BenUserBundle:User')->getUsersByEvent($entity->getId());
+        // var_dump($users);die();
+
+        return $this->render('BenAssociationBundle:event:invitation.html.twig', array(
+            'entity'      => $entity,
+            'users'      => $users,
+            ));
+    }
+
+    /**
+     * Finds and displays a event entity.
+     * @Secure(roles="ROLE_MANAGER")
+     *
+     */
+    public function sendAction(Event $entity)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('BenUserBundle:User')->getUsersByEvent($entity->getId(), true);
+        // var_dump($users);die();
+        $sender_user = $this->container->get('fos_user.user_manager')->findUserByUsername('admin');
+        $sender_email = $em->getRepository('BenAssociationBundle:config')->findOneBy(array('the_key' => 'org_email'))->getTheValue();
+        foreach ($users as $user) {
+            if($user != $sender_user){
+                $body = $this->render('BenAssociationBundle:event:email.html.twig', array('user' => $user, 'entity' => $entity));
+
+                 // send message using fos_message
+/*                $threadBuilder = $this->container->get('fos_message.composer')->newThread();
+                $threadBuilder
+                    ->addRecipient($user)
+                    ->setSender($sender_user)
+                    ->setSubject('welcome message')
+                    ->setBody($body->getContent());
+                $sender = $this->container->get('fos_message.sender');
+                $sender->send($threadBuilder->getMessage());*/
+
+                // send message using swiftmailer
+                $message = \Swift_Message::newInstance()
+                        ->setSubject('invitation à un reunion')
+                        ->setFrom($sender_email)
+                        ->setTo($user->getEmail())
+                        ->setBody($body, 'text/html');
+                $this->get('mailer')->send($message);
+            }
+        }
+
+        $this->get('session')->getFlashBag()->add('success', "messages envoyées avec succée.");
+
+        return $this->redirect($this->generateUrl('event_publish', array('id' => $entity->getId())));
     }
 }

@@ -17,6 +17,7 @@ class HotelsController extends Controller
 {
     /**
      * Lists all Hotels entities.
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function indexAction(Request $request)
@@ -38,6 +39,7 @@ class HotelsController extends Controller
 
     /**
      * Finds and displays a Hotels entity.
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function showAction($id)
@@ -59,6 +61,7 @@ class HotelsController extends Controller
 
     /**
      * Displays a form to create a new Hotels entity.
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function newAction()
@@ -74,6 +77,7 @@ class HotelsController extends Controller
 
     /**
      * Creates a new Hotels entity.
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function createAction(Request $request)
@@ -98,6 +102,7 @@ class HotelsController extends Controller
 
     /**
      * Displays a form to edit an existing Hotels entity.
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function editAction($id)
@@ -122,6 +127,7 @@ class HotelsController extends Controller
 
     /**
      * Edits an existing Hotels entity.
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function updateAction(Request $request, $id)
@@ -154,6 +160,7 @@ class HotelsController extends Controller
 
     /**
      * Deletes a Hotels entity.
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function deleteAction(Request $request, $id)

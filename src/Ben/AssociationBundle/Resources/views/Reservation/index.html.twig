@@ -2,14 +2,18 @@
 {% block title %}
 Tableau de bord | {{ parent() }}
 {% endblock %}
+    {% block stylesheet %}
+   {{ parent() }}   
+        <link href="{{ asset('css/daterangepicker-bs3.css') }}" rel="stylesheet"><!-- Loading my css -->
+    {% endblock %}
 {% block body %}
 <h2><span class="fui-book"></span> Liste des réservations</h2>
     <form id="jsForm" role="form" method="post" action="">
-        <input id="pagenumber" type="hidden" name="page" value="1">         
+        <input id="pagenumber" type="hidden" name="searchParam[page]" value="1">         
           <div class="row">
             <div class="col-lg-5 form-group">
               <div class="input-group">
-                <input type="text" name="keyword" class="form-control" placeholder="Search">
+                <input type="text" name="searchParam[keyword]" class="form-control" placeholder="Search">
                 <div class="input-group-btn">
                 <button class="btn btn-default" type="submit"><span class="fui-search"></span></button>
                 </div>
@@ -62,31 +66,15 @@ Tableau de bord | {{ parent() }}
               </div>
               <div class="modal-body">     
                 <div class="form-group">
-                    <label class="col-md-5 control-label" for="number">Date Début:</label>
+                    <label class="col-md-5 control-label" for="floor">Date de réservation:</label>
                     <div class="form-group col-md-7">
-                        <div class="input-group">
-                          <span class="input-group-btn">
-                            <button class="btn" type="button"><span class="fui-calendar"></span></button>
-                          </span>
-                          <input type="text" class="form-control has-datepicker" name="date-from" id="date-from" value="" placeholder="Date Début">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-5 control-label" for="floor">Date Fin:</label>
-                    <div class="form-group col-md-7">
-                        <div class="input-group">
-                          <span class="input-group-btn">
-                            <button class="btn" type="button"><span class="fui-calendar"></span></button>
-                          </span>
-                          <input type="text" class="form-control has-datepicker" name="date-to" id="date-to" value="" placeholder="Date Fin">
-                        </div>
+                        <input id="rangepicker" type="text" class="form-control" name="searchParam[date]">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-5 control-label" for="floor">Filtrer par:</label>
                     <div class="col-md-5">
-                      <select id="js-group" name="group" class="primary select-block">
+                      <select id="js-group" name="searchParam[group]" class="primary select-block">
                         <option value="0">Filtrer par groupe</option>
                         {% for group in groups %}
                         <option value="{{ group.id }}">{{ group.name }}</option>
@@ -97,7 +85,7 @@ Tableau de bord | {{ parent() }}
                 <div class="form-group">
                     <label class="col-md-5 control-label" for="floor">Nombre de ligne par page :</label>
                     <div class="col-md-5">
-                       <select id="js-perpage" name="perpage" class="select-block small">
+                       <select id="js-perpage" name="searchParam[perPage]" class="select-block small">
                         <option value="3" {% if app_config.rows_per_page == 3 %}selected{% endif %}>3</option>
                         <option value="20" {% if app_config.rows_per_page == 20 %}selected{% endif %}>20</option>
                         <option value="50" {% if app_config.rows_per_page == 50 %}selected{% endif %}>50</option>
@@ -117,6 +105,8 @@ Tableau de bord | {{ parent() }}
 {% endblock body %}
 {% block javascripts %}
 {{ parent() }}
+    <script src="{{ asset('js/moment.js') }}"></script>
+    <script src="{{ asset('js/daterangepicker.js') }}"></script>
 <script> 
     (function($) {
 
@@ -190,7 +180,9 @@ Tableau de bord | {{ parent() }}
 
       /* submit the form after loading the page*/
       init();
-      setTimeout(ajaxPost, 1);
+      ajaxPost();
+      /* daterangepicker */
+    $('#rangepicker').daterangepicker({format: 'YYYY/MM/DD'});
     })(jQuery);
 </script>
 {% endblock %}

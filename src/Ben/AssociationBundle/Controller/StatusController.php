@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Ben\AssociationBundle\Entity\Status;
 use Ben\AssociationBundle\Form\StatusType;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
  * Status controller.
@@ -16,6 +17,7 @@ class StatusController extends Controller
 {
     /**
      * Lists all Status entities.
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function indexAction()
@@ -35,6 +37,7 @@ class StatusController extends Controller
 
     /**
      * Finds and displays a Status entity.
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function showAction($id)
@@ -56,6 +59,7 @@ class StatusController extends Controller
 
     /**
      * Displays a form to create a new Status entity.
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function newAction()
@@ -71,6 +75,7 @@ class StatusController extends Controller
 
     /**
      * Creates a new Status entity.
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function createAction(Request $request)
@@ -95,6 +100,7 @@ class StatusController extends Controller
 
     /**
      * Displays a form to edit an existing Status entity.
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function editAction($id)
@@ -119,6 +125,7 @@ class StatusController extends Controller
 
     /**
      * Edits an existing Status entity.
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function updateAction(Request $request, $id)
@@ -151,6 +158,7 @@ class StatusController extends Controller
 
     /**
      * Deletes a Status entity.
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function deleteAction(Request $request, $id)

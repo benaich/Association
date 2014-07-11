@@ -43,12 +43,6 @@ class User extends BaseUser implements ParticipantInterface {
      * @Assert\Valid()
      */
     protected $profile;
-    
-    /**
-    * @ORM\ManyToOne(targetEntity="Ben\AssociationBundle\Entity\Status",inversedBy="users")
-    * @ORM\JoinColumn(name="user_id",referencedColumnName="id", nullable=true)
-    */
-    private $status;
 
     /**
      * @ORM\ManyToMany(targetEntity="Ben\UserBundle\Entity\Group", inversedBy="users")
@@ -63,6 +57,16 @@ class User extends BaseUser implements ParticipantInterface {
     * @ORM\OneToMany(targetEntity="Ben\AssociationBundle\Entity\Reservation", mappedBy="user", cascade={"remove", "persist"})
     */
     protected $reservations;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Ben\AssociationBundle\Entity\Cotisation", mappedBy="user", cascade={"remove", "persist"})
+    */
+    protected $cotisations;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Ben\AssociationBundle\Entity\Avancement", mappedBy="user", cascade={"remove", "persist"})
+    */
+    private $avancements;
 
     public function __construct() {
         parent::__construct();
@@ -210,29 +214,6 @@ class User extends BaseUser implements ParticipantInterface {
     public function getReservation()
     {
         return $this->reservations->last();
-    } 
-
-    /**
-     * Set status
-     *
-     * @param \Ben\AssociationBundle\Entity\Status $status
-     * @return posts
-     */
-    public function setStatus(\Ben\AssociationBundle\Entity\Status $status)
-    {
-        $this->status = $status;
-    
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return \Ben\AssociationBundle\Entity\Status 
-     */
-    public function getStatus()
-    {
-        return $this->status;
     }
     
     /**
@@ -248,6 +229,44 @@ class User extends BaseUser implements ParticipantInterface {
         else $role = 'utilisateur';
         return $role;
     }
-}
 
-?>
+    /**
+     * Get cotisations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCotisations()
+    {
+        return $this->cotisations;
+    }
+
+    /**
+     * Get avancements
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAvancements()
+    {
+        return $this->avancements;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string 
+     */
+    public function getStatus()
+    {
+        return ($this->avancements->last()) ? $this->avancements->last()->getStatus() : '';
+    }
+
+    /**
+     * Get status
+     *
+     * @return string 
+     */
+    public function getEtat()
+    {
+        return ($this->enabled) ? 'activé' : 'désactivé';
+    } 
+}

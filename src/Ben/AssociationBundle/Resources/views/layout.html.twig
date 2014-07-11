@@ -29,12 +29,8 @@
 <body>
 {% block header %}
 <header class="visible-print print-header hide">
-  <div class="col-xs-1"><img src="{{ asset(app_config.org_logo) }}" alt="logo"/></div>
-  <div class="col-xs-8">
-  <div class="title">
-    <h1>{{ app_config.org_name }}</h1>  
-  </div>
-  </div>
+  <div class="pull-right"><img src="{{ asset(app_config.org_logo) }}" alt="logo"/></div>
+  <h1>{{ app_config.org_name }}</h1> 
   <div class="clearfix"></div>
 </header>
     <header id="adminbar" class="header hidden-print navbar">
@@ -82,7 +78,8 @@
                 {% if fos_message_nb_unread() != 0 %}<span class="badge badge-important">{{ fos_message_nb_unread() }}</span>{% endif %}
                 </a>
             </li>
-            <li><a href="#" title="Support" data-toggle="tooltip" title="notifications" data-placement="bottom"><span class="glyphicon glyphicon-bullhorn"></span><span class="badge badge-important">4</span></a></li>
+            <li><a href="#" title="notifications" data-toggle="tooltip"  data-placement="bottom"><span class="glyphicon glyphicon-bell"></span></a></li>
+            <li><a href="#" title="Support" data-toggle="tooltip" data-placement="bottom"><span class="glyphicon glyphicon-bullhorn"></span></a></li>
         </ul>
     </header>
 

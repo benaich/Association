@@ -22,9 +22,11 @@ class AdminController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $groups = $em->getRepository('BenUserBundle:Group')->findAll();
+        $status = $em->getRepository('BenAssociationBundle:Status')->findAll();
         $entitiesLength = $em->getRepository('BenUserBundle:User')->counter();
         return $this->render('BenUserBundle:admin:index.html.twig', array(
                 'groups' => $groups,
+                'status' => $status,
                 'entitiesLength' => $entitiesLength[1]));
     }
 
@@ -87,7 +89,11 @@ class AdminController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find posts entity.');
         }
-        return $this->render('BenUserBundle:admin:show.html.twig', array('entity' => $entity));
+        $deleteForm = $this->createDeleteForm($id);
+        return $this->render('BenUserBundle:admin:show.html.twig', array(
+            'entity' => $entity,
+            'delete_form' => $deleteForm->createView(),
+            ));
     }
 
     /**
@@ -126,12 +132,23 @@ class AdminController extends Controller
     }
 
     /**
+     * Deletes a Avancement entity.
      * @Secure(roles="ROLE_MANAGER")
+     *
      */
-    public function deleteAction($user)
+    public function deleteAction(Request $request, $id)
     {
-    	$entity = array();
-        return $this->render('BenUserBundle:admin:new.html.twig', array('entity' => $entity));
+        $form = $this->createDeleteForm($id);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $userManager = $this->get('fos_user.user_manager');
+            $user = $userManager->findUserBy(array('id' => $id));
+            $userManager->deleteUser($user);
+        }
+
+        $this->get('session')->getFlashBag()->add('success', "L'adhérent a été supprimé avec succée.");
+        return $this->redirect($this->generateUrl('ben_users'));
     }
  
     /**
@@ -191,7 +208,7 @@ class AdminController extends Controller
     /**
      * @Secure(roles="ROLE_MANAGER")
      */    
-    public function exportAction()
+    public function toCsvAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
         
@@ -271,6 +288,7 @@ class AdminController extends Controller
 
         return $response;
     }
+
     /**
      * export to pdf
      * @Secure(roles="ROLE_USER")
@@ -286,6 +304,7 @@ class AdminController extends Controller
             $entities = $em->getRepository('BenUserBundle:user')->findUserById($users_id);
         }
         else $entities = $em->getRepository('BenUserBundle:user')->findAll();
+        // return $this->render('BenUserBundle:admin:badge.html.twig', array('entities' => $entities));
 
         $now = new \DateTime;
         $now = $now->format('d-m-Y_H-i');
@@ -297,7 +316,7 @@ class AdminController extends Controller
             200,
             array(
                 'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => 'attachment; filename="file'.$now.'.pdf"'
+                'Content-Disposition'   => 'attachment; filename="carte'.$now.'.pdf"'
             )
         );
     }
@@ -389,5 +408,45 @@ class AdminController extends Controller
         $response->headers->set('Cache-Control', 'maxage=1');
 
         return $response;        
+    }
+
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
+            ->getForm()
+        ;
+    }
+
+    /**
+     * generate etiquette pdf
+     * @Secure(roles="ROLE_USER")
+     */
+    public function etiquetteAction($users)
+    {
+        if(!$users)
+            return $this->redirect($this->generateUrl('ben_users'));
+        $em = $this->getDoctrine()->getManager();
+
+        if($users != 'all'){
+            $users_id = explode(',', $users);
+            $entities = $em->getRepository('BenUserBundle:user')->findUserById($users_id);
+        }
+        else $entities = $em->getRepository('BenUserBundle:user')->findAll();
+        // return $this->render('BenUserBundle:admin:etiquette.html.twig', array('entities' => $entities));
+
+        $now = new \DateTime;
+        $now = $now->format('d-m-Y_H-i');
+        $html = $this->renderView('BenUserBundle:admin:etiquette.html.twig', array(
+            'entities' => $entities));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="etiquette'.$now.'.pdf"'
+            )
+        );
     }
 }

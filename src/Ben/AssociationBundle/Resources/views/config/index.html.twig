@@ -30,7 +30,7 @@ Tableau de bord | {{ parent() }}
               </div>
               <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Description de l'association</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                   <textarea rows="3" name="config[org_description]" placeholder="ajouter une description..." class="form-control">{{app_config.org_description}}</textarea>
                 </div>
               </div>
@@ -153,8 +153,20 @@ Tableau de bord | {{ parent() }}
               </div>
               <div class="form-group">
                 <label for="" class="col-sm-4 control-label">badge css </label>
-                <div class="col-sm-4">
-                  <textarea rows="3" name="config[org_carte_css]" value="{{app_config.org_carte_css}}" placeholder="ajouter une description..." class="form-control">{{app_config.org_carte_css}}</textarea>
+                <div class="col-sm-6">
+                  <textarea rows="5" name="config[org_carte_css]" value="{{app_config.org_carte_css}}" class="form-control">{{app_config.org_carte_css}}</textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Lettre d'invitation </label>
+                <div class="col-sm-6">
+                  <textarea rows="3" name="config[letter_invitation]" value="{{app_config.letter_invitation}}" class="form-control">{{app_config.letter_invitation}}</textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Lettre de cotisation </label>
+                <div class="col-sm-6">
+                  <textarea rows="3" name="config[letter_cotisation]" value="{{app_config.letter_cotisation}}" class="form-control">{{app_config.letter_cotisation}}</textarea>
                 </div>
               </div>
               <div class="form-group">

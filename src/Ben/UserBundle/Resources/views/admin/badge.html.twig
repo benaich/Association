@@ -9,13 +9,9 @@
     <style type="text/css"> {{ app_config.org_carte_css}} </style>
 </head>
 <body>
-<header class="print-header hide">
-  <div class="col-xs-1"><img src="{{ addr ~asset(app_config.org_logo) }}" alt="logo"/></div>
-  <div class="col-xs-8">
-  <div class="title">
-    <h1>{{ app_config.org_name }}</h1>  
-  </div>
-  </div>
+<header class="print-header">
+  <div class="pull-right"><img src="{{ addr ~ asset(app_config.org_logo) }}" alt="logo"/></div>
+  <h1>{{ app_config.org_name }}</h1> 
   <div class="clearfix"></div>
 </header>
 
@@ -35,7 +31,14 @@
          <span>{{ app_config.org_slogan }}</span>
           <span class="pull-right">{{"now"|date('Y')}}</span>
       </div>
-    </div>  
+    </div>
+    <div class="box mybadge printed-badge">
+      <div class="js-barcode" data-id="{{ entity.profile.barcode }}"></div>
+      <div class="footer label-primary">
+          <span>Date d'inscription: {{ entity.created|date('Y-m-d') }}</span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
   {% endfor %}
     <div class="clearfix"></div>
   </div>
@@ -44,3 +47,14 @@
   </div>
 </body>
 </html>
+
+<script src="{{ addr ~ asset('js/jquery-1.8.3.min.js') }}"></script>
+<script src="{{ addr ~ asset('js/jquery-barcode.min.js') }}"></script>
+<script> 
+    (function($) {
+      $(".js-barcode").each(function(){
+        $(this).barcode($(this).data('id')+"", "codabar");   
+      });
+          
+    })(jQuery);
+</script>

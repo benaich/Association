@@ -1,0 +1,40 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+{% block body %}
+<h2>Cotisation list</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Adhérant</th>
+            <th>Montant</th>
+            <th>Type</th>
+            <th>Date début</th>
+            <th>Date fin</th>
+            <th>Commentaire</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ entity.user.profile.fullName }}</td>
+            <td>{{ entity.price }} DH</td>
+            <td>{{ entity.type }}</td>
+            <td>{% if entity.datefrom %}{{ entity.datefrom|date('Y-m-d') }}{% endif %}</td>
+            <td>{% if entity.dateto %}{{ entity.dateto|date('Y-m-d') }}{% endif %}</td>
+            <td>{{ entity.description }}</td>
+            <td>
+                <a class="btn btn-embossed btn-primary btn-xs" href="{{ path('cotisation_show', { 'id': entity.id }) }}" data-toggle="tooltip" title="Afficher"><span class="fui-search"></span></a>
+                <a class="btn btn-embossed btn-info btn-xs" href="{{ path('cotisation_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="fui-new"></span></a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock body %}

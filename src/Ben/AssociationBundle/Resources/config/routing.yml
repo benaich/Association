@@ -25,3 +25,11 @@ BenAssociationBundle_reservation:
 BenAssociationBundle_status:
         resource: "@BenAssociationBundle/Resources/config/routing/status.yml"
         prefix:   /status
+
+BenAssociationBundle_cotisation:
+        resource: "@BenAssociationBundle/Resources/config/routing/cotisation.yml"
+        prefix:   /cotisation
+
+BenAssociationBundle_avancement:
+        resource: "@BenAssociationBundle/Resources/config/routing/avancement.yml"
+        prefix:   /avancement

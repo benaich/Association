@@ -28,6 +28,7 @@ namespace Ben\MessageBundle\Entity;
 
         /**
          * @ORM\ManyToOne(targetEntity="Ben\UserBundle\Entity\User")
+         * @ORM\JoinColumn(name="participant_id", referencedColumnName="id", onDelete="CASCADE")
          */
         protected $participant;
 

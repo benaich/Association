@@ -13,7 +13,8 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class ReservationRepository extends EntityRepository
 {
-    public function findSome($nombreParPage, $page, $keyword, $group, $dateFrom, $dateTo) {       
+    public function search($searchParam) {
+        extract($searchParam);         
        $qb = $this->createQueryBuilder('r')
                 ->leftJoin('r.room', 'room')
                 ->addSelect('room')
@@ -26,16 +27,18 @@ class ReservationRepository extends EntityRepository
                 ->andWhere('u.username like :keyword or p.first_name like :keyword or p.family_name like :keyword or hotel.name like :keyword ')
                 ->setParameter('keyword', '%'.$keyword.'%')
                 ->orderBy('r.date_from', 'DESC');
-        if($group){
+        if(!empty($group)){
         	$qb->leftJoin('u.groups', 'g')
             ->andWhere('g.id = :group')->setParameter('group', $group);
         }
-        if($dateFrom)
-            $qb->andWhere('r.date_from = :dateFrom')->setParameter('dateFrom', $dateFrom);
-        if($dateTo)
-            $qb->andWhere('r.date_to = :dateTo')->setParameter('dateTo', $dateTo);
-        $qb->setFirstResult(($page - 1) * $nombreParPage)
-        ->setMaxResults($nombreParPage);
+        if(!empty($date)){
+            $date = explode("-",$date);
+            $qb->andWhere('r.date_from between :d1 and :d2')
+            ->setParameter('d1', $date[0])
+            ->setParameter('d2', $date[1]);
+        }
+        $qb->setFirstResult(($page - 1) * $perPage)
+        ->setMaxResults($perPage);
         
        return new Paginator($qb->getQuery());
     }

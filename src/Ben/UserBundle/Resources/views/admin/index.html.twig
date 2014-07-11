@@ -2,12 +2,16 @@
 {% block title %}
 Tableau de bord | {{ parent() }}
 {% endblock %}
+    {% block stylesheet %}
+   {{ parent() }}   
+        <link href="{{ asset('css/daterangepicker-bs3.css') }}" rel="stylesheet"><!-- Loading my css -->
+    {% endblock %}
 {% block body %}
 
 <h2><span class="fui-user"></span> Gestion des membres</h2>
         <form  id="jsForm" role="form" method="post" action="">
             <input id="pagenumber" type="hidden" name="searchParam[page]" value="1"> 
-            <div class="row">
+            <div class="row hidden-print">
               <div class="col-md-5">
                   <div class="form-group">
                      <div class="input-group">                                     
@@ -20,7 +24,7 @@ Tableau de bord | {{ parent() }}
               </div>
               <div class="col-lg-7">
                 <div class="btn-group pull-right">              
-                  <button class="btn btn-primary" data-toggle="modal" data-target="#searchModal"><span class="fui-gear"></span> Recherche avancée</button>
+                  <button class="btn btn-primary" data-toggle="modal" data-target="#searchModal"><span class="fui-search"></span> Recherche avancée</button>
                   <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                   </button>
@@ -35,8 +39,8 @@ Tableau de bord | {{ parent() }}
                     <li class="divider"></li>
                     <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> Exporter vers csv</a></li>
                     <li><a href="{{ path('ben_export_xml') }}"><span class="fui-export"></span> Exporter vers xml</a></li>
-                    <li><a href="#" id="js-badge" ><span class="fui-credit-card"></span> Cartes des Membres</a></li>
-                    <li><a href=""><span class="fui-tag"></span> Etiquettes de repas</a></li>
+                    <li><a href="#" id="js-badge"><span class="fui-credit-card"></span> Cartes des Membres</a></li>
+                    <li><a href="#" id="js-tiquet"><span class="fui-tag"></span> Etiquettes de repas</a></li>
                     <li class="divider"></li>
                     <li><a href="#" id="js-delete"><span class="glyphicon glyphicon-trash"></span> Supprimer</a></li>
                   </ul>
@@ -44,15 +48,15 @@ Tableau de bord | {{ parent() }}
               </div><!-- /.col-lg-2 -->
             </div><!-- /.row -->
 
-            <table class="table table-hover table-bordered">
+            <table class="table table-hover table-bordered table-striped">
                 <thead>
                     <tr>
                         <th><label class="checkbox no-label toggle-all" for="checkbox-table-1"><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" value="" id="checkbox-table-1" data-toggle="checkbox"></label></th>
-                        <th class="col-sm-3">Nom</th>
-                        <th class="col-sm-3">Email</th>
-                        <th class="col-sm-2">Statut</th>
-                        <th class="col-sm-2">Type de compte</th>
-                        <th class="col-sm-2">action</th>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Statut</th>
+                        <th>Type de compte</th>
+                        <th>action</th>
                     </tr>
                 </thead>
                 <tbody id="dataContainer"></tbody>
@@ -89,6 +93,8 @@ Tableau de bord | {{ parent() }}
 
  {% block javascripts %}
 {{ parent() }}
+    <script src="{{ asset('js/moment.js') }}"></script>
+    <script src="{{ asset('js/daterangepicker.js') }}"></script>
 <script> 
     (function($) {
 
@@ -176,6 +182,7 @@ Tableau de bord | {{ parent() }}
           pageInput = form.find('#pagenumber'),
           perPageBtn = form.find('#js-perpage'),
           printBadgeBtn = form.find('#js-badge'),
+          printTiquetBtn = form.find('#js-tiquet'),
           searchBtn = form.find('#js-search'),
           closeBtn = $('#searchModal').find('.close'),
           jsFormUrl = '',
@@ -185,6 +192,13 @@ Tableau de bord | {{ parent() }}
       /* print badge */    
       printBadgeBtn.on('click', function(){
           var url = '{{ path('ben_pdf', {'users': 1111 }) }}',
+              users = getCheckedRows();
+          users = (users==='')? 'all':users; 
+          url = url.replace("1111", users);
+          window.location.href = url;
+      });
+      printTiquetBtn.on('click', function(){
+          var url = '{{ path('ben_etiquette_user', {'users': 1111 }) }}',
               users = getCheckedRows();
           users = (users==='')? 'all':users; 
           url = url.replace("1111", users);
@@ -233,6 +247,9 @@ Tableau de bord | {{ parent() }}
       $('.dropdown-submenu').hover(function() {
         $(this).find('.dropdown-menu').toggleClass('open');
       });
+
+      /* daterangepicker */
+    $('#rangepicker').daterangepicker({format: 'YYYY/MM/DD'});
     })(jQuery);
 </script>
 {% endblock %}

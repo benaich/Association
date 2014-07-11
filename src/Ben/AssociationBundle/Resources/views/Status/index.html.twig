@@ -20,7 +20,7 @@ Tableau de bord | {{ parent() }}
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td>{{ entity.name }}</td>
-                    <td>{{ entity.users|length }}</td>
+                    <td>{{ entity.avancements|length }}</td>
                     <td><a href="{{ path('status_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span> modifier</a></td>
                 </tr>
             {% endfor %}

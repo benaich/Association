@@ -37,3 +37,11 @@ ben_remove_events:
     pattern:  /delete
     defaults: { _controller: "BenAssociationBundle:event:removeEntities" }
     requirements: { _method: post }
+
+event_publish:
+    pattern:  /{id}/publish
+    defaults: { _controller: "BenAssociationBundle:event:publish" }
+
+event_send:
+    pattern:  /{id}/send
+    defaults: { _controller: "BenAssociationBundle:event:send" }

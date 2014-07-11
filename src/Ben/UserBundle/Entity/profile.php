@@ -3,6 +3,7 @@
 namespace Ben\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -10,6 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="profile")
  * @ORM\Entity(repositoryClass="Ben\UserBundle\Entity\profileRepository")
+ * @UniqueEntity(fields="cin", message="Un adhérant existe déja avec ce cin")
+ * @UniqueEntity(fields="barcode", message="Un adhérant existe déja avec cet identifiant")
  */
 class profile
 {
@@ -38,6 +41,13 @@ class profile
      * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
      */
     private $first_name;
+
+    /**
+     * @var string $barcode
+     *
+     * @ORM\Column(name="barcode", type="string")
+     */
+    private $barcode;
 
     /**
      * @var string $cin
@@ -111,6 +121,20 @@ class profile
     private $gsm;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="diplome", type="string", length=255, nullable=true)
+     */
+    private $diplome;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="expertise", type="string", length=255, nullable=true)
+     */
+    private $expertise;
+
+    /**
      * @var string $description
      *
      * @ORM\Column(name="description", type="text", nullable=true)
@@ -156,8 +180,9 @@ class profile
     public function __construct()
     {
         $this->bird_day =  new \DateTime;
+        $this->barcode =  str_pad(mt_rand(0, 9999999999), 6, '0', STR_PAD_LEFT);
         $this->image= new \Ben\AssociationBundle\Entity\image();
-         $this->image->setPath("anonymous.jpg");
+        $this->image->setPath("anonymous.jpg");
     }
     
     /************ Les setters et getters ************/
@@ -228,6 +253,29 @@ class profile
     public function getFirstName()
     {
         return $this->first_name;
+    }
+
+    /**
+     * Set barcode
+     *
+     * @param integer $barcode
+     * @return profile
+     */
+    public function setBarcode($barcode)
+    {
+        $this->barcode = $barcode;
+    
+        return $this;
+    }
+
+    /**
+     * Get barcode
+     *
+     * @return string 
+     */
+    public function getBarcode()
+    {
+        return $this->barcode;
     }
 
     /**
@@ -596,5 +644,51 @@ class profile
     public function getGsm()
     {
         return $this->gsm;
+    }
+
+    /**
+     * Set diplome
+     *
+     * @param string $diplome
+     * @return profile
+     */
+    public function setDiplome($diplome)
+    {
+        $this->diplome = $diplome;
+    
+        return $this;
+    }
+
+    /**
+     * Get diplome
+     *
+     * @return string 
+     */
+    public function getDiplome()
+    {
+        return $this->diplome;
+    }
+
+    /**
+     * Set expertise
+     *
+     * @param string $expertise
+     * @return profile
+     */
+    public function setExpertise($expertise)
+    {
+        $this->expertise = $expertise;
+    
+        return $this;
+    }
+
+    /**
+     * Get expertise
+     *
+     * @return string 
+     */
+    public function getExpertise()
+    {
+        return $this->expertise;
     }
 }

@@ -7,7 +7,7 @@ Tableau de bord | {{ parent() }}
 
 <div class="row">
     <div class="col-sm-9">
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -44,10 +44,13 @@ Tableau de bord | {{ parent() }}
     </div> 
 
     <div class="col-md-3">
-        <form action="{{ path('event_delete', { 'id': entity.id }) }}" method="post" class="well">
+        <form action="{{ path('event_delete', { 'id': entity.id }) }}" method="post">
         {{ form_widget(delete_form) }}
         <a id="submitEditForm" class="btn btn-embossed btn-primary btn-block" href="{{ path('event_edit', { 'id': entity.id }) }}">
             <span class="fui-new"></span> Mettre à jour
+        </a>
+        <a class="btn btn-embossed btn-inverse btn-block " href="{{ path('event_publish', { 'id': entity.id }) }}">
+            <span class="fui-list-check"></span> Publier
         </a>
         <a class="btn btn-embossed btn-inverse btn-block " href="{{ path('event') }}">
             <span class="fui-list-bulleted"></span> Back to the list

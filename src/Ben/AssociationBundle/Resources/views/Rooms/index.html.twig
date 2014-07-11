@@ -29,12 +29,13 @@ Tableau de bord | {{ parent() }}
                   <li><a href="{{ path('rooms_new') }}"><span class="fui-plus"></span> Ajouter</a></li>
                   <li><a href="{{ path('room_new_multiple') }}"><span class="fui-plus"></span> Ajout Multiple</a></li>
                   <li class="divider"></li>
-                  <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> Exporter vers Excel</a></li>
+                  <li><a href="{{ path('rooms_export') }}"><span class="fui-export"></span> Exporter vers JSON</a></li>
+                  <li><a href="{{ path('rooms_export', { _format: 'xml'}) }}"><span class="fui-export"></span> Exporter vers XML</a></li>
             </ul>
           </div>
         </div>
     </div><!-- /.row -->
-    <table class="table table-hover table-bordered">
+    <table class="table table-hover table-bordered table-striped">
         <thead>
         <tr>
             <th>Chambre</th>

@@ -18,12 +18,14 @@ Tableau de bord | {{ parent() }}
       <span class="dropdown-arrow dropdown-arrow-inverse"></span>
       <ul class="dropdown-menu dropdown-inverse">
         <li><a href="{{ path('ben_edit_user', {id: entity.id }) }}"><span class="fui-new"> Modifier</a></li>
+        <li><a href="{{ path('avancement_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Ajouter un status</a></li>
+        <li><a href="{{ path('cotisation_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Ajouter une cotisation</a></li>
         <li><a href="{{ path('ben_pdf', {'users': entity.id }) }}"><span class="fui-credit-card"> Imprimer la carte</a></li>
-        <li><a href=""><span class="fui-tag"></span> Etiquettes</a></li>
+        <li><a href="{{ path('ben_etiquette_user', {'users': entity.id }) }}"><span class="fui-tag"></span> Etiquettes</a></li>
         <li><a id="btnPrint" href="#"><span class="glyphicon glyphicon-print"></span> imprimer la fiche</a></li>
         <li><a href="{{ path('reservation_new', {'id': entity.id }) }}"><span class="fui-tag"> Reserver une chambre</a></li>
         <li class="divider"></li>
-        <li><a href="{{ path('ben_new_user', {id: entity.id }) }}"><span class="glyphicon glyphicon-trash"></span> Supprimmer</a></li>
+        <li><a id="js-delete" href="{{ path('ben_new_user', {id: entity.id }) }}"><span class="glyphicon glyphicon-trash"></span> Supprimmer</a></li>
       </ul>
     </div>
   <h2><span class="fui-user"></span> {{ entity.profile.firstName }} {{ entity.profile.familyName }} </h2>
@@ -43,6 +45,15 @@ Tableau de bord | {{ parent() }}
             <span class="pull-right">{{"now"|date('Y')}}</span>
         </div>
       </div>
+      <div class="box hidden-print">
+        <div class="mybadge">
+          <div class="js-barcode" data-id="{{ entity.profile.barcode }}"></div>
+          <div class="footer label-primary">
+              <span>Date d'inscription: {{ entity.created|date('Y-m-d') }}</span>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
       <div class="box">
           <header>
             <h3><span class="glyphicon glyphicon-file"></span> Informations générale</h3>
@@ -51,7 +62,7 @@ Tableau de bord | {{ parent() }}
               <li class="list-group-item"><strong>Username :</strong> {{ entity.username }}</li>
               <li class="list-group-item"><strong>Password :</strong> ******</li>
               <li class="list-group-item"><strong>adresse email :</strong> <a href="mailto:{{ entity.email }}">{{ entity.email }}</a></li>
-              <li class="list-group-item"><strong>Etat du compte :</strong> {{ entity.enabled }}</li>
+              <li class="list-group-item"><strong>Etat du compte :</strong> {{ entity.etat }}</li>
               <li class="list-group-item"><strong>Date d'inscription : </strong> {{ entity.created|time_ago_in_words }}</li>
               {% if entity.lastLogin is not null%}
               <li class="list-group-item"><strong>Dernière connexion : </strong> {{ entity.lastLogin|time_ago_in_words }}</li>
@@ -71,15 +82,14 @@ Tableau de bord | {{ parent() }}
       <ul class="list-group">
           <li class="list-group-item"><strong>Nom :</strong> {{ entity.profile.familyName }}</li>
           <li class="list-group-item"><strong>Preom :</strong>  {{ entity.profile.firstName }}</li>
+          <li class="list-group-item"><strong>CIN :</strong> {{ entity.profile.cin }}</li>
           <li class="list-group-item"><strong>Status : </strong> {{ entity.status }}</li>
           <li class="list-group-item"><strong>Sexe :</strong> {{ entity.profile.gender }}</li>
           <li class="list-group-item"><strong>Date de naissance :</strong> {{ entity.profile.birdDay|date('Y-m-d') }}</li>
-          <li class="list-group-item"><strong>Adresse :</strong> {{ entity.profile.address }}</li>
-          <li class="list-group-item"><strong>Ville :</strong> {{ entity.profile.city }}</li>
           <li class="list-group-item"><strong>Code postal :</strong> {{ entity.profile.postCode }}</li>
-          <li class="list-group-item"><strong>Pay :</strong> {{ entity.profile.contry }}</li>
           <li class="list-group-item"><strong>Profession :</strong> {{ entity.profile.job }}</li>
-          <li class="list-group-item"><strong>A propos :</strong> {{ entity.profile.description }}</li>
+          <li class="list-group-item"><strong>Niveau d'étude :</strong> {{ entity.profile.diplome }}</li>
+          <li class="list-group-item"><strong>Spécialité :</strong> {{ entity.profile.expertise }}</li>
       </ul>
     </div>
   </div> 
@@ -92,11 +102,16 @@ Tableau de bord | {{ parent() }}
            <ul class="list-group">
                <li class="list-group-item"><strong>Tél :</strong> {{ entity.profile.tel }}</li>
                <li class="list-group-item"><strong>Gsm :</strong> {{ entity.profile.gsm }}</li>
-               <li class="list-group-item"><strong>facebook :</strong> {{ entity.profile.facebook }}</li>
-               <li class="list-group-item"><strong>twitter :</strong> {{ entity.profile.twitter }}</li>
-               <li class="list-group-item"><strong>Google+ :</strong> {{ entity.profile.google }}</li>
-               <li class="list-group-item"><strong>Siteweb :</strong> {{ entity.profile.website }}</li>
+          <li class="list-group-item"><strong>Adresse :</strong> {{ entity.profile.address }}</li>
+          <li class="list-group-item"><strong>Ville :</strong> {{ entity.profile.city }}</li>
+          <li class="list-group-item"><strong>Pay :</strong> {{ entity.profile.contry }}</li>
+          <li class="list-group-item"><strong>A propos :</strong> {{ entity.profile.description }}</li>
            </ul>
+          {# <ul class="social hidden-print hide">
+           <li><a href="{{ entity.profile.facebook }}"><span class="fui-facebook"></span></a></li>
+           <li><a href="{{ entity.profile.twitter }}"><span class="fui-twitter"></span></a></li>
+           <li><a href="{{ entity.profile.google }}"><span class="fui-googleplus"></span></a></li>
+          </ul>  #}
        </div>
        <div class="box">
            <header>
@@ -112,22 +127,91 @@ Tableau de bord | {{ parent() }}
                <li class="list-group-item"><strong>Numero de pavé :</strong> {{ reservation.room.floor }} </li>
            </ul>
            {% endif %}
-       </div>
-       <ul class="social hidden-print">
-           <li><a href="{{ entity.profile.facebook }}"><span class="fui-facebook"></span></a></li>
-           <li><a href="{{ entity.profile.twitter }}"><span class="fui-twitter"></span></a></li>
-           <li><a href="{{ entity.profile.google }}"><span class="fui-googleplus"></span></a></li>
-       </ul>                
+       </div>               
    </div> 
+   <div class="col-md-8"> 
+      <div class="box">
+          <header>
+              <h3><span class="glyphicon glyphicon-tag"></span> Historique des Grades</h3>
+          </header>
+          <table class="table table-hover table-bordered">
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Status</th>
+                      <th>Province</th>
+                      <th>Date de début</th>
+                      <th>Date fin</th>
+                  </tr>
+              </thead>
+              <tbody>
+              {% for entity in entity.avancements %}
+                <tr>
+                  <td>{{ loop.index }}</td>
+                  <td>{{ entity.status }} </td>
+                  <td>{{ entity.city }} </td>
+                  <td>{% if entity.dateFrom %}{{ entity.dateFrom|date('d/m/Y') }}{% endif %}</td>
+                  <td>{% if entity.dateTo %}{{ entity.dateTo|date('d/m/Y') }}{% endif %}
+                  <a class="btn btn-info btn-xs pull-right" href="{{ path('avancement_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+      </div>
+      <div class="box">
+          <header>
+              <h3><span class="glyphicon glyphicon-tag"></span> Historique des Cotisations</h3>
+          </header>
+          <table class="table table-hover table-bordered">
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Montant</th>
+                      <th>Type</th>
+                      <th>Date début</th>
+                      <th>Date fin</th>
+                  </tr>
+              </thead>
+              <tbody>
+              {% for entity in entity.cotisations %}
+                <tr>
+                  <td>{{ loop.index }}</td>
+                  <td>{{ entity.price }} DH</td>
+                  <td>{{ entity.type }}</td>
+                  <td>{% if entity.datefrom %}{{ entity.datefrom|date('Y-m-d') }}{% endif %}</td>
+                  <td>{% if entity.dateto %}{{ entity.dateto|date('Y-m-d') }}{% endif %}
+                  <a class="btn btn-info btn-xs pull-right" href="{{ path('cotisation_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+      </div>
+   </div>
 </div>
 
+<form id="deleteForm" action="{{ path('ben_delete_user', { 'id': entity.id }) }}" method="post">
+    {{ form_widget(delete_form) }}
+</form>
 
 {% endblock body %}
 
  {% block javascripts %}
 {{ parent() }}
+<script src="{{ asset('js/jquery-barcode.min.js') }}"></script>
 <script> 
     (function($) {
+
+      $(".js-barcode").each(function(){
+        $(this).barcode($(this).data('id')+"", "codabar");   
+      });
+
+      $('#js-delete').on('click', function(){
+          $('#deleteForm').submit();
+          return false;
+      });
+          
     })(jQuery);
 </script>
 {% endblock %}
