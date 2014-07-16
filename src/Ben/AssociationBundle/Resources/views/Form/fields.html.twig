@@ -52,7 +52,7 @@
 {% spaceless %}
 
     <div class="col-md-4">
-    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="input-md primary">
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="select-block primary">
         {% if empty_value is not none %}
             <option value="">{{ empty_value|trans({}, translation_domain) }}</option>
         {% endif %}
@@ -85,7 +85,13 @@
 {# checkbox #}
 {% block checkbox_widget %}
 {% spaceless %}
-<input type="checkbox" {{ block('widget_attributes') }} {% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}/>
+{% if form.parent.vars.compound|length == 1 %}
+<div class="col-md-4">
+    <input type="checkbox" {{ block('widget_attributes') }} data-toggle="switch" {% if value is defined %} value="{{ value }}"{% endif %}{% if form.vars.checked %} checked="checked"{% endif %}/>
+</div>
+{% else %}
+<input type="checkbox" {{ block('widget_attributes') }} {% if value is defined %} value="{{ value }}"{% endif %}{% if form.vars.checked %} checked="checked"{% endif %}/>
+{% endif %}
 {% endspaceless %}
 {% endblock checkbox_widget %}
 

@@ -1,9 +1,9 @@
-    <!-- Modal advanced search -->
+<!-- Modal advanced search -->
 <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" id="closeModal" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
         <h4 class="modal-title" id="searchModalLabel">Recherche avancée</h4>
       </div>
       <div class="modal-body">
@@ -24,9 +24,15 @@
             </div>
           </div>
           <div class="form-group">
-              <label class="col-md-5 control-label" for="floor">Date de naissance:</label>
+              <label class="col-md-5 control-label" for="date_from">Date de début</label>
               <div class="form-group col-md-7">
-                  <input id="rangepicker" type="text" class="form-control" name="searchParam[birdDay]" id="birdDay" value="" placeholder="Date de naissance">
+                    <input type="text" class="form-control has-datepicker" name="searchParam[date_from]" id="date_from" placeholder="Date de naissance">
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="col-md-5 control-label" for="date_to">Date fin</label>
+              <div class="form-group col-md-7">
+                    <input type="text" class="form-control has-datepicker" name="searchParam[date_to]" id="date_to" placeholder="Date de naissance">
               </div>
           </div>
           <div class="form-group">
@@ -45,7 +51,7 @@
             <label for="" class="col-md-5 control-label">Filtrer par Status :</label>
             <div class="col-md-7">
               <select name="searchParam[status]" class="primary select-block">
-                <option value="0">Filtrer par status</option>
+                <option value="0">Tous</option>
                 {% for entity in status %}
                 <option value="{{ entity.id }}">{{ entity.name }}</option>
                   {% endfor %}
@@ -56,7 +62,7 @@
             <label for="" class="col-md-5 control-label">Filtrer par groupe :</label>
             <div class="col-md-7">
               <select id="js-group" name="searchParam[group]" class="primary select-block">
-                <option value="0">Filtrer par groupe</option>
+                <option value="0">Tous</option>
                 {% for entity in groups %}
                 <option value="{{ entity.id }}">{{ entity.name }}</option>
                   {% endfor %}
@@ -77,7 +83,7 @@
             <label for="" class="col-md-5 control-label">Nombre de ligne par page :</label>
             <div class="col-md-7">
               <select id="js-perpage" name="searchParam[perPage]" class="primary select-block">
-                <option value="3" {% if app_config.rows_per_page == 3 %}selected{% endif %}>3</option>
+                <option value="10" {% if app_config.rows_per_page == 10 %}selected{% endif %}>10</option>
                 <option value="20" {% if app_config.rows_per_page == 20 %}selected{% endif %}>20</option>
                 <option value="50" {% if app_config.rows_per_page == 50 %}selected{% endif %}>50</option>
                 <option value="100" {% if app_config.rows_per_page == 100 %}selected{% endif %}>100</option>
@@ -87,7 +93,65 @@
           <div class="clearfix"></div>
       </div>
       <div class="modal-footer">
+      <div class="col-lg-7">
+        <div class="input-group">
+          <input type="text" name="searchParam[filterGroup]" class="form-control" placeholder="Créer un groupe pour ce filtre">
+          <div class="input-group-btn">
+          <button id="js-filter-group" class="btn btn-default" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+          </div>
+        </div>
+      </div>
+
         <button id="js-search" type="button" class="btn btn-primary">Rechercher</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal group allocation -->
+<div class="modal fade" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="groupModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="groupModalLabel">Goupe</h4>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <label for="" class="col-md-5 control-label">Nom du groupe :</label>
+            <div class="col-md-7">
+              <select name="group" class="primary select-block">
+                {% for entity in groups %}
+                <option value="{{ entity.id }}">{{ entity.name }}</option>
+                  {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+      </div>
+      <div class="modal-footer">
+        <button id="js-group-set" type="button" class="btn btn-primary">Valider</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Profil Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="myModalLabel">Profil</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-primary btn-embossed pull-left" data-dir="prev">Prev</button>
+        <a href="#" id="more" class="btn btn-primary btn-embossed">Plus d'info</a>
+        <button type="button" class="btn btn-primary btn-embossed pull-right" data-dir="next">Next</button>
       </div>
     </div>
   </div>

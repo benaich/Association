@@ -6,7 +6,18 @@
     {% set addr = 'http://' ~ app.request.server.get('SERVER_ADDR') %} 
     <link href="{{ addr ~ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ addr ~ asset('css/main.css') }}" rel="stylesheet"><!-- Loading my css -->
-    <style type="text/css"> {{ app_config.org_carte_css}} </style>
+    <style type="text/css"> 
+    .mybadge {
+      background: {{ app_config.badge_bgcolor}};
+      color: {{ app_config.badge_color}};
+      }
+      .mybadge .footer{ 
+        color: {{ app_config.badge_footer_color}};
+        background: {{ app_config.badge_footer_bgcolor}};
+      }
+      {{ app_config.org_carte_css}} 
+
+    </style>
 </head>
 <body>
 <header class="print-header">

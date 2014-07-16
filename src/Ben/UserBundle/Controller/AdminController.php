@@ -10,12 +10,14 @@ use Ben\UserBundle\Entity\User;
 use Ben\UserBundle\Form\userType;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Ben\UserBundle\Form\profileType;
+use Ben\UserBundle\Entity\Group;
 
 use Ben\AssociationBundle\Pagination\Paginator;
 
 class AdminController extends Controller
 {
     /**
+     * la page des adhérants
      * @Secure(roles="ROLE_MANAGER")
      */
     public function indexAction()
@@ -31,6 +33,7 @@ class AdminController extends Controller
     }
 
     /**
+     * liste des adhérants avec ajax
      * @Secure(roles="ROLE_MANAGER")
      */
     public function ajaxListAction(Request $request)
@@ -47,23 +50,27 @@ class AdminController extends Controller
     }
 
     /**
+     * formulaire d'ajout d'un adhérant
      * @Secure(roles="ROLE_MANAGER")
      */
     public function newAction()
     {
+        $config = $this->getConfig();
         $entity = new User();
-        $form = $this->createForm(new userType(), $entity);
+        $form = $this->createForm(new userType($config), $entity);
         return $this->render('BenUserBundle:admin:new.html.twig', array('entity' => $entity, 'form' => $form->createView()));
     }
 
     /**
+     * ajouter un adhérant
      * @Secure(roles="ROLE_MANAGER")
      */
     public function addAction(Request $request)
     {
         $em = $this->get('fos_user.user_manager');
+        $config = $this->getConfig();
         $entity = new User();
-        $form = $this->createForm(new userType(), $entity);
+        $form = $this->createForm(new userType($config), $entity);
         $form->bind($request);
         if ($form->isValid()) {
             $em->updateUser($entity, false);
@@ -80,43 +87,59 @@ class AdminController extends Controller
     }
 
     /**
-     * @Secure(roles="ROLE_MANAGER")
+     * afficher un adhérant
+     * @Secure(roles="ROLE_USER")
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        $security = $this->container->get('security.context');
+        if(!$security->isGranted('ROLE_MANAGER'))
+            $id = $security->getToken()->getUser()->getId();
         $entity = $em->getRepository('BenUserBundle:user')->findUser($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find posts entity.');
         }
+
+        $logs = $em->getRepository('BenAssociationBundle:ActivityLog')->findBy(array('entity_id' => $id));
         $deleteForm = $this->createDeleteForm($id);
         return $this->render('BenUserBundle:admin:show.html.twig', array(
             'entity' => $entity,
+            'logs' => $logs,
             'delete_form' => $deleteForm->createView(),
             ));
     }
 
     /**
+     * formulaire de modification d'un adhérant
      * @Secure(roles="ROLE_MANAGER")
      */
-    public function editAction(User $entity)
+    public function editAction(User $user)
     {
-        $form = $this->createForm(new userType($type), $entity);
-        return $this->render('BenUserBundle:admin:edit.html.twig', array('entity' => $entity, 'form' => $form->createView()));
+        /* check if user has admin role */
+        if (in_array('ROLE_ADMIN', $user->getRoles()) !== false ){
+            $this->get('session')->getFlashBag()->add('error', "impossible de modifier un super utilisateur de cette interface");
+            return $this->redirect($this->generateUrl('ben_users'));
+        }
+        $config = $this->getConfig();
+        $form = $this->createForm(new userType($config), $user);
+        return $this->render('BenUserBundle:admin:edit.html.twig', array('entity' => $user, 'form' => $form->createView()));
     }
 
     /**
+     * mettre à jour un adhérant
      * @Secure(roles="ROLE_MANAGER")
      */
     public function updateAction(Request $request, User $user) {
         $em = $this->get('fos_user.user_manager');
-        $form = $this->createForm(new userType(), $user);
+        $config = $this->getConfig();
+        $form = $this->createForm(new userType($config), $user);
         $form->bind($request);
         /* check if user has admin role */
-        /*if (array_search('ROLE_ADMIN', $user->getRoles()) !== false ){
-            $this->get('session')->getFlashBag()->add('Unauthorized access', "impossible de modifier un super utilisateur de cette interface");
+        if (in_array('ROLE_ADMIN', $user->getRoles()) !== false ){
+            $this->get('session')->getFlashBag()->add('error', "impossible de modifier un super utilisateur de cette interface");
             return $this->redirect($this->generateUrl('ben_users'));
-        }*/
+        }
         if ($form->isValid()) {
             $em->updateUser($user, false);
             $user->getProfile()->getImage()->manualRemove($user->getProfile()->getImage()->getAbsolutePath());
@@ -132,110 +155,18 @@ class AdminController extends Controller
     }
 
     /**
-     * Deletes a Avancement entity.
-     * @Secure(roles="ROLE_MANAGER")
-     *
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $userManager = $this->get('fos_user.user_manager');
-            $user = $userManager->findUserBy(array('id' => $id));
-            $userManager->deleteUser($user);
-        }
-
-        $this->get('session')->getFlashBag()->add('success', "L'adhérent a été supprimé avec succée.");
-        return $this->redirect($this->generateUrl('ben_users'));
-    }
- 
-    /**
-     * @Secure(roles="ROLE_MANAGER")
-     */   
-    public function removeUsersAction(Request $request)
-    {
-        $users = $request->get('users');
-        $userManager = $this->get('fos_user.user_manager');
-        foreach( $users as $id){
-            $user = $userManager->findUserBy(array('id' => $id));
-            $userManager->deleteUser($user);
-        }
-        return new Response('supression effectué avec succès');
-    } 
-
-    /**
-     * @Secure(roles="ROLE_MANAGER")
-     */
-    public function enableUsersAction(Request $request, $etat)
-    {
-        $users = $request->get('users');
-        $userManager = $this->get('fos_user.user_manager');
-        $etat = ($etat==1);
-        foreach( $users as $id){
-            $user = $userManager->findUserBy(array('id' => $id));
-            $user->setEnabled($etat);
-            $userManager->updateUser($user);
-        }
-        return new Response('1');
-    }
-
-    /**
-     * @Secure(roles="ROLE_MANAGER")
-     */    
-    public function setRoleAction(Request $request, $role)
-    {
-        if($role=='admin') $role='ROLE_ADMIN';
-        else if($role=='manager') $role='ROLE_MANAGER';
-        else if($role=='author') $role='ROLE_AUTHOR';
-        else if($role=='premium') $role='ROLE_PREMIUM';
-        else $role='ROLE_USER';
-        $users = $request->get('users');
-        $userManager = $this->get('fos_user.user_manager');
-        foreach( $users as $id){
-            $user = $userManager->findUserBy(array('id' => $id));
-            $user->removeRole('ROLE_MANAGER');
-            $user->removeRole('ROLE_ADMIN');
-            $user->removeRole('ROLE_AUTHOR');
-            $user->removeRole('ROLE_PREMIUM');
-            $user->addRole($role);
-            $userManager->updateUser($user);
-        }
-        return new Response('1');
-    }
-
-    /**
-     * @Secure(roles="ROLE_MANAGER")
-     */    
-    public function toCsvAction()
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-        
-        $entities = $em->getRepository('BenUserBundle:user')->getUsers();
-        $response = $this->render('BenUserBundle:admin:list.csv.twig',array(
-                    'entities' => $entities,
-                    ));
-         $response->headers->set('Content-Type', 'text/csv');
-         $response->headers->set('Content-Disposition', 'attachment; filename="contacts.csv"');
-
-        return $response;
-    }
-
-
-    /**
-     * Displays a form to edit an existing profil entity.
+     * formulaire pour mettre à jour les informations de l'utilisateur connécté
      * @Secure(roles="IS_AUTHENTICATED_REMEMBERED")
      */
     public function editMeAction() {
+        $config = $this->getConfig();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $entity = $user->getProfile();
-
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find profile entity.');
         }
 
-        $form = $this->createForm(new profileType(), $entity);
+        $form = $this->createForm(new profileType($config), $entity);
         return $this->render('BenUserBundle:myProfile:edit.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
@@ -244,12 +175,13 @@ class AdminController extends Controller
 
 
     /**
-     * Edits an existing profil entity.
+     * mettre à jour les informations de l'utilisateur connécté
      * @Secure(roles="IS_AUTHENTICATED_REMEMBERED")
      */
     public function updateMeAction(Request $request, \Ben\UserBundle\Entity\profile $profile) {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new profileType(), $profile);
+        $config = $this->getConfig();
+        $form = $this->createForm(new profileType($config), $profile);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -270,47 +202,129 @@ class AdminController extends Controller
     }
 
     /**
-     * export to xml
+     * supprimer un adhérant
+     * @Secure(roles="ROLE_ADMIN")
+     *
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $form = $this->createDeleteForm($id);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $userManager = $this->get('fos_user.user_manager');
+            $user = $userManager->findUserBy(array('id' => $id));
+            $userManager->deleteUser($user);
+        }
+
+        $this->get('session')->getFlashBag()->add('success', "L'adhérent a été supprimé avec succée.");
+        return $this->redirect($this->generateUrl('ben_users'));
+    }
+ 
+    /**
+     * supprimer plusieurs adhérants - ajax
+     * @Secure(roles="ROLE_ADMIN")
+     */   
+    public function removeUsersAction(Request $request)
+    {
+        $users = $request->get('users');
+        $userManager = $this->get('fos_user.user_manager');
+        foreach( $users as $id){
+            $user = $userManager->findUserBy(array('id' => $id));
+            $userManager->deleteUser($user);
+        }
+        return new Response('supression effectué avec succès');
+    } 
+
+    /**
+     * activer ou désactiver les adhérants sélectionnés - ajax
+     * @Secure(roles="ROLE_MANAGER")
+     */
+    public function enableUsersAction(Request $request, $etat)
+    {
+        $users = $request->get('users');
+        $userManager = $this->get('fos_user.user_manager');
+        $etat = ($etat==1);
+        foreach( $users as $id){
+            $user = $userManager->findUserBy(array('id' => $id));
+            $user->setEnabled($etat);
+            $userManager->updateUser($user);
+        }
+        return new Response('1');
+    }
+
+    /**
+     * changer le role des adhérants sélectionnés - ajax
+     * @Secure(roles="ROLE_ADMIN")
+     */    
+    public function setRoleAction(Request $request, $role)
+    {
+        if($role=='admin') $role='ROLE_ADMIN';
+        else if($role=='manager') $role='ROLE_MANAGER';
+        else $role='ROLE_USER';
+        $users = $request->get('users');
+        $userManager = $this->get('fos_user.user_manager');
+        foreach( $users as $id){
+            $user = $userManager->findUserBy(array('id' => $id));
+            /* check if user has admin role */
+            if (in_array('ROLE_ADMIN', $user->getRoles())){
+                $this->get('session')->getFlashBag()->add('error', "impossible de modifier un super utilisateur de cette interface");
+            }else{
+                $user->removeRole('ROLE_MANAGER');
+                $user->removeRole('ROLE_ADMIN');
+                $user->addRole($role);
+                $userManager->updateUser($user);
+            }
+        }
+        return new Response('1');
+    }
+
+    /**
+     * exporter vers csv
+     * @Secure(roles="ROLE_MANAGER")
+     */    
+    public function toCsvAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();        
+        $entities = $em->getRepository('BenUserBundle:user')->getUsers();
+        $response = $this->render('BenUserBundle:admin:list.csv.twig',array('entities' => $entities));
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="contacts.csv"');
+        return $response;
+    }
+
+    /**
+     * exporter vers xml
      * @Secure(roles="ROLE_MANAGER")
      */    
     public function toXmlAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
-        
         $entities = $em->getRepository('BenUserBundle:user')->getUsers();
-        // return $this->render('BenUserBundle:admin:list.xml.twig', array('entities' => $entities));
-
-        $response = $this->render('BenUserBundle:admin:list.xml.twig',array(
-                    'entities' => $entities,
-                    ));
-         $response->headers->set('Content-Type', 'text/xml');
-         // $response->headers->set('Content-Disposition', 'attachment; filename="contacts.xml"');
-
+        $response = $this->render('BenUserBundle:admin:list.xml.twig',array('entities' => $entities));
+        $response->headers->set('Content-Type', 'text/xml');
         return $response;
     }
 
     /**
-     * export to pdf
+     * exporter vers pdf
      * @Secure(roles="ROLE_USER")
      */
     public function toPdfAction($users)
     {
-        if(!$users)
-            return $this->redirect($this->generateUrl('ben_users'));
         $em = $this->getDoctrine()->getManager();
 
-        if($users != 'all'){
-            $users_id = explode(',', $users);
-            $entities = $em->getRepository('BenUserBundle:user')->findUserById($users_id);
-        }
-        else $entities = $em->getRepository('BenUserBundle:user')->findAll();
+        $security = $this->container->get('security.context');
+        if(!$security->isGranted('ROLE_MANAGER'))
+            $users_id = array($security->getToken()->getUser()->getId());
+        elseif($users !== 'all')$users_id = explode(',', $users);
+        else $users_id = null;
+
+        $entities = $em->getRepository('BenUserBundle:user')->findUserById($users_id);
         // return $this->render('BenUserBundle:admin:badge.html.twig', array('entities' => $entities));
 
-        $now = new \DateTime;
-        $now = $now->format('d-m-Y_H-i');
-        $html = $this->renderView('BenUserBundle:admin:badge.html.twig', array(
-            'entities' => $entities));
-
+        $now = (new \DateTime)->format('d-m-Y_H-i');
+        $html = $this->renderView('BenUserBundle:admin:badge.html.twig', array('entities' => $entities));
         return new Response(
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
             200,
@@ -322,124 +336,19 @@ class AdminController extends Controller
     }
 
     /**
-     * export to excel
-     * @Secure(roles="ROLE_USER")
+     * générer les tiquets pdf
+     * @Secure(roles="ROLE_MANAGER")
      */
-    public function toExcelAction($status)
+    public function printTicketAction($users)
     {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('BenUserBundle:user')->findAll();
-        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
-
-        $phpExcelObject->getProperties()->setCreator("ben");
-       $phpExcelObject->setActiveSheetIndex(0)
-            ->setCellValue("A1", "id")
-            ->setCellValue("B1", "nom d'utilisateur")
-            ->setCellValue("C1", "nom")
-            ->setCellValue("D1", "prenom")
-            ->setCellValue("E1", "ci")
-            ->setCellValue("F1", "email")
-            ->setCellValue("G1", "Sexe")
-            ->setCellValue("H1", "Date de naissance")
-            ->setCellValue("I1", "Adresse")
-            ->setCellValue("J1", "Ville")
-            ->setCellValue("K1", "Code postal")
-            ->setCellValue("L1", "Pays")
-            ->setCellValue("M1", "Profession")
-            ->setCellValue("N1", "A propos")
-            ->setCellValue("O1", "Tél")
-            ->setCellValue("P1", "Gsm")
-            ->setCellValue("Q1", "Revenu des parents")
-            ->setCellValue("R1", "Année d'obtention du bac")
-            ->setCellValue("S1", "Note du Baccalauréat")
-            ->setCellValue("T1", "Nombre des fréres/soeurs")
-            ->setCellValue("U1", "Note de lgement")
-            ->setCellValue("V1", "Etat")
-            ->setCellValue("W1", "Comportement")
-            ->setCellValue("X1", "Remarque")
-            ->setCellValue("Y1", "Date 'inscription");
-       $i=2;
-       foreach ($entities as $entity) {
-            $university = ($entity->getEtablissement()) ? $entity->getEtablissement()->getName() : '';
-           $phpExcelObject->setActiveSheetIndex(0)
-                ->setCellValue("A$i", $entity->getId())
-                ->setCellValue("B$i", $entity->getNDossier())
-                ->setCellValue("C$i", $entity->getFamilyName())
-                ->setCellValue("D$i", $entity->getFirstName())
-                ->setCellValue("E$i", $entity->getCin())
-                ->setCellValue("F$i", $entity->getCne())
-                ->setCellValue("G$i", $entity->getPassport())
-                ->setCellValue("H$i", $entity->getCarteSejour())
-                ->setCellValue("I$i", $entity->getBirdDay()->format('d/m/Y'))
-                ->setCellValue("J$i", $entity->getGender())
-                ->setCellValue("K$i", $entity->getAncientete())
-                ->setCellValue("L$i", $entity->getContry())
-                ->setCellValue("M$i", $entity->getCity())
-                ->setCellValue("N$i", $university)
-                ->setCellValue("O$i", $entity->getDiplome())
-                ->setCellValue("P$i", $entity->getNiveauEtude())
-                ->setCellValue("Q$i", $entity->getParentsRevenu())
-                ->setCellValue("R$i", $entity->getObtentionBac())
-                ->setCellValue("S$i", $entity->getExellence())
-                ->setCellValue("T$i", $entity->getBroSisNumber())
-                ->setCellValue("U$i", $entity->getNote())
-                ->setCellValue("V$i", $entity->getStatus())
-                ->setCellValue("W$i", $entity->getConditionSpecial())
-                ->setCellValue("X$i", $entity->getRemarque())
-                ->setCellValue("Y$i", $entity->getCreated()->format('d/m/Y'));
-            $i++;
-       }
-
-       $phpExcelObject->getActiveSheet()->setTitle('Liste des adhérents');
-
-       // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-       $phpExcelObject->setActiveSheetIndex(0);
-
-        // create the writer
-        $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel5');
-        // create the response
-        $response = $this->get('phpexcel')->createStreamedResponse($writer);
-        // adding headers
-        $now = new \DateTime;
-        $now = $now->format('d-m-Y_H-i');
-        $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
-        $response->headers->set('Content-Disposition', "attachment;filename=members-$now.xls");
-        $response->headers->set('Pragma', 'public');
-        $response->headers->set('Cache-Control', 'maxage=1');
-
-        return $response;        
-    }
-
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
-
-    /**
-     * generate etiquette pdf
-     * @Secure(roles="ROLE_USER")
-     */
-    public function etiquetteAction($users)
-    {
-        if(!$users)
-            return $this->redirect($this->generateUrl('ben_users'));
-        $em = $this->getDoctrine()->getManager();
-
-        if($users != 'all'){
-            $users_id = explode(',', $users);
-            $entities = $em->getRepository('BenUserBundle:user')->findUserById($users_id);
-        }
-        else $entities = $em->getRepository('BenUserBundle:user')->findAll();
+        if($users !== 'all')$users_id = explode(',', $users);
+        else $users_id = null;
+        $entities = $em->getRepository('BenUserBundle:user')->findUserById($users_id);
         // return $this->render('BenUserBundle:admin:etiquette.html.twig', array('entities' => $entities));
 
-        $now = new \DateTime;
-        $now = $now->format('d-m-Y_H-i');
-        $html = $this->renderView('BenUserBundle:admin:etiquette.html.twig', array(
-            'entities' => $entities));
-
+        $now = (new \DateTime)->format('d-m-Y_H-i');
+        $html = $this->renderView('BenUserBundle:admin:etiquette.html.twig', array('entities' => $entities));
         return new Response(
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
             200,
@@ -448,5 +357,189 @@ class AdminController extends Controller
                 'Content-Disposition'   => 'attachment; filename="etiquette'.$now.'.pdf"'
             )
         );
+    }
+
+    /**
+     * exporter vers excel
+     * @Secure(roles="ROLE_MANAGER")
+     */
+    public function toExcelAction($status)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('BenUserBundle:user')->findAll();
+        $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+
+        $phpExcelObject->getProperties()->setCreator("ben");
+        $phpExcelObject->setActiveSheetIndex(0)
+            ->setCellValue("A1", "id")
+            ->setCellValue("B1", "nom d'utilisateur")
+            ->setCellValue("C1", "nom")
+            ->setCellValue("D1", "prenom")
+            ->setCellValue("E1", "cin");
+        $i=2;
+        foreach ($entities as $entity) {
+            $university = ($entity->getEtablissement()) ? $entity->getEtablissement()->getName() : '';
+           $phpExcelObject->setActiveSheetIndex(0)
+                ->setCellValue("A$i", $entity->getId())
+                ->setCellValue("B$i", $entity->getNDossier())
+                ->setCellValue("C$i", $entity->getFamilyName())
+                ->setCellValue("D$i", $entity->getFirstName())
+                ->setCellValue("E$i", $entity->getCin());
+            $i++;
+       }
+
+        $phpExcelObject->getActiveSheet()->setTitle('Liste des adhérents');
+        $phpExcelObject->setActiveSheetIndex(0);
+        $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel5');
+        $response = $this->get('phpexcel')->createStreamedResponse($writer);
+        // adding headers
+        $now = (new \DateTime)->format('d-m-Y_H-i');
+        $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
+        $response->headers->set('Content-Disposition', "attachment;filename=members-$now.xls");
+        $response->headers->set('Pragma', 'public');
+        $response->headers->set('Cache-Control', 'maxage=1');
+
+        return $response;        
+    }
+
+    /**
+     * ajouter un groupe de recherche
+     * @Secure(roles="ROLE_MANAGER")
+     */
+    public function addFilterGroupAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $searchParam = $request->get('searchParam');
+        $entities = $em->getRepository('BenUserBundle:user')->search($searchParam);
+        $group = new Group();
+        $group->setName($searchParam['filterGroup']);
+        $group->setRoles(array());
+        foreach ($entities as $entity) {
+            $entity->addGroup($group);
+        }
+        $em->persist($group);
+        $em->flush();
+
+        $response = new Response(json_encode($group->toArray()));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
+    /**
+     * associer les adhérants sélectionnés à un groupe
+     * @Secure(roles="ROLE_MANAGER")
+     */
+    public function addToGroupAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $users = $request->get('users');
+        $group_id = $request->get('group');
+        $group = $em->getRepository('BenUserBundle:Group')->find($group_id);
+        $userManager = $this->get('fos_user.user_manager');
+        foreach( $users as $id){
+            $user = $userManager->findUserBy(array('id' => $id));
+            $user->addGroup($group);
+        }
+        $em->persist($group);
+        $em->flush();
+
+        $response = new Response(json_encode($group->toArray()));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
+    /**
+     * liste des utilisateurs d'un groupe
+     * @Secure(roles="ROLE_MANAGER")
+     */
+    public function showGroupAction(Request $request, Group $group, $perPage)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if($request->getMethod()==='POST') $searchParam = $request->get('searchParam');
+        else $searchParam['page'] = 1;
+        $searchParam['perPage'] = $perPage;
+        $searchParam['group'] = $group->getId();
+        $entities = $em->getRepository('BenUserBundle:user')->search($searchParam);
+        $pagination = (new Paginator())->setItems(count($entities), $searchParam['perPage'])->setPage($searchParam['page'])->toArray();
+        return $this->render('BenUserBundle:group:call_list.html.twig', array(
+                    'group' => $group,
+                    'entities' => $entities,
+                    'pagination' => $pagination,
+                    ));
+    }
+
+    /**
+     * supprimer un utilisateur d'un groupe
+     * @Secure(roles="ROLE_MANAGER")
+     */
+    public function removeFromGroupAction(Request $request, User $user, $groupid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $group = $em->getRepository('BenUserBundle:Group')->find($groupid);
+        $user->removeGroup($group);
+        $em->persist($group);
+        $em->flush();
+        return $this->redirect($this->generateUrl('ben_show_group', array('id' => $groupid)));
+    }
+
+    /**
+     * liste des utilisateurs public
+     * @Secure(roles="ROLE_MANAGER")
+     */
+    public function logAction(Request $request)
+    {
+        $feedback = $request->get('feedback');
+        $id = $request->get('user');
+        $type = $request->get('type');
+        $entity = new \Ben\AssociationBundle\Entity\ActivityLog();
+        $entity->setClassName('Ben\UserBundle\Entity\User');
+        $entity->setEntityId($id);
+        $entity->setUser($this->container->get('security.context')->getToken()->getUser()->getId());
+        $entity->setMessage($feedback);
+        $entity->setType('appel');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($entity);
+        $em->flush();
+        return new Response('1');
+    }
+
+    /**
+     * liste des utilisateurs public
+     * @Secure(roles="ROLE_MANAGER")
+     */
+    public function publicAction(Request $request, $perPage)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if($request->getMethod()==='POST') $searchParam = $request->get('searchParam');
+        else $searchParam['page'] = 1;
+        $searchParam['perPage'] = $perPage;
+        $entities = $em->getRepository('BenUserBundle:user')->search($searchParam);
+        $pagination = (new Paginator())->setItems(count($entities), $searchParam['perPage'])->setPage($searchParam['page'])->toArray();
+        return $this->render('BenUserBundle:admin:public.html.twig', array(
+                    'entities' => $entities,
+                    'pagination' => $pagination,
+                    ));
+    }
+
+
+    /* helper funcions */
+    public function getConfig()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('BenAssociationBundle:config')->findAll();
+        foreach ($entities as $entity) 
+           $config[$entity->getTheKey()] = $entity->getTheValue();
+       return $config;
+    }
+    
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
+            ->getForm()
+        ;
     }
 }

@@ -12,25 +12,25 @@ Tableau de bord | {{ parent() }}
 <h2><span class="fui-time"></span>  Liste des évenements</h2>
       <form id="jsForm" role="form" method="post" action="">
         <input id="pagenumber" type="hidden" name="searchParam[page]" value="1">     
-          <div class="row">
-            <div class="col-lg-5 form-group">
-              <div class="input-group">
-                <input type="text" name="searchParam[keyword]" class="form-control" placeholder="Search">
-                <div class="input-group-btn">
-                <button class="btn btn-default" type="submit"><span class="fui-search"></span></button>
-                </div>
-              </div>
-            </div><!-- /.col-lg-6 -->     
+          <div class="row hidden-print">
+              <div class="col-md-5">
+                  <div class="form-group">
+                     <div class="input-group">                                     
+                        <input type="text" name="searchParam[keyword]" class="form-control" placeholder="Search">
+                       <span class="input-group-btn">
+                             <button type="submit" class="btn"><span class="fui-search"></span></button>
+                         </span>
+                     </div>
+                  </div>
+              </div>    
             <div class="col-lg-7">
               <div class="btn-group pull-right">              
-                <button class="btn btn-primary" href="#" data-toggle="modal" data-target="#myModal"><span class="fui-gear"></span> Recherche avancée</button>
+                <button class="btn btn-primary" href="#" data-toggle="modal" data-target="#myModal"><span class="fui-search"></span> Recherche avancée</button>
                 <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                   <span class="caret"></span>
                 </button>
                 <span class="dropdown-arrow dropdown-arrow-inverse"></span>
                 <ul class="dropdown-menu dropdown-inverse">
-                      <li><a href="{{ path('event_new') }}"><span class="fui-plus"></span> Ajouter</a></li>
-                      <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> Exporter</a></li>
                       <li><a href="{{ path('event_calendar') }}"><span class="fui-calendar"></span> Calendrier</a></li>
                       <li class="divider"></li>
                       <li><a href="#" id="js-delete"><span class="fui-trash"></span> Supprimer</a></li>
@@ -86,8 +86,8 @@ Tableau de bord | {{ parent() }}
                 <div class="form-group">
                     <label class="col-md-5 control-label" for="floor">Nombre de ligne par page :</label>
                     <div class="col-md-5">
-                       <select id="js-perpage" name="searchParam[perPage]" class="select-block small">
-                        <option value="3" {% if app_config.rows_per_page == 3 %}selected{% endif %}>3</option>
+                       <select id="js-perpage" name="searchParam[perPage]" class="select-block primary">
+                        <option value="10" {% if app_config.rows_per_page == 10 %}selected{% endif %}>10</option>
                         <option value="20" {% if app_config.rows_per_page == 20 %}selected{% endif %}>20</option>
                         <option value="50" {% if app_config.rows_per_page == 50 %}selected{% endif %}>50</option>
                         <option value="100" {% if app_config.rows_per_page == 100 %}selected{% endif %}>100</option>
@@ -123,8 +123,6 @@ Tableau de bord | {{ parent() }}
         return entities.join(',');
       }
       function init(){
-        dateFromInput.val('');
-        dateToInput.val('');
         groupBtn.val('0');
         pageInput.val('1');
         checkboxBtn.prop("checked",false);
@@ -155,8 +153,6 @@ Tableau de bord | {{ parent() }}
       var form = $('#jsForm'),
           dataContainer = form.find('#dataContainer');
           deleteBtn = form.find('#js-delete'),
-          dateFromInput = form.find('#date-from'),
-          dateToInput = form.find('#date-to'),
           groupBtn = form.find('#js-group'),
           pageInput = form.find('#pagenumber'),
           perPageBtn = form.find('#js-perpage'),
@@ -184,7 +180,7 @@ Tableau de bord | {{ parent() }}
 
       /* submit the form after loading the page*/
       init();
-      setTimeout(ajaxPost, 1);
+      ajaxPost();
 
       /* daterangepicker */
      $('#rangepicker').daterangepicker({format: 'YYYY/MM/DD'});

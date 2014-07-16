@@ -8,6 +8,9 @@ class SecurityController extends BaseController
 {
     public function loginAction()
     {
+
+        $securityContext = $this->container->get('security.context');
+        $router = $this->container->get('router');
         $request = $this->container->get('request');
         /* @var $request \Symfony\Component\HttpFoundation\Request */
         $session = $request->getSession();

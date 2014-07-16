@@ -14,9 +14,17 @@ class ConfigExtension extends \Twig_Extension {
 
     public function getGlobals()
     {
-        $logoConfig = $this->em->getRepository('BenAssociationBundle:config')->findAll();
-        $result= [];
-        foreach ($logoConfig as $cf) {
+        $config = $this->em->getRepository('BenAssociationBundle:config')->findAll();
+        $fields = $this->em->getRepository('BenAssociationBundle:fields')->findAll();
+        $userTable = array_filter($fields, function($obj){
+            return ($obj->getTableName() === 'adherant');
+        });
+        $cotisationTable = array_filter($fields, function($obj){
+            return ($obj->getTableName() === 'cotisation');
+        });
+        $result['userTable']= $userTable;
+        $result['cotisationTable']= $cotisationTable;
+        foreach ($config as $cf) {
             $result[$cf->getTheKey()] = $cf->getTheValue();
         }
       return array(

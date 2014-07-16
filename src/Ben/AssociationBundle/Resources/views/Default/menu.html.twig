@@ -1,14 +1,31 @@
+{% set route = app.request.attributes.get('_route') %} 
+
+{% set dashboardMenu = ['Ben_association_homepage'] %}
+{% set userMenu = ['ben_users','ben_show_user','ben_new_user','etudiant_new','ben_edit_user'] %} 
+{% set groupMenu = ['fos_user_group_list', 'fos_user_group_show', 'fos_user_group_edit', 'ben_show_group'] %} 
+{% set statusMenu = ['status', 'status_show', 'status_new', 'status_edit'] %} 
+{% set roomMenu = ['room', 'room_show', 'room_new', 'room_edit'] %} 
+{% set eventMenu = ['event', 'event_show', 'event_new', 'event_edit', 'event_calendar', 'event_demo'] %} 
+{% set reservationMenu = ['reservation','reservation_show','reservation_new','reservation_edit'] %} 
+{% set cotisationMenu = ['cotisation', 'cotisation_show', 'cotisation_new', 'cotisation_edit'] %} 
+{% set hotelMenu = ['hotel', 'hotel_show', 'hotel_new', 'hotel_edit'] %}
+{% set configMenu = ['config', 'config_update_fields'] %}  
+
 <nav class="menu hidden-print">
     <ul>
-        <li><a href="{{ path('Ben_association_homepage') }}"><span class="glyphicon glyphicon-dashboard block"></span> <span>Dashboard</span></a></li>
-        <li><a href="{{ path('ben_users') }}"><span class="fui-user block"></span> <span>Adhérents</span></a></li>
-        <li><a href="{{ path('fos_user_group_list') }}"><span class="fui-myspace block"></span> <span>Groupes</span></a></li>
-        <li><a href="{{ path('status') }}"><span class="glyphicon glyphicon-tags block"></span> <span>Status</span></a></li>
-        <li><a href="{{ path('event') }}"><span class="fui-time block"></span> <span>Evenements</span></a></li>
-        <li><a href="{{ path('cotisation') }}"><span class="glyphicon glyphicon-usd block"></span> <span>cotisation</span></a></li>
-        <li><a href="{{ path('reservation') }}"><span class="fui-book block"></span> <span>reservation</span></a></li>
-        <li><a href="{{ path('hotels') }}"><span class="fui-home block"></span> <span>Logement</span></a></li>
-        <li><a href="{{ path('rooms') }}"><span class="fui-tag block"></span> <span>chambres</span></a></li>
-        <li><a href="{{ path('config') }}"><span class="fui-gear block"></span> <span>Préférences</span></a></li>
+    {% if is_granted("ROLE_MANAGER") %}
+        <li class="{% if route in dashboardMenu %}current{% endif %}"><a href="{{ path('Ben_association_homepage') }}"><span class="glyphicon glyphicon-dashboard block"></span> <span>Dashboard</span></a></li>
+        <li class="{% if route in userMenu %}current{% endif %}"><a href="{{ path('ben_users') }}"><span class="fui-user block"></span> <span>Adhérents</span></a></li>
+        <li class="{% if route in groupMenu %}current{% endif %}"><a href="{{ path('fos_user_group_list') }}"><span class="fui-myspace block"></span> <span>Groupes</span></a></li>
+        <li class="{% if route in statusMenu %}current{% endif %}"><a href="{{ path('status') }}"><span class="glyphicon glyphicon-tags block"></span> <span>Status</span></a></li>
+        <li class="{% if route in cotisationMenu %}current{% endif %}"><a href="{{ path('cotisation') }}"><span class="glyphicon glyphicon-usd block"></span> <span>cotisation</span></a></li>
+        {% if is_granted("ROLE_ADMIN") %}
+        <li class="{% if route in eventMenu %}current{% endif %}"><a href="{{ path('event') }}"><span class="fui-time block"></span> <span>Evenements</span></a></li>
+        <li class="{% if route in reservationMenu %}current{% endif %}"><a href="{{ path('reservation') }}"><span class="fui-book block"></span> <span>reservation</span></a></li>
+        <li class="{% if route in hotelMenu %}current{% endif %}"><a href="{{ path('hotels') }}"><span class="fui-home block"></span> <span>Logement</span></a></li>
+        <li class="{% if route in roomMenu %}current{% endif %}"><a href="{{ path('rooms') }}"><span class="fui-tag block"></span> <span>chambres</span></a></li>
+        <li class="{% if route in configMenu %}current{% endif %}"><a href="{{ path('config') }}"><span class="fui-gear block"></span> <span>Préférences</span></a></li>
+        {% endif %}
+    {% endif %}
     </ul>
 </nav>

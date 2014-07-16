@@ -1,0 +1,54 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block title %}
+Public - {{ parent() }}
+{% endblock %}
+
+{% block fos_user_content %}
+<h2><span class="fui-user"></span> Liste des adhérants</h2>
+
+<form  id="jsForm" role="form" method="post" action="{{ path('ben_users_public', {perPage : app_config.rows_per_page}) }}">
+    <input id="pagenumber" type="hidden" name="searchParam[page]" value="1"> 
+    <div class="row hidden-print">
+      <div class="col-md-5">
+          <div class="form-group">
+             <div class="input-group">                                     
+                <input type="text" name="searchParam[keyword]" class="form-control" placeholder="Search">
+               	<span class="input-group-btn">
+                     <button type="submit" class="btn"><span class="fui-search"></span></button>
+                </span>
+             </div>
+          </div>
+      </div>
+    </div><!-- /.row -->
+
+	<div class="row">
+	    {% for entity in entities %}
+	    <div class="col-md-4 col-xs-6">
+	        {% include "BenUserBundle:admin:entity.html.twig" %}
+	    </div>
+	    {% endfor %}
+	</div>
+
+	{% include "BenAssociationBundle:Default:pagination.html.twig" %}
+</form>
+
+{% endblock fos_user_content %}
+
+{% block javascripts %}
+{{ parent() }}
+<script> 
+    (function($) {
+    	var	form = $('#jsForm'),
+    		pageInput = form.find('#pagenumber');
+
+		/* pagination */    
+		form.on('click', '.js-page', function(){
+		    pageInput.val($(this).data('page'));
+		    form.trigger('submit');
+		});
+
+    })(jQuery);
+</script>
+{% endblock %}
+
+

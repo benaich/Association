@@ -63,18 +63,18 @@ class Thread extends BaseThread {
     }
     public function getParticipant($current_user)
     {
-        $participants = $this->getParticipants();
+        $participants = $this->getParticipantsList();
         unset($participants[array_search($current_user, $participants)]);
         $participant = ($participants) ? implode(' ', $participants) : $current_user;
         return $participant;     
     }
-    public function getParticipants()
+    public function getParticipantsList()
     {
+        $participants = [];
         foreach ($this->metadata as $data) {
                $participants[] = $data->getParticipant()->getUsername();
            }
-        return $participants;
-        var_dump($participants);die();   
+        return $participants; 
     }
 
 }

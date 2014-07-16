@@ -5,11 +5,25 @@ Tableau de bord | {{ parent() }}
 
 {% block stylesheet %}
     {{ parent() }}
-    <style type="text/css"> {{ app_config.org_carte_css}} </style>
+    <style type="text/css"> 
+    .mybadge {
+      background: {{ app_config.badge_bgcolor}};
+      color: {{ app_config.badge_color}};
+      }
+      .mybadge .footer{ 
+        color: {{ app_config.badge_footer_color}};
+        background: {{ app_config.badge_footer_bgcolor}};
+      }
+      {{ app_config.org_carte_css}} 
+
+    </style>
  {% endblock %}
  
 {% block body %}
-      
+     {% if is_granted("ROLE_MANAGER") %} 
+     <form id="deleteForm" action="{{ path('ben_delete_user', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+    </form>
     <div class="btn-group pull-right hidden-print">              
       <button class="btn btn-primary "><span class="fui-gear"></span> Selectioner une action</button>
       <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -21,17 +35,23 @@ Tableau de bord | {{ parent() }}
         <li><a href="{{ path('avancement_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Ajouter un status</a></li>
         <li><a href="{{ path('cotisation_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Ajouter une cotisation</a></li>
         <li><a href="{{ path('ben_pdf', {'users': entity.id }) }}"><span class="fui-credit-card"> Imprimer la carte</a></li>
-        <li><a href="{{ path('ben_etiquette_user', {'users': entity.id }) }}"><span class="fui-tag"></span> Etiquettes</a></li>
+        <li><a href="{{ path('ben_ticket_user', {'users': entity.id }) }}"><span class="fui-tag"></span> Ticket</a></li>
         <li><a id="btnPrint" href="#"><span class="glyphicon glyphicon-print"></span> imprimer la fiche</a></li>
         <li><a href="{{ path('reservation_new', {'id': entity.id }) }}"><span class="fui-tag"> Reserver une chambre</a></li>
+        {% if is_granted("ROLE_ADMIN") %}
         <li class="divider"></li>
         <li><a id="js-delete" href="{{ path('ben_new_user', {id: entity.id }) }}"><span class="glyphicon glyphicon-trash"></span> Supprimmer</a></li>
+        {% endif %}
       </ul>
     </div>
-  <h2><span class="fui-user"></span> {{ entity.profile.firstName }} {{ entity.profile.familyName }} </h2>
-
+    {% endif %}
+  <div class="row">
+    <div class="col-md-12 hidden-print"><h2><span class="fui-user"></span> {{ entity.profile.firstName }} {{ entity.profile.familyName }} </h2></div>
+  </div>
+  <h2 class="visible-print text-center">Fiche adhérant</h2>
 <div class="row">
     <div class="col-md-4">
+    {% if is_granted("ROLE_MANAGER") %} 
       <div class="box mybadge hidden-print">
         <img class="pull-left pic" src="{{ asset( entity.profile.image.getwebpath)}}"/>
         <img class="pull-right logo" src="{{ asset(app_config.org_logo) }}"/>
@@ -54,6 +74,7 @@ Tableau de bord | {{ parent() }}
           <div class="clearfix"></div>
         </div>
       </div>
+      {% endif %}
       <div class="box">
           <header>
             <h3><span class="glyphicon glyphicon-file"></span> Informations générale</h3>
@@ -100,24 +121,19 @@ Tableau de bord | {{ parent() }}
                <h3><span class="fui-book"></span> Informations de contact</h3>
            </header>
            <ul class="list-group">
-               <li class="list-group-item"><strong>Tél :</strong> {{ entity.profile.tel }}</li>
-               <li class="list-group-item"><strong>Gsm :</strong> {{ entity.profile.gsm }}</li>
-          <li class="list-group-item"><strong>Adresse :</strong> {{ entity.profile.address }}</li>
-          <li class="list-group-item"><strong>Ville :</strong> {{ entity.profile.city }}</li>
-          <li class="list-group-item"><strong>Pay :</strong> {{ entity.profile.contry }}</li>
-          <li class="list-group-item"><strong>A propos :</strong> {{ entity.profile.description }}</li>
+              <li class="list-group-item"><strong>Tél :</strong> {{ entity.profile.tel }}</li>
+              <li class="list-group-item"><strong>Gsm :</strong> {{ entity.profile.gsm }}</li>
+              <li class="list-group-item"><strong>Adresse :</strong> {{ entity.profile.address }}</li>
+              <li class="list-group-item"><strong>Ville :</strong> {{ entity.profile.city }}</li>
+              <li class="list-group-item"><strong>Pay :</strong> {{ entity.profile.contry }}</li>
+              <li class="list-group-item"><strong>A propos :</strong> {{ entity.profile.description }}</li>
            </ul>
-          {# <ul class="social hidden-print hide">
-           <li><a href="{{ entity.profile.facebook }}"><span class="fui-facebook"></span></a></li>
-           <li><a href="{{ entity.profile.twitter }}"><span class="fui-twitter"></span></a></li>
-           <li><a href="{{ entity.profile.google }}"><span class="fui-googleplus"></span></a></li>
-          </ul>  #}
        </div>
+      {% if entity.reservations|length %}
        <div class="box">
            <header>
                <h3><span class="fui-home"></span> Informations de logement</h3>
            </header>
-           {% if entity.reservations|length %}
            <ul class="list-group">
            {% set last = entity.reservations|length -1 %}
            {% set reservation = entity.reservations[last] %}
@@ -126,8 +142,8 @@ Tableau de bord | {{ parent() }}
                <li class="list-group-item"><strong>Numero de chambre :</strong> {{ reservation.room.number }} </li>
                <li class="list-group-item"><strong>Numero de pavé :</strong> {{ reservation.room.floor }} </li>
            </ul>
-           {% endif %}
-       </div>               
+       </div>
+      {% endif %}               
    </div> 
    <div class="col-md-8"> 
       <div class="box">
@@ -152,7 +168,9 @@ Tableau de bord | {{ parent() }}
                   <td>{{ entity.city }} </td>
                   <td>{% if entity.dateFrom %}{{ entity.dateFrom|date('d/m/Y') }}{% endif %}</td>
                   <td>{% if entity.dateTo %}{{ entity.dateTo|date('d/m/Y') }}{% endif %}
-                  <a class="btn btn-info btn-xs pull-right" href="{{ path('avancement_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+                  {% if is_granted("ROLE_MANAGER") %} 
+                  <a class="btn btn-inverse btn-xs pull-right" href="{{ path('avancement_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="glyphicon glyphicon-edit"></span></a>
+                  {% endif %}
                   </td>
                 </tr>
               {% endfor %}
@@ -181,8 +199,35 @@ Tableau de bord | {{ parent() }}
                   <td>{{ entity.type }}</td>
                   <td>{% if entity.datefrom %}{{ entity.datefrom|date('Y-m-d') }}{% endif %}</td>
                   <td>{% if entity.dateto %}{{ entity.dateto|date('Y-m-d') }}{% endif %}
-                  <a class="btn btn-info btn-xs pull-right" href="{{ path('cotisation_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+                  {% if is_granted("ROLE_MANAGER") %} 
+                  <a class="btn btn-inverse btn-xs pull-right" href="{{ path('cotisation_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="glyphicon glyphicon-edit"></span></a>
+                  {% endif %}
                   </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+      </div>
+      <div class="box">
+          <header>
+              <h3><span class="glyphicon glyphicon-tag"></span> Historique des appels</h3>
+          </header>
+          <table class="table table-hover table-bordered">
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>date d'appel</th>
+                      <th>type</th>
+                      <th>Note</th>
+                  </tr>
+              </thead>
+              <tbody>
+              {% for entity in logs %}
+                <tr>
+                  <td>{{ loop.index }}</td>
+                  <td>{% if entity.date %}{{ entity.date|date('Y-m-d à H:i') }}{% endif %}</td>
+                  <td>{{ entity.type }}</td>
+                  <td>{{ entity.message }}</td>
                 </tr>
               {% endfor %}
               </tbody>
@@ -190,10 +235,6 @@ Tableau de bord | {{ parent() }}
       </div>
    </div>
 </div>
-
-<form id="deleteForm" action="{{ path('ben_delete_user', { 'id': entity.id }) }}" method="post">
-    {{ form_widget(delete_form) }}
-</form>
 
 {% endblock body %}
 

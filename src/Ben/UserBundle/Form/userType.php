@@ -8,6 +8,12 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class userType extends AbstractType
 {
+    private $config;
+
+    public function __construct($config)
+    {
+        $this->config = $config;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -15,7 +21,7 @@ class userType extends AbstractType
             ->add('email')
             ->add('plainpassword', 'text', array('required' => false))
             ->add('enabled', 'checkbox', array('required' => false))
-            ->add('profile' , new profileType())
+            ->add('profile' , new profileType($this->config))
             ->add('groups', null, array('expanded' => "true", "multiple" => "true"))
             ;
     }

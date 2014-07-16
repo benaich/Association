@@ -1,0 +1,81 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+{% block stylesheet %}
+   {{ parent() }}   
+        <link href="{{ asset('css/froala_editor.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<h2><span class="fui-gear"></span> Configuration des champs</h2>
+<form class="form-horizontal" action="{{ path('config_update_fields')}}" method="POST">        
+        <div class="tabbable">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#tab1"><span class="fui-user"></span> Adérents</a></li>
+              <li><a href="#tab2"><span class="fui-tag"></span> Cotisation</a></li>
+            </ul> <!-- /tabs -->
+
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab1">
+              <table class="table table-hover table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Identifiant</th>
+                    <th>Nom du champ</th>
+                    <th>Visibilité</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in app_config.userTable %}
+                <tr>
+                  <td><input type="hidden" name="config[{{ item.id }}][id]" value="{{ item.id }}">{{ item.fieldname }}</td>
+                  <td><input type="text" name="config[{{ item.id }}][nicename]" value="{{ item.nicename }}" class="form-control"></td>
+                  <td><input type="checkbox" name="config[{{ item.id }}][visible]" {% if item.visible %}checked="checked"{% endif %} value="{{ item.isvisible }}" data-toggle="switch" /></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div><!-- /tab1 -->
+              <div class="tab-pane" id="tab2">
+              <table class="table table-hover table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Identifiant</th>
+                    <th>Nom du champ</th>
+                    <th>Visibilité</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in app_config.cotisationTable %}
+                <tr>
+                  <td><input type="hidden" name="config[{{ item.id }}][id]" value="{{ item.id }}">{{ item.fieldname }}</td>
+                  <td><input type="text" name="config[{{ item.id }}][nicename]" value="{{ item.nicename }}" class="form-control"></td>
+                  <td><input type="checkbox" name="config[{{ item.id }}][visible]" {% if item.visible %}checked="checked"{% endif %} value="{{ item.isvisible }}" data-toggle="switch" /></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div><!-- /tab1 -->
+            </div> <!-- /tab-content -->
+          </div>
+              <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-4">
+                  <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-check-inverted"></span> Mettre à jour</button>
+                </div>
+              </div>
+</form>
+   
+{% endblock body %}
+{% block javascripts %}
+{{ parent() }}
+    <script src="{{ asset('js/froala_editor.min.js') }}"></script>
+<script> 
+    (function($) {
+
+      $('.veditor').editable({inlineMode: false});
+      $('.fr-dropdown').find('.fa-magic').parent().hide();
+
+    })(jQuery);
+</script>
+{% endblock %}

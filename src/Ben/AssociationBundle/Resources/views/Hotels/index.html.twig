@@ -4,16 +4,18 @@ Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
 <h2><span class="fui-home"></span> Liste des logements</h2>
-<form id="jsForm" role="form" method="GET" action="{{ path('hotels') }}">       
-<div class="row">
-    <div class="col-lg-5 form-group">
-      <div class="input-group">
-        <input type="text" name="keyword" class="form-control" placeholder="Search">
-        <div class="input-group-btn">
-        <button class="btn btn-default" type="submit"><span class="fui-search"></span></button>
+<form id="jsForm" role="form" method="GET" action="{{ path('hotels') }}">         
+<div class="row hidden-print">
+    <div class="col-md-5">
+        <div class="form-group">
+           <div class="input-group">                                     
+              <input type="text" name="keyword" class="form-control" placeholder="Search">
+             <span class="input-group-btn">
+                   <button type="submit" class="btn"><span class="fui-search"></span></button>
+               </span>
+           </div>
         </div>
-      </div>
-    </div><!-- /.col-lg-6 -->
+    </div>
     <div class="col-lg-7">
       <div class="pull-right">
         <a class="btn btn-embossed btn-primary" href="{{ path('hotels_new') }}"><span class="fui-plus"></span> Ajouter</a>      

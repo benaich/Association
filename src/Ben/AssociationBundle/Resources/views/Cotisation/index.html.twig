@@ -9,12 +9,16 @@ Tableau de bord | {{ parent() }}
     <thead>
         <tr>
             <th>#</th>
-            <th>Adhérant</th>
+
+            {% for item in app_config.cotisationTable %}
+              {% if item.visible %}<th>{{ item.nicename }}</th>{% endif %}
+            {% endfor %}
+{#             <th>Adhérant</th>
             <th>Montant</th>
             <th>Type</th>
             <th>Date début</th>
             <th>Date fin</th>
-            <th>Commentaire</th>
+            <th>Commentaire</th> #}
             <th>Actions</th>
         </tr>
     </thead>
@@ -22,12 +26,17 @@ Tableau de bord | {{ parent() }}
     {% for entity in entities %}
         <tr>
             <td>{{ loop.index }}</td>
+            {% for item in app_config.cotisationTable %}
+              {% if item.visible %}<td>{{ entity.get(item.fieldName) }}</td>{% endif %}
+            {% endfor %}
+            {#
             <td>{{ entity.user.profile.fullName }}</td>
             <td>{{ entity.price }} DH</td>
             <td>{{ entity.type }}</td>
             <td>{% if entity.datefrom %}{{ entity.datefrom|date('Y-m-d') }}{% endif %}</td>
             <td>{% if entity.dateto %}{{ entity.dateto|date('Y-m-d') }}{% endif %}</td>
             <td>{{ entity.description }}</td>
+            #}
             <td>
                 <a class="btn btn-embossed btn-primary btn-xs" href="{{ path('cotisation_show', { 'id': entity.id }) }}" data-toggle="tooltip" title="Afficher"><span class="fui-search"></span></a>
                 <a class="btn btn-embossed btn-info btn-xs" href="{{ path('cotisation_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="fui-new"></span></a>

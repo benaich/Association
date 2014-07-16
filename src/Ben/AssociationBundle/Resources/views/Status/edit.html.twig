@@ -10,7 +10,9 @@ Tableau de bord | {{ parent() }}
     <div class="form-group">
       <div class="col-md-offset-4 col-md-4">
         <button type="submit" class="btn btn-primary btn-embossed"><span class="glyphicon glyphicon-edit"></span> Modifier</button>
+        {% if is_granted("ROLE_ADMIN") %}
         <button id="js-delete" class="btn btn-embossed btn-danger"><span class="fui-cross"></span> Supprimer </button>
+        {% endif %}
       </div>
     </div>
             
@@ -27,7 +29,7 @@ Tableau de bord | {{ parent() }}
     (function($) {
 
         $('#js-delete').on('click', function(){
-            $('#deleteForm').submit();
+            (confirmation()) && $('#deleteForm').submit();
             return false;
         });
     })(jQuery);

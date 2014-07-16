@@ -8,6 +8,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class profileType extends AbstractType
 {
+    private $diplome;
+
+    public function __construct($config)
+    {
+        foreach (explode(',', $config['org_diplome']) as $i => $val) 
+            $this->diplome[$val] = $val;
+        foreach (explode(',', $config['org_expertise']) as $i => $val) 
+            $this->expertise[$val] = $val;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -26,9 +36,8 @@ class profileType extends AbstractType
             ->add('gsm')
             ->add('job')
             ->add('description')
-            ->add('diplome', 'choice', array('choices' => array('BAC' => 'BAC','DEUG' => 'DEUG','LICENCE' => 'LICENCE','MASTER' => 'MASTER','DOCTORAT' => 'DOCTORAT'),
-                    'required' => false,))
-            ->add('expertise')
+            ->add('diplome', 'choice', array('choices' => $this->diplome,'required' => false,))
+            ->add('expertise', 'choice', array('choices' => $this->expertise,'required' => false,))
             // ->add('website')
             // ->add('facebook')
             // ->add('google')

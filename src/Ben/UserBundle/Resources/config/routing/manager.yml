@@ -1,5 +1,9 @@
+ben_users_public:
+    pattern:  /public/{perPage}
+    defaults: { _controller: BenUserBundle:Admin:public, perPage: 10}
+
 ben_users:
-    pattern:  /
+    pattern:  /adherants
     defaults: { _controller: BenUserBundle:Admin:index }
 
 ben_users_ajax:
@@ -27,11 +31,6 @@ ben_edit_user:
 ben_update_user:
     pattern:  /update/{id}
     defaults: { _controller: BenUserBundle:Admin:update }
-    requirements: { _method: post }
-
-ben_users_list:
-    pattern:  /users/list
-    defaults: { _controller: "BenUserBundle:Admin:usersList" }
     requirements: { _method: post }
 
 ben_enable_users:
@@ -63,7 +62,7 @@ ben_profile_edit:
     defaults: { _controller: "BenUserBundle:Admin:editMe" }
 
 ben_profile_update:
-    pattern:  _me/{id}/update
+    pattern:  /me/{id}/update
     defaults: { _controller: "BenUserBundle:Admin:updateMe" }
     requirements: { _method: post }
 
@@ -79,6 +78,29 @@ ben_badge_user:
     pattern:  /badge/{users}
     defaults: { _controller: "BenUserBundle:Admin:showBadge" }
 
-ben_etiquette_user:
-    pattern:  /etiquette/{users}
-    defaults: { _controller: "BenUserBundle:Admin:etiquette" }
+ben_ticket_user:
+    pattern:  /printTicket/{users}
+    defaults: { _controller: "BenUserBundle:Admin:printTicket" }
+
+add_group_filter:
+    pattern:  /addgroupfilter
+    defaults: { _controller: BenUserBundle:Admin:addFilterGroup }
+    requirements: { _method: post }
+
+add_users_group:
+    pattern:  /addtogroup
+    defaults: { _controller: BenUserBundle:Admin:addToGroup }
+    requirements: { _method: post }
+
+ben_show_group:
+    pattern:  /groupe/{id}/{perPage}
+    defaults: { _controller: BenUserBundle:Admin:showGroup, perPage: 10}
+
+ben_remove_from_roup:
+    pattern:  /groupereject/{id}/{groupid}
+    defaults: { _controller: BenUserBundle:Admin:removeFromGroup}
+
+add_users_log:
+    pattern:  /log
+    defaults: { _controller: BenUserBundle:Admin:log }
+    requirements: { _method: post }

@@ -225,8 +225,8 @@ class User extends BaseUser implements ParticipantInterface {
     {
         $roles = ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER'];
         if(in_array('ROLE_ADMIN', $this->roles)) $role = 'Administrateur';
-        else if(in_array('ROLE_MANAGER', $this->roles)) $role = 'Manager';
-        else $role = 'utilisateur';
+        else if(in_array('ROLE_MANAGER', $this->roles)) $role = 'Editeur';
+        else $role = 'Utilisateur';
         return $role;
     }
 
@@ -265,8 +265,32 @@ class User extends BaseUser implements ParticipantInterface {
      *
      * @return string 
      */
+    public function getGroupList()
+    {
+        $list = [];
+        foreach ($this->groups as $group) {
+            $list[] = $group->getName();
+        }
+        return implode(', ', $list);
+    }
+
+    /**
+     * Get status
+     *
+     * @return string 
+     */
     public function getEtat()
     {
         return ($this->enabled) ? 'activé' : 'désactivé';
-    } 
+    }
+
+    public function get($value)
+    {
+        $value = 'get'.ucfirst($value);
+        if(in_array($value, array('getUsername', 'getEmail', 'getRole', 'getEtat', 'getGroupList'))) 
+            $value = $this->$value();
+        else $value = $this->profile->$value();
+
+        return ($value instanceof \DateTime) ? $value->format('Y-m-d') : $value;
+    }
 }

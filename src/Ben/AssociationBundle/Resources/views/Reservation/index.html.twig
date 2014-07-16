@@ -9,16 +9,18 @@ Tableau de bord | {{ parent() }}
 {% block body %}
 <h2><span class="fui-book"></span> Liste des réservations</h2>
     <form id="jsForm" role="form" method="post" action="">
-        <input id="pagenumber" type="hidden" name="searchParam[page]" value="1">         
-          <div class="row">
-            <div class="col-lg-5 form-group">
-              <div class="input-group">
-                <input type="text" name="searchParam[keyword]" class="form-control" placeholder="Search">
-                <div class="input-group-btn">
-                <button class="btn btn-default" type="submit"><span class="fui-search"></span></button>
-                </div>
-              </div>
-            </div><!-- /.col-lg-6 -->     
+        <input id="pagenumber" type="hidden" name="searchParam[page]" value="1">     
+          <div class="row hidden-print">
+              <div class="col-md-5">
+                  <div class="form-group">
+                     <div class="input-group">                                     
+                        <input type="text" name="searchParam[keyword]" class="form-control" placeholder="Search">
+                       <span class="input-group-btn">
+                             <button type="submit" class="btn"><span class="fui-search"></span></button>
+                         </span>
+                     </div>
+                  </div>
+              </div>    
             <div class="col-lg-7">
               <div class="btn-group pull-right">              
                 <button class="btn btn-primary" href="#" data-toggle="modal" data-target="#myModal"><span class="fui-search"></span> Recherche avancée</button>

@@ -1,0 +1,149 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block title %}
+Paramètres - {{ parent() }}
+{% endblock %}
+
+{% block fos_user_content %}
+     
+<h2><span class="fui-myspace"></span> Groupe {{ group.getName() }}</h2>
+<form  id="jsForm" role="form" method="post" action="{{ path('ben_show_group', {id: group.id, perPage: app_config.rows_per_page}) }}">
+    <input id="pagenumber" type="hidden" name="searchParam[page]" value="1"> 
+    <div class="row hidden-print">
+      <div class="col-md-5">
+          <div class="form-group">
+             <div class="input-group">                                     
+                <input type="text" name="searchParam[keyword]" class="form-control" placeholder="Search">
+               	<span class="input-group-btn">
+                     <button type="submit" class="btn"><span class="fui-search"></span></button>
+                </span>
+             </div>
+          </div>
+      </div>
+    </div><!-- /.row -->
+
+<table class="table table-hover table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>nom</th>
+            <th>prenom</th>
+            <th>Cin</th>
+            <th>Tél</th>
+            <th>action</th>
+        </tr>
+    </thead>
+    <tbody>
+    	{% for entity in entities %}
+    	<tr>
+    		<td>{{loop.index}}</td>
+    		<td>{{ entity.profile.firstName }}</td>
+    		<td>{{ entity.profile.familyName }}</td>
+    		<td>{{ entity.profile.cin }}</td>
+    		<td>{{ entity.profile.tel }}</td>
+    		<td>
+                <a class="btn btn-embossed btn-success btn-xs js-call" href="#" data-id="{{ entity.id }}" data-call="{{ entity.profile.tel }}" data-toggle="tooltip" title="Appeler"><span class="glyphicon glyphicon-earphone"></span></a>
+                <a class="btn btn-embossed btn-info btn-xs" href="callto://+212666343755" data-toggle="tooltip" title="Envoyer un sms"><span class="glyphicon glyphicon-envelope"></span></a>
+                {% if is_granted("ROLE_ADMIN") %}
+                <a class="btn btn-embossed btn-danger btn-xs js-delete"  href="{{ path('ben_remove_from_roup', {id: entity.id, groupid: group.id }) }}" data-toggle="tooltip" title="Enlever de ce groupe"><span class="fui-cross"></span></a>
+                {% endif %}
+    		</td>
+    	</tr>
+    	{% endfor %}
+    </tbody>
+</table>
+
+	{% include "BenAssociationBundle:Default:pagination.html.twig" %}
+
+<!-- Profil Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="myModalLabel">Appel en cours</h4>
+      </div>
+      <div class="modal-body">
+      <div class="row">
+          <div class="col-md-3">
+              <img class="img-responsive img-circle avatar" src="{{ asset(app.user.profile.image.getwebpath)}}"/>
+          </div>
+          <div class="col-md-6 text-center"><span class="throbber">Loading…</span></div>
+          <div class="col-md-3">
+              <img class="img-responsive avatar" src="{{ asset('images/fixe.png')}}"/>
+              <small class="number">+212666343755</small>
+          </div>
+          <div class="text-center"><a href="#" id="hangup" data-toggle="tooltip" title="Racrocher" class="btn btn-danger btn-embossed"><span class="glyphicon glyphicon-earphone"></span></a></div>
+      </div>
+      <div class="feedback">
+          <label class="radio">
+            <span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span><input type="radio" name="feedback" id="optionsRadios1" value="réponse" data-toggle="radio">
+            Réponse
+          </label>
+          <label class="radio checked">
+            <span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span><input type="radio" name="feedback" id="optionsRadios2" value="occupé" data-toggle="radio">
+            Occupé
+          </label>
+          <label class="radio">
+            <span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span><input type="radio" name="feedback" id="optionsRadios3" value="pas de réponse" data-toggle="radio">
+            Pas de réponse
+          </label>
+          <input type="hidden" name="type" value="appel">
+          <input type="hidden" id="user" name="user" value="">
+
+          <a href="#" id="done" class="btn btn-primary btn-embossed pull-right"><span class="glyphicon glyphicon-check"></span> Terminer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</form>
+
+{% endblock fos_user_content %}
+
+{% block javascripts %}
+{{ parent() }}
+<script> 
+    (function($) {
+    	var	form = $('#jsForm'),
+    		  pageInput = form.find('#pagenumber'),
+          modal = form.find('#myModal'),
+          hangupBtn = modal.find('#hangup'),
+          feedback = modal.find('.feedback').hide(),
+          doneBtn = feedback.find('#done'),
+          userInput = feedback.find('#user'),
+          jsFormUrl = '{{ path('add_users_log') }}';
+
+
+      function ajaxPost(action, callback) {
+        $.ajax({ 
+          type: "POST", 
+          data: form.serialize(),
+          url: jsFormUrl
+        });
+        return false;
+      }
+
+      hangupBtn.on('click', function(){
+          feedback.slideDown().prev().slideUp();
+      });
+      doneBtn.on('click', function(){
+          modal.modal('hide');
+          ajaxPost();
+          feedback.hide().prev().show();
+      });
+      form.on('click', '.js-call', function(){
+          modal.find('.number').html('+212'+$(this).data('call').substr(1));
+          userInput.val($(this).data('id'))
+          modal.modal('show');
+      });
+
+		/* pagination */    
+		form.on('click', '.js-page', function(){
+		    pageInput.val($(this).data('page'));
+		    form.trigger('submit');
+		});
+
+    })(jQuery);
+</script>
+{% endblock %}

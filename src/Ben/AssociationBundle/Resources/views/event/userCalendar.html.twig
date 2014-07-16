@@ -1,0 +1,70 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Tableau de bord | {{ parent() }}
+{% endblock %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <link href="{{ asset('css/fullcalendar.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<h2><span class="fui-calendar"></span>  Calendrier des évenements</h2>
+<div id="calendar"></div>
+{% endblock body %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('js/moment.min.js') }}"></script>
+<script src="{{ asset('js/jquery-ui.custom.min.js') }}"></script>
+<script src="{{ asset('js/fullcalendar.min.js') }}"></script><!-- Full Calendar -->
+<script>  
+    (function($) {
+
+    /* calendar */
+    var date = new Date(),
+        d = date.getDate(),
+        m = date.getMonth(),
+        y = date.getFullYear();
+    
+    var calendar = $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      eventMouseover: function( event, jsEvent, view ) { 
+          var item = $(this).css('z-index','9');
+          if(item.find('.nube').length == 0){
+              var info = '<div class="nube"><h2>'+event.title+'</h2><ul class="list-unstyled"> <li><strong>type :</strong>'+event.type+'</li> <li><strong>Groupes invité: </strong>'+event.groups+'</li><li><strong>Description: </strong>'+event.description+'</li> <li><a href="'+event.url+'">plus d\'info</a></li> </ul></div>';
+              item.append(info);
+          }
+          item.find('.nube').stop(true,true).fadeIn();
+      },
+      eventMouseout: function( event, jsEvent, view ) { 
+          var item = $(this);
+          item.css('z-index','1').find('.nube').stop(true,true).fadeOut(200);
+      },
+      selectHelper: true,
+      selectable: false,
+      editable: false,
+      events: [
+      {% for entity in entities %}
+        {
+          id: {{ entity.id }},
+          title: '{{ entity.name }}',
+          description: hereDoc(function() {/*!{{ entity.description | replace({"\n":" "}) }}*/}),
+          type: '{{ entity.type }}',
+          groups: '{{ entity.getGroupList }}',
+          start: new Date('{{ entity.datefrom|date('Y-m-d H:i:s') }}'),
+          end: new Date('{{ entity.dateto|date('Y-m-d H:i:s') }}'),
+          url: '{{ path('event_show', { 'id': entity.id }) }}'
+        }{{ loop.last ? '' : ',' }}
+      {% endfor %}
+      ]
+    });
+
+    })(jQuery);
+</script>
+{% endblock %}
+
+

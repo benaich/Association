@@ -2,15 +2,23 @@
 {% block title %}
 Tableau de bord | {{ parent() }}
 {% endblock %}
+{% block stylesheet %}
+   {{ parent() }}   
+        <link href="{{ asset('css/bootstrap-colorpicker.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/froala_editor.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+{% endblock %}
 {% block body %}
 <h2><span class="fui-gear"></span> Préférences</h2>
-<form class="form-horizontal" action="{{ path('config_update')}}" method="POST" enctype="multipart/form-data">        
+<form class="form-horizontal" action="{{ path('config_update')}}" method="POST" enctype="multipart/form-data">
+<a class="btn btn-default pull-right btn-sm" href="{{ path('config_update_fields')}}"> Configuration des champs</a>      
         <div class="tabbable">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab1"><span class="fui-list-bulleted"></span> Général</a></li>
               <li><a href="#tab2"><span class="fui-twitter"></span> Réseaux sociaux</a></li>
               <li><a href="#tab3"><span class="fui-gear"></span> Paramètres</a></li>
               <li><a href="#tab4"><span class="fui-credit-card"></span> Cartes</a></li>
+              <li><a href="#tab5"><span class="fui-tag"></span> Lettres</a></li>
             </ul> <!-- /tabs -->
 
             <div class="tab-content">
@@ -105,6 +113,18 @@ Tableau de bord | {{ parent() }}
               </div><!-- /tab2 -->
               <div class="tab-pane" id="tab3">
               <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Diplome </label>
+                <div class="col-sm-6">
+                  <textarea rows="5" name="config[org_diplome]" class="form-control tagsinput">{{app_config.org_diplome}}</textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Spécialité </label>
+                <div class="col-sm-6">
+                  <textarea rows="5" name="config[org_expertise]" class="form-control tagsinput">{{app_config.org_expertise}}</textarea>
+                </div>
+              </div>
+              <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Latitude </label>
                 <div class="col-sm-4">
                   <input type="text" name="config[org_map_lat]" value="{{app_config.org_map_lat}}" class="form-control">
@@ -117,19 +137,19 @@ Tableau de bord | {{ parent() }}
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Langue par défaut </label>
+                <label for="" class="col-sm-4 control-label">Theme </label>
                 <div class="col-sm-4">
-                  <select name="config[org_lang]" value="{{app_config.org_lang}}" class="input-sm info">
-                        <option {% if app_config.org_lang =="fr_FR" %}selected="selected"{% endif %} value="fr_FR" selected="selected">Français</option>
-                        <option {% if app_config.org_lang =="en_US" %}selected="selected"{% endif %} value="en_US" >English</option>
+                    <select name="config[app_theme]" class="primary select-block">
+                        <option {% if app_config.app_theme =="theme1" %}selected="selected"{% endif %} value="theme1">theme1</option>
+                        <option {% if app_config.app_theme =="theme2" %}selected="selected"{% endif %} value="theme2">theme2</option>
+                        <option {% if app_config.app_theme =="theme3" %}selected="selected"{% endif %} value="theme3">theme3</option>
                     </select>
                 </div>
               </div>
               <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Lignes / Page </label>
                 <div class="col-sm-4">
-                  <select name="config[rows_per_page]" class="input-sm info">
-                        <option {% if app_config.rows_per_page =="3" %}selected="selected"{% endif %} value="3">3</option>
+                  <select name="config[rows_per_page]" class="primary select-block">
                         <option {% if app_config.rows_per_page =="10" %}selected="selected"{% endif %} value="10">10</option>
                         <option {% if app_config.rows_per_page =="20" %}selected="selected"{% endif %} value="20">20</option>
                         <option {% if app_config.rows_per_page =="30" %}selected="selected"{% endif %} value="30">30</option>
@@ -140,11 +160,35 @@ Tableau de bord | {{ parent() }}
               <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Auto-Enregistrement actif ?</label>
                 <div class="col-sm-4">
-                  <input type="checkbox" name="config[org_signup]" {% if app_config.org_signup %}checked="checked"{% endif %} data-toggle="switch" />
+                  <input type="checkbox" name="config[org_signup]" {% if app_config.org_signup %}checked="checked"{% endif %} value="{{ app_config.org_signup }}" data-toggle="switch" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Permettre aux membres d'imprimer leurs carte ? </label>
+                <div class="col-sm-4">
+                  <input type="checkbox" name="config[print_permission]" {% if app_config.print_permission %}checked='checked'{% endif %} value="{{ app_config.print_permission }}" data-toggle="switch" />
                 </div>
               </div>
               </div><!-- /tab3 -->
               <div class="tab-pane" id="tab4">
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Coleur du background </label>
+                <div class="col-sm-4">
+                <div class="input-group mycolorpicker" data-color="{{app_config.badge_bgcolor}}" data-color-format="rgb" >
+                  <span class="input-group-addon"><i></i></span>
+                  <input type="text" name="config[badge_bgcolor]" value="{{app_config.badge_bgcolor}}" class="form-control">
+                </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Coleur du Texte </label>
+                <div class="col-sm-4">
+                <div class="input-group mycolorpicker" data-color="{{app_config.badge_color}}" data-color-format="rgb" >
+                  <span class="input-group-addon"><i></i></span>
+                  <input type="text" name="config[badge_color]" value="{{app_config.badge_color}}" class="form-control">
+                </div>
+                </div>
+              </div>
               <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Texte du bandeau </label>
                 <div class="col-sm-4">
@@ -152,30 +196,51 @@ Tableau de bord | {{ parent() }}
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">badge css </label>
+                <label for="" class="col-sm-4 control-label">Coleur du background du bandeau</label>
+                <div class="col-sm-4">
+                <div class="input-group mycolorpicker" data-color="{{app_config.badge_footer_bgcolor}}" data-color-format="rgb" >
+                  <span class="input-group-addon"><i></i></span>
+                  <input type="text" name="config[badge_footer_bgcolor]" value="{{app_config.badge_footer_bgcolor}}" class="form-control">
+                </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Coleur du Texte du bandeau</label>
+                <div class="col-sm-4">
+                <div class="input-group mycolorpicker" data-color="{{app_config.badge_footer_color}}" data-color-format="rgb" >
+                  <span class="input-group-addon"><i></i></span>
+                  <input type="text" name="config[badge_footer_color]" value="{{app_config.badge_footer_color}}" class="form-control">
+                </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Style css </label>
                 <div class="col-sm-6">
-                  <textarea rows="5" name="config[org_carte_css]" value="{{app_config.org_carte_css}}" class="form-control">{{app_config.org_carte_css}}</textarea>
+                  <textarea name="config[org_carte_css]" class="form-control">{{app_config.org_carte_css}}</textarea>
+                </div>
+              </div>
+              </div><!-- /tab4 -->
+
+              <div class="tab-pane" id="tab5">
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Entéte de la lettre</label>
+                <div class="col-sm-6">
+                  <textarea name="config[letter_header]" class="form-control veditor">{{app_config.letter_header|raw}}</textarea>
                 </div>
               </div>
               <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Lettre d'invitation </label>
                 <div class="col-sm-6">
-                  <textarea rows="3" name="config[letter_invitation]" value="{{app_config.letter_invitation}}" class="form-control">{{app_config.letter_invitation}}</textarea>
+                  <textarea name="config[letter_invitation]" class="form-control veditor">{{app_config.letter_invitation|raw}}</textarea>
                 </div>
               </div>
               <div class="form-group">
                 <label for="" class="col-sm-4 control-label">Lettre de cotisation </label>
                 <div class="col-sm-6">
-                  <textarea rows="3" name="config[letter_cotisation]" value="{{app_config.letter_cotisation}}" class="form-control">{{app_config.letter_cotisation}}</textarea>
+                  <textarea name="config[letter_cotisation]" class="form-control veditor">{{app_config.letter_cotisation|raw}}</textarea>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Permettre aux membres d'imprimer leurs carte ? </label>
-                <div class="col-sm-4">
-                  <input type="checkbox" name="config[print_permission]" {% if app_config.print_permission %}checked="checked"{% endif %} data-toggle="switch" />
-                </div>
-              </div>
-              </div><!-- /tab4 -->
+              </div><!-- /tab5 -->
             </div> <!-- /tab-content -->
           </div>
               <div class="form-group">
@@ -186,3 +251,19 @@ Tableau de bord | {{ parent() }}
 </form>
    
 {% endblock body %}
+{% block javascripts %}
+{{ parent() }}
+
+    <script src="{{ asset('js/jquery.tagsinput.js') }}"></script>
+    <script src="{{ asset('js/froala_editor.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-colorpicker.min.js') }}"></script>
+<script> 
+    (function($) {
+      $(".tagsinput").tagsInput();
+      $('.veditor').editable({inlineMode: false});
+      $('.fr-dropdown').find('.fa-magic').parent().hide();
+      $('.mycolorpicker').colorpicker();
+
+    })(jQuery);
+</script>
+{% endblock %}

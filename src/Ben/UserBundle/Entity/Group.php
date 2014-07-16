@@ -19,13 +19,13 @@ class Group extends BaseGroup
      protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Ben\UserBundle\Entity\User", mappedBy="groups")
+     * @ORM\ManyToMany(targetEntity="Ben\UserBundle\Entity\User", mappedBy="groups", cascade={"persist"})
      * @ORM\JoinTable(name="user_group")
      */
     protected $users;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Ben\AssociationBundle\Entity\event", mappedBy="groups")
+     * @ORM\ManyToMany(targetEntity="Ben\AssociationBundle\Entity\event", mappedBy="groups", cascade={"persist"})
      * @ORM\JoinTable(name="event_group")
      */
     protected $events;
@@ -106,5 +106,17 @@ class Group extends BaseGroup
     public function getEvents()
     {
         return $this->events;
+    }
+
+    /**
+     * Get array
+     *
+     */
+    public function toArray()
+    {
+        return array(
+            'id' => $this->getId(),
+            'name' => $this->getName()
+            );
     }
 }

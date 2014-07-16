@@ -1,0 +1,21 @@
+<div class="box">
+    <header>
+        <div class="row">
+            <div class="col-md-5">
+                <img class="img-responsive img-circle avatar" src="{{ asset(entity.profile.image.getwebpath)}}"/>
+            </div>
+            <div class="col-md-7">                       
+                <ul class="list-unstyled pull-right text-inverse">
+                    <li><strong>Identifiant :</strong> {{ entity.username }}</li>
+                    <li><strong>Email :</strong> <a class="text-inverse" href="mailto:{{ entity.email }}" >{{ entity.email }}</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Nom :</strong> <a href="{{ path('ben_show_user', { 'id': entity.id }) }}"  data-toggle="tooltip" title="Plus d'info">{{ entity.profile.fullName }}</a></li>
+        <li class="list-group-item"><strong>CIN :</strong> {{ entity.profile.cin }}</li>
+        <li class="list-group-item"><strong>Profession :</strong> {{ entity.profile.job }}</li>
+    </ul>
+</div>

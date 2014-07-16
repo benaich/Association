@@ -17,6 +17,7 @@
         <link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet"><!-- Loading Bootstrap -->
         <link href="{{ asset('css/flat-ui.css') }}" rel="stylesheet"><!-- Loading Flat UI -->
         <link href="{{ asset('css/main.css') }}" rel="stylesheet"><!-- Loading my css -->
+        <link href="{{ asset('css/spinner.css') }}" rel="stylesheet"><!-- Loading my css -->
     {% endblock %}
     <title>{% block title %}webpractice{% endblock %}</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('icon.png') }}" />
@@ -26,7 +27,7 @@
     <![endif]-->
 </head>
 {% block container %}
-<body>
+<body class="{{ app_config.app_theme }} {% if not is_granted("ROLE_MANAGER") %}front-end{% endif %}">
 {% block header %}
 <header class="visible-print print-header hide">
   <div class="pull-right"><img src="{{ asset(app_config.org_logo) }}" alt="logo"/></div>
@@ -34,7 +35,7 @@
   <div class="clearfix"></div>
 </header>
     <header id="adminbar" class="header hidden-print navbar">
-        <div id="logo"><img src="{{ asset(app_config.org_logo) }}" alt="logo" class="img-small"> <span>{{ app_config.org_name }}</span></div>
+        <a href="#" id="logo"><img src="{{ asset(app_config.org_logo) }}" alt="logo" class="img-small"> <span>{{ app_config.org_name }}</span></a>
 
         <div class="dropdown pull-right user-profile">
           <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
@@ -79,7 +80,7 @@
                 </a>
             </li>
             <li><a href="#" title="notifications" data-toggle="tooltip"  data-placement="bottom"><span class="glyphicon glyphicon-bell"></span></a></li>
-            <li><a href="#" title="Support" data-toggle="tooltip" data-placement="bottom"><span class="glyphicon glyphicon-bullhorn"></span></a></li>
+            <li><a href="{{ path('event_calendar') }}" title="Calendrier" data-toggle="tooltip" data-placement="bottom"><span class="glyphicon glyphicon-calendar"></span></a></li>
         </ul>
     </header>
 

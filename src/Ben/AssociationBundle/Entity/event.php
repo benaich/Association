@@ -31,14 +31,14 @@ class event
     /**
      * @var \DateTime $date_from
      *
-     * @ORM\Column(name="date_from", type="date")
+     * @ORM\Column(name="date_from", type="datetime")
      */
     private $date_from;
 
     /**
      * @var \DateTime $date_to
      *
-     * @ORM\Column(name="date_to", type="date")
+     * @ORM\Column(name="date_to", type="datetime")
      */
     private $date_to;
 
@@ -228,5 +228,32 @@ class event
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * Get groups
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getGroupList()
+    {
+        $groups = '';
+        foreach ($this->groups as $group) {
+            $groups .= $group->getName().' ';
+        }
+        return $groups;
+    }
+    public function toArray()
+    {
+        return array(
+            'id'=>$this->id,
+            'title'=>$this->name,
+            'description'=>$this->description,
+            'type'=>$this->type,
+            'groups'=>$this->getGroupList(),
+            'start' => $this->date_from->format('Y-m-d H:i:s'), 
+            'end' => $this->date_to->format('Y-m-d H:i:s'), 
+            'url' => '#'
+            );
     }
 }

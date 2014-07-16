@@ -25,6 +25,7 @@ Tableau de bord | {{ parent() }}
 <script> 
     (function($) {
 
+        $('#ben_eventtype_date_to').closest('.form-group').hide().prev().hide();
         $('#js-delete').on('click', function(){
             $('#deleteForm').submit();
             return false;

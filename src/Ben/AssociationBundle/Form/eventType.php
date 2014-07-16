@@ -13,10 +13,11 @@ class eventType extends AbstractType
         $builder
             ->add('name')
             ->add('type')
-            ->add('date_from', 'date', array('widget' => 'single_text'))
-            ->add('date_to', 'date', array('widget' => 'single_text'))
+            ->add('date_from', 'datetime', array('widget' => 'single_text'))
+            ->add('date_to', 'datetime', array('widget' => 'single_text'))
             ->add('description')
-            ->add('type')
+            ->add('type', 'choice', array('choices' => array('réunion d’information' => 'réunion d’information','réunion d’échanges' => 'réunion d’échanges','réunion de résolution de problèm' => 'réunion de résolution de problèm'),
+                    'required' => false,))
             ->add('groups', null, array('expanded' => "true", "multiple" => "true"))
         ;
     }

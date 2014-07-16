@@ -40,95 +40,7 @@ class configController extends Controller
     }
 
     /**
-     * Finds and displays a config entity.
-     * @Secure(roles="ROLE_MANAGER")
-     *
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('BenAssociationBundle:config')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find config entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('BenAssociationBundle:config:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
-    }
-
-    /**
-     * Displays a form to create a new config entity.
-     * @Secure(roles="ROLE_MANAGER")
-     *
-     */
-    public function newAction()
-    {
-        $entity = new config();
-        $form   = $this->createForm(new configType(), $entity);
-
-        return $this->render('BenAssociationBundle:config:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
-     * Creates a new config entity.
-     * @Secure(roles="ROLE_MANAGER")
-     *
-     */
-    public function createAction(Request $request)
-    {
-        $entity  = new config();
-        $form = $this->createForm(new configType(), $entity);
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('config_show', array('id' => $entity->getId())));
-        }
-
-        return $this->render('BenAssociationBundle:config:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
-     * Displays a form to edit an existing config entity.
-     * @Secure(roles="ROLE_MANAGER")
-     *
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('BenAssociationBundle:config')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find config entity.');
-        }
-
-        $editForm = $this->createForm(new configType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('BenAssociationBundle:config:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Edits an existing config entity.
+     * update all config entities.
      * @Secure(roles="ROLE_MANAGER")
      *
      */
@@ -144,7 +56,8 @@ class configController extends Controller
         $imgform->bind($request);
         if($img->upload())
             $config['org_logo'] = $img->getWebPath();
-
+        $config['org_signup'] = isset($config['org_signup']);
+        $config['print_permission'] = isset($config['print_permission']);
         foreach ($config as $key => $value) {
             $em->getRepository('BenAssociationBundle:config')->updateBy($key, $value);
         }
@@ -152,35 +65,21 @@ class configController extends Controller
     }
 
     /**
-     * Deletes a config entity.
+     * update all fields entities.
      * @Secure(roles="ROLE_MANAGER")
      *
      */
-    public function deleteAction(Request $request, $id)
+    public function updateFiledsAction(Request $request)
     {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $em = $this->getDoctrine()->getManager();
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('BenAssociationBundle:config')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find config entity.');
+        if($request->getMethod() === 'POST'){         
+            $config = $request->get('config');
+            foreach ($config as $cfg) {
+                $em->getRepository('BenAssociationBundle:fields')->updateFields($cfg);
             }
-
-            $em->remove($entity);
-            $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('config'));
-    }
-
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+        return $this->render('BenAssociationBundle:config:fields.html.twig');
     }
 }

@@ -7,6 +7,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  
 class UserRepository extends EntityRepository
 {
+    /* advanced search */
     public function search($searchParam) {
         extract($searchParam);        
         $qb = $this->createQueryBuilder('u')
@@ -17,10 +18,11 @@ class UserRepository extends EntityRepository
                 ->leftJoin('u.groups', 'g')
                 ->addSelect('g')
                 ->leftJoin('u.avancements', 'av')
-                ->leftJoin('av.status', 'status')
-                ->andWhere('u.username like :keyword or u.email like :keyword or u.roles like :keyword or p.city like :keyword')
-                ->setParameter('keyword', '%'.$keyword.'%');
+                ->leftJoin('av.status', 'status');
 
+        if(!empty($keyword))
+            $qb->andWhere('concat(p.family_name, p.first_name) like :keyword or u.username like :keyword or u.email like :keyword or u.roles like :keyword or p.city like :keyword')
+                ->setParameter('keyword', '%'.$keyword.'%');
         if(!empty($group))
             $qb->andWhere('g.id = :group')->setParameter('group', $group);
         if(!empty($cin))
@@ -31,12 +33,10 @@ class UserRepository extends EntityRepository
             $qb->andWhere('p.gender = :gender')->setParameter('gender', $gender);
         if(!empty($status))
             $qb->andWhere('status.id = :status')->setParameter('status', $status);
-        if(!empty($birdDay)){
-            $date = explode("-",$birdDay);
-            $qb->andWhere('p.bird_day between :d1 and :d2')
-            ->setParameter('d1', $date[0])
-            ->setParameter('d2', $date[1]);
-        }
+        if(!empty($date_from))
+            $qb->andWhere('p.bird_day > :date_from')->setParameter('date_from', $date_from);
+        if(!empty($date_to))
+            $qb->andWhere('p.bird_day < :date_to')->setParameter('date_to', $date_to);
         if(!empty($city))
             $qb->andWhere('p.city = :city')->setParameter('city', $city);
         if(!empty($cotisation)){
@@ -90,6 +90,8 @@ class UserRepository extends EntityRepository
         $qb = $this->createQueryBuilder('u')
                 ->leftJoin('u.profile', 'p')
                 ->addSelect('p')
+                ->leftJoin('p.image', 'img')
+                ->addSelect('img')
                 ->leftJoin('u.groups', 'g')
                 ->addSelect('g')
                 ->leftJoin('u.reservations', 'r')
@@ -110,16 +112,15 @@ class UserRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function findUserById($users)
+    public function findUserById($users = null)
     {
         $qb = $this->createQueryBuilder('u')
                 ->leftJoin('u.profile', 'p')
                 ->addSelect('p')
-                ->leftJoin('u.reservations', 'r')
-                ->addSelect('r')
-                ->where('u.id IN (:id)')
-                ->setParameter('id', $users)
-        ;
+                ->leftJoin('p.image', 'img')
+                ->addSelect('img');
+        if(!empty($users))
+            $qb->where('u.id IN (:id)')->setParameter('id', $users);
  
         return $qb->getQuery()->getResult();
     }

@@ -218,4 +218,14 @@ class Cotisation
     {
         return $this->user;
     }
+
+    public function get($value)
+    {
+        $value = 'get'.ucfirst($value);
+        if($value == 'getUser') 
+            $value = $this->user->getProfile()->getFullName();
+        else $value = $this->$value();
+
+        return ($value instanceof \DateTime) ? $value->format('Y-m-d') : $value;
+    }
 }

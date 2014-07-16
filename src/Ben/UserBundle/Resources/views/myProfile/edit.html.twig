@@ -4,6 +4,9 @@ Profile - {{ parent() }}
 {% endblock %}
 
 {% block fos_user_content %}
+{% if app_config.print_permission %}
+<a href="{{ path('ben_pdf', {'users': entity.id }) }}" class="btn btn-inverse pull-right"><span class="glyphicon glyphicon-print"></span> Imprimer la carte</a>
+{% endif %}
 <h2><span class="fui-user"></span> Profile</h2>
 <form class="form-horizontal" action="{{ path('ben_profile_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
 <div class="tabbable">

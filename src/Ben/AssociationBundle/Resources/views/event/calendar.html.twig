@@ -11,19 +11,95 @@ Tableau de bord | {{ parent() }}
 {% block body %}
 <h2><span class="fui-calendar"></span>  Calendrier des évenements</h2>
 <div id="calendar"></div>
-{% endblock body %}
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    <form id="postForm" role="form" class="form-horizontal" method="post" action="{{ path('event_create') }}">
+      <div class="modal-header">
+        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title"><span class="glyphicon glyphicon-calendar"></span> Ajout d'un événement</h4>
+      </div>
+      <div class="modal-body">
+      <input type="hidden" name="json" value="1">
+        <div class="datacontainer">
+        {{ form_widget(form) }}
+        </div>
+          <div class="clearfix"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-embossed">Valider</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock body %}
 {% block javascripts %}
 {{ parent() }}
+<script src="{{ asset('js/moment.min.js') }}"></script>
+<script src="{{ asset('js/jquery-ui.custom.min.js') }}"></script>
 <script src="{{ asset('js/fullcalendar.min.js') }}"></script><!-- Full Calendar -->
-<script> 
+<script>  
     (function($) {
 
+      var modal = $('#myModal'),
+          workingArea= modal.find('.modal-content'),
+          postForm = modal.find('#postForm'),
+          inputFrom = postForm.find('#ben_eventtype_date_from'),
+          inputTo = postForm.find('#ben_eventtype_date_to'),
+          closeBtn = modal.find('.close');
+
+          postForm.find('div.col-md-4').removeClass('col-md-4').addClass('col-md-6');
+          inputTo.closest('.form-group').hide().prev().hide();
+
+      postForm.on('submit', function(e) {
+        e.preventDefault();
+        ajaxPost(postForm);
+        return false;
+      });
+      function update (event) {
+        var url = '{{ path('event_update_date', { 'id': '@@' }) }}',
+            action = postForm.attr('action');
+        url = url.replace("@@", event.id);
+        postForm.attr('action', url);
+        inputFrom.val(event.start);
+        inputTo.val(event.end);
+        postForm.trigger('submit');
+        postForm.attr('action', action);
+      }
+      function ajaxPost(form, action) {
+        var dataContainer = form.find('.dataContainer');
+        workingArea.addClass('working');
+        $.ajax({ 
+          type: "POST", 
+          data: form.serialize(),
+          url: form.attr('action'), 
+          success: function(data){ 
+            workingArea.removeClass('working');
+            if(data.id) {
+              var url = '{{ path('event_show', { 'id': '@@' }) }}';
+              data.url = url.replace("@@", data.id);
+              calendar.fullCalendar('renderEvent',data, true);
+              calendar.fullCalendar('unselect');
+              closeBtn.trigger('click');
+            }
+            else dataContainer.empty().hide().html(data).fadeIn();
+          },
+          error:function(){
+              alert('service non disponible pour le moment');
+              workingArea.removeClass('working');
+          }
+        });
+        return false;
+      }
+
     /* calendar */
-    var date = new Date();
-    var d = date.getDate();
-    var m = date.getMonth();
-    var y = date.getFullYear();
+    var date = new Date(),
+        d = date.getDate(),
+        m = date.getMonth(),
+        y = date.getFullYear();
     
     var calendar = $('#calendar').fullCalendar({
       header: {
@@ -33,81 +109,47 @@ Tableau de bord | {{ parent() }}
       },
       selectable: true,
       selectHelper: true,
-      select: function(start, end, allDay) {
-        var title = prompt('Event Title:');
-        if (title) {
-          calendar.fullCalendar('renderEvent',
-            {
-              title: title,
-              start: start,
-              end: end,
-              allDay: allDay
-            },
-            true // make the event "stick"
-          );
-        }
-        calendar.fullCalendar('unselect');
-      },
       editable: true,
-      events: [
-      {% for entity in entities %}
-        {
-          id: {{ entity.id }},
-          title: '{{ entity.name }}',
-          start: new Date({{ entity.datefrom|date('Y') }}, {{ entity.datefrom|date('m') }}-1, {{ entity.datefrom|date('d') }}),
-          end: new Date({{ entity.dateto|date('Y') }}, {{ entity.dateto|date('m') }}-1, {{ entity.dateto|date('d') }}),
-          url: '{{ path('event_show', { 'id': entity.id }) }}'
-        }{{ loop.last ? '' : ',' }}
-      {% endfor %}
-      ],
-      eventRender: function(event, element, view)
-      {
-          console.log("My Event: " + event.title);
-      },
-      eventClick: function(calEvent, jsEvent){
-          alert('hi');
-      },
-      eventDrop: function(event, delta) {
-          alert(event.title + ' was moved ' + delta + ' days\n' +
-              '(should probably update your database)');
+      select: function(start, end, allDay) {
+        inputFrom.val(start);
+        inputTo.val(end);
+        modal.modal('show');
       },
       eventMouseover: function( event, jsEvent, view ) { 
-          var item = $(this);
+          var item = $(this).css('z-index','9');
           if(item.find('.nube').length == 0){
-              var info = '<span class="nube"><h2>'+event.title+'</h2><img src="'+event.avatar+'" /> <p class="text">'+event.name+'</p><p>'+event.start+' <br /> '+event.end+'</p><p><a href="/post.php?blogid='+event.id+'">read_more</a></p></span>';
+              var info = '<div class="nube"><h2>'+event.title+'</h2><ul class="list-unstyled"> <li><strong>type :</strong>'+event.type+'</li> <li><strong>Groupes invité: </strong>'+event.groups+'</li> <li><a href="'+event.url+'">plus d\'info</a></li> </ul></div>';
               item.append(info);
-          }
-          if(parseInt(item.css('top')) <= 200){
-              item.find('.nube').css({'top': 20,'bottom':'auto'});
-              item.parent().find('.fc-event').addClass('z0');
           }
           item.find('.nube').stop(true,true).fadeIn();
       },
       eventMouseout: function( event, jsEvent, view ) { 
           var item = $(this);
-          item.find('.nube').stop(true,true).fadeOut();
-          alert(12);
+          item.css('z-index','1').find('.nube').stop(true,true).fadeOut(200);
       },
-      dayClick: function(date, allDay, jsEvent, view) {
-
-          /*if (allDay) {
-              alert('Clicked on the entire day: ' + date);
-          }else{
-              alert('Clicked on the slot: ' + date);
-          }*/
-
-          alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-
-          alert('Current view: ' + view.name);
-
-          // change the day's background color just for fun
-          $(this).css('background-color', 'red');
-
-      }
+      eventDrop: function(event, delta) {
+          update(event);
+      },
+      eventResize: function(event, delta) {
+          update(event);
+      },
+      events: [
+      {% for entity in entities %}
+        {
+          id: {{ entity.id }},
+          title: '{{ entity.name }}',
+          type: '{{ entity.type }}',
+          groups: '{{ entity.getGroupList }}',
+          start: new Date('{{ entity.datefrom|date('Y-m-d H:i:s') }}'),
+          end: new Date('{{ entity.dateto|date('Y-m-d H:i:s') }}'),
+          url: '{{ path('event_show', { 'id': entity.id }) }}'
+        }{{ loop.last ? '' : ',' }}
+      {% endfor %}
+      ]
     });
+
     })(jQuery);
 </script>
 {% endblock %}
-
 
 

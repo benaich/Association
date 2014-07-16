@@ -1,6 +1,4 @@
 #fos
-fos_user_security:
-    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
     prefix: /profile
@@ -25,4 +23,16 @@ fos_user_group:
 #admin section
 ben_user_profile:
     resource: "@BenUserBundle/Resources/config/routing/manager.yml"
-    prefix: /manage
+    prefix: /
+
+fos_user_security_login:
+    pattern:   /
+    defaults:  { _controller: FOSUserBundle:Security:login }
+
+fos_user_security_check:
+    pattern:   /login_check
+    defaults:  { _controller: FOSUserBundle:Security:check }
+
+fos_user_security_logout:
+    pattern:   /logout
+    defaults:  { _controller: FOSUserBundle:Security:logout }

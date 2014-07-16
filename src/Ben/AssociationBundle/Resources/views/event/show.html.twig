@@ -18,12 +18,12 @@ Tableau de bord | {{ parent() }}
                 <td>{{ entity.name }}</td>
             </tr>
             <tr>
-                <th>Date_from</th>
-                <td>{{ entity.datefrom|date('Y-m-d') }}</td>
+                <th>Date début</th>
+                <td>{{ entity.datefrom|date('d/m/Y à H:i') }}</td>
             </tr>
             <tr>
-                <th>Date_to</th>
-                <td>{{ entity.dateto|date('Y-m-d') }}</td>
+                <th>Date fin</th>
+                <td>{{ entity.dateto|date('d/m/Y à H:i') }}</td>
             </tr>
             <tr>
                 <th>Description</th>
@@ -36,28 +36,39 @@ Tableau de bord | {{ parent() }}
             <tr>
                 <th>Groupes Invités</th>
                 <td>
-                    <ul>{% for group in entity.groups %}<li>{{ group}}</li>{% endfor %}</ul>
+                    <ul class="list-unstyled">{% for group in entity.groups %}<li>{{ group}}</li>{% endfor %}</ul>
                 </td>
             </tr>
         </tbody>
     </table>
     </div> 
-
+{% if is_granted("ROLE_ADMIN") %}
     <div class="col-md-3">
-        <form action="{{ path('event_delete', { 'id': entity.id }) }}" method="post">
+        <form id="deleteForm" action="{{ path('event_delete', { 'id': entity.id }) }}" method="post">
         {{ form_widget(delete_form) }}
         <a id="submitEditForm" class="btn btn-embossed btn-primary btn-block" href="{{ path('event_edit', { 'id': entity.id }) }}">
             <span class="fui-new"></span> Mettre à jour
         </a>
-        <a class="btn btn-embossed btn-inverse btn-block " href="{{ path('event_publish', { 'id': entity.id }) }}">
-            <span class="fui-list-check"></span> Publier
+        <a class="btn btn-embossed btn-inverse btn-block " href="{{ path('event_demo', { 'id': entity.id }) }}">
+            <span class="fui-list-check"></span> Afficher les lettres
         </a>
-        <a class="btn btn-embossed btn-inverse btn-block " href="{{ path('event') }}">
-            <span class="fui-list-bulleted"></span> Back to the list
+        <a class="btn btn-embossed btn-inverse btn-block " href="{{ path('event_print', { 'id': entity.id }) }}">
+            <span class="fui-list-check"></span> Imprimer les lettres
         </a>
+        <a class="btn btn-embossed btn-inverse btn-block " href="{{ path('event') }}">Revenir à la liste</a>
         <button type="submit" class="btn btn-embossed btn-danger btn-block"><span class="fui-cross"></span> Supprimer </button>
     </form>
     </div>
+{% endif %}
 </div>
 {% endblock body %}
+
+ {% block javascripts %}
+{{ parent() }}
+<script> 
+    (function($) {
+        $('#deleteForm').on('submit', confirmation);
+    })(jQuery);
+</script>
+{% endblock %}
 

@@ -13,13 +13,13 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class eventRepository extends EntityRepository
 {
-    public function search($searchParam) {
+    public function search($searchParam = array()) {
         extract($searchParam);    
         $qb = $this->createQueryBuilder('e')
                 ->leftJoin('e.groups', 'g')
-                ->addSelect('g')
-                ->andWhere('e.name like :keyword or e.description like :keyword or e.type like :keyword')
-                ->setParameter('keyword', '%'.$keyword.'%');
+                ->addSelect('g');
+        if(!empty($keyword))
+            $qb->andWhere('e.name like :keyword or e.description like :keyword or e.type like :keyword')->setParameter('keyword', '%'.$keyword.'%');
         if(!empty($group))
             $qb->andWhere('g.id = :group')->setParameter('group', $group);
         if(!empty($date)){
@@ -28,10 +28,23 @@ class eventRepository extends EntityRepository
             ->setParameter('d1', $date[0])
             ->setParameter('d2', $date[1]);
         }
-        $qb->setFirstResult(($page - 1) * $perPage)
-        ->setMaxResults($perPage);
+        if(!empty($user))
+            $qb->leftJoin('g.users', 'u')->andWhere('u.id = :user')->setParameter('user', $user);
+        if(!empty($page))
+            $qb->setFirstResult(($page - 1) * $perPage)->setMaxResults($perPage);
         
        return new Paginator($qb->getQuery());
+    }
+
+    public function findOne($id)
+    {
+        $qb = $this->createQueryBuilder('e')
+                ->leftJoin('e.groups', 'g')
+                ->addSelect('g')
+                ->andWhere('e.id = :id')->setParameter('id', $id)
+        ;
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
     
     public function counter() {

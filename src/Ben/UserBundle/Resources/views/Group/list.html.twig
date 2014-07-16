@@ -11,10 +11,10 @@ Paramètres - {{ parent() }}
      <table class="table table-hover table-bordered">
         <thead>
             <tr>
-                <th class="col-sm-1">#</th>
-                <th class="col-sm-3">Nom du groupe</th>
-                <th class="col-sm-3">Nombre d'utilisateur dans ce groupe</th>
-                <th class="col-sm-2">action</th>
+                <th>#</th>
+                <th>Nom du groupe</th>
+                <th>Adhérant dans ce groupe</th>
+                <th>action</th>
             </tr>
         </thead>
         <tbody id="dataContainer">
@@ -26,7 +26,10 @@ Paramètres - {{ parent() }}
             <td>
                 <a class="btn btn-embossed btn-primary showuser btn-xs" href="{{ path('fos_user_group_show', {groupname: entity.name }) }}" data-toggle="tooltip" title="afficher"><span class="fui-search"></span></a>
                 <a class="btn btn-embossed btn-info btn-xs" href="{{ path('fos_user_group_edit', {groupname: entity.name }) }}" data-toggle="tooltip" title="modifier"><span class="fui-new"></span></a>
-                <a class="btn btn-embossed btn-danger btn-xs"  href="{{ path('fos_user_group_delete', {groupname: entity.name }) }}" data-toggle="tooltip" title="Supprimer"><span class="fui-cross"></span></a>
+                <a class="btn btn-embossed btn-success btn-xs" href="{{ path('ben_show_group', {id: entity.id, perPage: app_config.rows_per_page }) }}" data-toggle="tooltip" title="Appeler"><span class="glyphicon glyphicon-earphone"></span></a>
+                {% if is_granted("ROLE_ADMIN") %}
+                <a class="btn btn-embossed btn-danger btn-xs js-delete"  href="{{ path('fos_user_group_delete', {groupname: entity.name }) }}" data-toggle="tooltip" title="Supprimer"><span class="fui-cross"></span></a>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
@@ -44,6 +47,7 @@ Paramètres - {{ parent() }}
 {{ parent() }}
 <script> 
     (function($) {
+        $('.table').on('click', '.js-delete', confirmation);
         $('#js-input').find('.col-md-4').removeClass('col-md-4');
     })(jQuery);
 </script>

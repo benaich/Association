@@ -12,10 +12,20 @@ Groupes - {{ parent() }}
 
     <div class="form-group">
       <div class="col-md-offset-4 col-md-4">
-        <button type="submit" class="btn btn-primary btn-embossed"><span class="glyphicon glyphicon-plus"></span> Ajouter</button>
+        <button type="submit" class="btn btn-primary btn-embossed"><span class="glyphicon glyphicon-plus"></span> Modifier</button>
+        {% if is_granted("ROLE_ADMIN") %}
         <a href="{{ path('fos_user_group_delete', {groupname: groupname }) }}" id="js-delete" class="btn btn-embossed btn-danger"><span class="fui-cross"></span> Supprimer </a>
+        {% endif %}
       </div>
     </div>       
 </form>
 
 {% endblock fos_user_content %}
+{% block javascripts %}
+{{ parent() }}
+<script> 
+    (function($) {
+        $('#js-delete').on('click', confirmation);
+    })(jQuery);
+</script>
+{% endblock %}

@@ -8,11 +8,7 @@ use Symfony\Component\Httpfoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class UserController extends Controller {
-
-    public function loginFbAction() {
-        return $this->redirect($this->generateUrl("home"));
-    }
-
+    
     /**
      * @Template()
      */
@@ -30,7 +26,7 @@ class UserController extends Controller {
         $keyword = $request->get('term');
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('BenUserBundle:User')->autocomplete($keyword);
-        return $this->render('BenUserBundle:User:autocomplete.json.twig', array(
+        return $this->render('BenUserBundle:user:autocomplete.json.twig', array(
                     'entities' => $entities
                 ));
     }
