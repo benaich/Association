@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="profile")
  * @ORM\Entity(repositoryClass="Ben\UserBundle\Entity\profileRepository")
- * @UniqueEntity(fields="cin", message="Un adhérant existe déja avec ce cin")
- * @UniqueEntity(fields="barcode", message="Un adhérant existe déja avec cet identifiant")
+ * @UniqueEntity(fields="cin", message="user.cin.already_used")
+ * @UniqueEntity(fields="barcode", message="user.barcode.already_used")
  */
 class profile
 {
@@ -29,7 +29,7 @@ class profile
      * @var string $family_name
      *
      * @ORM\Column(name="family_name", type="string", length=255, nullable=true)
-     * @Assert\MaxLength(limit=20, message="Le contenu ne doit pas dépassé {{ limit }} carractere|Le contenu ne doit pas dépassé {{ limit }} carractere")
+     * @Assert\MaxLength(limit=20)
      * @Assert\MinLength(limit=2)
      * @Assert\NotBlank()
      */
@@ -58,11 +58,11 @@ class profile
 
 
     /**
-     * @var \DateTime $bird_day
+     * @var \DateTime $birthday
      *
-     * @ORM\Column(name="bird_day", type="date")
+     * @ORM\Column(name="birthday", type="date")
      */
-    private $bird_day;
+    private $birthday;
 
     /**
      * @var string $gender
@@ -179,9 +179,9 @@ class profile
     
     public function __construct()
     {
-        $this->bird_day =  new \DateTime;
+        $this->birthday =  new \DateTime;
         $this->barcode =  str_pad(mt_rand(0, 9999999999), 6, '0', STR_PAD_LEFT);
-        $this->image= new \Ben\AssociationBundle\Entity\image();
+        $this->image = new \Ben\AssociationBundle\Entity\image();
         $this->image->setPath("anonymous.jpg");
     }
     
@@ -302,26 +302,26 @@ class profile
     }
 
     /**
-     * Set bird_day
+     * Set birthday
      *
-     * @param \DateTime $birdDay
+     * @param \DateTime $birthday
      * @return profile
      */
-    public function setBirdDay($birdDay)
+    public function setBirthday($birthday)
     {
-        $this->bird_day = $birdDay;
+        $this->birthday = $birthday;
     
         return $this;
     }
 
     /**
-     * Get bird_day
+     * Get birthday
      *
      * @return \DateTime 
      */
-    public function getBirdDay()
+    public function getBirthday()
     {
-        return $this->bird_day;
+        return $this->birthday;
     }
 
     /**

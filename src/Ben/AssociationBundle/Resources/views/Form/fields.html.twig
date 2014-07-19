@@ -12,7 +12,7 @@
     {% if label is empty %}
         {% set label = name|humanize %}
     {% endif %}
-    <label class="col-md-4 control-label" {% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+    <label class="col-md-4 control-label" {% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ id|replace({'_':'.'})|trans }}</label>
 {% endspaceless %}
 {% endblock form_label %}
 
@@ -125,7 +125,7 @@
 {% spaceless %}
     {% if errors|length > 0 %}
     <div class="help-block col-md-4 ">
-    <ul>
+    <ul class="list-unstyled">
         {% for error in errors %}
             <li>{{
                 error.messagePluralization is null

@@ -2,6 +2,11 @@ cotisation:
     pattern:  /
     defaults: { _controller: "BenAssociationBundle:Cotisation:index" }
 
+cotisation_ajax:
+    pattern:  /list
+    defaults: { _controller: BenAssociationBundle:Cotisation:ajaxList }
+    requirements: { _method: post }
+
 cotisation_show:
     pattern:  /{id}/show
     defaults: { _controller: "BenAssociationBundle:Cotisation:show" }

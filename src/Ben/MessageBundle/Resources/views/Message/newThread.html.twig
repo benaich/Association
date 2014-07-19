@@ -9,30 +9,30 @@
 
 {% spaceless %}
     <header>
-        <h1><span class="glyphicon glyphicon-envelope"></span> Nouveau message</h1>
+        <h1><span class="glyphicon glyphicon-envelope"></span> {{ 'message.action.send'|trans }}</h1>
     </header>
     <div class="body">
         
     <form id="newmessageform" action="{{ url('fos_message_thread_new') }}" method="post">
         <div class="form-group row">
-            <label class="col-md-12" for="message_recipient">Envoyée à</label>
+            <label class="col-md-12" for="message_recipient">{{ 'message.form.sendto'|trans }}</label>
             <div class="col-md-8"> 
                 <input class="form-control" id="message_recipient" type="text" name="message[recipient]" required="required">
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-md-12" for="message_subject">Sujet</label>
+            <label class="col-md-12" for="message_subject">{{ 'message.form.subject'|trans }}</label>
             <div class="col-md-8"> 
                 <input class="form-control" id="message_subject" type="text" name="message[subject]" required="required">
             </div>
         </div>
         <div class="form-group">
-            <label for="message_body">Message</label>
+            <label for="message_body">{{ 'message.form.message'|trans }}</label>
             <div> 
                 <textarea rows="6" id="message_body" name="message[body]" required="required" class="form-control"></textarea>
             </div>
         </div>
-        <button type="submit" class="btn btn-embossed btn-primary"><span class="glyphicon glyphicon-share"></span> Envoyer</button>  
+        <button type="submit" class="btn btn-embossed btn-primary"><span class="glyphicon glyphicon-share"></span> {{ 'ben.action.send'|trans }}</button>  
         {{ form_widget(form._token) }}  
     </form>
     </div>

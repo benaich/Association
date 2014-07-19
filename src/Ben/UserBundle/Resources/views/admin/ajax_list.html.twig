@@ -6,53 +6,29 @@
         {% for item in app_config.userTable %}
           {% if item.visible %}<td>{{ entity.get(item.fieldName) }}</td>{% endif %}
         {% endfor %}
-{#     <td>
-        <em>{{ entity.profile.firstName }} {{ entity.profile.familyName }}</em>
-        {% if entity.enabled %}<span class="text-primary fui-radio-unchecked pull-right"></span>{% endif %}
-        <div class="myprofile hide"> 
-        <div class="row">
-          <div class="col-md-4"><img class="myavatar img-responsive" src="{{ asset( entity.profile.image.getwebpath)}}"></div>
-          <ul class="list-unstyled col-md-8 userinfo" data-index="{{ loop.index }}" data-id="{{ entity.id }}">
-              <li><strong>Identifiant :</strong> {{ entity.username }}</li>
-              <li><strong>Nom :</strong> {{ entity.profile.familyName }}</li>
-              <li><strong>Preom :</strong>  {{ entity.profile.firstName }}</li>
-              <li><strong>Date de naissance :</strong>  {{ entity.profile.birdDay|date('Y-m-d') }}</li>
-              <li><strong>Sexe :</strong>  {{ entity.profile.gender }}</li>
-              <li><strong>Adresse :</strong>  {{ entity.profile.address }}</li>
-              <li><strong>Ville :</strong> {{ entity.profile.city }}</li>
-              <li><strong>Siteweb :</strong> {{ entity.profile.website }}</li>
-              <li><strong>Biographie :</strong> {{ entity.profile.description }}</li>
-            </ul>
-        </div>
-        </div>
-    </td>
-    <td><a href="mailto:{{ entity.email }}">{{ entity.email }}</a></td>
-    <td>{{ entity.status }}</td>
-    <td>{{ entity.role }}</td> #}
         <td>
         <div class="myprofile hide"> 
         <div class="row">
-          <div class="col-md-4"><img class="myavatar img-responsive" src="{{ asset( entity.profile.image.getwebpath)}}"></div>
-          <ul class="list-unstyled col-md-8 userinfo" data-index="{{ loop.index }}" data-id="{{ entity.id }}">
-              <li><strong>Identifiant :</strong> {{ entity.username }}</li>
-              <li><strong>Nom :</strong> {{ entity.profile.familyName }}</li>
-              <li><strong>Preom :</strong>  {{ entity.profile.firstName }}</li>
-              <li><strong>Date de naissance :</strong>  {{ entity.profile.birdDay|date('Y-m-d') }}</li>
-              <li><strong>Sexe :</strong>  {{ entity.profile.gender }}</li>
-              <li><strong>Adresse :</strong>  {{ entity.profile.address }}</li>
-              <li><strong>Ville :</strong> {{ entity.profile.city }}</li>
-              <li><strong>Siteweb :</strong> {{ entity.profile.website }}</li>
-              <li><strong>Biographie :</strong> {{ entity.profile.description }}</li>
+          <div class="col-xs-4"><img class="myavatar img-responsive" src="{{ asset( entity.profile.image.getwebpath)}}"></div>
+          <ul class="list-unstyled col-xs-8 userinfo" data-index="{{ loop.index }}" data-id="{{ entity.id }}">
+              <li><strong>{{ 'user.form.username'|trans }} :</strong> {{ entity.username }}</li>
+              <li><strong>{{ 'user.form.profile.family.name'|trans }} :</strong> {{ entity.profile.familyName }}</li>
+              <li><strong>{{ 'user.form.profile.first.name'|trans }} :</strong>  {{ entity.profile.firstName }}</li>
+              <li><strong>{{ 'user.form.profile.birthday'|trans }} :</strong>  {{ entity.profile.birthday|date('d/m/Y') }}</li>
+              <li><strong>{{ 'user.form.profile.gender'|trans }} :</strong>  {{ entity.profile.gender }}</li>
+              <li><strong>{{ 'user.form.profile.address'|trans }} :</strong>  {{ entity.profile.address }}</li>
+              <li><strong>{{ 'user.form.profile.city'|trans }} :</strong> {{ entity.profile.city }}</li>
+              <li><strong>{{ 'user.form.profile.description'|trans }} :</strong> {{ entity.profile.description }}</li>
             </ul>
         </div>
         </div>
         <div class="text-center">
           
         <div class="btn-group">
-            <a class="btn btn-embossed btn-primary showuser btn-xs" data-index="{{ loop.index }}" data-id="{{ entity.id }}" href="#" data-toggle="modal" data-target="#myModal" title="afficher"><span class="glyphicon glyphicon-search"></span></a>
-            <a class="btn btn-embossed btn-info btn-xs" href="{{ path('ben_edit_user', {id: entity.id }) }}" title="modifier"><span class="glyphicon glyphicon-edit"></span></a>
-            <a class="btn btn-embossed btn-inverse btn-xs" href="{{ path('avancement_new', { 'id': entity.id }) }}" title="Ajouter un status"><span class="glyphicon glyphicon-user"></span></a>
-            <a class="btn btn-embossed btn-default btn-xs" href="{{ path('cotisation_new', { 'id': entity.id }) }}" title="cotisation"><span class="glyphicon glyphicon-check"></span></a>
+            <a class="btn btn-embossed btn-primary showuser btn-xs" data-index="{{ loop.index }}" data-id="{{ entity.id }}" href="#" data-toggle="modal" data-target="#myModal" title="{{ 'ben.action.show'|trans }}"><span class="glyphicon glyphicon-search"></span></a>
+            <a class="btn btn-embossed btn-info btn-xs" href="{{ path('ben_edit_user', {id: entity.id }) }}" title="{{ 'ben.action.edit'|trans }}"><span class="glyphicon glyphicon-edit"></span></a>
+            <a class="btn btn-embossed btn-inverse btn-xs" href="{{ path('avancement_new', { 'id': entity.id }) }}" title="{{ 'status.action.new'|trans }}"><span class="glyphicon glyphicon-user"></span></a>
+            <a class="btn btn-embossed btn-default btn-xs" href="{{ path('cotisation_new', { 'id': entity.id }) }}" title="{{ 'cotisation.meta.name'|trans }}"><span class="glyphicon glyphicon-check"></span></a>
         </div>
         </div>
         </td>

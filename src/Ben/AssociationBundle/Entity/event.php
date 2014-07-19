@@ -237,11 +237,11 @@ class event
      */
     public function getGroupList()
     {
-        $groups = '';
+        $groups = [];
         foreach ($this->groups as $group) {
-            $groups .= $group->getName().' ';
+            $groups[] = $group->getName();
         }
-        return $groups;
+        return implode(', ', $groups);
     }
     public function toArray()
     {

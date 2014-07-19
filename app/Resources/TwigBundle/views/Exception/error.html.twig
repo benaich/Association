@@ -1,0 +1,9 @@
+{% extends "::base.html.twig" %}
+{% block title %}
+Erreur - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+        <h1><span class="glyphicon glyphicon-dashboard"></span> Oops! An Error Occurred !</h1>
+        <p>The server returned a "{{ status_code }} {{ status_text}}".</p>
+{% endblock %}

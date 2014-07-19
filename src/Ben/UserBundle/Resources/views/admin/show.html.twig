@@ -20,33 +20,36 @@ Tableau de bord | {{ parent() }}
  {% endblock %}
  
 {% block body %}
+  <div class="row">
+    <div class="col-xs-6 hidden-print"><h2><span class="fui-user"></span> {{ entity.profile.firstName }} {{ entity.profile.familyName }} </h2></div>
+
      {% if is_granted("ROLE_MANAGER") %} 
      <form id="deleteForm" action="{{ path('ben_delete_user', { 'id': entity.id }) }}" method="post">
         {{ form_widget(delete_form) }}
     </form>
-    <div class="btn-group pull-right hidden-print">              
-      <button class="btn btn-primary "><span class="fui-gear"></span> Selectioner une action</button>
+    <div class="col-xs-6">
+          <div class="btn-group pull-right hidden-print">              
+      <button class="btn btn-primary "><span class="fui-gear"></span> {{ 'ben.action.select'|trans }}</button>
       <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
         <span class="caret"></span>
       </button>
       <span class="dropdown-arrow dropdown-arrow-inverse"></span>
       <ul class="dropdown-menu dropdown-inverse">
-        <li><a href="{{ path('ben_edit_user', {id: entity.id }) }}"><span class="fui-new"> Modifier</a></li>
-        <li><a href="{{ path('avancement_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Ajouter un status</a></li>
-        <li><a href="{{ path('cotisation_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> Ajouter une cotisation</a></li>
-        <li><a href="{{ path('ben_pdf', {'users': entity.id }) }}"><span class="fui-credit-card"> Imprimer la carte</a></li>
-        <li><a href="{{ path('ben_ticket_user', {'users': entity.id }) }}"><span class="fui-tag"></span> Ticket</a></li>
-        <li><a id="btnPrint" href="#"><span class="glyphicon glyphicon-print"></span> imprimer la fiche</a></li>
+        <li><a href="{{ path('ben_edit_user', {id: entity.id }) }}"><span class="fui-new"> {{ 'ben.action.edit'|trans }}</a></li>
+        <li><a href="{{ path('avancement_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> {{ 'status.action.new'|trans }}</a></li>
+        <li><a href="{{ path('cotisation_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-plus"></span> {{ 'cotisation.action.new'|trans }}</a></li>
+        <li><a href="{{ path('ben_pdf', {'users': entity.id }) }}"><span class="fui-credit-card"> {{ 'user.action.carte.print'|trans }}</a></li>
+        <li><a href="{{ path('ben_ticket_user', {'users': entity.id }) }}"><span class="fui-tag"></span> {{ 'user.action.tiquet'|trans }}</a></li>
+        <li><a id="btnPrint" href="#"><span class="glyphicon glyphicon-print"></span> {{ 'user.action.print'|trans }}</a></li>
         <li><a href="{{ path('reservation_new', {'id': entity.id }) }}"><span class="fui-tag"> Reserver une chambre</a></li>
         {% if is_granted("ROLE_ADMIN") %}
         <li class="divider"></li>
-        <li><a id="js-delete" href="{{ path('ben_new_user', {id: entity.id }) }}"><span class="glyphicon glyphicon-trash"></span> Supprimmer</a></li>
+        <li><a id="js-delete"  data-id="{{ entity.profile.fullName}}" href="{{ path('ben_new_user', {id: entity.id }) }}"><span class="glyphicon glyphicon-trash"></span> {{ 'ben.action.delete'|trans }}</a></li>
         {% endif %}
       </ul>
     </div>
+    </div>
     {% endif %}
-  <div class="row">
-    <div class="col-md-12 hidden-print"><h2><span class="fui-user"></span> {{ entity.profile.firstName }} {{ entity.profile.familyName }} </h2></div>
   </div>
   <h2 class="visible-print text-center">Fiche adhérant</h2>
 <div class="row">
@@ -77,19 +80,18 @@ Tableau de bord | {{ parent() }}
       {% endif %}
       <div class="box">
           <header>
-            <h3><span class="glyphicon glyphicon-file"></span> Informations générale</h3>
+            <h3><span class="glyphicon glyphicon-file"></span> {{ 'user.meta.general'|trans }}</h3>
           </header>
           <ul class="list-group">
-              <li class="list-group-item"><strong>Username :</strong> {{ entity.username }}</li>
-              <li class="list-group-item"><strong>Password :</strong> ******</li>
-              <li class="list-group-item"><strong>adresse email :</strong> <a href="mailto:{{ entity.email }}">{{ entity.email }}</a></li>
-              <li class="list-group-item"><strong>Etat du compte :</strong> {{ entity.etat }}</li>
-              <li class="list-group-item"><strong>Date d'inscription : </strong> {{ entity.created|time_ago_in_words }}</li>
+              <li class="list-group-item"><strong>{{ 'user.form.username'|trans }} :</strong> {{ entity.username }}</li>
+              <li class="list-group-item"><strong>{{ 'user.form.email'|trans }} :</strong> <a href="mailto:{{ entity.email }}">{{ entity.email }}</a></li>
+              <li class="list-group-item"><strong>{{ 'user.form.enabled'|trans }} :</strong> {{ entity.etat }}</li>
+              <li class="list-group-item"><strong>{{ 'user.form.created'|trans }} : </strong> {{ entity.created|time_ago_in_words }}</li>
               {% if entity.lastLogin is not null%}
-              <li class="list-group-item"><strong>Dernière connexion : </strong> {{ entity.lastLogin|time_ago_in_words }}</li>
+              <li class="list-group-item"><strong>{{ 'user.form.lastlogin'|trans }} : </strong> {{ entity.lastLogin|time_ago_in_words }}</li>
               {% endif %}
-              <li class="list-group-item"><strong>Responsablité : </strong> {{ entity.role }}</li>
-              <li class="list-group-item"><strong>Groupes : </strong>
+              <li class="list-group-item"><strong>{{ 'user.form.role'|trans }} : </strong> {{ entity.role }}</li>
+              <li class="list-group-item"><strong>{{ 'user.form.groups'|trans }} : </strong>
                 <ul>{% for group in entity.groups %}<li>{{ group}}</li>{% endfor %}</ul>
               </li>
           </ul>
@@ -98,19 +100,19 @@ Tableau de bord | {{ parent() }}
   <div class="col-md-4">
     <div class="box">
       <header>
-          <h3><span class="fui-user"></span> information association</h3>
+          <h3><span class="fui-user"></span> {{ 'user.meta.association'|trans }} </h3>
       </header>
       <ul class="list-group">
-          <li class="list-group-item"><strong>Nom :</strong> {{ entity.profile.familyName }}</li>
-          <li class="list-group-item"><strong>Preom :</strong>  {{ entity.profile.firstName }}</li>
-          <li class="list-group-item"><strong>CIN :</strong> {{ entity.profile.cin }}</li>
-          <li class="list-group-item"><strong>Status : </strong> {{ entity.status }}</li>
-          <li class="list-group-item"><strong>Sexe :</strong> {{ entity.profile.gender }}</li>
-          <li class="list-group-item"><strong>Date de naissance :</strong> {{ entity.profile.birdDay|date('Y-m-d') }}</li>
-          <li class="list-group-item"><strong>Code postal :</strong> {{ entity.profile.postCode }}</li>
-          <li class="list-group-item"><strong>Profession :</strong> {{ entity.profile.job }}</li>
-          <li class="list-group-item"><strong>Niveau d'étude :</strong> {{ entity.profile.diplome }}</li>
-          <li class="list-group-item"><strong>Spécialité :</strong> {{ entity.profile.expertise }}</li>
+          <li class="list-group-item"><strong>{{ 'user.form.profile.family.name'|trans }} :</strong> {{ entity.profile.familyName }}</li>
+          <li class="list-group-item"><strong>{{ 'user.form.profile.first.name'|trans }} :</strong>  {{ entity.profile.firstName }}</li>
+          <li class="list-group-item"><strong>{{ 'user.form.profile.cin'|trans }} :</strong> {{ entity.profile.cin }}</li>
+          <li class="list-group-item"><strong>{{ 'status.meta.name'|trans }} : </strong> {{ entity.status }}</li>
+          <li class="list-group-item"><strong>{{ 'user.form.profile.gender'|trans }} :</strong> {{ entity.profile.gender }}</li>
+          <li class="list-group-item"><strong>{{ 'user.form.profile.birthday'|trans }} :</strong> {{ entity.profile.birthday|date('Y-m-d') }}</li>
+          <li class="list-group-item"><strong>{{ 'user.form.profile.post.code'|trans }} :</strong> {{ entity.profile.postCode }}</li>
+          <li class="list-group-item"><strong>{{ 'user.form.profile.job'|trans }} :</strong> {{ entity.profile.job }}</li>
+          <li class="list-group-item"><strong>{{ 'user.form.profile.diplome'|trans }} :</strong> {{ entity.profile.diplome }}</li>
+          <li class="list-group-item"><strong>{{ 'user.form.profile.expertise'|trans }} :</strong> {{ entity.profile.expertise }}</li>
       </ul>
     </div>
   </div> 
@@ -118,15 +120,15 @@ Tableau de bord | {{ parent() }}
    <div class="col-md-4">
        <div class="box">
            <header>
-               <h3><span class="fui-book"></span> Informations de contact</h3>
+               <h3><span class="fui-book"></span> {{ 'user.meta.contact'|trans }}</h3>
            </header>
            <ul class="list-group">
-              <li class="list-group-item"><strong>Tél :</strong> {{ entity.profile.tel }}</li>
-              <li class="list-group-item"><strong>Gsm :</strong> {{ entity.profile.gsm }}</li>
-              <li class="list-group-item"><strong>Adresse :</strong> {{ entity.profile.address }}</li>
-              <li class="list-group-item"><strong>Ville :</strong> {{ entity.profile.city }}</li>
-              <li class="list-group-item"><strong>Pay :</strong> {{ entity.profile.contry }}</li>
-              <li class="list-group-item"><strong>A propos :</strong> {{ entity.profile.description }}</li>
+              <li class="list-group-item"><strong>{{ 'user.form.profile.tel'|trans }} :</strong> {{ entity.profile.tel }}</li>
+              <li class="list-group-item"><strong>{{ 'user.form.profile.gsm'|trans }} :</strong> {{ entity.profile.gsm }}</li>
+              <li class="list-group-item"><strong>{{ 'user.form.profile.address'|trans }} :</strong> {{ entity.profile.address }}</li>
+              <li class="list-group-item"><strong>{{ 'user.form.profile.city'|trans }} :</strong> {{ entity.profile.city }}</li>
+              <li class="list-group-item"><strong>{{ 'user.form.profile.contry'|trans }} :</strong> {{ entity.profile.contry }}</li>
+              <li class="list-group-item"><strong>{{ 'user.form.profile.description'|trans }} :</strong> {{ entity.profile.description }}</li>
            </ul>
        </div>
       {% if entity.reservations|length %}
@@ -148,16 +150,16 @@ Tableau de bord | {{ parent() }}
    <div class="col-md-8"> 
       <div class="box">
           <header>
-              <h3><span class="glyphicon glyphicon-tag"></span> Historique des Grades</h3>
+              <h3><span class="glyphicon glyphicon-tag"></span> {{ 'status.meta.logs'|trans }}</h3>
           </header>
           <table class="table table-hover table-bordered">
               <thead>
                   <tr>
                       <th>#</th>
-                      <th>Status</th>
-                      <th>Province</th>
-                      <th>Date de début</th>
-                      <th>Date fin</th>
+                      <th>{{ 'status.meta.name'|trans }}</th>
+                      <th>{{ 'user.form.profile.city'|trans }}</th>
+                      <th>{{ 'cotisation.form.date.from'|trans }}</th>
+                      <th>{{ 'cotisation.form.date.to'|trans }}</th>
                   </tr>
               </thead>
               <tbody>
@@ -179,16 +181,16 @@ Tableau de bord | {{ parent() }}
       </div>
       <div class="box">
           <header>
-              <h3><span class="glyphicon glyphicon-tag"></span> Historique des Cotisations</h3>
+              <h3><span class="glyphicon glyphicon-tag"></span> {{ 'cotisation.meta.logs'|trans }}</h3>
           </header>
           <table class="table table-hover table-bordered">
               <thead>
                   <tr>
                       <th>#</th>
-                      <th>Montant</th>
-                      <th>Type</th>
-                      <th>Date début</th>
-                      <th>Date fin</th>
+                      <th>{{ 'cotisation.form.price'|trans }}</th>
+                      <th>{{ 'cotisation.form.type'|trans }}</th>
+                      <th>{{ 'cotisation.form.date.from'|trans }}</th>
+                      <th>{{ 'cotisation.form.date.from'|trans }}</th>
                   </tr>
               </thead>
               <tbody>
@@ -210,15 +212,15 @@ Tableau de bord | {{ parent() }}
       </div>
       <div class="box">
           <header>
-              <h3><span class="glyphicon glyphicon-tag"></span> Historique des appels</h3>
+              <h3><span class="glyphicon glyphicon-tag"></span> {{ 'user.meta.calls'|trans }}</h3>
           </header>
           <table class="table table-hover table-bordered">
               <thead>
                   <tr>
                       <th>#</th>
-                      <th>date d'appel</th>
-                      <th>type</th>
-                      <th>Note</th>
+                      <th>{{ 'ben.meta.datecall'|trans }}</th>
+                      <th>{{ 'cotisation.form.type'|trans }}</th>
+                      <th>{{ 'ben.meta.note'|trans }}</th>
                   </tr>
               </thead>
               <tbody>
@@ -249,7 +251,7 @@ Tableau de bord | {{ parent() }}
       });
 
       $('#js-delete').on('click', function(){
-          $('#deleteForm').submit();
+          confirmation('voullez-vous vraiment supprimer l\'adherent '+$(this).data('id')) && $('#deleteForm').submit();
           return false;
       });
           

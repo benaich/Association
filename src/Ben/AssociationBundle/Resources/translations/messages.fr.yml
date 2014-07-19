@@ -1,0 +1,267 @@
+# messages.fr.yml
+user:
+    action:
+        new: Ajouter un adhérant
+        group: Associer à un groupe
+        edit: Mettre à jour un adhérant
+        login: Authentifier
+        carte: 
+            show: Cartes des Membres
+            print: Imprimer la carte
+        tiquet: Ticket de repas
+        print: Imprimer la fiche
+        promote:
+            admin: rendre administrateur
+            manager: rendre éditeur
+            user: un simple utilisateur
+        show: afficher mon profile
+        setting: Compte
+        logout: Déconnexion
+    form:
+        email: Courriel
+        enabled: état du compte
+        username: Identifiant
+        plainpassword: Mot de passe
+        groups: Groupes
+        role: Responsablité
+        created: Date d'inscription
+        lastlogin: Dernière connexion
+        rememberme: Garder ma session active
+        profile:
+            avatar: Photo
+            image.file: ''
+            family.name: Nom
+            first.name: Prenom
+            cin: CIN
+            barcode: Codebar
+            gender: Genre
+            birthday: Date de naissance
+            job: Profession
+            diplome: Niveau d'etude
+            expertise: Spécialité
+            address: Adresse
+            post.code: Code Postal
+            city: Ville
+            contry: Pays
+            tel: Tél
+            gsm: GSM
+            website: site web
+            googleplus: Google Plus
+            facebook: Facebook
+            twitter: Twitter
+            description: Autres informations
+    title:
+        main: Gestion des membres
+        profile: Profile
+    meta:
+        identity: Identité
+        name: Adhérent
+        count: %count% adherant | %count% adherants
+        general: Informations générale
+        association: Informations de L'association
+        contact: Informations de contact
+        calls: Historique des appels
+        man: Homme
+        woman: Femme
+group:
+    action:
+        new: ajouter un groupe
+        edit: Mettre à jour le groupe
+        filter: Filtrer par groupe
+        reject: Enlever de ce groupe
+    form:
+        name: Nom du groupe
+        image.file: Icone
+        placeholder:
+            filter: Créer un groupe pour ce filtre
+    meta:
+        name: Groupe
+        members: Nombre d'adhérents
+        count: %count% groupe | %count% groupes
+    title: Gestion des Groupes
+fos.user.group.form.name: Nom du groupe
+status:
+    action:
+        new: ajouter un statut
+        edit: Mettre à jour un statut
+        filter: Filtrer par statut
+    form:
+        name: nom du statut
+    meta:
+        name: Titre
+        members: Nombre d'adhérents
+        count: %count% statut | %count% statuts
+        logs:  Historique des Grades
+    title: Liste des statut
+event:
+    action:
+        edit: Mise à jour d'un événement
+        new: Ajout d'un événement
+        letter:
+            show: Afficher les lettres
+            print: Imprimer les lettres
+            send: Envoyer par mail
+    form:
+        name: Sujet
+        type: Type
+        description: Description
+        groups: Groupes
+    meta:
+        name: Evenement
+        date: Date
+        calendar: Calendrier des évenements
+    title: Liste des évenements
+cotisation:
+    action:
+        new: ajouter une cotisation
+        edit: Mettre à jour une cotisation
+        filter: Filtrer par cotisation
+    form:
+        price: Montant
+        type: type
+        date:
+           from: Date début
+           to: Date fin
+        description: Description
+        periode: Periode de cotisation
+        user: Adhérent
+    meta:
+        name: cotisation
+        count: Nombre d'adhérents
+        number: Cotisation N° %id%
+        logs:  Historique des Cotisations
+    title: Liste des cotisations
+config:
+    action:
+        fields: Configuration des champs
+    form:
+        logo: logo
+        name: nom de l'association
+        description: Description de l'association
+        map:
+            lat: Latitude
+            long: Longuitude
+        theme: Theme
+        allowlogin: Auto-Enregistrement actif ?
+        allowprint: Permettre aux membres d'imprimer leurs carte ?
+        carte:
+            bg: Coleur du background
+            fg: Coleur du Texte
+        headband:
+            bg: Coleur du background du bandeau
+            fg: Coleur du Texte du bandeau
+            text: Texte du bandeau
+        css: Style css
+        letter:
+            header: Entéte de la lettre
+            event: Lettre d'invitation
+            cotisation: Lettre de cotisation
+        local:
+            name: langue
+            fr: Français
+            en: Anglais
+            ar: Arabe
+    meta:
+        general: Générale
+        social: Réseaux sociaux
+        setting: Paramètres
+        carte: Cartes
+        letters: Lettres
+        field: 
+            name: Nom du champ
+            visible: Visibilité
+    title: Préférences
+
+ben:
+    menu:
+        dashboard: Tableau de bord
+        members: adhérants
+        groups: Groupes
+        status: Status
+        cotisation: Cotisations
+        events: Evénements
+        reservation: Résérvation
+        logement: Logement
+        rooms: Chambres
+        config: Préférences
+        collapse: Réduire le menu
+        messages: messages
+        notifications: notifications
+        calendar: calendrier
+    action:
+        new: Ajouter
+        show: afficher
+        edit: Mettre à jour
+        delete: Supprimer
+        valide: Valider
+        send: Envoyer
+        done: Terminer
+        search: Rechercher
+        advanced: Recherche avancée
+        tocsv: Exporter vers csv
+        toxml: Exporter vers xml
+        toexcel: Exporter vers excel
+        topdf: imprimer
+        enable: activer
+        disable: désactiver
+        prev: précedant
+        next: suivant
+        more: Plus d'info
+        call: appeler
+        sms: Envoyer un sms
+        backtolist: Revenir à la liste
+        print: imprimer
+        select: Selectioner une action
+        hangup: Racrocher
+    meta:
+        id: Id
+        all: Tous
+        actions: Actions
+        perpage: Nombre de ligne par page
+        total: Le totale
+        call: Appel en cours
+        message: message
+        datecall: date d'appel
+        note: remarque
+    image.form.file: ''
+# exceptions
+fos.user:
+    action:
+        email: Changer votre adresse email
+        account: Reglages Compte
+        password:
+            change: Changer votre mot de passe 
+    change.password.form:
+        current.password: Mot de passe actuel
+        new:
+            first: Nouveau mot de passe
+            second: Confirmer votre mot de passe
+    profile.form:
+        username: Nom d'utilisateur
+        email: Adresse e-mail
+        current.password: Mot de passe actuel
+message:
+    action:
+        send: Envoyer un nouveau message
+        delete: supprimer ce message
+        reply: Répondre
+        mail: Envoyer par mail
+    meta:
+        main: Messagerie
+        count: %count% message| %count% messages
+        no: Pas encore de messages
+        sent: Envoyés
+        inbox: Boîte de réception
+        deleted: Supprimés
+        demo: Modele des lettre envoyées
+    form:
+        message: Message
+        subject: Sujet
+        sendto: Envoyée à
+avancement:
+    form:
+        date:
+           from: Date début
+           to: Date fin
+        city: Province
+        status: Status

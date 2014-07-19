@@ -231,9 +231,10 @@ background: #4E4E4F;
 
 /* content */
 .wrapper {
-float: left;
-margin-top: 55px;
-padding-left: 100px;
-padding-top: 30px;
-width: 100%;
+	float: left;
+	margin-top: 55px;
+	padding-left: 100px;
+	padding-top: 30px;
+	width: 100%;
 }
+

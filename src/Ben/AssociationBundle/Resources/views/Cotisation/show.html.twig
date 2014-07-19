@@ -4,38 +4,38 @@ Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
 
-<h2><span class="fui-tag"></span> Cotisation N° #{{ entity.id }}</h2>
+<h2><span class="fui-tag"></span> {{ 'cotisation.meta.number'|trans({'%id%': entity.id} ) }} </h2>
 
 <div class="row">
-    <div class="col-sm-9">
+    <div class="col-xs-9">
 <table class="table table-bordered table-striped">
     <tbody>
         <tr>
-            <th>Adhérant</th>
+            <th>{{ 'user.meta.name'|trans }}</th>
             <td><a href="{{ path('ben_show_user', {'id': entity.user.id }) }}">{{ entity.user.profile.fullName }}</a></td>
         </tr>
         <tr>
-            <th>CIN</th>
+            <th>{{ 'user.form.profile.cin'|trans }}</th>
             <td>{{ entity.user.profile.cin }}</td>
         </tr>
         <tr>
-            <th>Montant</th>
+            <th>{{ 'cotisation.form.price'|trans }}</th>
             <td>{{ entity.price }}</td>
         </tr>
         <tr>
-            <th>Type</th>
+            <th>{{ 'cotisation.form.type'|trans }}</th>
             <td>{{ entity.type }}</td>
         </tr>
         <tr>
-            <th>Date début</th>
+            <th>{{ 'cotisation.form.date.from'|trans }}</th>
             <td>{{ entity.datefrom|date('Y-m-d') }}</td>
         </tr>
         <tr>
-            <th>Date fin</th>
+            <th>{{ 'cotisation.form.date.to'|trans }}</th>
             <td>{{ entity.dateto|date('Y-m-d') }}</td>
         </tr>
         <tr>
-            <th>Commentaire</th>
+            <th>{{ 'cotisation.form.description'|trans }}</th>
             <td>{{ entity.description }}</td>
         </tr>
     </tbody>
@@ -44,17 +44,17 @@ Tableau de bord | {{ parent() }}
       Fait à {{ app_config.org_city }} le {{ 'now'|date('d/m/Y')}}
   </div>
 </div> 
-<div class="col-md-3">
+<div class="col-xs-3">
     <form action="{{ path('cotisation_delete', { 'id': entity.id }) }}" method="post">
     {{ form_widget(delete_form) }}
     <a id="submitEditForm" class="btn btn-embossed btn-primary btn-block" href="{{ path('cotisation_edit', { 'id': entity.id }) }}">
-        <span class="fui-new"></span> Mettre à jour
+        <span class="fui-new"></span> {{ 'ben.action.edit'|trans }}
     </a>
-    <a id="btnPrint" href="#" class="btn btn-embossed btn-inverse btn-block"><span class="glyphicon glyphicon-print"></span> imprimer le reçus</a>
+    <a id="btnPrint" href="#" class="btn btn-embossed btn-inverse btn-block"><span class="glyphicon glyphicon-print"></span> {{ 'ben.action.print'|trans }}</a>
     <a class="btn btn-embossed btn-inverse btn-block " href="{{ path('cotisation') }}">
-        <span class="fui-list-bulleted"></span> Revenir à la liste
+        <span class="fui-arrow-left"></span> {{ 'ben.action.backtolist'|trans }}
     </a>
-    <button type="submit" class="btn btn-embossed btn-danger btn-block"><span class="fui-cross"></span> Supprimer </button>
+    <button type="submit" class="btn btn-embossed btn-danger btn-block"><span class="fui-cross"></span> {{ 'ben.action.delete'|trans }} </button>
     </form>
 </div>
 <div class="clearfix"></div>

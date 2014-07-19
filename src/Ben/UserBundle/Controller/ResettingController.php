@@ -23,8 +23,7 @@ class ResettingController extends BaseController {
         }
 
         if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
-            $flash = "Un nouveau mot de passe a déjà été demandé pour cet utilisateur dans les dernières 24 heures.";
-            $this->setFlash('error', $flash);
+            $this->setFlash('error', 'ben.flash.error.user.resetting.password');
             return new RedirectResponse($this->container->get('router')->generate('Ben_association_homepage'));
         }
 

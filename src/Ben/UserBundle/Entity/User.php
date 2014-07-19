@@ -7,10 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use FOS\MessageBundle\Model\ParticipantInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="UserRepository"))
  * @ORM\Table(name="user")
+ * @UniqueEntity("username")
  * @ORM\HasLifecycleCallbacks
  */
 class User extends BaseUser implements ParticipantInterface {

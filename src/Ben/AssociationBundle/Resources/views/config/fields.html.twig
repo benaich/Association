@@ -8,12 +8,12 @@ Tableau de bord | {{ parent() }}
         <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
 {% endblock %}
 {% block body %}
-<h2><span class="fui-gear"></span> Configuration des champs</h2>
+<h2><span class="fui-gear"></span> {{ 'config.action.fields'|trans }}</h2>
 <form class="form-horizontal" action="{{ path('config_update_fields')}}" method="POST">        
         <div class="tabbable">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab1"><span class="fui-user"></span> Adérents</a></li>
-              <li><a href="#tab2"><span class="fui-tag"></span> Cotisation</a></li>
+              <li class="active"><a href="#tab1"><span class="fui-user"></span> {{ 'ben.menu.members'|trans }}</a></li>
+              <li><a href="#tab2"><span class="fui-tag"></span> {{ 'ben.menu.cotisation'|trans }}</a></li>
             </ul> <!-- /tabs -->
 
             <div class="tab-content">
@@ -21,9 +21,9 @@ Tableau de bord | {{ parent() }}
               <table class="table table-hover table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th>Identifiant</th>
-                    <th>Nom du champ</th>
-                    <th>Visibilité</th>
+                    <th>{{ 'ben.meta.id'|trans }}</th>
+                    <th>{{ 'config.meta.field.name'|trans }}</th>
+                    <th>{{ 'config.meta.field.visible'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,9 +41,9 @@ Tableau de bord | {{ parent() }}
               <table class="table table-hover table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th>Identifiant</th>
-                    <th>Nom du champ</th>
-                    <th>Visibilité</th>
+                    <th>{{ 'ben.meta.id'|trans }}</th>
+                    <th>{{ 'config.meta.field.name'|trans }}</th>
+                    <th>{{ 'config.meta.field.visible'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -61,7 +61,7 @@ Tableau de bord | {{ parent() }}
           </div>
               <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-4">
-                  <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-check-inverted"></span> Mettre à jour</button>
+                  <button type="submit" class="btn btn-primary btn-embossed"><span class="fui-check-inverted"></span> {{ 'ben.action.edit'|trans }}</button>
                 </div>
               </div>
 </form>

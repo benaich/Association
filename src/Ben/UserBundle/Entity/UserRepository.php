@@ -34,9 +34,9 @@ class UserRepository extends EntityRepository
         if(!empty($status))
             $qb->andWhere('status.id = :status')->setParameter('status', $status);
         if(!empty($date_from))
-            $qb->andWhere('p.bird_day > :date_from')->setParameter('date_from', $date_from);
+            $qb->andWhere('p.birthday > :date_from')->setParameter('date_from', $date_from);
         if(!empty($date_to))
-            $qb->andWhere('p.bird_day < :date_to')->setParameter('date_to', $date_to);
+            $qb->andWhere('p.birthday < :date_to')->setParameter('date_to', $date_to);
         if(!empty($city))
             $qb->andWhere('p.city = :city')->setParameter('city', $city);
         if(!empty($cotisation)){
@@ -126,9 +126,7 @@ class UserRepository extends EntityRepository
     }
 
     public function counter() {
-        $sql = 'SELECT count(u) FROM ben\UserBundle\Entity\User u';
-        $query = $this->_em->createQuery($sql);
-         
-      return $query->getOneOrNullResult();
+        $qb = $this->createQueryBuilder('u')->select('COUNT(u)');
+        return $qb->getQuery()->getSingleScalarResult();
     }
 }

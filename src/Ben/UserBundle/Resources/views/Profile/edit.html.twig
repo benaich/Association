@@ -5,20 +5,20 @@ Paramètres - {{ parent() }}
 
 {% block fos_user_content %}
 
-<h2><span class="fui-gear"></span> Reglages Compte</h2>
+<h2><span class="fui-gear"></span> {{ 'fos.user.action.account'|trans }}</h2>
 {% include "FOSUserBundle:ChangePassword:changePassword.html.twig" %}
 <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="form-horizontal">
 <fieldset>
-    <legend>Changer votre adresse email </legend>    
+    <legend>{{ 'fos.user.action.email'|trans }}</legend>    
     
-        {{ form_row(form.username, { 'label': 'Nom d\'utilisateur'}) }}
-        {{ form_row(form.email, { 'label': 'Adresse e-mail'}) }}
-        {{ form_row(form.current_password, { 'label': 'Mot de passe actuel'}) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.current_password) }}
 
         {{ form_rest(form) }}
     <div class="form-group">
         <div class="col-sm-offset-4 col-sm-4">
-            <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-new"></span> Mettre à jour</button>
+            <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-new"></span> {{ 'ben.action.edit'|trans }}</button>
         </div>
     </div>
 </fieldset>

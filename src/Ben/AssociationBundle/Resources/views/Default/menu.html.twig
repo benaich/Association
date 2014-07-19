@@ -14,18 +14,19 @@
 <nav class="menu hidden-print">
     <ul>
     {% if is_granted("ROLE_MANAGER") %}
-        <li class="{% if route in dashboardMenu %}current{% endif %}"><a href="{{ path('Ben_association_homepage') }}"><span class="glyphicon glyphicon-dashboard block"></span> <span>Dashboard</span></a></li>
-        <li class="{% if route in userMenu %}current{% endif %}"><a href="{{ path('ben_users') }}"><span class="fui-user block"></span> <span>Adhérents</span></a></li>
-        <li class="{% if route in groupMenu %}current{% endif %}"><a href="{{ path('fos_user_group_list') }}"><span class="fui-myspace block"></span> <span>Groupes</span></a></li>
-        <li class="{% if route in statusMenu %}current{% endif %}"><a href="{{ path('status') }}"><span class="glyphicon glyphicon-tags block"></span> <span>Status</span></a></li>
-        <li class="{% if route in cotisationMenu %}current{% endif %}"><a href="{{ path('cotisation') }}"><span class="glyphicon glyphicon-usd block"></span> <span>cotisation</span></a></li>
+        <li class="{% if route in dashboardMenu %}current{% endif %}"><a href="{{ path('Ben_association_homepage') }}" ><span class="glyphicon glyphicon-dashboard block"></span> <span>{{'ben.menu.dashboard'|trans}}</span></a></li>
+        <li class="{% if route in userMenu %}current{% endif %}"><a href="{{ path('ben_users') }}" ><span class="fui-user block"></span> <span>{{'ben.menu.members'|trans}}</span></a></li>
+        <li class="{% if route in groupMenu %}current{% endif %}"><a href="{{ path('fos_user_group_list') }}" ><span class="fui-myspace block"></span> <span>{{'ben.menu.groups'|trans}}</span></a></li>
+        <li class="{% if route in statusMenu %}current{% endif %}"><a href="{{ path('status') }}" ><span class="glyphicon glyphicon-tags block"></span> <span>{{'ben.menu.status'|trans}}</span></a></li>
+        <li class="{% if route in cotisationMenu %}current{% endif %}"><a href="{{ path('cotisation') }}" ><span class="glyphicon glyphicon-usd block"></span> <span>{{'ben.menu.cotisation'|trans}}</span></a></li>
         {% if is_granted("ROLE_ADMIN") %}
-        <li class="{% if route in eventMenu %}current{% endif %}"><a href="{{ path('event') }}"><span class="fui-time block"></span> <span>Evenements</span></a></li>
-        <li class="{% if route in reservationMenu %}current{% endif %}"><a href="{{ path('reservation') }}"><span class="fui-book block"></span> <span>reservation</span></a></li>
-        <li class="{% if route in hotelMenu %}current{% endif %}"><a href="{{ path('hotels') }}"><span class="fui-home block"></span> <span>Logement</span></a></li>
-        <li class="{% if route in roomMenu %}current{% endif %}"><a href="{{ path('rooms') }}"><span class="fui-tag block"></span> <span>chambres</span></a></li>
-        <li class="{% if route in configMenu %}current{% endif %}"><a href="{{ path('config') }}"><span class="fui-gear block"></span> <span>Préférences</span></a></li>
+        <li class="{% if route in eventMenu %}current{% endif %}"><a href="{{ path('event') }}" ><span class="fui-time block"></span> <span>{{'ben.menu.events'|trans}}</span></a></li>
+        <li class="{% if route in reservationMenu %}current{% endif %}"><a href="{{ path('reservation') }}" ><span class="fui-book block"></span> <span>{{'ben.menu.reservation'|trans}}</span></a></li>
+        <li class="{% if route in hotelMenu %}current{% endif %}"><a href="{{ path('hotels') }}" ><span class="fui-home block"></span> <span>{{'ben.menu.logement'|trans}}</span></a></li>
+        <li class="{% if route in roomMenu %}current{% endif %}"><a href="{{ path('rooms') }}" ><span class="fui-tag block"></span> <span>{{'ben.menu.rooms'|trans}}</span></a></li>
+        <li class="{% if route in configMenu %}current{% endif %}"><a href="{{ path('config') }}" ><span class="fui-gear block"></span> <span>{{'ben.menu.config'|trans}}</span></a></li>
         {% endif %}
     {% endif %}
+        <li><a id="trigger-shelf" href="#" data-toggle="tooltip" data-tooltip-style="light" data-placement="right" title="Collapse menu"><span class="fui-arrow-left block"></span> <span> {{'ben.menu.collapse'|trans}}</span></a></li>
     </ul>
 </nav>

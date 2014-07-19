@@ -5,49 +5,49 @@ Profile - {{ parent() }}
 
 {% block fos_user_content %}
 {% if app_config.print_permission %}
-<a href="{{ path('ben_pdf', {'users': entity.id }) }}" class="btn btn-inverse pull-right"><span class="glyphicon glyphicon-print"></span> Imprimer la carte</a>
+<a href="{{ path('ben_pdf', {'users': entity.id }) }}" class="btn btn-inverse pull-right"><span class="glyphicon glyphicon-print"></span> {{ 'user.action.carte.print'|trans }}</a>
 {% endif %}
 <h2><span class="fui-user"></span> Profile</h2>
 <form class="form-horizontal" action="{{ path('ben_profile_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
 <div class="tabbable">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#tab1"><span class="fui-user"></span> Identité</a></li>
-      <li><a href="#tab2"><span class="fui-book"></span> Informations de contact</a></li>
+      <li class="active"><a href="#tab1"><span class="fui-user"></span> {{ 'user.meta.identity'|trans }}</a></li>
+      <li><a href="#tab2"><span class="fui-book"></span> {{ 'user.meta.contact'|trans }}</a></li>
     </ul> <!-- /tabs -->
     <div class="tab-content">
         <div class="tab-pane active" id="tab1">
             <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Photo </label>
+                <label for="" class="col-sm-4 control-label">{{ 'user.form.profile.avatar'|trans }}</label>
                 <div class="col-sm-4">
                     <img class="myavatar col-md-4" src="{{ asset( entity.image.getwebpath)}}">
                 </div>
             </div>
-            {{ form_row(form.image.file, { 'label': ' '}) }}
-            {{ form_row(form.family_name, { 'label': 'Nom'}) }}
-            {{ form_row(form.first_name, { 'label': 'Prenom'}) }}
-            {{ form_row(form.cin, { 'label': 'CIN'}) }}
-            {{ form_row(form.barcode, { 'label': 'Codebar'}) }}
-            {{ form_row(form.gender, { 'label': 'Genre'}) }}
-            {{ form_row(form.bird_day, { 'label': 'Date de naissance'}) }}
-            {{ form_row(form.job, { 'label': 'Profession'}) }}
-            {{ form_row(form.diplome, { 'label': 'Niveau d\'etude'}) }}
-            {{ form_row(form.expertise, { 'label': 'Spécialité'}) }}
+            {{ form_row(form.image.file) }}
+            {{ form_row(form.family_name) }}
+            {{ form_row(form.first_name) }}
+            {{ form_row(form.cin) }}
+            {{ form_row(form.barcode) }}
+            {{ form_row(form.gender) }}
+            {{ form_row(form.birthday) }}
+            {{ form_row(form.job) }}
+            {{ form_row(form.diplome) }}
+            {{ form_row(form.expertise) }}
         </div><!-- /tab1 -->
         <div class="tab-pane" id="tab2">
-            {{ form_row(form.address, { 'label': 'Adresse'}) }}
-            {{ form_row(form.post_code, { 'label': 'Code Postal'}) }}
-            {{ form_row(form.city, { 'label': 'Ville'}) }}
-            {{ form_row(form.contry, { 'label': 'Pays'}) }}
-            {{ form_row(form.tel, { 'label': 'Tél'}) }}
-            {{ form_row(form.gsm, { 'label': 'GSM'}) }}
+            {{ form_row(form.address) }}
+            {{ form_row(form.post_code) }}
+            {{ form_row(form.city) }}
+            {{ form_row(form.contry) }}
+            {{ form_row(form.tel) }}
+            {{ form_row(form.gsm) }}
             {{ form_rest(form) }}
         </div><!-- /tab2 -->
     </div>
 
     <div class="form-group">
       <div class="col-sm-offset-4 col-sm-4">
-        <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-new"></span> Mettre à jours</button>
-        <a href="{{ path('ben_show_user', {'id': app.user.id }) }}" class="btn btn-default btn-embossed"><span class="fui-search"> Afficher mon profile</a>
+        <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-new"></span> {{ 'ben.action.edit'|trans }}</button>
+        <a href="{{ path('ben_show_user', {'id': app.user.id }) }}" class="btn btn-default btn-embossed"><span class="fui-search"> {{ 'user.action.show'|trans }}</a>
       </div>
     </div>
 </form>

@@ -1,7 +1,7 @@
 {% extends "BenAssociationBundle::layout.html.twig" %}
 {% set route = app.request.attributes.get('_route') %} 
 {% block body %}
-<h2><span class="glyphicon glyphicon-envelope"></span> Messages Privés</h2>
+<h2><span class="glyphicon glyphicon-envelope"></span> {{ 'message.meta.main'|trans }}</h2>
 <div class="row">
     <div class="col-md-4">
         <div class="inbox-panel box">           
@@ -10,16 +10,16 @@
               <div class="col-md-5"><img class="img-responsive img-circle" src="{{ asset( app.user.avatar)}}" alt=""></div>
               <div class="col-md-7">
                   <h3><i>{{ app.user.profile.firstName }}</i> {{ app.user.profile.familyName }}</h3>
-                <a href="{{ path('ben_profile_edit', { 'name': app.user.username}) }}" title=""><span class="glyphicon glyphicon-user"></span> Profile</a>
-                <a href="{{ path('fos_user_profile_edit') }}" title=""><span class="glyphicon glyphicon-cog"></span> Setting</a>
+                <a href="{{ path('ben_profile_edit', { 'name': app.user.username}) }}" title=""><span class="glyphicon glyphicon-user"></span> {{ 'user.title.profile'|trans }}</a>
+                <a href="{{ path('fos_user_profile_edit') }}" title=""><span class="glyphicon glyphicon-cog"></span> {{ 'ben.menu.config'|trans }}</a>
               </div>
           </div>
           </header> 
           <div class="list-group">
-              <a class="list-group-item {% if route == 'fos_message_inbox' %}active{% endif %}" href="{{ path('fos_message_inbox') }}"><span class="glyphicon glyphicon-inbox"></span> INBOX <span class="badge label-danger">{{ fos_message_nb_unread() }}</span></a>
-              <a class="list-group-item {% if route == 'fos_message_sent' %}active{% endif %}" href="{{ path('fos_message_sent') }}"><span class="glyphicon glyphicon-send"></span> Envoyée</a>
-              <a class="list-group-item {% if route == 'fos_message_deleted' %}active{% endif %}" href="{{ path('fos_message_deleted') }}"><span class="glyphicon glyphicon-trash"></span> Trash</a>
-              <a class="list-group-item {% if route == 'fos_message_thread_new' %}active{% endif %}" href="{{ path('fos_message_thread_new') }}"><span class="glyphicon glyphicon-plus-sign"></span> Nouveau message</a>
+              <a class="list-group-item {% if route == 'fos_message_inbox' %}active{% endif %}" href="{{ path('fos_message_inbox') }}"><span class="glyphicon glyphicon-inbox"></span> {{ 'message.meta.inbox'|trans }} <span class="badge label-danger">{{ fos_message_nb_unread() }}</span></a>
+              <a class="list-group-item {% if route == 'fos_message_sent' %}active{% endif %}" href="{{ path('fos_message_sent') }}"><span class="glyphicon glyphicon-send"></span> {{ 'message.meta.sent'|trans }}</a>
+              <a class="list-group-item {% if route == 'fos_message_deleted' %}active{% endif %}" href="{{ path('fos_message_deleted') }}"><span class="glyphicon glyphicon-trash"></span> {{ 'message.meta.deleted'|trans }}</a>
+              <a class="list-group-item {% if route == 'fos_message_thread_new' %}active{% endif %}" href="{{ path('fos_message_thread_new') }}"><span class="glyphicon glyphicon-plus-sign"></span> {{ 'message.action.send'|trans }}</a>
           </div>
         </div>
     </div>

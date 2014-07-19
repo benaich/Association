@@ -3,15 +3,15 @@
 Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
-<h2><span class="fui-tag"></span> Status edit</h2>
+<h2><span class="fui-tag"></span> {{ 'status.action.edit'|trans }}</h2>
 <form id="createForm" class="form-horizontal" action="{{ path('status_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}
 
     <div class="form-group">
       <div class="col-md-offset-4 col-md-4">
-        <button type="submit" class="btn btn-primary btn-embossed"><span class="glyphicon glyphicon-edit"></span> Modifier</button>
+        <button type="submit" class="btn btn-primary btn-embossed"><span class="glyphicon glyphicon-edit"></span> {{'ben.action.edit'|trans}}</button>
         {% if is_granted("ROLE_ADMIN") %}
-        <button id="js-delete" class="btn btn-embossed btn-danger"><span class="fui-cross"></span> Supprimer </button>
+        <button id="js-delete" class="btn btn-embossed btn-danger" data-id="{{entity.name}}"><span class="fui-cross"></span> {{'ben.action.delete'|trans}} </button>
         {% endif %}
       </div>
     </div>
@@ -29,7 +29,7 @@ Tableau de bord | {{ parent() }}
     (function($) {
 
         $('#js-delete').on('click', function(){
-            (confirmation()) && $('#deleteForm').submit();
+            (confirmation('voullez-vous vraiment supprimer le status '+$(this).data('id'))) && $('#deleteForm').submit();
             return false;
         });
     })(jQuery);

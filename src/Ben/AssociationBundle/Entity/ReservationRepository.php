@@ -42,10 +42,10 @@ class ReservationRepository extends EntityRepository
         
        return new Paginator($qb->getQuery());
     }
-    
+
     public function counter() {
-        $query = $this->_em->createQuery('SELECT count(r) FROM ben\AssociationBundle\Entity\Reservation r');
-        return $query->getOneOrNullResult();
-    }	
+        $qb = $this->createQueryBuilder('r')->select('COUNT(r)');
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 	
 }

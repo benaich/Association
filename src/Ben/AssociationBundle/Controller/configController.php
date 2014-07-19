@@ -48,6 +48,7 @@ class configController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $config = $request->get('config');
+        // $this->get('session')->set('_locale', $config['org_lang']);
 
         /* handle img */
         $img = new \Ben\AssociationBundle\Entity\image();
@@ -61,6 +62,8 @@ class configController extends Controller
         foreach ($config as $key => $value) {
             $em->getRepository('BenAssociationBundle:config')->updateBy($key, $value);
         }
+
+        $this->get('session')->getFlashBag()->add('success', "ben.flash.success.updated");
         return $this->redirect($this->generateUrl('config'));
     }
 

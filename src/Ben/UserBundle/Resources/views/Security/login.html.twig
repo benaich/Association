@@ -8,41 +8,62 @@ Login - {{ parent() }}
 
     <div class="sign-in">
         <div class="sign-in-head text-center">
-            <h1>Association {{ app_config.org_name }}</h1>
+            <h1>{{ app_config.org_name }}</h1>
         </div>
         <div class="sign-in-form">
-        <h5></h5>
+        <h5></h5> 
+            <form action="{{ path("fos_user_security_check") }}" method="post">
+
             {% if error %}
                 <div class="alert alert-error fade in">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong><i class="icon-warning-sign"></i> erreur : </strong> {{ error|trans({}, 'FOSUserBundle') }}
+                {{ error|trans({}, 'FOSUserBundle') }}
                 </div>
-            {% endif %} 
-            <form action="{{ path("fos_user_security_check") }}" method="post">
+            {% endif %}
+
                 <div class="form-group">
                     <div class="input-group input-group-lg">
                       <span class="input-group-addon"><span class="fui-user"></span></span>
-                      <input type="text" class="form-control" placeholder="Login/E-mail" name="_username" value="{{ last_username }}" required="required" autofocus="true" />
+                      <input type="text" class="form-control" placeholder="{{ 'user.form.username'|trans }}" name="_username" value="{{ last_username }}" required="required" autofocus="true" />
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group input-group-lg">
                       <span class="input-group-addon"><span class="fui-lock"></span></span>
-                       <input type="password" class="form-control" id="password" name="_password" required="required" placeholder="Password"/>
+                       <input type="password" class="form-control" id="password" name="_password" required="required" placeholder="{{ 'user.form.plainpassword'|trans }}"/>
                     </div>
                 </div>
-
-                <div class="form-group">
+                <div class="row">
+                <div class="form-group col-xs-8">
                     <label class="checkbox primary checked" for="checkbox6">
                     <span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" checked="checked" name="_remember_me" value="on" id="checkbox6" data-toggle="checkbox">
-                    Garder ma session active
+                    {{ 'user.form.rememberme'|trans }}
                   </label>
                 </div>
-               <p class="text-center btn-area">
-              <button type="submit" class="btn btn-primary btn-wide btn-huge" href="adherents.html">Login</button>
+                <div class="col-xs-4">
+                    <select name="_locale" class="primary select-block">
+                        <option selected="selected" value="fr_FR">{{ 'config.form.local.fr'|trans }}</option>
+                        <option value="en">{{ 'config.form.local.en'|trans }}</option>
+                        <option value="ar">{{ 'config.form.local.ar'|trans }}</option>
+                    </select>
+                </div>
+                </div>
+              <p class="text-center btn-area">
+              <button type="submit" class="btn btn-primary btn-wide btn-huge">{{ 'user.action.login'|trans }}</button>
               </p>
             </form>
         </div>
     </div>
   </body>
+    <script src="{{ asset('js/jquery-1.8.3.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-ui-1.10.3.custom.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-select.js') }}"></script>
+    <script src="{{ asset('js/flatui-checkbox.js') }}"></script>
+    <script src="{{ asset('js/application.js') }}"></script>
+    <script type="text/javascript">
+    (function($) {
+
+    })(jQuery);
+    </script>
+
 {% endblock container %}

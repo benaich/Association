@@ -10,53 +10,54 @@ Tableau de bord | {{ parent() }}
  {% endblock %}
 
 {% block body %}
-<h2><span class="glyphicon glyphicon-dashboard"></span> Tableau de bord</h2>
+
+<h2><span class="glyphicon glyphicon-dashboard"></span> {{'ben.menu.dashboard'|trans}}</h2>
 <div class="row">
-	<div class="col-md-2">
+	<div class="col-md-2 col-xs-6">
 	<div class="stat-boxes widget-body">
-		<a href="#"><span class="fui-user ben-icone"></span></a>
+		<a href="{{ path('ben_users') }}"><span class="fui-user ben-icone"></span></a>
 		<h3 class="ticker--one">{{ counter.user }}</h3>
-		<i>ADHERENTS</i>
+		<i>{{'ben.menu.members'|trans}}</i>
 		<div class="clearfix"></div>		
 	</div>
 	</div>
-	<div class="col-md-2">
+	<div class="col-md-2 col-xs-6">
 		<div class="stat-boxes widget-body">
-			<a href="#"><span class="fui-myspace ben-icone"></span></a>
+			<a href="{{ path('fos_user_group_list') }}"><span class="fui-myspace ben-icone"></span></a>
 			<h3 class="ticker--one">{{ counter.group }}</h3>
-			<i>GROUPES</i>
+			<i>{{'ben.menu.groups'|trans}}</i>
 			<div class="clearfix"></div>		
 		</div>
 	</div>
-	<div class="col-md-2">
+	<div class="col-md-2 col-xs-6">
 		<div class="stat-boxes widget-body">
-			<a href="#"><span class="fui-time ben-icone"></span></a>
+			<a href="{{ path('event') }}"><span class="fui-time ben-icone"></span></a>
 			<h3 class="ticker--one">{{ counter.event }}</h3>
-			<i>EVENEMENTS</i>
+			<i>{{'ben.menu.events'|trans}}</i>
 			<div class="clearfix"></div>		
 		</div>
 	</div>
-	<div class="col-md-2">
+	<div class="col-md-2 col-xs-6">
 		<div class="stat-boxes widget-body">
-			<a href="#"><span class="fui-book ben-icone"></span></a>
+			<a href="{{ path('reservation') }}"><span class="fui-book ben-icone"></span></a>
 			<h3 class="ticker--one">{{ counter.reservation }}</h3>
-			<i>RESERVATION</i>
+			<i>{{'ben.menu.reservation'|trans}}</i>
 			<div class="clearfix"></div>		
 		</div>
 	</div>
-	<div class="col-md-2">
+	<div class="col-md-2 col-xs-6">
 		<div class="stat-boxes widget-body">
-			<a href="#"><span class="fui-home ben-icone"></span></a>
+			<a href="{{ path('hotels') }}"><span class="fui-home ben-icone"></span></a>
 			<h3 class="ticker--one">{{ counter.hotels }}</h3>
-			<i>LOGEMENT</i>
+			<i>{{'ben.menu.logement'|trans}}</i>
 			<div class="clearfix"></div>		
 		</div>
 	</div>
-	<div class="col-md-2">
+	<div class="col-md-2 col-xs-6">
 		<div class="stat-boxes widget-body">
-			<a href="#"><span class="fui-tag ben-icone"></span></a>
+			<a href="{{ path('rooms') }}"><span class="fui-tag ben-icone"></span></a>
 			<h3 class="ticker--one">{{ counter.rooms }}</h3>
-			<i>CHAMBRE</i>
+			<i>{{'ben.menu.rooms'|trans}}</i>
 			<div class="clearfix"></div>		
 		</div>
 	</div>
@@ -246,7 +247,12 @@ Tableau de bord | {{ parent() }}
     	mapContainer = document.getElementById('js-map'); 
     	map = new google.maps.Map(mapContainer, options),
     	styledMapType = new google.maps.StyledMapType(styles, { name: 'Styled' });  
-   	map.mapTypes.set('Styled', styledMapType); 
+    	map.mapTypes.set('Styled', styledMapType); 
+    	marker = new google.maps.Marker({
+		    position: options.center,
+		    map: map,
+		    animation: google.maps.Animation.DROP
+		});
    
    	$('.js-toggle').on('click', function(){
    		$(this).toggleClass('fui-arrow-left').closest('header').next().slideToggle();

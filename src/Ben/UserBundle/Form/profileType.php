@@ -23,7 +23,7 @@ class profileType extends AbstractType
         $builder
             ->add('family_name')
             ->add('first_name')
-            ->add('bird_day', 'date', array('widget' => 'single_text'))
+            ->add('birthday', 'date', array('widget' => 'single_text'))
             ->add('gender', 'choice', array('choices' => array('homme' => 'Homme','femme' => 'Femme'),
                     'required' => false,))
             ->add('cin')
@@ -55,6 +55,6 @@ class profileType extends AbstractType
 
     public function getName()
     {
-        return 'profiletype';
+        return 'user_form_profile';
     }
 }

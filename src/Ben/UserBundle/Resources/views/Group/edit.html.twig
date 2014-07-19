@@ -6,15 +6,23 @@ Groupes - {{ parent() }}
 {% block fos_user_content %}
      
 <h2><span class="fui-user"></span> Gestion des Groupes</h2>
-<form id="createForm" class="form-horizontal" action="{{ path('fos_user_group_edit', {'groupname': groupname} ) }}" method="post" {{ form_enctype(form) }}>
-        {{ form_row(form.name, {'label' : 'Nom du Groupe'}) }}
-        {{ form_rest(form)}}
+<form id="createForm" class="form-horizontal" action="{{ path('fos_user_group_edit', {'groupname': group.name} ) }}" method="post" {{ form_enctype(form) }}>
+    <div class="form-group">
+      <label for="" class="col-md-4 control-label">{{ 'user.form.profile.avatar'|trans }}</label>
+      <div class="col-md-2 text-center">
+        <img src="{{ asset( group.image.getwebpath)}}">
+      </div>
+    </div>
+    {{ form_row(form.image.file) }}
+    {{ form_row(form.name) }}
+    {{ form_rest(form)}}
+
 
     <div class="form-group">
       <div class="col-md-offset-4 col-md-4">
-        <button type="submit" class="btn btn-primary btn-embossed"><span class="glyphicon glyphicon-plus"></span> Modifier</button>
+        <button type="submit" class="btn btn-primary btn-embossed"><span class="glyphicon glyphicon-plus"></span> {{ 'ben.action.edit'|trans }}</button>
         {% if is_granted("ROLE_ADMIN") %}
-        <a href="{{ path('fos_user_group_delete', {groupname: groupname }) }}" id="js-delete" class="btn btn-embossed btn-danger"><span class="fui-cross"></span> Supprimer </a>
+        <a href="{{ path('fos_user_group_delete', {groupname: group.name }) }}" id="js-delete" class="btn btn-embossed btn-danger"><span class="fui-cross"></span> {{ 'ben.action.delete'|trans }} </a>
         {% endif %}
       </div>
     </div>       

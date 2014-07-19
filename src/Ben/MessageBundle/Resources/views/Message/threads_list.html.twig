@@ -9,7 +9,7 @@
         <div class="col-md-10">
             <div class="message-label">
                 <p class="pull-right muted"><small>{{ thread.lastMessage.createdAt|time_ago_in_words }}</small><br>
-                    <small>{{ thread.messages|length }} {% if thread.messages|length == 1  %}message{% else %}messages{% endif %}</small>
+                    <small>{{ 'message.meta.count'|transchoice(thread.messages|length) }}</small>
                 </p>
                 <h6><a href="{{  path('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}" class="link-main">{{ thread.subject }}</a></h6>
             </div>
@@ -21,7 +21,7 @@
     <li class="thread-item">
         <div class="col-right">
             <div class="body-content" >
-                <p>Pas encore de messages</p>
+                <p>{{ 'message.meta.no'|trans }}</p>
             </div>
         </div>
     </li>

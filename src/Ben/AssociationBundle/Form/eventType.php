@@ -31,6 +31,6 @@ class eventType extends AbstractType
 
     public function getName()
     {
-        return 'ben_eventtype';
+        return 'event_form';
     }
 }

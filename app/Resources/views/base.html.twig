@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="benaich.med@gmail.com">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+    <title>{% block title %}Error{% endblock %}</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('icon.png') }}" />
+</head>
+<body>
+<div class="container">
+    <p></p>
+    <div class="well">
+    	{% block body %}{% endblock %}
+    </div>
+</div>
+</body>
 </html>

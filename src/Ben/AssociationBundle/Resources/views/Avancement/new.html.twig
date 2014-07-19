@@ -3,7 +3,7 @@
 Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
-<h2>nouveau status</h2>
+<h2>{{ 'status.action.new'|trans }}</h2>
 
 <form class="form-horizontal" action="{{ path('avancement_create') }}" method="post" {{ form_enctype(form) }}>
 
@@ -11,7 +11,7 @@ Tableau de bord | {{ parent() }}
 
     <div class="form-group">
       <div class="col-md-offset-4 col-md-4">
-        <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-check-inverted"></span> Valider</button>
+        <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-check-inverted"></span> {{ 'ben.action.valide'|trans}}</button>
       </div>
     </div>
 </form>
@@ -22,7 +22,7 @@ Tableau de bord | {{ parent() }}
 <script> 
     (function($) {
 
-        $('#ben_avancementtype_user').closest('.form-group').hide();
+        $('#avancement_form_user').closest('.form-group').hide();
     })(jQuery);
 </script>
 {% endblock %}

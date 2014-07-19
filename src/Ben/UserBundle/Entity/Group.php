@@ -4,10 +4,13 @@ namespace Ben\UserBundle\Entity;
 
 use FOS\UserBundle\Entity\Group as BaseGroup;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="mygroup")
+ * @UniqueEntity("name")
  */
 class Group extends BaseGroup
 {
@@ -29,10 +32,18 @@ class Group extends BaseGroup
      * @ORM\JoinTable(name="event_group")
      */
     protected $events;
+    
+    /**
+    * @ORM\OneToOne(targetEntity="Ben\AssociationBundle\Entity\image", cascade={"remove", "persist"})
+    * @Assert\Valid()
+    */
+    private $image;
 
     public function __construct() {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->image = new \Ben\AssociationBundle\Entity\image();
+        $this->image->setPath('unknown.png');
     }
 
      public function __toString()
@@ -106,6 +117,38 @@ class Group extends BaseGroup
     public function getEvents()
     {
         return $this->events;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \Ben\AssociationBundle\Entity\image $image
+     * @return Group
+     */
+    public function setImage(\Ben\AssociationBundle\Entity\image $image = null)
+    {
+        $this->image = $image;
+    
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Ben\AssociationBundle\Entity\image 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Get avatar
+     *
+     * @return string 
+     */
+    public function getImg() {
+        return $this->getImage()->getwebpath();
     }
 
     /**

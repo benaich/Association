@@ -3,14 +3,14 @@
 Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
-<h2><span class="fui-home"></span> Mise à jour d'un avancement</h2>
+<h2><span class="fui-home"></span> {{ 'status.action.edit'|trans }}</h2>
 <form id="createForm" class="form-horizontal" action="{{ path('avancement_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
   {% include "BenAssociationBundle:Avancement:form.html.twig" %}
 
     <div class="form-group">
       <div class="col-md-offset-4 col-md-4">
-        <button type="submit" class="btn btn-primary btn-embossed"><span class="glyphicon glyphicon-edit"></span> Modifier</button>
-        <button id="js-delete" class="btn btn-embossed btn-danger"><span class="fui-cross"></span> Supprimer </button>
+        <button type="submit" class="btn btn-primary btn-embossed"><span class="glyphicon glyphicon-edit"></span> {{ 'ben.action.edit'|trans}}</button>
+        <button id="js-delete" class="btn btn-embossed btn-danger"><span class="fui-cross"></span> {{ 'ben.action.delete'|trans}} </button>
       </div>
     </div>
             
@@ -25,7 +25,7 @@ Tableau de bord | {{ parent() }}
 {{ parent() }}
 <script> 
     (function($) {
-        $('#ben_avancementtype_user').closest('.form-group').hide();
+        $('#avancement_form_user').closest('.form-group').hide();
         $('#js-delete').on('click', function(){
             $('#deleteForm').submit();
             return false;

@@ -30,7 +30,7 @@ class eventController extends Controller
         $entitiesLength = $em->getRepository('BenAssociationBundle:event')->counter();
         return $this->render('BenAssociationBundle:event:index.html.twig', array(
                 'groups' => $groups,
-                'entitiesLength' => $entitiesLength[1]));
+                'entitiesLength' => $entitiesLength));
     }
 
     /**
@@ -74,22 +74,6 @@ class eventController extends Controller
     }
 
     /**
-     * Displays a form to create a new event entity.
-     * @Secure(roles="ROLE_ADMIN")
-     *
-     */
-    public function newAction()
-    {
-        $entity = new event();
-        $form   = $this->createForm(new eventType(), $entity);
-
-        return $this->render('BenAssociationBundle:event:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
      * Creates a new event entity.
      * @Secure(roles="ROLE_ADMIN")
      *
@@ -99,25 +83,18 @@ class eventController extends Controller
         $entity  = new event();
         $form = $this->createForm(new eventType(), $entity);
         $form->bind($request);
-        $jsonEnabled = $request->get('json');
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-            if($jsonEnabled)
-                return $this->redirect($this->generateUrl('event_show_json', array('id' => $entity->getId())));                
-            return $this->redirect($this->generateUrl('event_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('event_show_json', array('id' => $entity->getId()))); 
         }
-        if($jsonEnabled)
-            return $this->render('BenAssociationBundle:event:new_json.html.twig', array(
+
+        return $this->render('BenAssociationBundle:event:new_json.html.twig', array(
                 'entity' => $entity,
                 'form'   => $form->createView(),
             ));
-        return $this->render('BenAssociationBundle:event:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
     }
 
     /**
@@ -168,6 +145,7 @@ class eventController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('success', "ben.flash.success.event.updated");
             return $this->redirect($this->generateUrl('event_edit', array('id' => $id)));
         }
 
@@ -200,6 +178,7 @@ class eventController extends Controller
             $em->flush();
         }
 
+        $this->get('session')->getFlashBag()->add('success', "ben.flash.success.event.deleted");
         return $this->redirect($this->generateUrl('event'));
     }
 
@@ -265,6 +244,10 @@ class eventController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('BenUserBundle:User')->getUsersByEvent($entity->getId());
+        if(empty($users)) {
+            $this->get('session')->getFlashBag()->add('danger', "ben.flash.error.group.empty");
+            return $this->redirect($this->generateUrl('event_show', array('id' => $entity->getId())));
+        }
 
         return $this->render('BenAssociationBundle:event:demo.html.twig', array(
             'entity'      => $entity,
@@ -281,7 +264,19 @@ class eventController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('BenUserBundle:User')->getUsersByEvent($entity->getId(), true);
-        // var_dump($users);die();
+        if(empty($users)) {
+            $this->get('session')->getFlashBag()->add('danger', "ben.flash.error.group.empty");
+            return $this->redirect($this->generateUrl('event_show', array('id' => $entity->getId())));
+        }
+        // log users who reseved this mail
+        $log['type'] = 'email';
+        $log['feedback'] = $entity->getName();
+        foreach ($users as $user) {
+            $log['entity_id'] = $user->getId();
+            $em->persist($this->getLog($log));
+        }
+        $em->flush();
+
         $sender_user = $this->container->get('fos_user.user_manager')->findUserByUsername('admin');
         $sender_email = $em->getRepository('BenAssociationBundle:config')->findOneBy(array('the_key' => 'org_email'))->getTheValue();
         foreach ($users as $user) {
@@ -310,8 +305,8 @@ class eventController extends Controller
             }
         }
 
-        $this->get('session')->getFlashBag()->add('success', "messages envoyées avec succée.");
-        return $this->redirect($this->generateUrl('event_publish', array('id' => $entity->getId())));
+        
+        return $this->redirect($this->generateUrl('event_demo', array('id' => $entity->getId())));
     }
 
     /**
@@ -322,10 +317,22 @@ class eventController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('BenUserBundle:User')->getUsersByEvent($entity->getId());
+        if(empty($users)) {
+            $this->get('session')->getFlashBag()->add('danger', "ben.flash.error.group.empty");
+            return $this->redirect($this->generateUrl('event_show', array('id' => $entity->getId())));
+        }
         // return $this->render('BenAssociationBundle:event:print.html.twig', array('entity'=>$entity,'users'=>$users));
 
-        $now = new \DateTime;
-        $now = $now->format('d-m-Y_H-i');
+        // log users who reseved letters
+        $log['type'] = 'lettre';
+        $log['feedback'] = $entity->getName();
+        foreach ($users as $user) {
+            $log['entity_id'] = $user['id'];
+            $em->persist($this->getLog($log));
+        }
+        $em->flush();
+
+        $now = (new \DateTime)->format('d-m-Y_H-i');
         $html = $this->renderView('BenAssociationBundle:event:print.html.twig', array(
             'entity'      => $entity,
             'users'      => $users,
@@ -377,5 +384,17 @@ class eventController extends Controller
         $em->persist($entity);
         $em->flush();
         return new Response('1');
+    }
+
+    private function getLog($log)
+    {
+        extract($log);
+        $entity = new \Ben\AssociationBundle\Entity\ActivityLog();
+        $entity->setClassName('Ben\UserBundle\Entity\User');
+        $entity->setEntityId($entity_id);
+        $entity->setUser($this->container->get('security.context')->getToken()->getUser()->getId());
+        $entity->setMessage($feedback);
+        $entity->setType($type);
+        return $entity;
     }
 }

@@ -29,7 +29,7 @@ class AdminController extends Controller
         return $this->render('BenUserBundle:admin:index.html.twig', array(
                 'groups' => $groups,
                 'status' => $status,
-                'entitiesLength' => $entitiesLength[1]));
+                'entitiesLength' => $entitiesLength));
     }
 
     /**
@@ -78,10 +78,10 @@ class AdminController extends Controller
             $entity->addGroup($this->container->get('fos_user.group_manager')->findGroupByName('Adhérents'));
 
             $this->getDoctrine()->getManager()->flush();
-            $this->get('session')->getFlashBag()->add('success', "Adhérent ajouté avec succée.");
+            $this->get('session')->getFlashBag()->add('success', "ben.flash.success.user.created");
             return $this->redirect($this->generateUrl('ben_show_user', array('id' => $entity->getId())));
         }
-        $this->get('session')->getFlashBag()->add('error', "Il y a des erreurs dans le formulaire soumis !");
+        $this->get('session')->getFlashBag()->add('error', "ben.flash.error.form");
 
         return $this->render('BenUserBundle:admin:new.html.twig', array('entity' => $entity, 'form' => $form->createView()));
     }
@@ -118,7 +118,7 @@ class AdminController extends Controller
     {
         /* check if user has admin role */
         if (in_array('ROLE_ADMIN', $user->getRoles()) !== false ){
-            $this->get('session')->getFlashBag()->add('error', "impossible de modifier un super utilisateur de cette interface");
+            $this->get('session')->getFlashBag()->add('error', "ben.flash.error.user.admin");
             return $this->redirect($this->generateUrl('ben_users'));
         }
         $config = $this->getConfig();
@@ -137,7 +137,7 @@ class AdminController extends Controller
         $form->bind($request);
         /* check if user has admin role */
         if (in_array('ROLE_ADMIN', $user->getRoles()) !== false ){
-            $this->get('session')->getFlashBag()->add('error', "impossible de modifier un super utilisateur de cette interface");
+            $this->get('session')->getFlashBag()->add('error', "ben.flash.error.user.admin");
             return $this->redirect($this->generateUrl('ben_users'));
         }
         if ($form->isValid()) {
@@ -146,10 +146,10 @@ class AdminController extends Controller
             $user->getProfile()->getImage()->upload();
 
             $this->getDoctrine()->getManager()->flush();
-            $this->get('session')->getFlashBag()->add('success', "Vos modifications ont été enregistrées.");
+            $this->get('session')->getFlashBag()->add('success', "ben.flash.success.updated");
             return $this->redirect($this->generateUrl('ben_edit_user', array('id' => $user->getId())));
         }
-        $this->get('session')->getFlashBag()->add('error', "Il y a des erreurs dans le formulaire soumis !");
+        $this->get('session')->getFlashBag()->add('error', "ben.flash.error.form");
         
         return $this->render('BenUserBundle:admin:edit.html.twig', array('entity' => $user, 'form' => $form->createView()));
     }
@@ -190,10 +190,10 @@ class AdminController extends Controller
             $profile->getImage()->upload();
                
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', "Vos modifications ont été enregistrées.");
+            $this->get('session')->getFlashBag()->add('success', "ben.flash.success.updated");
             return $this->redirect($this->generateUrl('ben_profile_edit', array('name' => $profile->getId())));
         }
-        $this->get('session')->getFlashBag()->add('error', "Il y a des erreurs dans le formulaire soumis !");
+        $this->get('session')->getFlashBag()->add('error', "ben.flash.error.form");
 
         return $this->render('BenUserBundle:myProfile:edit.html.twig', array(
                     'entity' => $profile,
@@ -217,7 +217,7 @@ class AdminController extends Controller
             $userManager->deleteUser($user);
         }
 
-        $this->get('session')->getFlashBag()->add('success', "L'adhérent a été supprimé avec succée.");
+        $this->get('session')->getFlashBag()->add('success', "ben.flash.user.deleted");
         return $this->redirect($this->generateUrl('ben_users'));
     }
  
@@ -268,7 +268,7 @@ class AdminController extends Controller
             $user = $userManager->findUserBy(array('id' => $id));
             /* check if user has admin role */
             if (in_array('ROLE_ADMIN', $user->getRoles())){
-                $this->get('session')->getFlashBag()->add('error', "impossible de modifier un super utilisateur de cette interface");
+                $this->get('session')->getFlashBag()->add('error', "ben.flash.error.user.admin");
             }else{
                 $user->removeRole('ROLE_MANAGER');
                 $user->removeRole('ROLE_ADMIN');
@@ -411,17 +411,24 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $searchParam = $request->get('searchParam');
         $entities = $em->getRepository('BenUserBundle:user')->search($searchParam);
-        $group = new Group();
-        $group->setName($searchParam['filterGroup']);
-        $group->setRoles(array());
-        foreach ($entities as $entity) {
-            $entity->addGroup($group);
-        }
-        $em->persist($group);
-        $em->flush();
+        $blackConstraint = new \Symfony\Component\Validator\Constraints\NotBlank();
+        $errorList = $this->get('validator')->validateValue($searchParam['filterGroup'], $blackConstraint);
 
+        if (count($errorList) == 0) {
+            $group = new Group();
+            $group->setName($searchParam['filterGroup']);
+            $group->setRoles(array());
+            foreach ($entities as $entity) {
+                $entity->addGroup($group);
+            }
+            $em->persist($group);
+            $em->flush();
         $response = new Response(json_encode($group->toArray()));
         $response->headers->set('Content-Type', 'application/json');
+        } else {
+            $errorMessage = $errorList[0]->getMessage();
+            $response = new Response($errorMessage);
+        }
 
         return $response;
     }
@@ -481,6 +488,7 @@ class AdminController extends Controller
         $user->removeGroup($group);
         $em->persist($group);
         $em->flush();
+        $this->get('session')->getFlashBag()->add('success', "ben.flash.success.general");
         return $this->redirect($this->generateUrl('ben_show_group', array('id' => $groupid)));
     }
 
@@ -490,16 +498,7 @@ class AdminController extends Controller
      */
     public function logAction(Request $request)
     {
-        $feedback = $request->get('feedback');
-        $id = $request->get('user');
-        $type = $request->get('type');
-        $entity = new \Ben\AssociationBundle\Entity\ActivityLog();
-        $entity->setClassName('Ben\UserBundle\Entity\User');
-        $entity->setEntityId($id);
-        $entity->setUser($this->container->get('security.context')->getToken()->getUser()->getId());
-        $entity->setMessage($feedback);
-        $entity->setType('appel');
-
+        $entity = $this->getLog($request->get('log'));
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
         $em->flush();
@@ -526,7 +525,7 @@ class AdminController extends Controller
 
 
     /* helper funcions */
-    public function getConfig()
+    private function getConfig()
     {
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('BenAssociationBundle:config')->findAll();
@@ -541,5 +540,20 @@ class AdminController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+    private function getLog($log)
+    {
+        extract($log);
+        if(!empty($sms)){
+            $type = 'sms';
+            $feedback = $sms;
+        }
+        $entity = new \Ben\AssociationBundle\Entity\ActivityLog();
+        $entity->setClassName('Ben\UserBundle\Entity\User');
+        $entity->setEntityId($entity_id);
+        $entity->setUser($this->container->get('security.context')->getToken()->getUser()->getId());
+        $entity->setMessage($feedback);
+        $entity->setType($type);
+        return $entity;
     }
 }

@@ -3,6 +3,7 @@
 namespace Ben\AssociationBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * CotisationRepository
@@ -12,4 +13,40 @@ use Doctrine\ORM\EntityRepository;
  */
 class CotisationRepository extends EntityRepository
 {
+    public function search($searchParam = array()) {
+        extract($searchParam);    
+        $qb = $this->createQueryBuilder('c')
+                ->leftJoin('c.user', 'u')
+                ->addSelect('u')
+                ->leftJoin('u.profile', 'p')
+                ->addSelect('p')
+                ->leftJoin('p.image', 'img')
+                ->addSelect('img')
+                ->leftJoin('u.groups', 'g')
+                ->addSelect('g');
+        if(!empty($keyword))
+            $qb->andWhere('concat(p.family_name, p.first_name) like :keyword or u.username like :keyword or c.description like :keyword')
+        		->setParameter('keyword', '%'.$keyword.'%');
+        if(!empty($group))
+            $qb->andWhere('g.id = :group')->setParameter('group', $group);
+        if(!empty($cin))
+            $qb->andWhere('p.cin = :cin')->setParameter('cin', $cin);
+        if(!empty($type))
+            $qb->andWhere('c.type = :type')->setParameter('type', $type);
+        if(!empty($date)){
+            $date = explode("-",$date);
+            $qb->andWhere('c.date_from between :d1 and :d2')
+            ->setParameter('d1', $date[0])
+            ->setParameter('d2', $date[1]);
+        }
+        if(!empty($page))
+            $qb->setFirstResult(($page - 1) * $perPage)->setMaxResults($perPage);
+        
+       return new Paginator($qb->getQuery());
+    }
+
+    public function counter() {
+        $qb = $this->createQueryBuilder('c')->select('COUNT(c)');
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

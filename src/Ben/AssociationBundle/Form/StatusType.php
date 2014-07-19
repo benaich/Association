@@ -24,6 +24,6 @@ class StatusType extends AbstractType
 
     public function getName()
     {
-        return 'ben_statustype';
+        return 'status_form';
     }
 }

@@ -17,3 +17,15 @@ services:
     #       - { name: doctrine.event_listener, event: postUpdate }
     #       - { name: doctrine.event_listener, event: preRemove }
     #       - { name: doctrine.event_listener, event: postRemove }
+
+    ben.locale_listener:
+        class: Ben\UserBundle\Listener\LocaleListener
+        arguments: ["%kernel.default_locale%"]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ben_user.group.form.type:
+        class: Ben\UserBundle\Form\Type\GroupFormType
+        arguments: ["%fos_user.model.user.class%"]
+        tags:
+            - { name: form.type, alias: ben_user_group}

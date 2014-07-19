@@ -1,4 +1,4 @@
 id, username, email, prenom, nom, date de naissance, ville, date d'inscription, dernière connexion
 {% for entity in entities %}
-{{ entity.id }}, {{ entity.username }}, {{ entity.email }}, {{ entity.profile.firstName }}, {{ entity.profile.familyName }}, {{ entity.profile.birdDay|date('Y-m-d') }}, {{ entity.profile.city }}, {{ entity.created|date('Y-m-d') }}, {{ entity.lastLogin|date('Y-m-d') }}
+{{ entity.id }}, {{ entity.username }}, {{ entity.email }}, {{ entity.profile.firstName }}, {{ entity.profile.familyName }}, {{ entity.profile.birthday|date('d/m/Y') }}, {{ entity.profile.city }}, {{ entity.created|date('d/m/Y') }}, {{ entity.lastLogin|date('d/m/Y') }}
  {% endfor %} 

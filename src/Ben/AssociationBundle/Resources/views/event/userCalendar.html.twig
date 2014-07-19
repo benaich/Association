@@ -6,10 +6,11 @@ Tableau de bord | {{ parent() }}
 {% block stylesheet %}
     {{ parent() }}
     <link href="{{ asset('css/fullcalendar.css') }}" rel="stylesheet">
+    <link href="{{ asset('qtip2/jquery.qtip.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-<h2><span class="fui-calendar"></span>  Calendrier des évenements</h2>
+<h2><span class="fui-calendar"></span>  {{ 'event.meta.calendar'|trans }}</h2>
 <div id="calendar"></div>
 {% endblock body %}
 {% block javascripts %}
@@ -17,6 +18,10 @@ Tableau de bord | {{ parent() }}
 <script src="{{ asset('js/moment.min.js') }}"></script>
 <script src="{{ asset('js/jquery-ui.custom.min.js') }}"></script>
 <script src="{{ asset('js/fullcalendar.min.js') }}"></script><!-- Full Calendar -->
+{% if app.request.locale != 'en' %}
+<script src="{{ asset('js/lang/'~app.request.locale~'.js') }}"></script><!-- Full Calendar -->
+{% endif %}
+<script src="{{ asset('qtip2/jquery.qtip.js') }}"></script>
 <script>  
     (function($) {
 
@@ -32,21 +37,27 @@ Tableau de bord | {{ parent() }}
         center: 'title',
         right: 'month,agendaWeek,agendaDay'
       },
-      eventMouseover: function( event, jsEvent, view ) { 
-          var item = $(this).css('z-index','9');
-          if(item.find('.nube').length == 0){
-              var info = '<div class="nube"><h2>'+event.title+'</h2><ul class="list-unstyled"> <li><strong>type :</strong>'+event.type+'</li> <li><strong>Groupes invité: </strong>'+event.groups+'</li><li><strong>Description: </strong>'+event.description+'</li> <li><a href="'+event.url+'">plus d\'info</a></li> </ul></div>';
-              item.append(info);
-          }
-          item.find('.nube').stop(true,true).fadeIn();
+      selectable: true,
+      eventRender: function(event, element) {
+        element.qtip({    
+            content: {    
+                title: { text: event.title },
+                text: '<b>{{ 'event.meta.date'|trans }}: </b>' + (moment(event.start).format('MM/DD/YYYY à hh:mm')) + '<br><b>{{ 'event.form.type'|trans }}: </b>'+event.type+'<br><b>{{ 'event.form.groups'|trans }}: </b>'+event.groups+'<br><b>{{ 'event.form.description'|trans }}: </b>'+event.description+'<br /><a href="'+event.url+'">{{ 'ben.action.more'|trans }}</a>'     
+            },
+            style: { 
+              classes: 'qtip-bootstrap', 
+              tip: {corner: 'left center'}
+            },         
+            position: {
+              my: 'bottom  center',
+              at: 'top center',
+              target: 'mouse',
+              adjust: {
+                  mouse: false
+              }
+            }
+        });
       },
-      eventMouseout: function( event, jsEvent, view ) { 
-          var item = $(this);
-          item.css('z-index','1').find('.nube').stop(true,true).fadeOut(200);
-      },
-      selectHelper: true,
-      selectable: false,
-      editable: false,
       events: [
       {% for entity in entities %}
         {

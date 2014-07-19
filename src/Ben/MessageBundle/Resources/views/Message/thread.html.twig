@@ -3,12 +3,12 @@
 {% block message_content %}
 <header>
     <form id="deleteform" class="pull-right" action="{{ url('fos_message_thread_delete', {'threadId': thread.id}) }}" method="post">
-        <button type="submit" class="btn btn-xs btn-danger">supprimer ce message</button>
+        <button type="submit" class="btn btn-xs btn-danger">{{ 'message.action.delete'|trans }}</button>
     </form>
     <h1><span class="glyphicon glyphicon-envelope"></span> {{ thread.subject }}</h1>
     <ul class="meta list-unstyled">
         <li><span class="glyphicon glyphicon-time"></span> {{ thread.createdAt|time_ago_in_words }} </li>
-        <li><span class="glyphicon glyphicon-envelope"></span> {{ thread.messages|length }} Messages </li>
+        <li><span class="glyphicon glyphicon-envelope"></span> {{ 'message.meta.count'|transchoice(thread.messages|length) }} </li>
         <li><span class="glyphicon glyphicon-user"></span> {{ thread.getParticipant(app.user) }}</li>
     </ul>
 </header>
@@ -39,7 +39,7 @@
                 <textarea id="comment_body" rows="3" name="message[body]" required="required" class="form-control" placeholder="Laisser un message *"></textarea>
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-sm btn-primary">send <span class="glyphicon glyphicon-share"></span></button>
+                <button type="submit" class="btn btn-sm btn-primary">{{ 'ben.action.send'|trans }} <span class="glyphicon glyphicon-share"></span></button>
             </div>
             <div class="clearfix"></div>
         {{ form_widget(form._token) }}

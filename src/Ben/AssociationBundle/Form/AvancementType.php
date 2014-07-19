@@ -28,6 +28,6 @@ class AvancementType extends AbstractType
 
     public function getName()
     {
-        return 'ben_avancementtype';
+        return 'avancement_form';
     }
 }

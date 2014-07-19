@@ -1,0 +1,266 @@
+# messages.fr.yml
+user:
+    action:
+        new: Add a user
+        group: Join to group
+        edit: Update user
+        login: Log in
+        carte: 
+            show: Membership cards
+            print: Print card
+        tiquet: Meal ticket
+        print: Print document
+        promote:
+            admin: Promote to admin
+            manager: Promote to manager
+            user: Promote to simple user
+        show: View my profile
+        setting: Account
+        logout: Logout
+    form:
+        email: Email
+        enabled: Enabled
+        username: Username
+        plainpassword: password
+        groups: Groups
+        role: Role
+        created: Registration Date
+        lastlogin: Last login date
+        rememberme: Remember me
+        profile:
+            avatar: Avatar
+            image.file: ''
+            family.name: Family name
+            first.name: First name
+            cin: CIN
+            barcode: Barecode
+            gender: Gender
+            birthday: Birthday
+            job: Job
+            diplome: Degree
+            expertise: Expertise
+            address: Address
+            post.code: Postal Code
+            city: City
+            contry: Contry
+            tel: Number
+            gsm: GSM
+            website: Website
+            googleplus: Google Plus
+            facebook: Facebook
+            twitter: Twitter
+            description: Description
+    title:
+        main: Membership Management
+        profile: Profile
+    meta:
+        identity: Identity
+        name: Member
+        count: %count% member | %count% members
+        general: General information
+        association: Information of association
+        contact: Contact information
+        calls: Call History
+        man: Man
+        woman: Woman
+group:
+    action:
+        new: Add a group
+        edit: Update group
+        filter: Filter by group
+        reject: Remove from this group
+    form:
+        name: Group name
+        image.file: Icon
+        placeholder:
+            filter: Create a group for the search result
+    meta:
+        name: Group
+        members: Number of users
+        count: %count% group | %count% groups
+    title: Groups management 
+fos.user.group.form.name: group name
+status:
+    action:
+        new: Add a status
+        edit: update status
+        filter: Filter by status
+    form:
+        name: Status name
+    meta:
+        name: Title
+        members: Number of users
+        count: %count% status | %count% statuses
+        logs:  Status history
+    title: Status list
+event:
+    action:
+        edit: Update event
+        new: Add an event
+        letter:
+            show: View letters
+            print: Print letters
+            send: Send by email
+    form:
+        name: Subject
+        type: Type
+        description: Description
+        groups: Groups
+    meta:
+        name: Event
+        date: Date
+        calendar: Event's calendar
+    title: Events list
+cotisation:
+    action:
+        new: Add a contribution
+        edit: Update contribution
+        filter: Filter by contribution
+    form:
+        price: Price
+        type: Type
+        date:
+           from: Date From
+           to: Date To
+        description: Description
+        periode: Date range 
+        user: Member
+    meta:
+        name: contribution
+        count: Number of users
+        number: Contribution N° %id%
+        logs:  Contributions history
+    title: Contributions list
+config:
+    action:
+        fields: Fields configuration
+    form:
+        logo: logo
+        name: Association name
+        description: Description
+        map:
+            lat: Latitude
+            long: Longuitude
+        theme: Theme
+        allowlogin: Allow registration ?
+        allowprint: Allow members to print their cards ?
+        carte:
+            bg: Background color
+            fg: Texte color
+        headband:
+            bg: Headband Background color
+            fg: Headband Texte color
+            text: Headband text
+        css: CSS style
+        letter:
+            header: letter header
+            event: Invitation letter
+            cotisation: Contributions letter
+        local:
+            name: language
+            fr: Frensh
+            en: English
+            ar: Arabic
+    meta:
+        general: General
+        social: Social networks
+        setting: Settings
+        carte: Cards
+        letters: Letters
+        field: 
+            name: Field name
+            visible: Visibility
+    title: Settings
+ben:
+    menu:
+        dashboard: Dashboard
+        members: Members
+        groups: Groups
+        status: Status
+        cotisation: Contributions
+        events: Events
+        reservation: Reservation
+        logement: Hotels
+        rooms: Rooms
+        config: Settings
+        collapse: Collapse menu
+        messages: Messages
+        notifications: Notifications
+        calendar: Calendar
+    action:
+        new: Add
+        show: Show
+        edit: Update
+        delete: Remove
+        valide: validate
+        send: Send
+        done: Submit
+        search: Search
+        advanced: Advanced search
+        tocsv: Export to csv
+        toxml: Export to xml
+        toexcel: Export to excel
+        topdf: Print
+        enable: Enable
+        disable: Disable
+        prev: Prev
+        next: Next
+        more: Read more
+        call: Call
+        sms: Send sms
+        backtolist: Back to list
+        print: Print
+        select: Select an action
+        hangup: Hangup
+    meta:
+        id: Id
+        all: All
+        actions: Actions
+        perpage: Number of lines per page
+        total: Total
+        call: Incoming call
+        message: Message
+        datecall: Call Date
+        note: comment
+    image.form.file: ''
+# exceptions
+fos.user:
+    action:
+        email: Change your email address
+        account: Account Settings
+        password:
+            change: Change your password
+    change.password.form:
+        current.password: Current password
+        new:
+            first: New password
+            second: Verification
+    profile.form:
+        username: Username
+        email: Email address
+        current.password: Current password
+message:
+    action:
+        send: Send a new message
+        delete: Delete this message
+        reply: Reply
+        mail: Send by mail
+    meta:
+        main: Messenger
+        count: %count% message | %count% messages
+        no: There is no thread to show
+        sent: Sent
+        inbox: Inbox
+        deleted: Deleted
+        demo: Model of sent letters
+    form:
+        message: Message
+        subject: Subject
+        sendto: Send to
+avancement:
+    form:
+        date:
+           from: Date From
+           to: Date To
+        city: City
+        status: Status

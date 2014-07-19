@@ -34,11 +34,11 @@ class image
     * @Assert\File(
     *      maxSize = "2M",
     *      mimeTypes = {"image/jpeg", "image/pjpeg", "image/png", "image/x-png", "image/gif"},
-    *      mimeTypesMessage = "ce format d'image est inconnu",
-    *      uploadIniSizeErrorMessage = "Le fichier téléchargé est trop volumineux",
-    *      uploadFormSizeErrorMessage = "Le fichier téléchargé est plus grand que celui autorisé par le champ de saisie du fichier HTML",
-    *      uploadErrorMessage = "Le fichier téléchargé ne peut être transféré pour une raison inconnue",
-    *      maxSizeMessage = "Le fichier est trop volumineux"
+    *      mimeTypesMessage = "image.error.mimeType",
+    *      uploadIniSizeErrorMessage = "image.error.uploadIniSize",
+    *      uploadFormSizeErrorMessage = "image.error.uploadFormSize",
+    *      uploadErrorMessage = "image.error.uploadError",
+    *      maxSizeMessage = "image.error.maxSize"
     * )
     */
     private $file;
@@ -147,7 +147,6 @@ class image
     {
         $default1=$this->getUploadRootDir().'/anonymous.jpg';
         $default2=$this->getUploadRootDir().'/unknown.png';
-        $default3=$this->getUploadRootDir().'/jpeg.png';
         if ($this->filenameForRemove and $this->filenameForRemove != $default1 and $this->filenameForRemove != $default2) {
             unlink($this->filenameForRemove);
         }
@@ -157,9 +156,8 @@ class image
        if (null === $this->file) return;
         $default1=$this->getUploadRootDir().'/anonymous.jpg';
         $default2=$this->getUploadRootDir().'/unknown.png';
-        $default3=$this->getUploadRootDir().'/jpeg.png';
         
-        if ($filenameForRemove != $default1 and $filenameForRemove != $default2 and $filenameForRemove != $default3) {
+        if ($filenameForRemove != $default1 and $filenameForRemove != $default2) {
             if (!preg_match("#http://#", $filenameForRemove))  unlink($filenameForRemove);
         }
     }

@@ -32,7 +32,7 @@ Tableau de bord | {{ parent() }}
     <li>
         <form action="{{ path('status_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button type="submit" data-toggle="delete" data-msg="voullez-vous vraiment le status {{ entity.name }}">Delete</button>
         </form>
     </li>
 </ul>

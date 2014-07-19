@@ -48,7 +48,7 @@ class eventRepository extends EntityRepository
     }
     
     public function counter() {
-        $query = $this->_em->createQuery('SELECT count(e) FROM ben\AssociationBundle\Entity\event e');
-        return $query->getOneOrNullResult();
+        $qb = $this->createQueryBuilder('e')->select('COUNT(e)');
+        return $qb->getQuery()->getSingleScalarResult();
     }
 }

@@ -24,6 +24,6 @@ class imageType extends AbstractType
 
     public function getName()
     {
-        return 'ben_imagetype';
+        return 'ben_image_form';
     }
 }

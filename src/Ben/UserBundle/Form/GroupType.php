@@ -12,6 +12,7 @@ class GroupType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('image' , new \Ben\AssociationBundle\Form\imageType())
         ;
     }
 
@@ -24,6 +25,6 @@ class GroupType extends AbstractType
 
     public function getName()
     {
-        return 'group_type';
+        return 'group_form';
     }
 }

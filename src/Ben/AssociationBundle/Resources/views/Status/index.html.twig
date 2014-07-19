@@ -3,16 +3,16 @@
 Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
-<h2>Liste des status</h2>
+<h2>{{ 'status.title'|trans }}</h2>
 <div class="row">
     <div class="col-md-7">
         <table class="table table-hover table-bordered">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Titre</th>
-                    <th>Nombre d'adhérents</th>
-                    <th>Actions</th>
+                    <th>{{ 'status.meta.name'|trans }}</th>
+                    <th>{{ 'status.meta.members'|trans }}</th>
+                    <th>{{ 'ben.meta.actions'|trans }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,24 +21,25 @@ Tableau de bord | {{ parent() }}
                     <td>{{ loop.index }}</td>
                     <td>{{ entity.name }}</td>
                     <td>{{ entity.avancements|length }}</td>
-                    <td><a href="{{ path('status_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span> modifier</a></td>
+                    <td><a href="{{ path('status_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span> {{ 'ben.action.edit'|trans }}</a></td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+         <div class="caption"><strong>{{ 'ben.meta.total'|trans }}:</strong> <em>{{ 'status.meta.count'|transchoice(entities|length ) }}</em></div>
     </div>
 
     <div class="col-md-5">
     <form action="{{ path('status_create') }}" class="form-horizontal well" method="post" {{ form_enctype(form) }}>
         <div class="form-group">
-            <div class="col-md-4"><strong>Nom du status</strong></div>
+            <div class="col-md-4"><strong>{{ 'status.form.name'|trans }}</strong></div>
             {{ form_widget(form.name) }}
         </div>
 
         {{ form_rest(form) }}
         <div class="form-group">
           <div class="col-sm-offset-4 col-sm-6">
-            <button type="submit" name="subvalider" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Ajouter</button>
+            <button type="submit" name="subvalider" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> {{ 'ben.action.new'|trans }}</button>
           </div>
         </div>
     </form>
@@ -50,7 +51,7 @@ Tableau de bord | {{ parent() }}
 {{ parent() }}
 <script> 
     (function($) {
-        $('#ben_statustype_name').parent().removeClass('col-md-4').addClass('col-md-8');
+        $('#status_form_name').parent().removeClass('col-md-4').addClass('col-md-8');
     })(jQuery);
 </script>
 {% endblock %}

@@ -1,0 +1,37 @@
+ben:
+  flash:
+    error:
+      general: "Désolé, une erreur s'est produite"
+      form: There are errors in the submitted form!
+      user:
+        admin: You cannot update a super user from this interfece 
+        resetting:
+          password: The password for this user has already been requested within the last 24 hours.
+      group:
+        empty: The group is empty
+    success:
+      updated: Your changes have been saved successfully.
+      profile:
+        updated: The profile has been updated
+        password: The password has been changed
+      user:
+        created: The user has been registred successfully
+        deleted: The user has been removed successfully
+      group:
+        updated: The group has been updated
+        created: The group has been created
+        deleted: The group has been deleted
+      message:
+        sent: messages sent successfully.
+      event:
+        updated: The event has been updated
+        deleted: The event has been deleted
+      status:
+        updated: The status has been updated
+        created: The status has been created
+        deleted: The status has been deleted
+      contribution:
+        updated: The contribution has been updated
+        created: The contribution has been created
+        deleted: The contribution has been deleted
+      general: The action has been done successfully

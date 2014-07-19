@@ -3,14 +3,14 @@
 Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
-<h2><span class="fui-time"></span> Mise à jour d'un événement</h2>
+<h2><span class="fui-time"></span> {{ 'event.action.edit'|trans }}</h2>
 <form id="createForm" class="form-horizontal" action="{{ path('event_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}
 
     <div class="form-group">
       <div class="col-md-offset-4 col-md-4">
-        <button type="submit" class="btn btn-primary btn-embossed"><span class="glyphicon glyphicon-edit"></span> Modifier</button>
-        <button id="js-delete" class="btn btn-embossed btn-danger"><span class="fui-cross"></span> Supprimer </button>
+        <button type="submit" class="btn btn-primary btn-embossed"><span class="glyphicon glyphicon-edit"></span> {{ 'ben.action.edit'|trans }}</button>
+        <button id="js-delete" class="btn btn-embossed btn-danger"><span class="fui-cross"></span> {{ 'ben.action.delete'|trans }} </button>
       </div>
     </div> 
 </form>
@@ -25,7 +25,7 @@ Tableau de bord | {{ parent() }}
 <script> 
     (function($) {
 
-        $('#ben_eventtype_date_to').closest('.form-group').hide().prev().hide();
+        $('#event_form_date_to').closest('.form-group').hide().prev().hide();
         $('#js-delete').on('click', function(){
             $('#deleteForm').submit();
             return false;

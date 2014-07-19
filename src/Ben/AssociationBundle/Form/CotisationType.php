@@ -29,6 +29,6 @@ class CotisationType extends AbstractType
 
     public function getName()
     {
-        return 'ben_cotisationtype';
+        return 'cotisation_form';
     }
 }

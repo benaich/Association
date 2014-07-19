@@ -1,0 +1,37 @@
+ben:
+  flash:
+    error:
+      general: "Désolé, une erreur s'est produite"
+      form: Il y a des erreurs dans le formulaire soumis !
+      user:
+        admin: impossible de modifier un super utilisateur de cette interface
+        resetting:
+          password: Un nouveau mot de passe a déjà été demandé pour cet utilisateur dans les dernières 24 heures.
+      group:
+        empty: Ce groupe est vides
+    success:
+      updated: Vos modifications ont été enregistrées.
+      profile:
+        updated: Votre profile a été mis à jour
+        password: Le mot de passe a été réinitialisé avec succès
+      user:
+        created: Adhérent ajouté avec succée.
+        deleted: L'adhérent a été supprimé avec succée !
+      group:
+        updated: Le groupe a été mis à jour
+        created: Le groupe a été créé avec succée !
+        deleted: Le groupe a été supprimé
+      message:
+        sent: messages envoyées avec succée.
+      event:
+        updated: L'evenement a été mis à jour
+        deleted: L'evenement a été supprimé
+      status:
+        updated: Le statut a été mis à jour
+        created: Le statut a été créé avec succée !
+        deleted: Le statut a été supprimé
+      contribution:
+        updated: la cotisation a été mis à jour
+        created: La cotisation a été créé avec succée !
+        deleted: La cotisation a été supprimé
+      general: L'action a été effectuées avec succès

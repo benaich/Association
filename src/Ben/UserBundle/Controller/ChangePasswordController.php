@@ -23,7 +23,7 @@ class ChangePasswordController extends BaseController
 
         $process = $formHandler->process($user);
         if ($process) {
-            $this->setFlash('fos_user_success', 'change_password.flash.success');
+            $this->setFlash('fos_user_success', 'ben.flash.success.profile.password');
 
             return new RedirectResponse($this->container->get('router')->generate('fos_user_profile_edit'));
         }

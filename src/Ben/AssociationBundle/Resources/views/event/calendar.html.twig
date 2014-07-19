@@ -6,10 +6,11 @@ Tableau de bord | {{ parent() }}
 {% block stylesheet %}
     {{ parent() }}
     <link href="{{ asset('css/fullcalendar.css') }}" rel="stylesheet">
+    <link href="{{ asset('qtip2/jquery.qtip.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-<h2><span class="fui-calendar"></span>  Calendrier des évenements</h2>
+<h2><span class="fui-calendar"></span>  {{ 'event.meta.calendar'|trans }}</h2>
 <div id="calendar"></div>
 
 <!-- Modal -->
@@ -19,7 +20,7 @@ Tableau de bord | {{ parent() }}
     <form id="postForm" role="form" class="form-horizontal" method="post" action="{{ path('event_create') }}">
       <div class="modal-header">
         <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
-        <h4 class="modal-title"><span class="glyphicon glyphicon-calendar"></span> Ajout d'un événement</h4>
+        <h4 class="modal-title"><span class="glyphicon glyphicon-calendar"></span> {{ 'event.action.new'|trans }}</h4>
       </div>
       <div class="modal-body">
       <input type="hidden" name="json" value="1">
@@ -29,7 +30,7 @@ Tableau de bord | {{ parent() }}
           <div class="clearfix"></div>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary btn-embossed">Valider</button>
+        <button type="submit" class="btn btn-primary btn-embossed">{{ 'ben.action.valide'|trans }}</button>
       </div>
       </form>
     </div>
@@ -41,14 +42,18 @@ Tableau de bord | {{ parent() }}
 <script src="{{ asset('js/moment.min.js') }}"></script>
 <script src="{{ asset('js/jquery-ui.custom.min.js') }}"></script>
 <script src="{{ asset('js/fullcalendar.min.js') }}"></script><!-- Full Calendar -->
+{% if app.request.locale != 'en' %}
+<script src="{{ asset('js/lang/'~app.request.locale~'.js') }}"></script><!-- Full Calendar -->
+{% endif %}
+<script src="{{ asset('qtip2/jquery.qtip.js') }}"></script>
 <script>  
     (function($) {
 
       var modal = $('#myModal'),
           workingArea= modal.find('.modal-content'),
           postForm = modal.find('#postForm'),
-          inputFrom = postForm.find('#ben_eventtype_date_from'),
-          inputTo = postForm.find('#ben_eventtype_date_to'),
+          inputFrom = postForm.find('#event_form_date_from'),
+          inputTo = postForm.find('#event_form_date_to'),
           closeBtn = modal.find('.close');
 
           postForm.find('div.col-md-4').removeClass('col-md-4').addClass('col-md-6');
@@ -115,10 +120,30 @@ Tableau de bord | {{ parent() }}
         inputTo.val(end);
         modal.modal('show');
       },
-      eventMouseover: function( event, jsEvent, view ) { 
+      eventRender: function(event, element) {
+        element.qtip({    
+            content: {    
+                title: { text: event.title },
+                text: '<b>{{ 'event.meta.date'|trans }}: </b>' + (moment(event.start).format('MM/DD/YYYY à hh:mm')) + '<br><b>{{ 'event.form.type'|trans }}: </b>'+event.type+'<br><b>{{ 'event.form.groups'|trans }}: </b>'+event.groups+'<br><b>{{ 'event.form.description'|trans }}: </b>'+event.description+'<br /><a href="'+event.url+'">{{ 'ben.action.more'|trans }}</a>'     
+            },
+            style: { 
+              classes: 'qtip-bootstrap', 
+              tip: {corner: 'left center'}
+            },         
+            position: {
+              my: 'bottom  center',
+              at: 'top center',
+              target: 'mouse',
+              adjust: {
+                  mouse: false
+              }
+            }
+        });
+      }
+/*      eventMouseover: function( event, jsEvent, view ) { 
           var item = $(this).css('z-index','9');
           if(item.find('.nube').length == 0){
-              var info = '<div class="nube"><h2>'+event.title+'</h2><ul class="list-unstyled"> <li><strong>type :</strong>'+event.type+'</li> <li><strong>Groupes invité: </strong>'+event.groups+'</li> <li><a href="'+event.url+'">plus d\'info</a></li> </ul></div>';
+              var info = '<div class="nube"><h2>'+event.title+'</h2><ul class="list-unstyled"> <li><strong>{{ 'event.form.type'|trans }} :</strong>'+event.type+'</li> <li><strong>{{ 'event.form.groups'|trans }}: </strong>'+event.groups+'</li> <li><a href="'+event.url+'">{{ 'ben.action.more'|trans }}</a></li> </ul></div>';
               item.append(info);
           }
           item.find('.nube').stop(true,true).fadeIn();
@@ -126,7 +151,7 @@ Tableau de bord | {{ parent() }}
       eventMouseout: function( event, jsEvent, view ) { 
           var item = $(this);
           item.css('z-index','1').find('.nube').stop(true,true).fadeOut(200);
-      },
+      }*/,
       eventDrop: function(event, delta) {
           update(event);
       },
@@ -140,6 +165,7 @@ Tableau de bord | {{ parent() }}
           title: '{{ entity.name }}',
           type: '{{ entity.type }}',
           groups: '{{ entity.getGroupList }}',
+          description: hereDoc(function() {/*!"{{ entity.description | replace({"\n":" "}) }}"*/}),
           start: new Date('{{ entity.datefrom|date('Y-m-d H:i:s') }}'),
           end: new Date('{{ entity.dateto|date('Y-m-d H:i:s') }}'),
           url: '{{ path('event_show', { 'id': entity.id }) }}'
@@ -151,5 +177,3 @@ Tableau de bord | {{ parent() }}
     })(jQuery);
 </script>
 {% endblock %}
-
-

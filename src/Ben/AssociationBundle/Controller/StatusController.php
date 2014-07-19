@@ -89,6 +89,7 @@ class StatusController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('success', "ben.flash.success.status.created");
             return $this->redirect($this->generateUrl('status'));
         }
 
@@ -146,6 +147,7 @@ class StatusController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('success', "ben.flash.success.status.updated");
             return $this->redirect($this->generateUrl('status_edit', array('id' => $id)));
         }
 
@@ -178,6 +180,7 @@ class StatusController extends Controller
             $em->flush();
         }
 
+        $this->get('session')->getFlashBag()->add('success', "ben.flash.success.status.deleted");
         return $this->redirect($this->generateUrl('status'));
     }
 

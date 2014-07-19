@@ -9,71 +9,72 @@ Tableau de bord | {{ parent() }}
         <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
 {% endblock %}
 {% block body %}
-<h2><span class="fui-gear"></span> Préférences</h2>
+
+<a class="btn btn-inverse pull-right btn-sm" href="{{ path('config_update_fields')}}"> {{ 'config.action.fields'|trans }} <span class="fui-arrow-right"></span></a>      
+<h2><span class="fui-gear"></span> {{ 'config.title'|trans }} </h2>
 <form class="form-horizontal" action="{{ path('config_update')}}" method="POST" enctype="multipart/form-data">
-<a class="btn btn-default pull-right btn-sm" href="{{ path('config_update_fields')}}"> Configuration des champs</a>      
         <div class="tabbable">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab1"><span class="fui-list-bulleted"></span> Général</a></li>
-              <li><a href="#tab2"><span class="fui-twitter"></span> Réseaux sociaux</a></li>
-              <li><a href="#tab3"><span class="fui-gear"></span> Paramètres</a></li>
-              <li><a href="#tab4"><span class="fui-credit-card"></span> Cartes</a></li>
-              <li><a href="#tab5"><span class="fui-tag"></span> Lettres</a></li>
+              <li class="active"><a href="#tab1"><span class="fui-list-bulleted"></span> {{ 'config.meta.general'|trans }}</a></li>
+              <li><a href="#tab2"><span class="fui-twitter"></span> {{ 'config.meta.social'|trans }}</a></li>
+              <li><a href="#tab3"><span class="fui-gear"></span> {{ 'config.meta.setting'|trans }}</a></li>
+              <li><a href="#tab4"><span class="fui-credit-card"></span> {{ 'config.meta.carte'|trans }}</a></li>
+              <li><a href="#tab5"><span class="fui-tag"></span> {{ 'config.meta.letters'|trans }}</a></li>
             </ul> <!-- /tabs -->
 
             <div class="tab-content">
               <div class="tab-pane active" id="tab1">
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Logo</label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.logo'|trans }}</label>
                 <div class="col-sm-4">
                   <img class="myavatar col-md-4" src="{{ asset( app_config.org_logo )}}">
                 </div>
               </div>              
               {{ form_row(imgform.file, { 'label': ' '}) }}
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Nom de l'association</label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.name'|trans }}</label>
                 <div class="col-sm-4">
                   <input type="text" name="config[org_name]" value="{{app_config.org_name}}" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Description de l'association</label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.description'|trans }}</label>
                 <div class="col-sm-6">
                   <textarea rows="3" name="config[org_description]" placeholder="ajouter une description..." class="form-control">{{app_config.org_description}}</textarea>
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Adresse</label>
+                <label for="" class="col-sm-4 control-label">{{ 'user.form.profile.address'|trans }}</label>
                 <div class="col-sm-4">
                   <input type="text" name="config[org_address]" value="{{app_config.org_address}}" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Code Postal</label>
+                <label for="" class="col-sm-4 control-label">{{ 'user.form.profile.post.code'|trans }}</label>
                 <div class="col-sm-4">
                   <input type="text" name="config[org_cp]" value="{{app_config.org_cp}}" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Ville</label>
+                <label for="" class="col-sm-4 control-label">{{ 'user.form.profile.city'|trans }}</label>
                 <div class="col-sm-4">
                   <input type="text" name="config[org_city]" value="{{app_config.org_city}}" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Pays</label>
+                <label for="" class="col-sm-4 control-label">{{ 'user.form.profile.contry'|trans }}</label>
                 <div class="col-sm-4">
                   <input type="text" name="config[org_contry]" value="{{app_config.org_contry}}" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Tél </label>
+                <label for="" class="col-sm-4 control-label">{{ 'user.form.profile.tel'|trans }} </label>
                 <div class="col-sm-4">
                   <input type="text" name="config[org_tel]" value="{{app_config.org_tel}}" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">GSM </label>
+                <label for="" class="col-sm-4 control-label">{{ 'user.form.profile.gsm'|trans }} </label>
                 <div class="col-sm-4">
                   <input type="text" name="config[org_gsm]" value="{{app_config.org_gsm}}" class="form-control">
                 </div>
@@ -81,31 +82,31 @@ Tableau de bord | {{ parent() }}
             </div><!-- /tab1 -->
               <div class="tab-pane" id="tab2">
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Adresse email </label>
+                <label for="" class="col-sm-4 control-label">{{ 'user.form.email'|trans }}</label>
                 <div class="col-sm-4">
                   <input type="text" name="config[org_email]" value="{{app_config.org_email}}" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Site Web </label>
+                <label for="" class="col-sm-4 control-label">{{ 'user.form.profile.website'|trans }} </label>
                 <div class="col-sm-4">
                   <input type="text" name="config[org_website]" value="{{app_config.org_website}}" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Google+ </label>
+                <label for="" class="col-sm-4 control-label">{{ 'user.form.profile.googleplus'|trans }} </label>
                 <div class="col-sm-4">
                   <input type="text" name="config[org_google]" value="{{app_config.org_google}}" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Facebook </label>
+                <label for="" class="col-sm-4 control-label">{{ 'user.form.profile.facebook'|trans }} </label>
                 <div class="col-sm-4">
                   <input type="text" name="config[org_facebook]" value="{{app_config.org_facebook}}" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Twitter </label>
+                <label for="" class="col-sm-4 control-label">{{ 'user.form.profile.twitter'|trans }} </label>
                 <div class="col-sm-4">
                   <input type="text" name="config[org_twitter]" value="{{app_config.org_twitter}}" class="form-control">
                 </div>
@@ -113,31 +114,31 @@ Tableau de bord | {{ parent() }}
               </div><!-- /tab2 -->
               <div class="tab-pane" id="tab3">
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Diplome </label>
+                <label for="" class="col-sm-4 control-label">{{ 'user.form.profile.diplome'|trans }} </label>
                 <div class="col-sm-6">
                   <textarea rows="5" name="config[org_diplome]" class="form-control tagsinput">{{app_config.org_diplome}}</textarea>
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Spécialité </label>
+                <label for="" class="col-sm-4 control-label">{{ 'user.form.profile.expertise'|trans }} </label>
                 <div class="col-sm-6">
                   <textarea rows="5" name="config[org_expertise]" class="form-control tagsinput">{{app_config.org_expertise}}</textarea>
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Latitude </label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.map.lat'|trans }} </label>
                 <div class="col-sm-4">
                   <input type="text" name="config[org_map_lat]" value="{{app_config.org_map_lat}}" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Longuitude </label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.map.long'|trans }} </label>
                 <div class="col-sm-4">
                   <input type="text" name="config[org_map_lng]" value="{{app_config.org_map_lng}}" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Theme </label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.theme'|trans }} </label>
                 <div class="col-sm-4">
                     <select name="config[app_theme]" class="primary select-block">
                         <option {% if app_config.app_theme =="theme1" %}selected="selected"{% endif %} value="theme1">theme1</option>
@@ -146,8 +147,18 @@ Tableau de bord | {{ parent() }}
                     </select>
                 </div>
               </div>
+{#               <div class="form-group">
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.local.name'|trans }} </label>
+                <div class="col-sm-4">
+                    <select name="config[org_lang]" class="primary select-block">
+                        <option {% if app_config.org_lang =="fr_FR" %}selected="selected"{% endif %} value="fr_FR">{{ 'config.form.local.fr'|trans }}</option>
+                        <option {% if app_config.org_lang =="en" %}selected="selected"{% endif %} value="en">{{ 'config.form.local.en'|trans }}</option>
+                        <option {% if app_config.org_lang =="ar" %}selected="selected"{% endif %} value="ar">{{ 'config.form.local.ar'|trans }}</option>
+                    </select>
+                </div>
+              </div> #}
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Lignes / Page </label>
+                <label for="" class="col-sm-4 control-label">{{ 'ben.meta.perpage'|trans }}  </label>
                 <div class="col-sm-4">
                   <select name="config[rows_per_page]" class="primary select-block">
                         <option {% if app_config.rows_per_page =="10" %}selected="selected"{% endif %} value="10">10</option>
@@ -158,13 +169,13 @@ Tableau de bord | {{ parent() }}
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Auto-Enregistrement actif ?</label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.allowlogin'|trans }}</label>
                 <div class="col-sm-4">
                   <input type="checkbox" name="config[org_signup]" {% if app_config.org_signup %}checked="checked"{% endif %} value="{{ app_config.org_signup }}" data-toggle="switch" />
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Permettre aux membres d'imprimer leurs carte ? </label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.allowprint'|trans }}</label>
                 <div class="col-sm-4">
                   <input type="checkbox" name="config[print_permission]" {% if app_config.print_permission %}checked='checked'{% endif %} value="{{ app_config.print_permission }}" data-toggle="switch" />
                 </div>
@@ -172,7 +183,7 @@ Tableau de bord | {{ parent() }}
               </div><!-- /tab3 -->
               <div class="tab-pane" id="tab4">
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Coleur du background </label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.carte.bg'|trans }}</label>
                 <div class="col-sm-4">
                 <div class="input-group mycolorpicker" data-color="{{app_config.badge_bgcolor}}" data-color-format="rgb" >
                   <span class="input-group-addon"><i></i></span>
@@ -181,7 +192,7 @@ Tableau de bord | {{ parent() }}
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Coleur du Texte </label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.carte.fg'|trans }}</label>
                 <div class="col-sm-4">
                 <div class="input-group mycolorpicker" data-color="{{app_config.badge_color}}" data-color-format="rgb" >
                   <span class="input-group-addon"><i></i></span>
@@ -190,13 +201,13 @@ Tableau de bord | {{ parent() }}
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Texte du bandeau </label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.headband.text'|trans }}</label>
                 <div class="col-sm-4">
                   <input type="text" name="config[org_slogan]" value="{{app_config.org_slogan}}" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Coleur du background du bandeau</label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.headband.bg'|trans }}</label>
                 <div class="col-sm-4">
                 <div class="input-group mycolorpicker" data-color="{{app_config.badge_footer_bgcolor}}" data-color-format="rgb" >
                   <span class="input-group-addon"><i></i></span>
@@ -205,7 +216,7 @@ Tableau de bord | {{ parent() }}
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Coleur du Texte du bandeau</label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.headband.fg'|trans }}</label>
                 <div class="col-sm-4">
                 <div class="input-group mycolorpicker" data-color="{{app_config.badge_footer_color}}" data-color-format="rgb" >
                   <span class="input-group-addon"><i></i></span>
@@ -214,7 +225,7 @@ Tableau de bord | {{ parent() }}
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Style css </label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.css'|trans }}</label>
                 <div class="col-sm-6">
                   <textarea name="config[org_carte_css]" class="form-control">{{app_config.org_carte_css}}</textarea>
                 </div>
@@ -223,19 +234,19 @@ Tableau de bord | {{ parent() }}
 
               <div class="tab-pane" id="tab5">
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Entéte de la lettre</label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.letter.header'|trans }}</label>
                 <div class="col-sm-6">
                   <textarea name="config[letter_header]" class="form-control veditor">{{app_config.letter_header|raw}}</textarea>
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Lettre d'invitation </label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.letter.event'|trans }} </label>
                 <div class="col-sm-6">
                   <textarea name="config[letter_invitation]" class="form-control veditor">{{app_config.letter_invitation|raw}}</textarea>
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Lettre de cotisation </label>
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.letter.cotisation'|trans }} </label>
                 <div class="col-sm-6">
                   <textarea name="config[letter_cotisation]" class="form-control veditor">{{app_config.letter_cotisation|raw}}</textarea>
                 </div>
@@ -245,7 +256,7 @@ Tableau de bord | {{ parent() }}
           </div>
               <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-4">
-                  <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-check-inverted"></span> Mettre à jour</button>
+                  <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-check-inverted"></span> {{ 'ben.action.edit'|trans }}</button>
                 </div>
               </div>
 </form>

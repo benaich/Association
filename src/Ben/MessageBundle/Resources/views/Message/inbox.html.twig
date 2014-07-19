@@ -2,7 +2,7 @@
 
 {% block message_content %}
     <header>
-        <h1><span class="glyphicon glyphicon-envelope"></span> Boite de réception</h1>
+        <h1><span class="glyphicon glyphicon-envelope"></span> {{ 'message.meta.inbox'|trans }}</h1>
     </header>
     {% include 'FOSMessageBundle:Message:threads_list.html.twig' with {'threadpage': threads} %}
 {% endblock %}

@@ -9,6 +9,7 @@ use Ben\AssociationBundle\Entity\Cotisation;
 use Ben\AssociationBundle\Form\CotisationType;
 use Ben\UserBundle\Entity\User;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Ben\AssociationBundle\Pagination\Paginator;
 
 /**
  * Cotisation controller.
@@ -24,12 +25,29 @@ class CotisationController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('BenAssociationBundle:Cotisation')->findAll();
-
+        $groups = $em->getRepository('BenUserBundle:Group')->findAll();
+        $entitiesLength = $em->getRepository('BenAssociationBundle:Cotisation')->counter();
         return $this->render('BenAssociationBundle:Cotisation:index.html.twig', array(
-            'entities' => $entities,
-        ));
+                'groups' => $groups,
+                'entitiesLength' => $entitiesLength));
+    }
+
+    /**
+     * ajax Lists Cotisation entities.
+     * @Secure(roles="ROLE_MANAGER")
+     *
+     */
+    public function ajaxListAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $searchParam = $request->get('searchParam');
+
+        $entities = $em->getRepository('BenAssociationBundle:Cotisation')->search($searchParam);
+        $pagination = (new Paginator())->setItems(count($entities), $searchParam['perPage'])->setPage($searchParam['page'])->toArray();
+        return $this->render('BenAssociationBundle:Cotisation:ajax_list.html.twig', array(
+                    'entities' => $entities,
+                    'pagination' => $pagination,
+                    ));
     }
 
     /**
@@ -87,6 +105,7 @@ class CotisationController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('success', "ben.flash.success.contribution.created");
             return $this->redirect($this->generateUrl('cotisation_show', array('id' => $entity->getId())));
         }
 
@@ -144,9 +163,11 @@ class CotisationController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('success', "ben.flash.success.contribution.updated");
             return $this->redirect($this->generateUrl('cotisation_edit', array('id' => $id)));
         }
 
+        $this->get('session')->getFlashBag()->add('success', "ben.flash.error.form");
         return $this->render('BenAssociationBundle:Cotisation:edit.html.twig', array(
             'entity'      => $entity,
             'form'   => $editForm->createView(),
@@ -176,6 +197,7 @@ class CotisationController extends Controller
             $em->flush();
         }
 
+        $this->get('session')->getFlashBag()->add('success', "ben.flash.success.contribution.deleted");
         return $this->redirect($this->generateUrl('cotisation'));
     }
 

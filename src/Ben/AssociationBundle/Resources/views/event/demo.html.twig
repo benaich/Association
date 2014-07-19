@@ -8,10 +8,10 @@ Tableau de bord | {{ parent() }}
     <div class="page">            
         <div class="content-warper">
 		    <header>
-		    	<h1 class="col-md-8"><span class="glyphicon glyphicon-envelope"></span> Modele des lettre envoyées</h1>
+		    	<h1 class="col-md-8"><span class="glyphicon glyphicon-envelope"></span> {{ 'message.meta.demo'|trans }}</h1>
 		    	<div class="btn-group col-md-4">
-				    <a class="btn btn-info" href="{{ path('event_print', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-print"></span> imprimer</a>
-				    <a class="btn btn-inverse" href="{{ path('event_send', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-envelope"></span> Envoyer par mail</a>
+				    <a class="btn btn-info" href="{{ path('event_print', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-print"></span> {{ 'ben.action.print'|trans }}</a>
+				    <a class="btn btn-inverse" href="{{ path('event_send', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-envelope"></span> {{ 'message.action.mail'|trans }}</a>
 				</div>
 		        <div class="clearfix"></div>
 			</header>

@@ -1,50 +1,50 @@
 <div class="tabbable">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#tab1"><span class="fui-user"></span> Identité</a></li>
-      <li><a href="#tab2"><span class="fui-book"></span> Informations de contact</a></li>
-      <li><a href="#tab3"><span class="fui-myspace"></span> Informations relatives à L'association</a></li>
+      <li class="active"><a href="#tab1"><span class="fui-user"></span> {{ 'user.meta.identity'|trans }}</a></li>
+      <li><a href="#tab2"><span class="fui-book"></span> {{ 'user.meta.contact'|trans }}</a></li>
+      <li><a href="#tab3"><span class="fui-myspace"></span> {{ 'user.meta.association'|trans }}</a></li>
     </ul> <!-- /tabs -->
 	 <div class="tab-content">
         <div class="tab-pane active" id="tab1">
               <div class="form-group">
-                <label for="" class="col-sm-4 control-label">Photo</label>
+                <label for="" class="col-sm-4 control-label">{{ 'user.form.profile.avatar'|trans }}</label>
                 <div class="col-sm-4">
                   <img class="myavatar col-md-4" src="{{ asset( entity.profile.image.getwebpath)}}">
                 </div>
               </div>
-              {{ form_row(form.profile.image.file, { 'label': ' '}) }}
-              {{ form_row(form.profile.family_name, { 'label': 'Nom'}) }}
-              {{ form_row(form.profile.first_name, { 'label': 'Prenom'}) }}
-              {{ form_row(form.profile.cin, { 'label': 'CIN'}) }}
-              {{ form_row(form.profile.barcode, { 'label': 'Codebar'}) }}
-              {{ form_row(form.profile.gender, { 'label': 'Genre'}) }}
-              {{ form_row(form.profile.bird_day, { 'label': 'Date de naissance'}) }}
-              {{ form_row(form.profile.job, { 'label': 'Profession'}) }}
-              {{ form_row(form.profile.diplome, { 'label': 'Niveau d\'etude'}) }}
-              {{ form_row(form.profile.expertise, { 'label': 'Spécialité'}) }}
+              {{ form_row(form.profile.image.file) }}
+              {{ form_row(form.profile.family_name) }}
+              {{ form_row(form.profile.first_name) }}
+              {{ form_row(form.profile.cin) }}
+              {{ form_row(form.profile.barcode) }}
+              {{ form_row(form.profile.gender) }}
+              {{ form_row(form.profile.birthday) }}
+              {{ form_row(form.profile.job) }}
+              {{ form_row(form.profile.diplome) }}
+              {{ form_row(form.profile.expertise) }}
         </div><!-- /tab1 -->
 
 				<div class="tab-pane" id="tab2">
-              {{ form_row(form.profile.address, { 'label': 'Adresse'}) }}
-              {{ form_row(form.profile.post_code, { 'label': 'Code Postal'}) }}
-              {{ form_row(form.profile.city, { 'label': 'Ville'}) }}
-              {{ form_row(form.profile.contry, { 'label': 'Pays'}) }}
-              {{ form_row(form.profile.tel, { 'label': 'Tél'}) }}
-              {{ form_row(form.profile.gsm, { 'label': 'GSM'}) }}
-              {{ form_row(form.email, { 'label': 'Courriel'}) }}
+              {{ form_row(form.profile.address) }}
+              {{ form_row(form.profile.post_code) }}
+              {{ form_row(form.profile.city) }}
+              {{ form_row(form.profile.contry) }}
+              {{ form_row(form.profile.tel) }}
+              {{ form_row(form.profile.gsm) }}
+              {{ form_row(form.email) }}
              {#
-              {{ form_row(form.profile.facebook, { 'label': 'facebook'}) }}
-              {{ form_row(form.profile.twitter, { 'label': 'twitter'}) }}
-              {{ form_row(form.profile.google, { 'label': 'google'}) }}
-              {{ form_row(form.profile.website, { 'label': 'Site Web'}) }} #}
+              {{ form_row(form.profile.facebook) }}
+              {{ form_row(form.profile.twitter) }}
+              {{ form_row(form.profile.google) }}
+              {{ form_row(form.profile.website) }} #}
 				</div><!-- /tab2 -->
 
         <div class="tab-pane" id="tab3">
-              {{ form_row(form.enabled, { 'label': 'Compte actif'}) }}
-              {{ form_row(form.username, { 'label': 'Identifiant'}) }}
-              {{ form_row(form.plainpassword, { 'label': 'Mot de passe'}) }}
-              {{ form_row(form.profile.description, { 'label': 'Autres informations'}) }}
-              {{ form_row(form.groups, { 'label': 'Groupes'}) }}
+              {{ form_row(form.enabled) }}
+              {{ form_row(form.username) }}
+              {{ form_row(form.plainpassword) }}
+              {{ form_row(form.profile.description) }}
+              {{ form_row(form.groups) }}
        {{ form_rest(form) }}
       </div><!-- /tab3 -->
 

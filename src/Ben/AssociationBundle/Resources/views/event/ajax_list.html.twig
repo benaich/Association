@@ -10,10 +10,18 @@
                 <ul>{% for group in entity.groups %}<li>{{ group}}</li>{% endfor %}</ul>
             </td>
             <td>
-                <a class="btn btn-embossed btn-primary btn-xs" href="{{ path('event_show', { 'id': entity.id }) }}" data-toggle="tooltip" title="Afficher"><span class="fui-search"></span></a>
-                <a class="btn btn-embossed btn-info btn-xs" href="{{ path('event_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="fui-new"></span></a>
+                <a class="btn btn-embossed btn-primary btn-xs" href="{{ path('event_show', { 'id': entity.id }) }}" data-toggle="tooltip" title="{{ 'ben.action.show'|trans }}"><span class="fui-search"></span></a>
+                <a class="btn btn-embossed btn-info btn-xs" href="{{ path('event_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="{{ 'ben.action.edit'|trans }}"><span class="fui-new"></span></a>
             </td>
         </tr>
     {% endfor %}
 
 {% include "BenAssociationBundle:Default:pagination.html.twig" %}
+<script>   
+(function($) {
+
+    /* tooltip */
+    $('td a').tooltip();
+
+})(jQuery);
+</script>

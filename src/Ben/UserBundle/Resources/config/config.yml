@@ -5,6 +5,8 @@ fos_user:
     user_class: Ben\UserBundle\Entity\User
     group:
         group_class: Ben\UserBundle\Entity\Group
+        form:          
+            type: ben_user_group
     from_email:
         address:        info@knowledge.com
         sender_name:    admin

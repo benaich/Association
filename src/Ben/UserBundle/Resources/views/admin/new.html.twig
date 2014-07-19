@@ -3,13 +3,13 @@
 Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
-<h2><span class="fui-user"></span> Inscription d'un Adhérent</h2>
+<h2><span class="fui-user"></span> {{ 'user.action.new'|trans }}</h2>
 <form class="form-horizontal" action="{{ path('ben_add_user')}}" method="POST" role="form"  {{ form_enctype(form) }}>
 	{% include "BenUserBundle:admin:form.html.twig" %}
 
     <div class="form-group">
       <div class="col-sm-offset-4 col-sm-4">
-        <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-plus"></span> Ajouter</button>
+        <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-plus"></span> {{ 'ben.action.new'|trans }}</button>
       </div>
     </div>
 </form>
@@ -19,7 +19,7 @@ Tableau de bord | {{ parent() }}
 {{ parent() }}
 <script> 
     (function($) {
-    	$('#user_type_groups_1').parent().hide();
+    	$('#user_form_groups_1').parent().hide();
     })(jQuery);
 </script>
 {% endblock %}

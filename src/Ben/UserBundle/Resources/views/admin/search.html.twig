@@ -4,84 +4,93 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
-        <h4 class="modal-title" id="searchModalLabel">Recherche avancée</h4>
+        <h4 class="modal-title" id="searchModalLabel">{{'ben.action.advanced'|trans}}</h4>
       </div>
       <div class="modal-body">
-          <div class="form-group">
-            <label for="" class="col-md-5 control-label">N° CIN</label>
-            <div class="form-group col-md-7">
+      <div class="row">
+          <div class="col-md-6">
+            <label for="" class="control-label">{{ 'user.form.profile.cin'|trans }}</label>
+            <div class="form-group ">
               <input type="text" name="searchParam[cin]" class="form-control">
             </div>
           </div>
-          <div class="form-group">
-            <label for="" class="col-md-5 control-label">Sexe</label>
-            <div class="col-md-7">
+          <div class="col-md-6">
+            <label for="" class="control-label">{{ 'user.form.profile.gender'|trans }}</label>
+            <div class="">
               <select name="searchParam[gender]" class="primary select-block">
                 <option value=""></option>
-                <option value="homme">Homme</option>
-                <option value="femme">Femme</option>
+                <option value="homme">{{ 'user.meta.man'|trans }}</option>
+                <option value="femme">{{ 'user.meta.woman'|trans }}</option>
               </select>
             </div>
           </div>
-          <div class="form-group">
-              <label class="col-md-5 control-label" for="date_from">Date de début</label>
-              <div class="form-group col-md-7">
-                    <input type="text" class="form-control has-datepicker" name="searchParam[date_from]" id="date_from" placeholder="Date de naissance">
+      </div>
+      <div class="row">
+          <div class="col-md-6"> 
+              <label class="control-label" for="date_from">{{ 'cotisation.form.date.from'|trans }}</label>
+              <div class="form-group ">
+                    <input type="text" class="form-control has-datepicker" name="searchParam[date_from]" id="date_from" placeholder="{{ 'user.form.profile.birthday'|trans }}">
               </div>
           </div>
-          <div class="form-group">
-              <label class="col-md-5 control-label" for="date_to">Date fin</label>
-              <div class="form-group col-md-7">
-                    <input type="text" class="form-control has-datepicker" name="searchParam[date_to]" id="date_to" placeholder="Date de naissance">
+          <div class="col-md-6">
+              <label class="control-label" for="date_to">{{ 'cotisation.form.date.to'|trans }}</label>
+              <div class="form-group ">
+                    <input type="text" class="form-control has-datepicker" name="searchParam[date_to]" id="date_to" placeholder="{{ 'user.form.profile.birthday'|trans }}">
               </div>
           </div>
-          <div class="form-group">
-            <label for="citySelect" class="col-md-5 control-label">Ville</label>
-            <div class="form-group col-md-7">
+      </div>
+      <div class="row">
+          <div class="col-md-6">
+            <label for="citySelect" class="control-label">{{ 'user.form.profile.city'|trans }}</label>
+            <div class="form-group ">
               <input id="citySelect" type="text" name="searchParam[city]" class="form-control">
             </div>
           </div>
-          <div class="form-group">
-            <label for="citySelect" class="col-md-5 control-label">Codebar</label>
-            <div class="form-group col-md-7">
+          <div class="col-md-6">
+            <label for="citySelect" class="control-label">{{ 'user.form.profile.barcode'|trans }}</label>
+            <div class="form-group ">
               <input id="citySelect" type="text" name="searchParam[barcode]" class="form-control">
             </div>
           </div>
-          <div class="form-group">
-            <label for="" class="col-md-5 control-label">Filtrer par Status :</label>
-            <div class="col-md-7">
+      </div>
+      <div class="row">
+          <div class="col-md-6">
+            <label for="" class="control-label">{{ 'status.action.filter'|trans }}</label>
+            <div class="">
               <select name="searchParam[status]" class="primary select-block">
-                <option value="0">Tous</option>
+                <option value="0">{{ 'ben.meta.all'|trans }}</option>
                 {% for entity in status %}
                 <option value="{{ entity.id }}">{{ entity.name }}</option>
                   {% endfor %}
               </select>
             </div>
           </div>
-          <div class="form-group">
-            <label for="" class="col-md-5 control-label">Filtrer par groupe :</label>
-            <div class="col-md-7">
+          <div class="col-md-6">
+            <label for="" class="control-label">{{ 'group.action.filter'|trans }}</label>
+            <div class="">
               <select id="js-group" name="searchParam[group]" class="primary select-block">
-                <option value="0">Tous</option>
+                <option value="0">{{ 'ben.meta.all'|trans }}</option>
                 {% for entity in groups %}
                 <option value="{{ entity.id }}">{{ entity.name }}</option>
                   {% endfor %}
               </select>
             </div>
           </div>
-          <div class="form-group">
-            <label for="" class="col-md-5 control-label">Filtrer par cotisation :</label>
-            <div class="col-md-7">
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="" class="control-label">{{ 'cotisation.action.filter'|trans }}</label>
+            <div class="">
               <select name="searchParam[cotisation]" class="primary select-block">
-                <option value="0">Tous</option>
+                <option value="0">{{ 'ben.meta.all'|trans }}</option>
                 <option value="1">Payé</option>
                 <option value="2">Non payé</option>
               </select>
             </div>
           </div>
-          <div class="form-group">
-            <label for="" class="col-md-5 control-label">Nombre de ligne par page :</label>
-            <div class="col-md-7">
+          <div class="col-md-6">
+            <label for="" class="control-label">{{ 'ben.meta.perpage'|trans }}</label>
+            <div class="">
               <select id="js-perpage" name="searchParam[perPage]" class="primary select-block">
                 <option value="10" {% if app_config.rows_per_page == 10 %}selected{% endif %}>10</option>
                 <option value="20" {% if app_config.rows_per_page == 20 %}selected{% endif %}>20</option>
@@ -90,19 +99,20 @@
               </select>
             </div>
           </div>
+        </div>
           <div class="clearfix"></div>
       </div>
       <div class="modal-footer">
-      <div class="col-lg-7">
+      <div class="col-md-7">
         <div class="input-group">
-          <input type="text" name="searchParam[filterGroup]" class="form-control" placeholder="Créer un groupe pour ce filtre">
+          <input type="text" name="searchParam[filterGroup]" class="form-control" placeholder="{{ 'group.form.placeholder.filter'|trans}}">
           <div class="input-group-btn">
           <button id="js-filter-group" class="btn btn-default" type="button"><span class="glyphicon glyphicon-plus"></span></button>
           </div>
         </div>
       </div>
 
-        <button id="js-search" type="button" class="btn btn-primary">Rechercher</button>
+        <button id="js-search" type="button" class="btn btn-primary">{{ 'ben.action.search'|trans }}</button>
       </div>
     </div>
   </div>
@@ -115,11 +125,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
-        <h4 class="modal-title" id="groupModalLabel">Goupe</h4>
+        <h4 class="modal-title" id="groupModalLabel">{{ 'group.meta.name'|trans }}</h4>
       </div>
       <div class="modal-body">
           <div class="form-group">
-            <label for="" class="col-md-5 control-label">Nom du groupe :</label>
+            <label for="" class="col-md-5 control-label">{{ 'group.form.name'|trans }}</label>
             <div class="col-md-7">
               <select name="group" class="primary select-block">
                 {% for entity in groups %}
@@ -131,7 +141,7 @@
           <div class="clearfix"></div>
       </div>
       <div class="modal-footer">
-        <button id="js-group-set" type="button" class="btn btn-primary">Valider</button>
+        <button id="js-group-set" type="button" class="btn btn-primary">{{ 'ben.action.valide'|trans }}</button>
       </div>
     </div>
   </div>
@@ -143,15 +153,15 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
-        <h4 class="modal-title" id="myModalLabel">Profil</h4>
+        <h4 class="modal-title" id="myModalLabel">{{ 'user.meta.name'|trans }}</h4>
       </div>
       <div class="modal-body">
         ...
       </div>
       <div class="modal-footer text-center">
-        <button type="button" class="btn btn-primary btn-embossed pull-left" data-dir="prev">Prev</button>
-        <a href="#" id="more" class="btn btn-primary btn-embossed">Plus d'info</a>
-        <button type="button" class="btn btn-primary btn-embossed pull-right" data-dir="next">Next</button>
+        <button type="button" class="btn btn-primary btn-embossed pull-left" data-dir="prev">{{ 'ben.action.prev'|trans }}</button>
+        <a href="#" id="more" class="btn btn-primary btn-embossed">{{ 'ben.action.more'|trans }}</a>
+        <button type="button" class="btn btn-primary btn-embossed pull-right" data-dir="next">{{ 'ben.action.next'|trans }}</button>
       </div>
     </div>
   </div>

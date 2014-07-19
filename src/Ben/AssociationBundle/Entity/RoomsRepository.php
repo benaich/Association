@@ -64,8 +64,8 @@ class RoomsRepository extends EntityRepository
     }
 
     public function counter() {
-        $query = $this->_em->createQuery('SELECT count(r) FROM ben\AssociationBundle\Entity\Rooms r');
-        return $query->getOneOrNullResult();
-    } 
+        $qb = $this->createQueryBuilder('r')->select('COUNT(r)');
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 	
 }

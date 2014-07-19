@@ -4,52 +4,52 @@ Tableau de bord | {{ parent() }}
 {% endblock %}
 {% block body %}
 
-<h2><span class="fui-user"></span> Gestion des membres</h2>
+<h2><span class="fui-user"></span> {{'user.title.main'|trans}}</h2>
         <form  id="jsForm" role="form" method="post" action="">
             <input id="pagenumber" type="hidden" name="searchParam[page]" value="1"> 
             <div class="row hidden-print">
-              <div class="col-md-5">
+              <div class="col-md-5 col-xs-6">
                   <div class="form-group">
                      <div class="input-group">                                     
-                        <input type="text" name="searchParam[keyword]" class="form-control" placeholder="Search">
+                        <input type="text" name="searchParam[keyword]" class="form-control" placeholder="{{ 'ben.action.search'|trans }}">
                        <span class="input-group-btn">
                              <button type="submit" class="btn"><span class="fui-search"></span></button>
                          </span>
                      </div>
                   </div>
               </div>
-              <div class="col-lg-7">
+              <div class="col-md-7 col-xs-6">
                 <div class="btn-group pull-right">              
-                  <button class="btn btn-primary" data-toggle="modal" data-target="#searchModal"><span class="fui-search"></span> Recherche avancée</button>
+                  <button class="btn btn-primary" data-toggle="modal" data-target="#searchModal"><span class="fui-search"></span> {{'ben.action.advanced'|trans}}</button>
                   <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                   </button>
                   <span class="dropdown-arrow dropdown-arrow-inverse"></span>
                   <ul class="dropdown-menu dropdown-inverse">
-                    <li><a href="{{ path('ben_new_user') }}"><span class="fui-plus"></span> Ajouter un adhérent</a></li>
+                    <li><a href="{{ path('ben_new_user') }}"><span class="fui-plus"></span> {{'user.action.new'|trans}}</a></li>
                     {% if is_granted("ROLE_ADMIN") %}
-                    <li><a href="#" class="js-enable" data-action="1"><span class="fui-check"></span> Activer</a></li>
-                    <li><a href="#" class="js-enable" data-action="0"><span class="glyphicon glyphicon-ban-circle"></span> Désctiver</a></li>
+                    <li><a href="#" class="js-enable" data-action="1"><span class="fui-check"></span> {{'ben.action.enable'|trans}}</a></li>
+                    <li><a href="#" class="js-enable" data-action="0"><span class="glyphicon glyphicon-ban-circle"></span> {{'ben.action.disable'|trans}}</a></li>
                     <li class="divider"></li>
-                    <li><a href="#" class="js-promote" data-action="admin"><span class="fui-user text-warning"></span> Administrateur</a></li>
-                    <li><a href="#" class="js-promote" data-action="manager"><span class="fui-user text-success"></span> Editeur</a></li>
-                    <li><a href="#" class="js-promote" data-action="user"><span class="fui-user"></span> Simple utilisateur</a></li>
-                    <li><a href="#" data-toggle="modal" data-target="#groupModal"><span class="glyphicon glyphicon-pushpin"></span> Associer à un groupe</a></li>
+                    <li><a href="#" class="js-promote" data-action="admin"><span class="fui-user text-warning"></span> {{'user.action.promote.admin'|trans}}</a></li>
+                    <li><a href="#" class="js-promote" data-action="manager"><span class="fui-user text-success"></span> {{'user.action.promote.manager'|trans}}</a></li>
+                    <li><a href="#" class="js-promote" data-action="user"><span class="fui-user"></span> {{'user.action.promote.user'|trans}}</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#groupModal"><span class="glyphicon glyphicon-pushpin"></span> {{'user.action.group'|trans}}</a></li>
                     {% endif %}
                     <li class="divider"></li>
-                    <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> Exporter vers csv</a></li>
-                    <li><a href="{{ path('ben_export_xml') }}"><span class="fui-export"></span> Exporter vers xml</a></li>
-                    <li><a href="#" id="js-badge"><span class="fui-credit-card"></span> Cartes des Membres</a></li>
-                    <li><a href="#" id="js-tiquet"><span class="fui-tag"></span> Ticket de repas</a></li>
+                    <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> {{'ben.action.tocsv'|trans}}</a></li>
+                    <li><a href="{{ path('ben_export_xml') }}"><span class="fui-export"></span> {{'ben.action.toxml'|trans}}</a></li>
+                    <li><a href="#" id="js-badge"><span class="fui-credit-card"></span> {{'user.action.carte.show'|trans}}</a></li>
+                    <li><a href="#" id="js-tiquet"><span class="fui-tag"></span> {{'user.action.tiquet'|trans}}</a></li>
                     {% if is_granted("ROLE_ADMIN") %}
                     <li class="divider"></li>
-                    <li><a href="#" id="js-delete"><span class="glyphicon glyphicon-trash"></span> Supprimer</a></li>
+                    <li><a href="#" id="js-delete"><span class="glyphicon glyphicon-trash"></span> {{'ben.action.delete'|trans}}</a></li>
                     {% endif %}
                   </ul>
                 </div>
               </div><!-- /.col-lg-2 -->
             </div><!-- /.row -->
-
+            <div class="table-responsive">
             <table class="table table-hover table-bordered table-striped">
                 <thead>
                     <tr>
@@ -57,14 +57,15 @@ Tableau de bord | {{ parent() }}
                         {% for item in app_config.userTable %}
                           {% if item.visible %}<th>{{ item.nicename }}</th>{% endif %}
                         {% endfor %}
-                        <th>action</th>
+                        <th>{{'ben.meta.actions'|trans}}</th>
                     </tr>
                 </thead>
                 <tbody id="dataContainer"></tbody>
             </table>
+            </div>
 
-            <div>
-              <em><strong>Total:</strong> {{ entitiesLength }} Adhérents</em>
+            <div class="caption">
+              <em><strong>{{ 'ben.meta.total'|trans }}:</strong> {{ 'user.meta.count'|transchoice(entitiesLength) }}</em>
             </div>
 
             {% include "BenUserBundle:admin:search.html.twig" %}
@@ -170,6 +171,17 @@ Tableau de bord | {{ parent() }}
         modalBody.hide().html(profiles[index]).fadeIn();
         updateLink(modal.find('.userinfo').data('id'));
       });
+      /* keyboard navigation */
+      $(document).keydown(function(e){
+        if (e.keyCode == 37) { 
+          navBtn.filter("[data-dir=prev]").trigger('click');
+          return false;
+        }
+        else if(e.keyCode == 39){ 
+          navBtn.filter("[data-dir=next]").trigger('click');
+          return false;
+        }
+      });
 
 
 
@@ -220,7 +232,7 @@ Tableau de bord | {{ parent() }}
 
       /* delete a user */
       deleteBtn.on('click', function(){
-        if (!isSelected() || !confirmation()) return false;
+        if (!isSelected() || !confirmation('voullez-vous vraiment supprimer les adhérants séléctionnées')) return false;
         jsFormUrl='{{ path('ben_remove_users') }}';
         ajaxPost('delete');
       });
@@ -233,8 +245,12 @@ Tableau de bord | {{ parent() }}
       filterGroupBtn.on('click', function(){
           jsFormUrl = '{{ path('add_group_filter') }}';
           ajaxPost('filtergroup', function(data){
-            groupInput.append('<option value="'+data.id+'">'+data.name+'</option>');
-            alert('Le groupe '+data.name+' a été ajouté avec succée');
+            if(data.name){
+              groupInput.append('<option value="'+data.id+'">'+data.name+'</option>');
+              alert('Le groupe '+data.name+' a été ajouté avec succée');
+            }
+            else alert('This value should not be blank.');
+            console.log(data);
           });
           searchModal.modal('hide');
 
@@ -247,7 +263,6 @@ Tableau de bord | {{ parent() }}
           jsFormUrl = '{{ path('add_users_group') }}';
           ajaxPost('groupset', function(data){
             alert('Les adhérants séléctionnées ont été ajouté au groupe '+data.name);
-            console.log(data);
           });
       });
 

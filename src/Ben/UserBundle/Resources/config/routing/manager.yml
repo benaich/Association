@@ -1,3 +1,9 @@
+contact:
+    pattern:   /{_locale}/contact
+    defaults:  { _controller: AcmeDemoBundle:Contact:index, _locale: en }
+    requirements:
+        _locale: en|fr|de
+
 ben_users_public:
     pattern:  /public/{perPage}
     defaults: { _controller: BenUserBundle:Admin:public, perPage: 10}
