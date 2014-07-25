@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<!--
+         ===================================================================
+        ||          designed & developed by benaich.med@gmail.com          ||
+         ===================================================================
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gestion des membres</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="application-name" content="Tacharock"/>
+    <meta name="author" content="benaich.med@gmail.com">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+                        <link href="/association/web/bootstrap/css/bootstrap.css" rel="stylesheet"><!-- Loading Bootstrap -->
+            <link href="/association/web/css/flat-ui.css" rel="stylesheet"><!-- Loading Flat UI -->
+        <link href="/association/web/css/main.css" rel="stylesheet"><!-- Loading my css -->
+        <link href="/association/web/css/spinner.css" rel="stylesheet">
+        
+    <link href="/association/web/css/fullcalendar.css" rel="stylesheet">
+    <link href="/association/web/qtip2/jquery.qtip.css" rel="stylesheet">
+    <title>Tableau de bord | webpractice
+</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/association/web/favicon.ico" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container">
+<h2><span class="fui-calendar"></span>  Calendrier des évenements</h2>
+<div id="calendar"></div>  
+</div>
+
+
+
+<script src="/association/web/js/jquery-1.8.3.min.js"></script>
+<script src="/association/web/js/bootstrap.min.js"></script>
+<script src="/association/web/js/moment.min.js"></script>
+<script src="/association/web/js/jquery-ui.custom.min.js"></script>
+<script src="/association/web/js/fullcalendar.min.js"></script><!-- Full Calendar -->
+<script src="/association/web/js/lang/fr.js"></script><!-- Full Calendar -->
+<script src="/association/web/qtip2/jquery.qtip.js"></script>
+<script>  
+    (function($) {
+  function hereDoc(f) {
+    return f.toString().
+        replace(/^[^\/]+\/\*!?/, '').
+        replace(/\*\/[^\/]+$/, '');
+  }
+    /* calendar */
+    var date = new Date(),
+        d = date.getDate(),
+        m = date.getMonth(),
+        y = date.getFullYear();
+    
+    var calendar = $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      selectable: true,
+      eventRender: function(event, element) {
+        element.qtip({    
+            content: {    
+                title: { text: event.title },
+                text: '<b>Date: </b>' + (moment(event.start).format('MM/DD/YYYY à hh:mm')) + '<br><b>Type: </b>'+event.type+'<br><b>Groupes: </b>'+event.groups+'<br><b>Description: </b>'+event.description     
+            },
+            style: { 
+              classes: 'qtip-bootstrap', 
+              tip: {corner: 'left center'}
+            },         
+            position: {
+              my: 'bottom  center',
+              at: 'top center',
+              target: 'mouse',
+              adjust: {
+                  mouse: false
+              }
+            }
+        });
+      },
+      events: [
+              {
+          id: 2,
+          title: 'reunion 12',
+          description: hereDoc(function() {/*!Cette réunion durera 4 heures, elle aura pour objet de (les raisons de la réunion et thèmes qui seront abordés lors de la réunionà ) : par exemple, de vous sensibiliser à notre cause, de vous faire découvrir plus en détail le fonctionnement de notre association…*/}),
+          type: 'urgent',
+          groups: 'administrateurs',
+          start: new Date('2014-04-12 00:00:00'),
+          end: new Date('2014-04-13 00:00:00')
+        },
+              {
+          id: 3,
+          title: 'reunion',
+          description: hereDoc(function() {/*!Votre compt a été modifié par un administrateur ou un membre du bureau.  Vous pouvez vous connecter à l&#039;adresse pour vérifier ces informations ou les modifier.*/}),
+          type: 'urgent',
+          groups: 'Adhérents',
+          start: new Date('2014-04-18 00:00:00'),
+          end: new Date('2014-04-23 00:00:00')
+        },
+              {
+          id: 4,
+          title: 'social',
+          description: hereDoc(function() {/*!Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,     quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo     consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse     cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non     proident, sunt in culpa qui officia deserunt mollit anim id est laborum.*/}),
+          type: 'routine',
+          groups: 'Adhérents, administrateurs',
+          start: new Date('2014-04-09 00:00:00'),
+          end: new Date('2014-04-15 00:00:00')
+        },
+              {
+          id: 13,
+          title: 'google meeting',
+          description: hereDoc(function() {/*!It&#039;s time to play &quot;remember when&quot; at our Doe High Class of &#039;81 reunion next July, and the organizing committee is in high gear!*/}),
+          type: 'emergency',
+          groups: 'administrateurs',
+          start: new Date('2014-07-07 00:00:00'),
+          end: new Date('2014-07-08 00:00:00')
+        },
+              {
+          id: 14,
+          title: 'Sample Letter #2',
+          description: hereDoc(function() {/*!Need a reason to lose 20 pounds? Are you just dying to go shopping for a new dress? Can&#039;t wait to get out of town and visit memory lane? Then get out your checkbook, fill out the attached form, and join us at the 30-Year Reunion of The Class of &#039;72!*/}),
+          type: 'urgent',
+          groups: 'Adhérents, administrateurs',
+          start: new Date('-0001-11-30 00:00:00'),
+          end: new Date('-0001-11-30 00:00:00')
+        },
+              {
+          id: 16,
+          title: 'réunion des admin',
+          description: hereDoc(function() {/*!As soon as we receive your registration, we will send you a packet containing further information, including where to stay, what to wear, how much weight to lose, etc. Come join the fun. It was a blast at 20 years. Think what it will be like at 30!!*/}),
+          type: 'urgent',
+          groups: 'Adhérents, administrateurs',
+          start: new Date('2014-07-16 05:30:00'),
+          end: new Date('2014-07-16 12:00:00')
+        },
+              {
+          id: 19,
+          title: 'ramadan karim',
+          description: hereDoc(function() {/*!everyone*/}),
+          type: 'réunion de résolution de problèm',
+          groups: 'Adhérents',
+          start: new Date('2014-07-15 08:00:00'),
+          end: new Date('2014-07-15 10:30:00')
+        },
+              {
+          id: 25,
+          title: 'Reunion',
+          description: hereDoc(function() {/*!Nous avons l’honneur de vous convier à une réunion d’information le XXX (date de la réunion) à XXX (heure de la réunion). Cette rencontre sera l’occasion d’aborder XXX (thème de la réunion). Dans un souci d’organisation, nous vous serions reconnaissants de nous confirmer rapidement (variante : avant le XXX (date)) votre présence par courrier, ou en contactant directement XXX (nom de la personne) au XXX (n° de téléphone). Espérant vous compter parmi les membres présents, nous vous prions d’agréer, Madame / Monsieur, l’expression de nos sentiments les meilleurs.*/}),
+          type: 'réunion d’information',
+          groups: 'Apple, Femme',
+          start: new Date('2014-07-11 00:00:00'),
+          end: new Date('2014-07-12 00:00:00')
+        },
+              {
+          id: 26,
+          title: 'Avertissement',
+          description: hereDoc(function() {/*!Le rédacteur de cette lettre est diplômé d’une maîtrise en droit des affaires. Ses qualités rédactionnelles sont utilisées tant par les particuliers, que les entreprises. Elle intervient aussi en tant que formatrice en Français. La rigueur de sa formation se retrouve dans ses écrits et est appréciée par tout public. Membre du Groupement d’Ecrivains Conseils.*/}),
+          type: 'réunion de résolution de problèm',
+          groups: 'actif membe, Apple',
+          start: new Date('2014-07-10 08:00:00'),
+          end: new Date('2014-07-10 10:00:00')
+        }
+            ]
+    });
+
+    })(jQuery);
+</script>
+
+</body>
+ 
+</html>

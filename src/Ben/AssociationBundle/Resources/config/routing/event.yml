@@ -63,3 +63,11 @@ event_update_date:
     pattern:  /{id}/updatedate
     defaults: { _controller: "BenAssociationBundle:event:updateDate" }
     requirements: { _method: post }
+
+event_ftp:
+    pattern:  /ftp/
+    defaults: { _controller: "BenAssociationBundle:event:ftp"}
+
+event_html:
+    pattern:  /html
+    defaults: { _controller: "BenAssociationBundle:event:html" }

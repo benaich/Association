@@ -10,6 +10,7 @@ use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher as EventDisp
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Listener responsible to change the redirection after a success login based on roles
@@ -19,12 +20,14 @@ class SecurityListener
     protected $router;
     protected $security;
     protected $dispatcher;
+    protected $em;
 
-    public function __construct(Router $router, SecurityContext $security, EventDispatcher $dispatcher)
+    public function __construct(Router $router, SecurityContext $security, EventDispatcher $dispatcher, EntityManager $em)
     {
         $this->router = $router;
         $this->security = $security;
         $this->dispatcher = $dispatcher;
+        $this->em = $em;
     }
 
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
@@ -37,11 +40,14 @@ class SecurityListener
         $request = $event->getRequest();
         $locale = $request->get('_locale');
         $request->getSession()->set('_locale', $locale);
-
-        if ($this->security->isGranted('ROLE_ADMIN')) {
+        $allowaccess = $this->em->getRepository('BenAssociationBundle:config')->findOneBy(array('the_key' => 'allowaccess'))->getTheValue();
+        // var_dump($allowaccess);die;
+        if ($this->security->isGranted('ROLE_MANAGER')) {
             $event->getResponse()->headers->set('Location', $this->router->generate('Ben_association_homepage'));    
         } else {
-            $event->getResponse()->headers->set('Location', $this->router->generate('ben_profile_edit', 
+            if(empty($allowaccess))
+                $event->getResponse()->headers->set('Location', $this->router->generate('fos_user_security_logout')); 
+            else $event->getResponse()->headers->set('Location', $this->router->generate('ben_profile_edit', 
                 array('name'=>$this->security->getToken()->getUser()->getUsername())));
         }
     }

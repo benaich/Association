@@ -144,6 +144,7 @@ config:
         theme: Theme
         allowlogin: Allow registration ?
         allowprint: Allow members to print their cards ?
+        allowaccess: Allow members to log In ?
         carte:
             bg: Background color
             fg: Texte color
@@ -222,6 +223,7 @@ ben:
         message: Message
         datecall: Call Date
         note: comment
+        map: The Site
     image.form.file: ''
 # exceptions
 fos.user:

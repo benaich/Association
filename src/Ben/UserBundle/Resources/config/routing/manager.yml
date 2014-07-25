@@ -80,6 +80,10 @@ ben_export_xml:
     pattern:  /xml
     defaults: { _controller: "BenUserBundle:Admin:toXml"}
 
+ben_export_excel:
+    pattern:  /excel
+    defaults: { _controller: "BenUserBundle:Admin:toExcel"}
+
 ben_badge_user:
     pattern:  /badge/{users}
     defaults: { _controller: "BenUserBundle:Admin:showBadge" }

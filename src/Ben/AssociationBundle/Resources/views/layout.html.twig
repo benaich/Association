@@ -14,10 +14,17 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     {% block meta %}{% endblock %}
     {% block stylesheet %}
+    {% if app.request.locale == 'ar' %}
+        <link href="{{ asset('bootstrap/css/bootstrap-arabic.css') }}" rel="stylesheet"><!-- Loading arabic Bootstrap -->
+    {% else %}
         <link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet"><!-- Loading Bootstrap -->
+    {% endif %}
         <link href="{{ asset('css/flat-ui.css') }}" rel="stylesheet"><!-- Loading Flat UI -->
         <link href="{{ asset('css/main.css') }}" rel="stylesheet"><!-- Loading my css -->
         <link href="{{ asset('css/spinner.css') }}" rel="stylesheet">
+    {% if app.request.locale == 'ar' %}
+        <link href="{{ asset('css/main-arabic.css') }}" rel="stylesheet"><!-- Loading my css -->
+    {% endif %}
     {% endblock %}
     <title>{% block title %}webpractice{% endblock %}</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />

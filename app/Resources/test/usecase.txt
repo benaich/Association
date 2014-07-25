@@ -1,0 +1,144 @@
+==================================================== Admininistrateur ====================================================
+
+authentification par un login et mot de passe avec possibilité de choisir la langue entre (ar,fr,en)
+gestion des adherants:
+	ajouter, modifier et supprimer un adherant
+	recherche multi-critéres
+		cin, sexe, date de naissance, ville, codabar, status, groupe, cotisation, nombre de ligne par page
+	activer ou desactiver un adherant (accées à son profile)
+	changer le role de l'utilisateur (simple utilisateur, editeur ou administrateur)
+	associer un ou plusieurs utilisateurs à un groupe
+	créer un groupe de filtre
+	exporter la liste des adhérent vers different type de données (csv, xml, pdf ou excel)
+	imprimer les cartes des adhérents
+	imprimer les tickets de repas
+	naviger sur les profiles des adherant avec les touches de claviers
+	ajouter un status pour un adhérant
+	ajouter une cotisation
+	consulter le profile complet d'un adherant
+		information générale
+		Informations de L'association
+		Informations de contact
+		Historique des Grades (status)
+		Historique des Cotisations
+		Historique des appels, sms ou mail reçus
+	imprimer la fiche d'un adherant
+
+Gestion des Groupes:
+	Ajouter, modifier et supprimer un groupe
+	consulter la liste des membres dans un groupe
+		chercher un adhérant dans un groupe
+		appeler un adherant et laisser un feedback sur l'appel emis
+		Envoyer un SMS
+		Enlever un adhérant d'un groupe
+
+Gestion des Status:
+	consulter la liste des status disponible et le nombre d'adherants pour chaque status
+	Ajouter, modifier et supprimer un status
+
+Gestion des cotisations:
+	consulter la liste des cotisation efféctuées
+	recherche multi-critéres
+		cin, periode de cotisation, groupe, type de cotisation, nombre de ligne par page
+	Modifier et supprimer une cotisation
+	Afficher une cotisation et imprimer le reçus
+
+Gestion des évenement:
+	consulter la liste des événements
+	recherche multi-critéres
+		cin, periode d'evenement, groupe, nombre de ligne par page
+	consulter le calendrier des évenements
+	ajouter un evenement en utilisant l'interface érgonomique du calendrier
+	chander la date d'un evenemnt avec un simple drag & drop
+	afficher, mettre à jour et supprimer un evenement
+	publier un événement par mail
+	imprimmer les lettres d'invitations
+
+Préférences:
+	modifier les information relatif à l'association
+		logo de l'application, titre, description, ville ...
+	configurer les paramettre de google maps afin d'afficher l'address exacte de l'association dans la carte (Latitude, Longuitude)
+	changer le theme de l'application
+	mettre à jour le nombre de ligne à afficher par page
+	Permettre ou non aux membres d'imprimer leurs carte
+	modifier la mise en forme des badges
+	modofier le modèle des lettres envoyées
+	configuration des champs:
+		prsiser quel information à afficher pour les tables adhérants et cotisations
+
+Messagerie:
+	Boîte de réception, Boîte d'envoi, messages supprimés
+	envoyer un nouveau messages
+
+Profile:
+	Modifier la photo de profile et les autres informations
+	imprimer la carte si c'est autorisé par l'administrateur
+	Changer le mot de passe (necessite le mot de passe actuel)
+	Changer l'adresse email (necessite le mot de passe actuel)
+
+Déconnexion
+
+====================================================== Editeur ======================================================
+
+foctionalité de l'admin avec des exception
+
+authentification par un login et mot de passe avec possibilité de choisir la langue entre (ar,fr,en)
+
+gestion des adherants:
+	ajouter, modifier un adherant
+	un editeur n'a pas le droit de modifier les information d'un administrateur pour des raisons de sécurité
+	recherche multi-critéres
+		cin, sexe, date de naissance, ville, codabar, status, groupe, cotisation, nombre de ligne par page
+	exporter la liste des adhérent vers different type de données (csv, xml, pdf ou excel)
+	imprimer les cartes des adhérents
+	imprimer les tickets de repas
+	naviger sur les profiles des adherant avec les touches de claviers
+	ajouter un status pour un adhérant
+	ajouter une cotisation
+	consulter le profile complet d'un adherant
+	imprimer la fiche d'un adherant
+
+Gestion des Groupes:
+	foctionalité de l'admin sauf la suppression d'un groupe
+
+Gestion des Status:
+	foctionalité de l'admin sauf la suppression d'un Status
+
+Gestion des cotisations:
+	foctionalité de l'admin sauf la suppression d'une cotisations
+
+Gestion des évenement:
+	un editeur peut just voir dans le calendrier les événements auxquel il est invité
+
+Messagerie:
+	Boîte de réception, Boîte d'envoi, messages supprimés
+	envoyer un nouveau messages
+
+Profile:
+	Modifier la photo de profile et les autres informations
+	imprimer la carte si c'est autorisé par l'administrateur
+	Changer le mot de passe (necessite le mot de passe actuel)
+	Changer l'adresse email (necessite le mot de passe actuel)
+
+Déconnexion
+
+====================================================== Simple utilisateur ======================================================
+
+authentification par un login et mot de passe avec possibilité de choisir la langue entre (ar,fr,en)
+
+Calendrier:
+	un utilisateur peut just voir dans le calendrier les événements auxquel il est invité
+
+Messagerie:
+	Boîte de réception, Boîte d'envoi, messages supprimés
+	envoyer un nouveau messages
+
+Profile:
+	Modifier la photo de profile et les autres informations
+	imprimer la carte si c'est autorisé par l'administrateur
+	Changer le mot de passe (necessite le mot de passe actuel)
+	Changer l'adresse email (necessite le mot de passe actuel)
+
+Déconnexion
+
+

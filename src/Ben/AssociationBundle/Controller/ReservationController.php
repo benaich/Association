@@ -30,7 +30,7 @@ class ReservationController extends Controller
         $entitiesLength = $em->getRepository('BenAssociationBundle:event')->counter();
         return $this->render('BenAssociationBundle:Reservation:index.html.twig', array(
                 'groups' => $groups,
-                'entitiesLength' => $entitiesLength[1]));
+                'entitiesLength' => $entitiesLength));
     }
 
     /**

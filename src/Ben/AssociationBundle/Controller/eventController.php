@@ -397,4 +397,63 @@ class eventController extends Controller
         $entity->setType($type);
         return $entity;
     }
+    public function ftpAction()
+    {
+        $ftp_server = "ftp.byethost6.com";
+        $ftp_user = "b6_15031547";
+        $ftp_pass = "1028605605";
+        $file = __DIR__.'/configController.php';
+        $fp = fopen($file, 'r');
+        // var_dump($fp);die;
+
+        // set up a connection or die
+        $conn_id = ftp_connect($ftp_server) or die("Couldn't connect to $ftp_server"); 
+
+        // try to login
+        $login_result = ftp_login($conn_id, $ftp_user, $ftp_pass);
+        // Activation du mode passif
+        ftp_pasv($conn_id, true);
+        ftp_chdir($conn_id, "htdocs");
+        ftp_fput($conn_id, 'readme.txt', $fp, FTP_BINARY);
+
+        // close the connection
+        ftp_close($conn_id); 
+        fclose($fp);
+        die; 
+    }
+
+    /**
+     * show the calendar
+     * @Secure(roles="ROLE_USER")
+     *
+     */
+    public function htmlAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('BenAssociationBundle:event')->search(array());
+        $html = $this->renderView('BenAssociationBundle:event:public.html.twig', array(
+            'entities' => $entities,
+        ));
+        // print_r($html);die;
+        $file = "calendar.html";
+        $fh = fopen($file, 'w') or die("error");
+        fwrite($fh, $html);
+        fclose($fh);
+
+
+        $ftp_server = "ftp.byethost6.com";
+        $ftp_user = "b6_15031547";
+        $ftp_pass = "1028605605";
+        $fp = fopen($file, 'r');
+        $conn_id = ftp_connect($ftp_server) or die("Couldn't connect to $ftp_server"); 
+        $login_result = ftp_login($conn_id, $ftp_user, $ftp_pass);
+        ftp_pasv($conn_id, true);
+        ftp_chdir($conn_id, "htdocs");
+        ftp_fput($conn_id, 'calendar.html', $fp, FTP_BINARY);
+        ftp_close($conn_id); 
+        fclose($fp); 
+
+        $this->get('session')->getFlashBag()->add('success', "ben.flash.success.general");
+        return $this->redirect($this->generateUrl('event'));
+    }
 }

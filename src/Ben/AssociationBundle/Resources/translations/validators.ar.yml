@@ -1,0 +1,25 @@
+user:
+    username:
+        already_used: اسم المستخدم موجود مسبقا
+        blank: فضلا ادخل اسم مستخدم
+        short: "[-Inf,Inf] اسم المستخدم قصير جدا"
+        long: "[-Inf,Inf] اسم المستخدم طويل جدا"
+    email:
+        already_used: البريد الالكتروني موجود مسبقا
+        blank: فضلا ادخل بريد المتروني
+        short: "[-Inf,Inf] البريد الالكتروني قصير"
+        long: "[-Inf,Inf] البريد الالكتروني طويل"
+        invalid: البريد الالمتروني غير صحيح
+    cin:
+        already_used: هذا الرمز موجود مسبقا
+    barcode:
+        already_used: هذا الرمز الشريطي موجود مسبقا
+
+
+image:
+    error:
+        mimeType: نوع الملف غير معروف
+        uploadIniSize: الملف كبير جدا
+        uploadFormSize: الملف الذي تم تنزيله أكبر من المسموح به من قبل حقل الإدخال من ملف HTML
+        uploadError: لا يمكن نقل الملفات التي تم تحميلها لسبب غير معروف
+        maxSize: الملف أكبر مما يجب

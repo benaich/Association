@@ -1,0 +1,267 @@
+# messages.fr.yml
+user:
+    action:
+        new: إضافة عضو
+        group: الانضمام إلى المجموعة
+        edit:  تحديث عضو
+        login: التسجيل
+        carte: 
+            show: بطاقة الأعضاء
+            print: طباعة البطاقة
+        tiquet: تذكرة وجبة طعام
+        print: طباعة السجل
+        promote:
+            admin: جعله مشرف
+            manager: جعله محرر
+            user: مستخدم عادي
+        show: عرض معلوماتي الشخصية
+        setting: حساب
+        logout: الخروج
+    form:
+        email: البريد
+        enabled: حالة الحساب
+        username: اسم المستخدم
+        plainpassword: كلمة المرور
+        groups: مجموعات
+        role: مسؤولية
+        created: تاريخ التسجيل
+        lastlogin: آخر إتصال
+        rememberme: تذكرني
+        profile:
+            avatar: صورة
+            image.file: ''
+            family.name: الاسم
+            first.name: اللقب
+            cin: رقم البطاقة الوطنية
+            barcode: الرمز الشريطي
+            gender: الجنس
+            birthday: تاريخ الميلاد
+            job: المهنة
+            diplome: مستوى الدراسة
+            expertise: التخصص
+            address: العنوان
+            post.code: الرمز البريدي
+            city: المدينة
+            contry: الدولة
+            tel: الهاتف التابث
+            gsm: الهاتف النقال
+            website: الموقع الالكتروني
+            googleplus: Google Plus
+            facebook: Facebook
+            twitter: Twitter
+            description: معلومات أخرى
+    title:
+        main: قائمة الاعضاء
+        profile: الملف الشخصي
+    meta:
+        identity: تعريف
+        name: عضو
+        count: لا يوجد اعضاء | عضو واحد | عضوان | %count% اعضاء | %count% عضوا | %count% عضو
+        general: معلومات عامة
+        association: معلومات الجمعية
+        contact: معلومات الاتصال
+        calls: سجل الاتصالات
+        man: ذكر
+        woman: أنثى
+group:
+    action:
+        new: إضافة مجموعة
+        edit: تحديث مجموعة
+        filter: فلتر حسب المجموعة
+        reject: إزالة هذه المجموعة
+    form:
+        name: اسم المجموعة
+        placeholder:
+            filter: إنشاء مجموعة لهذا الفلتر
+    meta:
+        name: مجموعة
+        members: عدد الاعضاء
+        count: لا توجد اي مجموعة |  مجموعة واحدة |  مجموعتان | %count% مجموعات | %count%  مجموعة | %count%  مجموعة
+    title: ادارة المجموعات
+fos.user.group.form.name: اسم المجموعة
+status:
+    action:
+        new: إضافة رتبة
+        edit: تحديث رتبة
+        filter: فلتر حسب الرتبة
+    form:
+        name: اسم الرتبة
+    meta:
+        name: رتبة
+        members: عدد الاعضاء
+        count: لا توجد اي رتبة |  رتبة واحدة |  رتبتان | %count% رتب | %count%  رتبة | %count%  رتبة
+        logs:  سجل الدرجات
+    title: قائمة الرتب
+event:
+    action:
+        edit: تحديث حدث
+        new: اضافة حدث
+        letter:
+            show: اضهار الرسائل
+            print: طباعة الرسائل
+            send: ارسال عن طريق البريد الالكتروني
+    form:
+        name: الموضوع
+        type: النوع
+        description: وصف
+        groups: مجموعات
+    meta:
+        name: حدث
+        date: تاريخ
+        calendar: اجندة الاحداث
+    title: قائمة الاحداث
+cotisation:
+    action:
+        new: إضافة مساهمة
+        edit: تحديث مساهمة
+        filter: فلتر حسب مساهمة
+    form:
+        price: مبلغ
+        type: نوع
+        date:
+           from: تاريخ البدأ
+           to: تاريخ الانتهاء
+        description: وصف
+        periode: فترة
+        user: عضو
+    meta:
+        name: مساهمة 
+        count: عدد الاعضاء
+        number: مساهمة N° %id%
+        logs:  سجل المساهمات
+    title: قائمة المساهمات
+config:
+    action:
+        fields: إعداد الحقول
+    form:
+        logo: شعار
+        name: اسم الجمعية
+        description: وصف الجمعية
+        map:
+            lat: خط العرض
+            long: خط الطول
+        theme: Theme
+        allowlogin: التسجيل التلقائي مفعل ؟
+        allowprint: تسمح للاعضاء طباعة بطاقاتهم؟
+        carte:
+            bg: لون الخلفية
+            fg: لون النص
+        headband:
+            bg: اللون الخلفية لافتة
+            fg: لون نص لافتة
+            text: نص لافتة
+        css: النمط  css
+        letter:
+            header: راس الرسالة
+            event: رساة الدعوة
+            cotisation: رسالة المساهمة
+        local:
+            name: اللغة
+            fr: الفرنسية
+            en: الانجليزية
+            ar: العربية
+    meta:
+        general: عام
+        social: الشبكات الاجتماعية
+        setting: الاعدادات
+        carte: البطائق
+        letters: الرسائل
+        field: 
+            name: اسم الحقل
+            visible: مدي الرؤية
+    title: التفضيلات
+
+ben:
+    menu:
+        dashboard: لوحة القيادة
+        members: اعضاء
+        groups: مجموعات 
+        status: رتب
+        cotisation: مساهمات
+        events: احداث
+        reservation: حجز
+        logement: مسكن
+        rooms: غرف
+        config: التفضيلات
+        collapse: الرجوع للقائمة
+        messages: رسائل
+        notifications: إخطارات
+        calendar: اجندة
+    action:
+        new: اضافة
+        show: اظهار
+        edit: تحديث
+        delete: حذف
+        valide: تحقق
+        send: ارسال
+        done: انهاء
+        search: بحث
+        advanced: خيارات البحث
+        tocsv: تصدير الى ملف csv
+        toxml: تصدير الى ملف xml
+        toexcel: تصدير الى ملف excel
+        topdf: طبع
+        enable: تفعيل
+        disable: تعطيل
+        prev: سابق
+        next: التالي
+        more: مزيد من المعلومات
+        call: اتصال
+        sms: ارسال  sms
+        backtolist: العودة إلى قائمة
+        print: طبع
+        select: اختيار اجراء
+        hangup: إنهاء مكالمة
+    meta:
+        id: Id
+        all: الجميع
+        actions: القائمة
+        perpage: عدد الاسطر في الصفحة
+        total: مجموع
+        call: جاري الاتصال
+        message: الرسالة
+        datecall: تاريخ الا تصال
+        note: ملاحظة
+        map: موقعنا
+    image.form.file: ''
+# exceptions
+fos.user:
+    action:
+        email: تغيير عنوان البريد الإلكتروني الخاص بك
+        account: تعديلات الحساب
+        password:
+            change: تغيير كلمة السر 
+    change.password.form:
+        current.password: كلمة المرور الحالية
+        new:
+            first: كلمة المرور الجديدة
+            second: تأكيد كلمة المرور
+    profile.form:
+        username: اسم المستخدم
+        email: عنوان البريد الإلكتروني
+        current.password: كلمة المرور الحالية
+message:
+    action:
+        send: إرسال رسالة جديدة
+        delete: حذف هذه الرسالة
+        reply: إجابة
+        mail: ترسل عن طريق البريد الإلكتروني
+    meta:
+        main: المراسلة
+        count: لا توجد اي رسالة |  رسالة واحدة |  رسالتان | %count% رسائل | %count%  رسالة | %count%  رسالة
+        no: لا توجد رسائل حتى الآن
+        sent: ارسل
+        inbox: البريد الوارد
+        deleted: حذف
+        demo: نموذج من الرسائل التي بعث
+    form:
+        message: رسالة
+        subject: موضوع
+        sendto: أرسل إلى
+avancement:
+    form:
+        date:
+           from: تاريخ البدأ
+           to: تاريخ الانتهاء
+        city: ولاية
+        status: رتبة

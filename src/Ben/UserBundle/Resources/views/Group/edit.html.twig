@@ -5,7 +5,7 @@ Groupes - {{ parent() }}
 
 {% block fos_user_content %}
      
-<h2><span class="fui-user"></span> Gestion des Groupes</h2>
+<h2><span class="fui-user"></span> {{ 'group.action.edit'|trans }}</h2>
 <form id="createForm" class="form-horizontal" action="{{ path('fos_user_group_edit', {'groupname': group.name} ) }}" method="post" {{ form_enctype(form) }}>
     <div class="form-group">
       <label for="" class="col-md-4 control-label">{{ 'user.form.profile.avatar'|trans }}</label>

@@ -1,0 +1,38 @@
+ben:
+  flash:
+    error:
+      general: "عذرا، حدث خطأ"
+      form: هناك اخطاء في الاستمارة
+      user:
+        admin: استحالة نعديل العضو الخارق لهذه الواجهة
+        resetting:
+          password: طلب كلمة مرور جديدة لهذا المستخدم في ال 24 ساعة الماضية.
+      group:
+        empty: المجموعة فارغة
+    success:
+      updated: تم حفظ التغييرات.
+      profile:
+        updated: تم تحديث ملفك الشخصي
+        password: تم إعادة تعيين كلمة المرور بنجاح
+      user:
+        created: تم اضافة العضو بنجاح
+        deleted: تم حذف العضو بنجاح
+      group:
+        updated: تم تحديث المجموعة
+        created: تم إنشاء المجموعة!
+        deleted: تم حذف مجموعة
+      message:
+        sent: تم ارسال الرسائل بنجاح
+      event:
+        updated: تم تحديث هذا الحدث
+        deleted: تم حذف الحدث
+      status:
+        updated: تم تحديث الرتبة
+        created: تم إنشاء الرتبة!
+        deleted: تم حذف الرتبة
+      contribution:
+        updated: تم تحديث المساهمة
+        created: تم انشاء المساهمة
+        deleted: تم حذف المساهمة
+      general: تم تنفيذ العمل بنجاح
+      info: ''

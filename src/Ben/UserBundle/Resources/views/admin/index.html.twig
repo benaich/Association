@@ -6,7 +6,9 @@ Tableau de bord | {{ parent() }}
 
 <h2><span class="fui-user"></span> {{'user.title.main'|trans}}</h2>
         <form  id="jsForm" role="form" method="post" action="">
-            <input id="pagenumber" type="hidden" name="searchParam[page]" value="1"> 
+          <input id="pagenumber" type="hidden" name="searchParam[page]" value="1"> 
+          <input id="sortBy" type="hidden" name="searchParam[sortBy]"> 
+          <input id="sortDir" type="hidden" name="searchParam[sortDir]"> 
             <div class="row hidden-print">
               <div class="col-md-5 col-xs-6">
                   <div class="form-group">
@@ -39,6 +41,7 @@ Tableau de bord | {{ parent() }}
                     <li class="divider"></li>
                     <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> {{'ben.action.tocsv'|trans}}</a></li>
                     <li><a href="{{ path('ben_export_xml') }}"><span class="fui-export"></span> {{'ben.action.toxml'|trans}}</a></li>
+                    <li><a href="{{ path('ben_export_excel') }}"><span class="fui-export"></span> {{'ben.action.toxml'|trans}}</a></li>
                     <li><a href="#" id="js-badge"><span class="fui-credit-card"></span> {{'user.action.carte.show'|trans}}</a></li>
                     <li><a href="#" id="js-tiquet"><span class="fui-tag"></span> {{'user.action.tiquet'|trans}}</a></li>
                     {% if is_granted("ROLE_ADMIN") %}
@@ -55,7 +58,13 @@ Tableau de bord | {{ parent() }}
                     <tr>
                         <th><label class="checkbox no-label toggle-all" for="checkbox-table-1"><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" value="" id="checkbox-table-1" data-toggle="checkbox"></label></th>
                         {% for item in app_config.userTable %}
-                          {% if item.visible %}<th>{{ item.nicename }}</th>{% endif %}
+                          {% if item.visible %}
+                          {% if item.fieldName in ['firstname','birthday','familyname'] %}
+                          <th class="sortable"><a href="#" class="js-sort" data-order="{{ item.fieldname }}">{{ item.nicename }}<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
+                          {% else %}
+                          <th>{{ item.nicename }}</th>
+                          {% endif %}
+                          {% endif %}
                         {% endfor %}
                         <th>{{'ben.meta.actions'|trans}}</th>
                     </tr>
@@ -141,6 +150,9 @@ Tableau de bord | {{ parent() }}
           perPageBtn = form.find('#js-perpage'),
           printBadgeBtn = form.find('#js-badge'),
           printTiquetBtn = form.find('#js-tiquet'),
+          sortByInput = form.find('#sortBy'),
+          sortDirInput = form.find('#sortDir'),
+          sortBtn = form.find('.js-sort'),
           searchBtn = form.find('#js-search'),
           filterGroupBtn = form.find('#js-filter-group'),
           searchModal = form.find('#searchModal'),
@@ -219,6 +231,18 @@ Tableau de bord | {{ parent() }}
         if (!isSelected()) return false;
         jsFormUrl = url.replace("1111", etat);
         ajaxPost('enable');
+      });
+
+
+      /* change sort order */
+      sortBtn.on('click', function(){
+        var th = $(this).parent();
+        th.addClass('sorted').toggleClass('asc').siblings().removeClass('sorted');
+        sortByInput.val($(this).data('order'));
+        if (th.hasClass('asc')) sortDirInput.val('ASC');
+        else sortDirInput.val('DESC');
+        ajaxPost();
+        return false;
       });
 
       /* promote a user */

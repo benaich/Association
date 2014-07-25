@@ -22,7 +22,21 @@
             </ul>
         </div>
         </div>
-        <div class="text-center">
+
+        <div class="btn-group">              
+          <button class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown"><span class="fui-gear"></span> actions
+            <span class="caret"></span>
+          </button>
+          <span class="dropdown-arrow dropdown-arrow-inverse"></span>
+          <ul class="dropdown-menu dropdown-inverse">
+            <li><a class="showuser" data-index="{{ loop.index }}" data-id="{{ entity.id }}" href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-search"></span> {{ 'ben.action.show'|trans }}</a></li>
+            <li><a href="{{ path('ben_edit_user', {id: entity.id }) }}"><span class="glyphicon glyphicon-edit"></span> {{ 'ben.action.edit'|trans }}</a></li>
+            <li><a href="{{ path('avancement_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-user"></span> {{ 'status.action.new'|trans }}</a></li>
+            <li><a href="{{ path('cotisation_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-check"></span> {{ 'cotisation.meta.name'|trans }}</a></li>
+          </ul>
+        </div>
+
+{#         <div class="text-center">
           
         <div class="btn-group">
             <a class="btn btn-embossed btn-primary showuser btn-xs" data-index="{{ loop.index }}" data-id="{{ entity.id }}" href="#" data-toggle="modal" data-target="#myModal" title="{{ 'ben.action.show'|trans }}"><span class="glyphicon glyphicon-search"></span></a>
@@ -30,7 +44,7 @@
             <a class="btn btn-embossed btn-inverse btn-xs" href="{{ path('avancement_new', { 'id': entity.id }) }}" title="{{ 'status.action.new'|trans }}"><span class="glyphicon glyphicon-user"></span></a>
             <a class="btn btn-embossed btn-default btn-xs" href="{{ path('cotisation_new', { 'id': entity.id }) }}" title="{{ 'cotisation.meta.name'|trans }}"><span class="glyphicon glyphicon-check"></span></a>
         </div>
-        </div>
+        </div> #}
         </td>
     </tr>
 {% endfor %}

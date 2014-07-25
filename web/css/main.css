@@ -382,6 +382,7 @@ ul.social li {
 .js-barcode div{background: transparent!important;}
 .etiquette .js-barcode{padding-left: 10px;} 
 /* flat ui */
+.open > .dropdown-menu{overflow: hidden;}
 .fui-arrow-right:before{content: "\e02c"!important}
 .table .selected-row > td {background-color: #f2fbfa!important;}
 p{font-size: inherit;line-height: inherit;}
@@ -730,6 +731,18 @@ div.page p{
 }
 
 .modal .throbber{margin-top: 18%!important;}
+/* sort */
+th.sortable a, th.sorted a {
+	display: block;
+	overflow: hidden;
+	color: #526476;
+}
+th.sortable .glyphicon-sort{
+	opacity: 0;
+}
+th.sortable:hover .glyphicon-sort, th.sorted .glyphicon-sort{
+	opacity: 1;
+}
 
 
 

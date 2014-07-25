@@ -34,7 +34,7 @@ class RoomsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entitiesLength = $em->getRepository('BenAssociationBundle:Rooms')->counter();
         return $this->render('BenAssociationBundle:Rooms:index.html.twig', array(
-                'entitiesLength' => $entitiesLength[1]));
+                'entitiesLength' => $entitiesLength));
     }
 
     /**

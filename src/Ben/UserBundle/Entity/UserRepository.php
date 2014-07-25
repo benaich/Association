@@ -18,6 +18,7 @@ class UserRepository extends EntityRepository
                 ->leftJoin('u.groups', 'g')
                 ->addSelect('g')
                 ->leftJoin('u.avancements', 'av')
+                ->addSelect('av')
                 ->leftJoin('av.status', 'status');
 
         if(!empty($keyword))
@@ -40,13 +41,26 @@ class UserRepository extends EntityRepository
         if(!empty($city))
             $qb->andWhere('p.city = :city')->setParameter('city', $city);
         if(!empty($cotisation)){
+            $current=new \DateTime("now");
+            $current->setDate(DATE_FORMAT($current, 'Y'),01,01);
             if($cotisation==1)
-                $qb->leftJoin('u.cotisations', 'c')->andWhere($qb->expr()->andx($qb->expr()->isNotNull('c.user')));
-            else $qb->leftJoin('u.cotisations', 'c')->andWhere($qb->expr()->andx($qb->expr()->isNull('c.user')));
+                $qb->leftJoin('u.cotisations', 'c')
+                    // ->andWhere('c.date_from > :current')->setParameter('current', $current)
+                    ->andWhere($qb->expr()->andx($qb->expr()->isNotNull('c.user')));
+            else $qb->leftJoin('u.cotisations', 'c')
+                    // ->andWhere('c.date_from < :current')->setParameter('current', $current)
+                    ->andWhere($qb->expr()->andx($qb->expr()->isNull('c.user')));
         }
-        $qb->setFirstResult(($page - 1) * $perPage)
-        ->setMaxResults($perPage);
 
+        if(!empty($sortBy)){
+            $sortBy = ($sortBy == 'familyname') ? 'family_name' : $sortBy;
+            $sortBy = ($sortBy == 'firstname') ? 'first_name' : $sortBy;
+            $sortBy = in_array($sortBy, array('first_name', 'family_name', 'birthday')) ? $sortBy : 'id';
+            $sortDir = ($sortDir == 'DESC') ? 'DESC' : 'ASC';
+            $qb->orderBy('p.' . $sortBy, $sortDir);
+        }
+        if(!empty($perPage)) $qb->setFirstResult(($page - 1) * $perPage)->setMaxResults($perPage);
+        // var_dump($qb->getQuery()->getDql());die;
        return new Paginator($qb->getQuery());
     }
 

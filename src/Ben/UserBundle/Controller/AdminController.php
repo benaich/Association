@@ -266,15 +266,10 @@ class AdminController extends Controller
         $userManager = $this->get('fos_user.user_manager');
         foreach( $users as $id){
             $user = $userManager->findUserBy(array('id' => $id));
-            /* check if user has admin role */
-            if (in_array('ROLE_ADMIN', $user->getRoles())){
-                $this->get('session')->getFlashBag()->add('error', "ben.flash.error.user.admin");
-            }else{
-                $user->removeRole('ROLE_MANAGER');
-                $user->removeRole('ROLE_ADMIN');
-                $user->addRole($role);
-                $userManager->updateUser($user);
-            }
+            $user->removeRole('ROLE_MANAGER');
+            $user->removeRole('ROLE_ADMIN');
+            $user->addRole($role);
+            $userManager->updateUser($user);
         }
         return new Response('1');
     }
@@ -363,28 +358,59 @@ class AdminController extends Controller
      * exporter vers excel
      * @Secure(roles="ROLE_MANAGER")
      */
-    public function toExcelAction($status)
+    public function toExcelAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('BenUserBundle:user')->findAll();
+        $entities = $em->getRepository('BenUserBundle:user')->search(array());
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
         $phpExcelObject->getProperties()->setCreator("ben");
         $phpExcelObject->setActiveSheetIndex(0)
             ->setCellValue("A1", "id")
-            ->setCellValue("B1", "nom d'utilisateur")
+            ->setCellValue("B1", "CIN")
             ->setCellValue("C1", "nom")
             ->setCellValue("D1", "prenom")
-            ->setCellValue("E1", "cin");
+            ->setCellValue("E1", "Identifiant")
+            ->setCellValue("F1", "email")
+            ->setCellValue("G1", "sexe")
+            ->setCellValue("H1", "codebare")
+            ->setCellValue("I1", "adresse")
+            ->setCellValue("J1", "code postal")
+            ->setCellValue("K1", "ville")
+            ->setCellValue("L1", "pays")
+            ->setCellValue("M1", "tel")
+            ->setCellValue("N1", "gsm")
+            ->setCellValue("O1", "profession")
+            ->setCellValue("P1", "description")
+            ->setCellValue("Q1", "diplome")
+            ->setCellValue("R1", "expertise")
+            ->setCellValue("S1", "status")
+            ->setCellValue("T1", "Date de naissance")
+            ->setCellValue("U1", "Date d'inscription");
         $i=2;
         foreach ($entities as $entity) {
-            $university = ($entity->getEtablissement()) ? $entity->getEtablissement()->getName() : '';
            $phpExcelObject->setActiveSheetIndex(0)
                 ->setCellValue("A$i", $entity->getId())
-                ->setCellValue("B$i", $entity->getNDossier())
-                ->setCellValue("C$i", $entity->getFamilyName())
-                ->setCellValue("D$i", $entity->getFirstName())
-                ->setCellValue("E$i", $entity->getCin());
+                ->setCellValue("B$i", $entity->getProfile()->getCin())
+                ->setCellValue("C$i", $entity->getProfile()->getFamilyName())
+                ->setCellValue("D$i", $entity->getProfile()->getFirstName())
+                ->setCellValue("E$i", $entity->getUsername())
+                ->setCellValue("F$i", $entity->getEmail())
+                ->setCellValue("G$i", $entity->getProfile()->getGender())
+                ->setCellValue("H$i", $entity->getProfile()->getBarcode())
+                ->setCellValue("I$i", $entity->getProfile()->getAddress())
+                ->setCellValue("J$i", $entity->getProfile()->getPostCode())
+                ->setCellValue("K$i", $entity->getProfile()->getCity())
+                ->setCellValue("L$i", $entity->getProfile()->getContry())
+                ->setCellValue("M$i", $entity->getProfile()->getTel())
+                ->setCellValue("N$i", $entity->getProfile()->getGsm())
+                ->setCellValue("O$i", $entity->getProfile()->getJob())
+                ->setCellValue("P$i", $entity->getProfile()->getDescription())
+                ->setCellValue("Q$i", $entity->getProfile()->getDiplome())
+                ->setCellValue("R$i", $entity->getProfile()->getExpertise())
+                ->setCellValue("S$i", $entity->getStatus())
+                ->setCellValue("T$i", $entity->getProfile()->getBirthday()->format('d/m/Y'))
+                ->setCellValue("U$i", $entity->getCreated()->format('d/m/Y'));
             $i++;
        }
 
@@ -493,10 +519,23 @@ class AdminController extends Controller
     }
 
     /**
-     * liste des utilisateurs public
+     * log mail, sms, call for a user
      * @Secure(roles="ROLE_MANAGER")
      */
     public function logAction(Request $request)
+    {
+        $entity = $this->getLog($request->get('log'));
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($entity);
+        $em->flush();
+        return new Response('1');
+    }
+
+    /**
+     * log mail, sms, call fo a group
+     * @Secure(roles="ROLE_MANAGER")
+     */
+    public function logGroupAction(Request $request)
     {
         $entity = $this->getLog($request->get('log'));
         $em = $this->getDoctrine()->getManager();

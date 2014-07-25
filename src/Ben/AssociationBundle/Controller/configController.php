@@ -59,6 +59,7 @@ class configController extends Controller
             $config['org_logo'] = $img->getWebPath();
         $config['org_signup'] = isset($config['org_signup']);
         $config['print_permission'] = isset($config['print_permission']);
+        $config['users_access'] = isset($config['users_access']);
         foreach ($config as $key => $value) {
             $em->getRepository('BenAssociationBundle:config')->updateBy($key, $value);
         }

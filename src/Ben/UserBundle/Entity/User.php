@@ -13,6 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="UserRepository"))
  * @ORM\Table(name="user")
  * @UniqueEntity("username")
+ * @UniqueEntity("email")
  * @ORM\HasLifecycleCallbacks
  */
 class User extends BaseUser implements ParticipantInterface {
@@ -259,7 +260,7 @@ class User extends BaseUser implements ParticipantInterface {
      */
     public function getStatus()
     {
-        return ($this->avancements->last()) ? $this->avancements->last()->getStatus() : '';
+        return ($this->avancements->last()) ? $this->avancements->last()->getStatus()->getName() : '';
     }
 
     /**

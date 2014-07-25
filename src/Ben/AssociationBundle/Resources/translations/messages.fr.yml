@@ -123,7 +123,7 @@ cotisation:
            from: Date début
            to: Date fin
         description: Description
-        periode: Periode de cotisation
+        periode: Periode
         user: Adhérent
     meta:
         name: cotisation
@@ -143,6 +143,7 @@ config:
             long: Longuitude
         theme: Theme
         allowlogin: Auto-Enregistrement actif ?
+        allowaccess: Les adhérants peuvent se connécter?
         allowprint: Permettre aux membres d'imprimer leurs carte ?
         carte:
             bg: Coleur du background
@@ -223,6 +224,7 @@ ben:
         message: message
         datecall: date d'appel
         note: remarque
+        map: Locale
     image.form.file: ''
 # exceptions
 fos.user:

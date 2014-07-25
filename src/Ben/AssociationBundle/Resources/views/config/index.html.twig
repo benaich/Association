@@ -141,9 +141,9 @@ Tableau de bord | {{ parent() }}
                 <label for="" class="col-sm-4 control-label">{{ 'config.form.theme'|trans }} </label>
                 <div class="col-sm-4">
                     <select name="config[app_theme]" class="primary select-block">
-                        <option {% if app_config.app_theme =="theme1" %}selected="selected"{% endif %} value="theme1">theme1</option>
-                        <option {% if app_config.app_theme =="theme2" %}selected="selected"{% endif %} value="theme2">theme2</option>
-                        <option {% if app_config.app_theme =="theme3" %}selected="selected"{% endif %} value="theme3">theme3</option>
+                        <option {% if app_config.app_theme =="theme1" %}selected="selected"{% endif %} value="theme1">Bluewood</option>
+                        <option {% if app_config.app_theme =="theme2" %}selected="selected"{% endif %} value="theme2">Dark</option>
+                        <option {% if app_config.app_theme =="theme3" %}selected="selected"{% endif %} value="theme3">PURPLE</option>
                     </select>
                 </div>
               </div>
@@ -178,6 +178,12 @@ Tableau de bord | {{ parent() }}
                 <label for="" class="col-sm-4 control-label">{{ 'config.form.allowprint'|trans }}</label>
                 <div class="col-sm-4">
                   <input type="checkbox" name="config[print_permission]" {% if app_config.print_permission %}checked='checked'{% endif %} value="{{ app_config.print_permission }}" data-toggle="switch" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">{{ 'config.form.allowaccess'|trans }}</label>
+                <div class="col-sm-4">
+                  <input type="checkbox" name="config[allowaccess]" {% if app_config.allowaccess %}checked="checked"{% endif %} value="{{ app_config.allowaccess }}" data-toggle="switch" />
                 </div>
               </div>
               </div><!-- /tab3 -->

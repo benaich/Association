@@ -49,7 +49,7 @@ class AvancementController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', "Le status a été ajouté avec succée.");
+            $this->get('session')->getFlashBag()->add('success', "ben.flash.success.status.created");
             return $this->redirect($this->generateUrl('ben_show_user', array('id' => $entity->getUser()->getId())));
         }
 
@@ -107,7 +107,7 @@ class AvancementController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', "Le status a été modifié avec succée.");
+            $this->get('session')->getFlashBag()->add('success', "ben.flash.success.status.updated");
             return $this->redirect($this->generateUrl('ben_show_user', array('id' => $entity->getUser()->getId())));
         }
 
@@ -140,7 +140,7 @@ class AvancementController extends Controller
             $em->flush();
         }
 
-        $this->get('session')->getFlashBag()->add('success', "Le grade a été supprimé avec succée.");
+            $this->get('session')->getFlashBag()->add('success', "ben.flash.success.status.deleted");
             return $this->redirect($this->generateUrl('ben_show_user', array('id' => $entity->getUser()->getId())));
     }
 
