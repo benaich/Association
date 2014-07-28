@@ -9,6 +9,7 @@ ben:
           password: Un nouveau mot de passe a déjà été demandé pour cet utilisateur dans les dernières 24 heures.
       group:
         empty: Ce groupe est vides
+      login: impossible de se connecter au serveur
     success:
       updated: Vos modifications ont été enregistrées.
       profile:

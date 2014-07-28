@@ -38,10 +38,9 @@ class SecurityListener
     public function onKernelResponse(FilterResponseEvent $event)
     {
         $request = $event->getRequest();
-        $locale = $request->get('_locale');
-        $request->getSession()->set('_locale', $locale);
+        // $locale = $request->get('_locale');
+        // $request->getSession()->set('_locale', $locale);
         $allowaccess = $this->em->getRepository('BenAssociationBundle:config')->findOneBy(array('the_key' => 'allowaccess'))->getTheValue();
-        // var_dump($allowaccess);die;
         if ($this->security->isGranted('ROLE_MANAGER')) {
             $event->getResponse()->headers->set('Location', $this->router->generate('Ben_association_homepage'));    
         } else {

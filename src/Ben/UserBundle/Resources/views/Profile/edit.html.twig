@@ -23,5 +23,25 @@ Paramètres - {{ parent() }}
     </div>
 </fieldset>
 </form>
+<form action="{{ path('config_update_lang') }}" method="POST" class="form-horizontal">
+<fieldset>
+    <legend>{{ 'config.form.local.name'|trans }} </legend>
+    <div class="form-group">
+        <label for="" class="col-sm-4 control-label">{{ 'config.form.local.name'|trans }} </label>
+        <div class="col-sm-4">
+            <select name="_locale" class="primary select-block">
+                <option {% if app_config.org_lang =="fr_FR" %}selected="selected"{% endif %} value="fr_FR">{{ 'config.form.local.fr'|trans }}</option>
+                <option {% if app_config.org_lang =="en" %}selected="selected"{% endif %} value="en">{{ 'config.form.local.en'|trans }}</option>
+                <option {% if app_config.org_lang =="ar" %}selected="selected"{% endif %} value="ar">{{ 'config.form.local.ar'|trans }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-4">
+            <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-new"></span> {{ 'ben.action.edit'|trans }}</button>
+        </div>
+    </div>
+</fieldset>
+</form>
 
 {% endblock fos_user_content %}

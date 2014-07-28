@@ -9,6 +9,7 @@ ben:
           password: The password for this user has already been requested within the last 24 hours.
       group:
         empty: The group is empty
+      login: Could not connect to server: Login authentication failed
     success:
       updated: Your changes have been saved successfully.
       profile:

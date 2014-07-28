@@ -1,176 +1,90 @@
-Symfony Standard Edition
-========================
+==============================================================================
+                    I.  Annexe I : Installation sous Linux
+==============================================================================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
-application that you can use as the skeleton for your new applications.
+On va voir dans ce chapitre les points à vérifier pour déployer l’application sur un serveur linux. La méthodologie est la suivante :
 
-This document contains information on how to download, install, and start
-using Symfony. For a more detailed explanation, see the [Installation][1]
-chapter of the Symfony Documentation.
+1) Vérifier et préparer le serveur de production
+------------------------------------------------
 
-1) Installing the Standard Edition
-----------------------------------
+Évidemment, pour déployer une application Symfony2 sur votre serveur, encore faut-il que celui-ci soit compatible avec les besoins de Symfony2 ! Pour vérifier cela, on peut distinguer deux cas.
+Symfony2 intègre un petit fichier PHP qui fait toutes les vérifications de compatibilité nécessaires, Il s'agit du fichier web/config.php, envoyez le sur votre serveur. Ouvrez la page web qui lui correspond, par exemple www.votre-serveur.com/config.php. Vous devriez obtenir soit des alertes "Major Problems" que vous devez corriger ou juste des Recommandations essayez de les respecter si cela est possible.
 
-When it comes to installing the Symfony Standard Edition, you have the
-following options.
+2) Pré-requis au bon fonctionnement de Symfony2
+-----------------------------------------------
 
-### Use Composer (*recommended*)
+Voici les points obligatoires qu'il faut que votre serveur respecte pour pouvoir faire tourner Symfony2 :
+- PHP doit être au minimum à la version PHP 5.3.3
+- JSON doit être activé
+- ctype doit être activé
+- Votre PHP.ini doit avoir le paramètre date.timezone défini
+- installer le driver PDO
 
-As Symfony uses [Composer][2] to manage its dependencies, the recommended way
-to create a new project is to use it.
+3) Installer wkhtmltopdf
+-----------------------------------------------
 
-If you don't have Composer yet, download it following the instructions on
-http://getcomposer.org/ or just run the following command:
+Wkhtmltopdf un outil qui permet de générer des PDF, il est utilisé dans l'application pour imprimer les badges des adhérents.
+# apt-get install wkhtmltopdf
+Âpres l'installation modifier le fichier de configuration app/config/config.yml afin de spécifier le chemin absolue de wkhtmltopdf.
 
-    curl -s https://getcomposer.org/installer | php
+4) Envoyer les fichiers sur le serveur
+-----------------------------------------------
 
-Then, use the `create-project` command to generate a new Symfony application:
 
-    php composer.phar create-project symfony/framework-standard-edition path/to/install 2.1.x-dev
+Dans un premier temps, il faut bien évidemment envoyer les fichiers sur le serveur. Pour éviter d'envoyer des fichiers inutiles et lourds, videz dans un premier temps le cache de votre application en supprimant tout le contenu du repertoire app/cache. Ensuite, envoyez tous vos fichiers et dossiers à la racine de votre hébergement, dans www/
+Important:
+Les fichiers dans le répertoire vendors/ sont assez lourds et prennent beaucoup de temps lors de l'uploada. Pour remédier à ce problème, sur votre serveur, exécutez la commande
+ # php composer.phar install 
+Cette commande qui va installer les mêmes versions des dépendances que vous avez en local. Cela se fait grâce au fichier composer.lock qui contient tous les numéros des versions installées justement.
+Si vous n'avez pas accès à Composer sur votre serveur, alors contentez-vous d'envoyer le dossier vendor en même temps que le reste de votre application.
 
-For an exact version, replace 2.1.x-dev with the latest Symfony version (e.g. 2.1.1).
+5) Régler les droits sur les dossiers app/cache et app/logs
+-----------------------------------------------------------
 
-Composer will install Symfony and all its dependencies under the
-`path/to/install` directory.
 
-### Download an Archive File
+Vous le savez maintenant, Symfony2 a besoin de pouvoir écrire dans deux répertoires : app/cache pour y mettre le cache de l'application et ainsi améliorer les performances, et app/logs pour y mettre l'historiques des informations et erreurs rencontrées lors de l'exécution des pages. Sur votre serveur, exécutez la commande suivante:
+# chmod 775 -R app/cache app/logs
 
-To quickly test Symfony, you can also download an [archive][3] of the Standard
-Edition and unpack it somewhere under your web server root directory.
 
-If you downloaded an archive "without vendors", you also need to install all
-the necessary dependencies. Download composer (see above) and run the
-following command:
-
-    php composer.phar install
-
-2) Checking your System Configuration
+6) Mettre en place la base de données
 -------------------------------------
 
-Before starting coding, make sure that your local system is properly
-configured for Symfony.
+Il ne manque pas grand-chose avant que votre site ne soit opérationnel. Il faut notamment s'attaquer à la base de données. Pour cela, modifiez le fichier app/config/parameters.yml de votre serveur afin d'adapter les valeurs des paramètres database_*.
+Ensuite connecter a MySQL et importer la base de donner à l'aide du ficher app/Ressources/database.sql
 
-Execute the `check.php` script from the command line:
+Ça y est, l'application devrait être opérationnel dès maintenant ! Vérifiez que tout fonctionne bien dans www.votre-serveur.com/app.php.
+Important:
+Les erreurs ne sont certes pas affichées à l'écran, mais elles sont heureusement répertoriées dans le fichier app/logs/prod. Si l'un de vos visiteurs vous rapporte une erreur, c'est dans ce fichier qu'il faut aller regarder pour avoir le détail, les informations nécessaires à la résolution de l'erreur.
 
-    php app/check.php
+==============================================================================
+                    II : Installation sous Windows
+==============================================================================
 
-Access the `config.php` script from a browser:
+2) Installation de WAMP
+-----------------------
 
-    http://localhost/path/to/symfony/app/web/config.php
+Pour commencer, il faut télécharger l’installeur wamp disponible gratuitement sur son site officiel. (Notez qu’il est disponible en version 32 et 64 bits veillez donc à choisir la bonne version en regard de votre système d’exploitation afin d’en tirer pleinement satisfaction)
+Dès lors que le téléchargement est terminé vous pouvez procéder à son installation. L’installation est très simple je ne m’attarderai pas dessus afin de rester centré uniquement sur l’essentiel dans ce tutoriel.
 
-If you get any warnings or recommendations, fix them before moving on.
 
-3) Browsing the Demo Application
---------------------------------
+2) Déploiement des différents modules Apache et PHP 
+---------------------------------------------------
 
-Congratulations! You're now ready to use Symfony.
+Pour apache :
+Faites clic-gauche sur l’icône de Wamp dans la barre des tâches > Apache > Apache Modules > sélectionnez « Rewrite Module »
+Pour les modules php :
+clic-gauche sur l’icône de Wamp > PHP > PHP Extensions > cochez « php_intl », « php_xmlrpc », « php_pdo_mysql », « php_sqlite3 », « php_mbstring »
+Symfony2 recommande aussi l’utilisation du module php_apc pour accélérer le rendu des pages.
 
-From the `config.php` page, click the "Bypass configuration and go to the
-Welcome page" link to load up your first Symfony page.
 
-You can also use a web-based configurator by clicking on the "Configure your
-Symfony Application online" link of the `config.php` page.
+3) Installer wkhtmltopdf
+------------------------
 
-To see a real-live Symfony page in action, access the following page:
+Pour télécharger Wkhtmltopdf, rendez-vous à cette adresse : http://wkhtmltopdf.org/downloads.html Dès lors que le téléchargement est terminé vous pouvez procéder à son installation.
+Ensuit vous devez modifier le fichier de configuration app/config/config.yml afin de spécifier le chemin absolue de wkhtmltopdf. 
 
-    web/app_dev.php/demo/hello/Fabien
 
-4) Getting started with Symfony
--------------------------------
+4) Test de Symfony2
+-------------------
 
-This distribution is meant to be the starting point for your Symfony
-applications, but it also contains some sample code that you can learn from
-and play with.
-
-A great way to start learning Symfony is via the [Quick Tour][4], which will
-take you through all the basic features of Symfony2.
-
-Once you're feeling good, you can move onto reading the official
-[Symfony2 book][5].
-
-A default bundle, `AcmeDemoBundle`, shows you Symfony2 in action. After
-playing with it, you can remove it by following these steps:
-
-  * delete the `src/Acme` directory;
-
-  * remove the routing entries referencing AcmeBundle in
-    `app/config/routing_dev.yml`;
-
-  * remove the AcmeBundle from the registered bundles in `app/AppKernel.php`;
-
-  * remove the `web/bundles/acmedemo` directory;
-
-  * remove the `security.providers`, `security.firewalls.login` and
-    `security.firewalls.secured_area` entries in the `security.yml` file or
-    tweak the security configuration to fit your needs.
-
-What's inside?
----------------
-
-The Symfony Standard Edition is configured with the following defaults:
-
-  * Twig is the only configured template engine;
-
-  * Doctrine ORM/DBAL is configured;
-
-  * Swiftmailer is configured;
-
-  * Annotations for everything are enabled.
-
-It comes pre-configured with the following bundles:
-
-  * **FrameworkBundle** - The core Symfony framework bundle
-
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
-
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
-
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
-
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
-
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
-
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
-
-  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
-    library
-
-  * [**JMSSecurityExtraBundle**][13] - Allows security to be added via
-    annotations
-
-  * [**JMSDiExtraBundle**][14] - Adds more powerful dependency injection
-    features
-
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
-
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
-
-  * [**SensioGeneratorBundle**][15] (in dev/test env) - Adds code generation
-    capabilities
-
-  * **AcmeDemoBundle** (in dev/test env) - A demo bundle with some example
-    code
-
-Enjoy!
-
-[1]:  http://symfony.com/doc/2.1/book/installation.html
-[2]:  http://getcomposer.org/
-[3]:  http://symfony.com/download
-[4]:  http://symfony.com/doc/2.1/quick_tour/the_big_picture.html
-[5]:  http://symfony.com/doc/2.1/index.html
-[6]:  http://symfony.com/doc/2.1/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  http://symfony.com/doc/2.1/book/doctrine.html
-[8]:  http://symfony.com/doc/2.1/book/templating.html
-[9]:  http://symfony.com/doc/2.1/book/security.html
-[10]: http://symfony.com/doc/2.1/cookbook/email.html
-[11]: http://symfony.com/doc/2.1/cookbook/logging/monolog.html
-[12]: http://symfony.com/doc/2.1/cookbook/assetic/asset_management.html
-[13]: http://jmsyst.com/bundles/JMSSecurityExtraBundle/master
-[14]: http://jmsyst.com/bundles/JMSDiExtraBundle/master
-[15]: http://symfony.com/doc/2.1/bundles/SensioGeneratorBundle/index.html
+Placez ensuite le répertoire de l’application dans votre répertoire web (par défaut C:/WAMP/www/ ) et rendez-vous à l’adresse : http://localhost/association/app/check.php

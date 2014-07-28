@@ -23,16 +23,17 @@
         </div>
         </div>
 
-        <div class="btn-group">              
-          <button class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown"><span class="fui-gear"></span> actions
+        <div class="btn-group pull-left">              
+          <button class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"><span class="fui-gear"></span>
             <span class="caret"></span>
           </button>
           <span class="dropdown-arrow dropdown-arrow-inverse"></span>
           <ul class="dropdown-menu dropdown-inverse">
-            <li><a class="showuser" data-index="{{ loop.index }}" data-id="{{ entity.id }}" href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-search"></span> {{ 'ben.action.show'|trans }}</a></li>
+            <li><a class="js-show" data-index="{{ loop.index }}" data-id="{{ entity.id }}" href="#"><span class="glyphicon glyphicon-search"></span> {{ 'ben.action.show'|trans }}</a></li>
             <li><a href="{{ path('ben_edit_user', {id: entity.id }) }}"><span class="glyphicon glyphicon-edit"></span> {{ 'ben.action.edit'|trans }}</a></li>
             <li><a href="{{ path('avancement_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-user"></span> {{ 'status.action.new'|trans }}</a></li>
             <li><a href="{{ path('cotisation_new', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-check"></span> {{ 'cotisation.meta.name'|trans }}</a></li>
+            <li><a class="js-call" href="#" data-id="{{ entity.id }}" data-call="{{ entity.profile.tel }}"><span class="glyphicon glyphicon-earphone"></span> {{ 'ben.action.call'|trans }}</a></li>
           </ul>
         </div>
 

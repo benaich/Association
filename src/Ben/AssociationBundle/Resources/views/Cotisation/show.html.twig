@@ -1,6 +1,6 @@
 {% extends "BenAssociationBundle::layout.html.twig" %}
 {% block title %}
-Tableau de bord | {{ parent() }}
+{{ 'cotisation.meta.number'|trans({'%id%': entity.id} ) }} | {{ parent() }}
 {% endblock %}
 {% block body %}
 
@@ -54,7 +54,8 @@ Tableau de bord | {{ parent() }}
     <a class="btn btn-embossed btn-inverse btn-block " href="{{ path('cotisation') }}">
         <span class="fui-arrow-left"></span> {{ 'ben.action.backtolist'|trans }}
     </a>
-    <button type="submit" class="btn btn-embossed btn-danger btn-block"><span class="fui-cross"></span> {{ 'ben.action.delete'|trans }} </button>
+    {% if is_granted("ROLE_ADMIN") %}<button type="submit" class="btn btn-embossed btn-danger btn-block"><span class="fui-cross"></span> {{ 'ben.action.delete'|trans }} </button>{% endif %}
+    
     </form>
 </div>
 <div class="clearfix"></div>

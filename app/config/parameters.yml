@@ -23,3 +23,7 @@ parameters:
     appfolder:     Association
     asset_url:     http://127.0.0.1/Association/web/
 
+    ftp_server: curios.onlinewebshop.net
+    ftp_user: 1631669
+    ftp_password: Azerty.123
+    ftp_dir: curios.onlinewebshop.net

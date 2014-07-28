@@ -46,7 +46,7 @@ h6,
 .h6 {
   font-size: 12px;
 }
-.container > h2 {
+.container > h2, .container > .row h2 {
 	color: #666;
 	text-shadow: 0 1px 0 #FFF;
 	margin-bottom: 28px;
@@ -210,25 +210,7 @@ header.header{
 	margin-top: 50px;
 }
 /* login form */
-.sign-in-bg{background-color: #EDEDED;}
-.sign-in{
-	width: 400px;
-	margin: 20px auto;
-}
-.sign-in-head{
-	background-color: #414a58;
-	padding: 10px 20px;
-	border-radius: 3px 3px 0 0;
-}
-.sign-in-head h1{
-	font: 30px normal;
-	color: #FFFFFF;
-	margin: 10px 0;	
-}
-.sign-in-form{
-	background-color: white;
-	padding: 10px 20px;
-}
+
 /* table */
 .table tr {
 background: white;
@@ -364,9 +346,9 @@ ul.social li {
 	padding: 5px;
 }
 .mybadge h2{
-	margin-top: 30px;
+	margin-top: 12px!important;
 	font-size: 22px;
-	margin-bottom: 0;
+	margin-bottom: 0!important;
 }
 .mybadge .footer{
 	background: rgba(52, 73, 94, 0.77);
@@ -382,6 +364,7 @@ ul.social li {
 .js-barcode div{background: transparent!important;}
 .etiquette .js-barcode{padding-left: 10px;} 
 /* flat ui */
+.table .dropdown-menu{left:-48px;}
 .open > .dropdown-menu{overflow: hidden;}
 .fui-arrow-right:before{content: "\e02c"!important}
 .table .selected-row > td {background-color: #f2fbfa!important;}
@@ -743,9 +726,12 @@ th.sortable .glyphicon-sort{
 th.sortable:hover .glyphicon-sort, th.sorted .glyphicon-sort{
 	opacity: 1;
 }
+.fc-content{background-color: white;}
 
-
-
+/* qtip2 */
+.qtip-bootstrap .qtip-content {font-size: 12px;}
+.qtip-bootstrap .qtip-content a{display: block;text-align: center;}
+.fc-grid .fc-event-time{display: none;}
 
 
 

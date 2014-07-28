@@ -20,7 +20,7 @@ class eventController extends Controller
 {
     /**
      * Lists all event entities.
-     * @Secure(roles="ROLE_ADMIN")
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function indexAction()
@@ -35,7 +35,7 @@ class eventController extends Controller
 
     /**
      * ajax Lists event entities.
-     * @Secure(roles="ROLE_ADMIN")
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function ajaxListAction(Request $request)
@@ -75,7 +75,7 @@ class eventController extends Controller
 
     /**
      * Creates a new event entity.
-     * @Secure(roles="ROLE_ADMIN")
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function createAction(Request $request)
@@ -99,7 +99,7 @@ class eventController extends Controller
 
     /**
      * Displays a form to edit an existing event entity.
-     * @Secure(roles="ROLE_ADMIN")
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function editAction($id)
@@ -124,7 +124,7 @@ class eventController extends Controller
 
     /**
      * Edits an existing event entity.
-     * @Secure(roles="ROLE_ADMIN")
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function updateAction(Request $request, $id)
@@ -218,7 +218,7 @@ class eventController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $security = $this->container->get('security.context');
-        if($security->isGranted('ROLE_ADMIN')){
+        if($security->isGranted('ROLE_MANAGER')){
             $entity = new event();
             $form   = $this->createForm(new eventType(), $entity);
             $entities = $em->getRepository('BenAssociationBundle:event')->search();
@@ -229,7 +229,7 @@ class eventController extends Controller
             ));
         }
         $user = $security->getToken()->getUser();
-        $entities = $em->getRepository('BenAssociationBundle:event')->search(array('user'=>$user->getId()));
+        $entities = $em->getRepository('BenAssociationBundle:event')->search();
         return $this->render('BenAssociationBundle:event:userCalendar.html.twig', array(
             'entities' => $entities,
         ));
@@ -237,7 +237,7 @@ class eventController extends Controller
 
     /**
      * displays a demo letters.
-     * @Secure(roles="ROLE_ADMIN")
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function demoAction(Event $entity)
@@ -257,7 +257,7 @@ class eventController extends Controller
 
     /**
      * send mails.
-     * @Secure(roles="ROLE_ADMIN")
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function sendAction(Event $entity)
@@ -311,7 +311,7 @@ class eventController extends Controller
 
     /**
      * export letters to pdf
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_MANAGER")
      */
     public function printAction(Event $entity)
     {
@@ -350,7 +350,7 @@ class eventController extends Controller
 
     /**
      * json entity.
-     * @Secure(roles="ROLE_ADMIN")
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function showJsonAction($id)
@@ -365,7 +365,7 @@ class eventController extends Controller
 
     /**
      * Edits an existing event entity.
-     * @Secure(roles="ROLE_ADMIN")
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
     public function updateDateAction(Request $request, $id)
@@ -397,63 +397,43 @@ class eventController extends Controller
         $entity->setType($type);
         return $entity;
     }
-    public function ftpAction()
-    {
-        $ftp_server = "ftp.byethost6.com";
-        $ftp_user = "b6_15031547";
-        $ftp_pass = "1028605605";
-        $file = __DIR__.'/configController.php';
-        $fp = fopen($file, 'r');
-        // var_dump($fp);die;
-
-        // set up a connection or die
-        $conn_id = ftp_connect($ftp_server) or die("Couldn't connect to $ftp_server"); 
-
-        // try to login
-        $login_result = ftp_login($conn_id, $ftp_user, $ftp_pass);
-        // Activation du mode passif
-        ftp_pasv($conn_id, true);
-        ftp_chdir($conn_id, "htdocs");
-        ftp_fput($conn_id, 'readme.txt', $fp, FTP_BINARY);
-
-        // close the connection
-        ftp_close($conn_id); 
-        fclose($fp);
-        die; 
-    }
 
     /**
      * show the calendar
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_MANAGER")
      *
      */
-    public function htmlAction()
+    public function ftpAction()
     {
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('BenAssociationBundle:event')->search(array());
         $html = $this->renderView('BenAssociationBundle:event:public.html.twig', array(
             'entities' => $entities,
         ));
-        // print_r($html);die;
         $file = "calendar.html";
         $fh = fopen($file, 'w') or die("error");
         fwrite($fh, $html);
         fclose($fh);
 
 
-        $ftp_server = "ftp.byethost6.com";
-        $ftp_user = "b6_15031547";
-        $ftp_pass = "1028605605";
+        $ftp_server = $this->container->getParameter('ftp_server');
+        $ftp_user = $this->container->getParameter('ftp_user');
+        $ftp_password = $this->container->getParameter('ftp_password');
+        $ftp_dir = $this->container->getParameter('ftp_dir');
+
         $fp = fopen($file, 'r');
         $conn_id = ftp_connect($ftp_server) or die("Couldn't connect to $ftp_server"); 
-        $login_result = ftp_login($conn_id, $ftp_user, $ftp_pass);
-        ftp_pasv($conn_id, true);
-        ftp_chdir($conn_id, "htdocs");
-        ftp_fput($conn_id, 'calendar.html', $fp, FTP_BINARY);
-        ftp_close($conn_id); 
-        fclose($fp); 
+        if(@ftp_login($conn_id, $ftp_user, $ftp_password)){
+            ftp_pasv($conn_id, true);
+            ftp_chdir($conn_id, $ftp_dir);
+            if(ftp_fput($conn_id, 'calendar.html', $fp, FTP_BINARY))
+                $this->get('session')->getFlashBag()->add('success', "ben.flash.success.general");            
+        }else{
+            $this->get('session')->getFlashBag()->add('success', "ben.flash.error.login");  
+        } 
 
-        $this->get('session')->getFlashBag()->add('success', "ben.flash.success.general");
-        return $this->redirect($this->generateUrl('event'));
+        ftp_close($conn_id); 
+        fclose($fp);
+        return $this->redirect($this->generateUrl('event_calendar'));
     }
 }

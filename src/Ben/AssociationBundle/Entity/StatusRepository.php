@@ -12,4 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class StatusRepository extends EntityRepository
 {
+    public function counter() {
+        $qb = $this->createQueryBuilder('s')->select('COUNT(s)');
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

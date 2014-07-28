@@ -125,7 +125,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
-        <h4 class="modal-title" id="groupModalLabel">{{ 'group.meta.name'|trans }}</h4>
+        <h4 class="modal-title">{{ 'group.meta.name'|trans }}</h4>
       </div>
       <div class="modal-body">
           <div class="form-group">
@@ -153,7 +153,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
-        <h4 class="modal-title" id="myModalLabel">{{ 'user.meta.name'|trans }}</h4>
+        <h4 class="modal-title">{{ 'user.meta.name'|trans }}</h4>
       </div>
       <div class="modal-body">
         ...
@@ -162,6 +162,77 @@
         <button type="button" class="btn btn-primary btn-embossed pull-left" data-dir="prev">{{ 'ben.action.prev'|trans }}</button>
         <a href="#" id="more" class="btn btn-primary btn-embossed">{{ 'ben.action.more'|trans }}</a>
         <button type="button" class="btn btn-primary btn-embossed pull-right" data-dir="next">{{ 'ben.action.next'|trans }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- mail Modal -->
+<div class="modal fade" id="mailModal" tabindex="-1" role="dialog" aria-labelledby="mailModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">{{ 'message.action.mail'|trans }}</h4>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <div class="form-group">
+              <input type="text" name="mail[subject]" class="form-control obj" placeholder="Objet">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-group">
+              <textarea id="body" name="mail[body]" rows="6" class="form-control" placeholder="{{ 'ben.meta.message'|trans }}"></textarea>
+            </div>
+          </div>
+          <button id="js-sendmail" type="button" class="btn btn-primary btn-block">{{ 'ben.action.send'|trans }}</button>
+          <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- call Modal -->
+<div class="modal fade" id="callModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">{{ 'ben.meta.call'|trans }}</h4>
+      </div>
+      <div class="modal-body">
+      <div class="row">
+          <div class="col-xs-3">
+              <img class="img-responsive img-circle" src="{{ asset(app.user.profile.image.getwebpath)}}"/>
+          </div>
+          <div class="col-xs-6 text-center">
+          <span class="throbber">Loading…</span>
+          <div id="timer"></div></div>
+          <div class="col-xs-3">
+              <img class="img-responsive" src="{{ asset('images/fixe.png')}}"/>
+              <small class="number"></small>
+          </div>
+          <div class="col-md-12 text-center"><a href="#" id="hangup" data-toggle="tooltip" title="{{ 'ben.action.hangup'|trans }}" class="btn btn-danger btn-embossed"><span class="glyphicon glyphicon-earphone"></span></a></div>
+      </div>
+      <div class="feedback">
+          <label class="radio">
+            <span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span><input type="radio" name="log[feedback]" checked="checked" value="réponse" data-toggle="radio">
+            Réponse
+          </label>
+          <label class="radio">
+            <span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span><input type="radio" name="log[feedback]" value="occupé" data-toggle="radio">
+            Occupé
+          </label>
+          <label class="radio">
+            <span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span><input type="radio" name="log[feedback]" value="pas de réponse" data-toggle="radio">
+            Pas de réponse
+          </label>
+          <input type="hidden" id="logtype" name="log[type]" value="appel">
+          <input type="hidden" id="user" name="log[entity_id]" value="">
+          <input type="hidden" name="log[user]" value="{{app.user.id}}">
+          <a href="#" id="sendFeedback" class="btn btn-primary btn-embossed pull-right"><span class="glyphicon glyphicon-check"></span> {{ 'ben.action.done'|trans }}</a>
+        </div>
       </div>
     </div>
   </div>

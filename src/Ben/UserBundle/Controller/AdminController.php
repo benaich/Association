@@ -311,11 +311,11 @@ class AdminController extends Controller
 
         $security = $this->container->get('security.context');
         if(!$security->isGranted('ROLE_MANAGER'))
-            $users_id = array($security->getToken()->getUser()->getId());
-        elseif($users !== 'all')$users_id = explode(',', $users);
-        else $users_id = null;
+            $ids = array($security->getToken()->getUser()->getId());
+        elseif($users !== 'all')$ids = explode(',', $users);
+        else $ids = null;
 
-        $entities = $em->getRepository('BenUserBundle:user')->findUserById($users_id);
+        $entities = $em->getRepository('BenUserBundle:user')->search(array('ids'=>$ids));
         // return $this->render('BenUserBundle:admin:badge.html.twig', array('entities' => $entities));
 
         $now = (new \DateTime)->format('d-m-Y_H-i');
@@ -337,9 +337,9 @@ class AdminController extends Controller
     public function printTicketAction($users)
     {
         $em = $this->getDoctrine()->getManager();
-        if($users !== 'all')$users_id = explode(',', $users);
-        else $users_id = null;
-        $entities = $em->getRepository('BenUserBundle:user')->findUserById($users_id);
+        if($users !== 'all')$ids = explode(',', $users);
+        else $ids = null;
+        $entities = $em->getRepository('BenUserBundle:user')->search(array('ids'=>$ids));
         // return $this->render('BenUserBundle:admin:etiquette.html.twig', array('entities' => $entities));
 
         $now = (new \DateTime)->format('d-m-Y_H-i');
@@ -535,11 +535,15 @@ class AdminController extends Controller
      * log mail, sms, call fo a group
      * @Secure(roles="ROLE_MANAGER")
      */
-    public function logGroupAction(Request $request)
+    public function logGroupAction(Request $request, $id)
     {
-        $entity = $this->getLog($request->get('log'));
         $em = $this->getDoctrine()->getManager();
-        $em->persist($entity);
+        $users = $em->getRepository('BenUserBundle:user')->search(array('group'=>$id));
+        foreach ($users as $user) {
+            $entity = $this->getLog($request->get('log'));
+            $entity->setEntityId($user->getId());
+            $em->persist($entity);
+        }
         $em->flush();
         return new Response('1');
     }
@@ -560,6 +564,81 @@ class AdminController extends Controller
                     'entities' => $entities,
                     'pagination' => $pagination,
                     ));
+    }
+
+    /**
+     * send mail
+     * @Secure(roles="ROLE_MANAGER")
+     */
+    public function sendMailGroupAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $mail = $request->get('mail');
+        if($id == 0){ //send mail to one person
+            $recipients = $mail['email'];
+            $logEntity = $this->getLog($request->get('log'));
+            $logEntity->setMessage($mail['subject']);
+            $logEntity->setType('mail');
+            $em->persist($logEntity);
+        }
+        else{ //send mail to a group
+            $users = $em->getRepository('BenUserBundle:user')->search(array('group'=>$id));
+            $recipients = [];
+            foreach ($users as $user) {
+                $recipients[] = $user->getEmail();
+                $logEntity = $this->getLog($request->get('log'));
+                $logEntity->setMessage($mail['subject']);
+                $logEntity->setType('mail');
+                $logEntity->setEntityId($user->getId());
+                $em->persist($logEntity);
+            }
+        }
+        $this->sendMail($mail, $recipients);
+        $em->flush();
+        return new Response('1');
+    }
+
+    /**
+     * send mail to selected users
+     * @Secure(roles="ROLE_ADMIN")
+     */    
+    public function sendMailAction(Request $request)
+    {
+        $ids = $request->get('users');
+        $mail = $request->get('mail');
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('BenUserBundle:user')->search(array('ids'=>$ids));
+        $recipients = [];
+        foreach ($users as $user) {
+            $recipients[] = $user->getEmail();
+            $logEntity = $this->getLog($request->get('log'));
+            $logEntity->setMessage($mail['subject']);
+            $logEntity->setEntityId($user->getId());
+            $em->persist($logEntity);
+        }
+        
+        if($logEntity->getType()==='mail')
+            $this->sendMail($mail, $recipients);
+        $em->flush();
+        
+        return new Response('1');
+    }
+
+
+    /**
+     * send mail to selected users
+     * @Secure(roles="ROLE_ADMIN")
+     */    
+    public function clearLogAction(Request $request, $id, $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if($id == 0)
+            $entities = $em->getRepository('BenAssociationBundle:ActivityLog')->findBy(array('entity_id' => $user));
+        else $entities = $em->getRepository('BenAssociationBundle:ActivityLog')->findBy(array('id' => $id));
+        foreach ($entities as $entity) $em->remove($entity);
+        $em->flush();
+        
+        return new Response('1');
     }
 
 
@@ -590,9 +669,20 @@ class AdminController extends Controller
         $entity = new \Ben\AssociationBundle\Entity\ActivityLog();
         $entity->setClassName('Ben\UserBundle\Entity\User');
         $entity->setEntityId($entity_id);
-        $entity->setUser($this->container->get('security.context')->getToken()->getUser()->getId());
+        $entity->setUser($user);
         $entity->setMessage($feedback);
         $entity->setType($type);
         return $entity;
+    }
+    public function sendMail($mail, $recipients)
+    {
+        extract($mail);
+        $sender_email = $this->container->getParameter('webmaster');
+        $message = \Swift_Message::newInstance()
+                    ->setSubject($subject)
+                    ->setFrom($sender_email)
+                    ->setTo($recipients)
+                    ->setBody($body, 'text/plain');
+        $this->get('mailer')->send($message);
     }
 }

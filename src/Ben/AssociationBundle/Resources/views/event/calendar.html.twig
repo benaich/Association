@@ -1,6 +1,6 @@
 {% extends "BenAssociationBundle::layout.html.twig" %}
 {% block title %}
-Tableau de bord | {{ parent() }}
+{{ 'event.meta.calendar'|trans }} | {{ parent() }}
 {% endblock %}
 
 {% block stylesheet %}
@@ -10,7 +10,11 @@ Tableau de bord | {{ parent() }}
 {% endblock %}
 
 {% block body %}
-<h2><span class="fui-calendar"></span>  {{ 'event.meta.calendar'|trans }}</h2>
+<div class="row">
+  <div class="col-xs-10"><h2><span class="fui-calendar"></span>  {{ 'event.meta.calendar'|trans }}</h2></div>
+  <div class="col-xs-2"><a href="{{ path('event_ftp') }}" class="btn btn-inverse btn-sm btn-block"><span class="glyphicon glyphicon-share"></span> {{'event.action.ftp'|trans}}</a></div>
+</div>
+
 <div id="calendar"></div>
 
 <!-- Modal -->

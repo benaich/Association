@@ -10,7 +10,7 @@ Tableau de bord | {{ parent() }}
     <div class="form-group">
       <div class="col-md-offset-4 col-md-4">
         <button type="submit" class="btn btn-primary btn-embossed"><span class="glyphicon glyphicon-edit"></span> {{ 'ben.action.edit'|trans }}</button>
-        <button id="js-delete" class="btn btn-embossed btn-danger"><span class="fui-cross"></span> {{ 'ben.action.delete'|trans }} </button>
+        {% if is_granted("ROLE_ADMIN") %}<button id="js-delete" class="btn btn-embossed btn-danger"><span class="fui-cross"></span> {{ 'ben.action.delete'|trans }} </button>{% endif %}
       </div>
     </div>
 </form>

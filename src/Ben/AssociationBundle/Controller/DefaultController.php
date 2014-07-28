@@ -16,9 +16,11 @@ class DefaultController extends Controller
         $counter['user'] = $em->getRepository('BenUserBundle:User')->counter();
         $counter['group'] = count($this->container->get('fos_user.group_manager')->findGroups());
         $counter['event'] = $em->getRepository('BenAssociationBundle:event')->counter();
-        $counter['reservation'] = $em->getRepository('BenAssociationBundle:Reservation')->counter();
-        $counter['rooms'] = $em->getRepository('BenAssociationBundle:Rooms')->counter();
-        $counter['hotels'] = 2;
+        $counter['cotisation'] = $em->getRepository('BenAssociationBundle:cotisation')->counter();
+        $counter['status'] = $em->getRepository('BenAssociationBundle:status')->counter();
+        // $counter['reservation'] = $em->getRepository('BenAssociationBundle:Reservation')->counter();
+        // $counter['rooms'] = $em->getRepository('BenAssociationBundle:Rooms')->counter();
+        // $counter['hotels'] = 2;
         return $this->render('BenAssociationBundle:Default:index.html.twig', array(
                 'counter' => $counter));
     }

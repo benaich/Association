@@ -1,27 +1,44 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+Login - {{ parent() }}
+{% endblock %}
+{% block stylesheet %}
+    {{ parent() }}
+    <link href="{{ asset('css/login.css') }}" rel="stylesheet">
+{% endblock %}
 
 {% block container %}
-<body class="sign-in-bg">
-<div class="sign-in">
-<form class="form-inline formstyle" action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+<body class="login-screen">
+    
+    {% include "BenAssociationBundle:Default:flashes.html.twig" %}
+    <div class="login-warper">
+        <div class="login-icon">
+            <img src="{{ asset(app_config.org_logo) }}" alt="Welcome to Mail App">
+            <h4>Welcome to <small>{{ app_config.org_name }}</small></h4>
+        </div>
+    <div class="login-form">
+        
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
    <fieldset>
         <legend>Récupération du Mot de passe</legend>
     
         {% if invalid_username is defined %}
             <div class="alert alert-error fade in">
             <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong><i class="icon-warning-sign"></i> erreur : </strong> {{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}
+            {{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}
             </div>
         {% endif %}
-        <div class="form-group">            
-        <div class="input-group">
-        <input type="text" class="form-control" name="username" required="required" placeholder="Nom d'utilisateur ou adresse e-mail" />
-        <button type="submit" class="btn btn-info">Réinitialiser le mot de passe <span class="glyphicon glyphicon-refresh"></span></button>
-        </div>
-        </div>
-    </fieldset>
-</form>
-</div>
 
+        <div class="form-group">
+          <input type="text" class="form-control" name="username" required="required" placeholder="Nom d'utilisateur ou adresse e-mail" />
+          <label class="login-field-icon fui-user" for="login-name"></label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Réinitialiser le mot de passe</button>
+    </fieldset>
+    </form>
+    </div>
+    </div>
 </body>
 {% endblock container %}
+

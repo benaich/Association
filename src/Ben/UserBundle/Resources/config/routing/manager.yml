@@ -114,3 +114,22 @@ add_users_log:
     pattern:  /log
     defaults: { _controller: BenUserBundle:Admin:log }
     requirements: { _method: post }
+
+ben_log_group:
+    pattern:  /log/group/{id}
+    defaults: { _controller: BenUserBundle:Admin:logGroup }
+    requirements: { _method: post }
+
+ben_mail:
+    pattern:  /mail
+    defaults: { _controller: BenUserBundle:Admin:sendMail }
+    requirements: { _method: post }
+
+ben_mail_group:
+    pattern:  /mail/group/{id}
+    defaults: { _controller: BenUserBundle:Admin:sendMailGroup }
+    requirements: { _method: post }
+
+ben_clear_log:
+    pattern:  /log/clear/{id}/{user}
+    defaults: { _controller: BenUserBundle:Admin:clearLog, id: 0, user: 0 }

@@ -48,18 +48,17 @@ class configController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $config = $request->get('config');
-        // $this->get('session')->set('_locale', $config['org_lang']);
 
         /* handle img */
         $img = new \Ben\AssociationBundle\Entity\image();
         $imgform   = $this->createForm(new \Ben\AssociationBundle\Form\imageType(), $img);
-        
         $imgform->bind($request);
         if($img->upload())
             $config['org_logo'] = $img->getWebPath();
+
         $config['org_signup'] = isset($config['org_signup']);
         $config['print_permission'] = isset($config['print_permission']);
-        $config['users_access'] = isset($config['users_access']);
+        $config['allowaccess'] = isset($config['allowaccess']);
         foreach ($config as $key => $value) {
             $em->getRepository('BenAssociationBundle:config')->updateBy($key, $value);
         }
@@ -68,6 +67,23 @@ class configController extends Controller
         return $this->redirect($this->generateUrl('config'));
     }
 
+
+    /**
+     * update all config entities.
+     * @Secure(roles="ROLE_MANAGER")
+     *
+     */
+    public function updateLangAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $locale = $request->get('_locale');
+        $this->get('session')->set('_locale', $locale);
+
+        $em->getRepository('BenAssociationBundle:config')->updateBy('org_lang', $locale);
+
+        $this->get('session')->getFlashBag()->add('success', "ben.flash.success.updated");
+        return $this->redirect($this->generateUrl('fos_user_profile_edit'));
+    }
     /**
      * update all fields entities.
      * @Secure(roles="ROLE_MANAGER")

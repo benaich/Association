@@ -101,6 +101,7 @@ event:
             show: Afficher les lettres
             print: Imprimer les lettres
             send: Envoyer par mail
+        ftp: Publier l'agenda
     form:
         name: Sujet
         type: Type

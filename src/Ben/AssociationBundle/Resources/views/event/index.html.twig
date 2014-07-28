@@ -1,6 +1,6 @@
 {% extends "BenAssociationBundle::layout.html.twig" %}
 {% block title %}
-Tableau de bord | {{ parent() }}
+{{'event.title'|trans}} | {{ parent() }}
 {% endblock %}
     {% block stylesheet %}
    {{ parent() }}   
@@ -32,7 +32,7 @@ Tableau de bord | {{ parent() }}
                 <span class="dropdown-arrow dropdown-arrow-inverse"></span>
                 <ul class="dropdown-menu dropdown-inverse">
                       <li><a href="{{ path('event_calendar') }}"><span class="fui-calendar"></span> {{'ben.menu.calendar'|trans}}</a></li>
-                      <li><a href="{{ path('event_html') }}"><span class="fui-send"></span> Envoyer vers le serveur FTP</a></li>
+                      <li><a href="{{ path('event_ftp') }}"><span class="glyphicon glyphicon-share"></span> {{'event.action.ftp'|trans}}</a></li>
                       <li class="divider"></li>
                       <li><a href="#" id="js-delete"><span class="fui-trash"></span> {{'ben.action.delete'|trans}}</a></li>
                 </ul>

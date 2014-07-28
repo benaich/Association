@@ -1,6 +1,6 @@
 {% extends "BenAssociationBundle::layout.html.twig" %}
 {% block title %}
-Tableau de bord | {{ parent() }}
+Adherant | {{ parent() }}
 {% endblock %}
 
 {% block stylesheet %}
@@ -41,7 +41,7 @@ Tableau de bord | {{ parent() }}
         <li><a href="{{ path('ben_pdf', {'users': entity.id }) }}"><span class="fui-credit-card"> {{ 'user.action.carte.print'|trans }}</a></li>
         <li><a href="{{ path('ben_ticket_user', {'users': entity.id }) }}"><span class="fui-tag"></span> {{ 'user.action.tiquet'|trans }}</a></li>
         <li><a id="btnPrint" href="#"><span class="glyphicon glyphicon-print"></span> {{ 'user.action.print'|trans }}</a></li>
-        <li><a href="{{ path('reservation_new', {'id': entity.id }) }}"><span class="fui-tag"> Reserver une chambre</a></li>
+        {# <li><a href="{{ path('reservation_new', {'id': entity.id }) }}"><span class="fui-tag"> Reserver une chambre</a></li> #}
         {% if is_granted("ROLE_ADMIN") %}
         <li class="divider"></li>
         <li><a id="js-delete"  data-id="{{ entity.profile.fullName}}" href="{{ path('ben_new_user', {id: entity.id }) }}"><span class="glyphicon glyphicon-trash"></span> {{ 'ben.action.delete'|trans }}</a></li>
@@ -131,7 +131,7 @@ Tableau de bord | {{ parent() }}
               <li class="list-group-item"><strong>{{ 'user.form.profile.description'|trans }} :</strong> {{ entity.profile.description }}</li>
            </ul>
        </div>
-      {% if entity.reservations|length %}
+{#       {% if entity.reservations|length %}
        <div class="box">
            <header>
                <h3><span class="fui-home"></span> Informations de logement</h3>
@@ -145,9 +145,10 @@ Tableau de bord | {{ parent() }}
                <li class="list-group-item"><strong>Numero de pavé :</strong> {{ reservation.room.floor }} </li>
            </ul>
        </div>
-      {% endif %}               
+      {% endif %}  #}              
    </div> 
-   <div class="col-md-8"> 
+   <div class="col-md-8">
+      {% if entity.avancements|length %} 
       <div class="box">
           <header>
               <h3><span class="glyphicon glyphicon-tag"></span> {{ 'status.meta.logs'|trans }}</h3>
@@ -171,7 +172,7 @@ Tableau de bord | {{ parent() }}
                   <td>{% if entity.dateFrom %}{{ entity.dateFrom|date('d/m/Y') }}{% endif %}</td>
                   <td>{% if entity.dateTo %}{{ entity.dateTo|date('d/m/Y') }}{% endif %}
                   {% if is_granted("ROLE_MANAGER") %} 
-                  <a class="btn btn-inverse btn-xs pull-right" href="{{ path('avancement_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="glyphicon glyphicon-edit"></span></a>
+                  <a class="btn btn-link btn-xs pull-right" href="{{ path('avancement_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="glyphicon glyphicon-edit"></span></a>
                   {% endif %}
                   </td>
                 </tr>
@@ -179,6 +180,8 @@ Tableau de bord | {{ parent() }}
               </tbody>
           </table>
       </div>
+      {% endif %}
+      {% if entity.cotisations|length %}
       <div class="box">
           <header>
               <h3><span class="glyphicon glyphicon-tag"></span> {{ 'cotisation.meta.logs'|trans }}</h3>
@@ -202,7 +205,7 @@ Tableau de bord | {{ parent() }}
                   <td>{% if entity.datefrom %}{{ entity.datefrom|date('Y-m-d') }}{% endif %}</td>
                   <td>{% if entity.dateto %}{{ entity.dateto|date('Y-m-d') }}{% endif %}
                   {% if is_granted("ROLE_MANAGER") %} 
-                  <a class="btn btn-inverse btn-xs pull-right" href="{{ path('cotisation_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="glyphicon glyphicon-edit"></span></a>
+                  <a class="btn btn-link btn-xs pull-right" href="{{ path('cotisation_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="glyphicon glyphicon-edit"></span></a>
                   {% endif %}
                   </td>
                 </tr>
@@ -210,17 +213,20 @@ Tableau de bord | {{ parent() }}
               </tbody>
           </table>
       </div>
+      {% endif %}
+      {% if logs %}
       <div class="box">
           <header>
-              <h3><span class="glyphicon glyphicon-tag"></span> {{ 'user.meta.calls'|trans }}</h3>
+              <h3><span class="glyphicon glyphicon-tag"></span> {{ 'user.meta.calls'|trans }}</h3>              
           </header>
-          <table class="table table-hover table-bordered">
+          <table class="table table-hover table-bordered ajax">
               <thead>
                   <tr>
                       <th>#</th>
                       <th>{{ 'ben.meta.datecall'|trans }}</th>
                       <th>{{ 'cotisation.form.type'|trans }}</th>
-                      <th>{{ 'ben.meta.note'|trans }}</th>
+                      <th>{{ 'ben.meta.note'|trans }} 
+              <a href="{{ path('ben_clear_log', {'user': entity.id }) }}" class="btn btn-link btn-xs pull-right" data-toggle="tooltip" title="Suppromer l'hisorique"><span class="glyphicon glyphicon-trash"></span></a></th>
                   </tr>
               </thead>
               <tbody>
@@ -229,12 +235,13 @@ Tableau de bord | {{ parent() }}
                   <td>{{ loop.index }}</td>
                   <td>{% if entity.date %}{{ entity.date|date('Y-m-d à H:i') }}{% endif %}</td>
                   <td>{{ entity.type }}</td>
-                  <td>{{ entity.message }}</td>
+                  <td>{{ entity.message }} <a href="{{ path('ben_clear_log', { 'id': entity.id}) }}" class="btn btn-link btn-xs pull-right" data-toggle="tooltip" title="supprimer"><span class="fui-cross"></span></a></td>
                 </tr>
               {% endfor %}
               </tbody>
           </table>
       </div>
+      {% endif %}
    </div>
 </div>
 
@@ -254,6 +261,15 @@ Tableau de bord | {{ parent() }}
           confirmation('voullez-vous vraiment supprimer l\'adherent '+$(this).data('id')) && $('#deleteForm').submit();
           return false;
       });
+
+      $('.ajax').on('click', 'a', function(e){
+        $.ajax({ 
+          type: "POST", 
+          url: $(this).attr('href')
+        });
+        $(this).closest('tr').fadeOut();
+        return false;
+      })
           
     })(jQuery);
 </script>

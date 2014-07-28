@@ -1,6 +1,6 @@
 {% extends "BenAssociationBundle::layout.html.twig" %}
 {% block title %}
-Tableau de bord | {{ parent() }}
+{{'ben.menu.dashboard'|trans}} | {{ parent() }}
 {% endblock %}
 
 
@@ -39,25 +39,25 @@ Tableau de bord | {{ parent() }}
 	</div>
 	<div class="col-md-2 col-xs-6">
 		<div class="stat-boxes widget-body">
-			<a href="{{ path('reservation') }}"><span class="fui-book ben-icone"></span></a>
-			<h3 class="ticker--one">{{ counter.reservation }}</h3>
-			<i>{{'ben.menu.reservation'|trans}}</i>
+			<a href="{{ path('cotisation') }}"><span class="glyphicon glyphicon-usd ben-icone"></span></a>
+			<h3 class="ticker--one">{{ counter.cotisation }}</h3>
+			<i>{{'ben.menu.cotisation'|trans}}</i>
 			<div class="clearfix"></div>		
 		</div>
 	</div>
 	<div class="col-md-2 col-xs-6">
 		<div class="stat-boxes widget-body">
-			<a href="{{ path('hotels') }}"><span class="fui-home ben-icone"></span></a>
-			<h3 class="ticker--one">{{ counter.hotels }}</h3>
-			<i>{{'ben.menu.logement'|trans}}</i>
+			<a href="{{ path('status') }}"><span class="fui-tag ben-icone"></span></a>
+			<h3 class="ticker--one">{{ counter.status }}</h3>
+			<i>{{'ben.menu.status'|trans}}</i>
 			<div class="clearfix"></div>		
 		</div>
 	</div>
 	<div class="col-md-2 col-xs-6">
 		<div class="stat-boxes widget-body">
-			<a href="{{ path('rooms') }}"><span class="fui-tag ben-icone"></span></a>
-			<h3 class="ticker--one">{{ counter.rooms }}</h3>
-			<i>{{'ben.menu.rooms'|trans}}</i>
+			<a href="{{ path('fos_message_inbox') }}"><span class="glyphicon glyphicon-envelope ben-icone"></span></a>
+			<h3 class="ticker--one">{{ fos_message_nb_unread() }}</h3>
+			<i>{{ 'ben.menu.messages'|trans }}</i>
 			<div class="clearfix"></div>		
 		</div>
 	</div>

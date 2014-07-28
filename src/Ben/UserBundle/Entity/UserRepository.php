@@ -26,6 +26,8 @@ class UserRepository extends EntityRepository
                 ->setParameter('keyword', '%'.$keyword.'%');
         if(!empty($group))
             $qb->andWhere('g.id = :group')->setParameter('group', $group);
+        if(!empty($ids))
+            $qb->andWhere('u.id in (:ids)')->setParameter('ids', $ids);
         if(!empty($cin))
             $qb->andWhere('p.cin = :cin')->setParameter('cin', $cin);
         if(!empty($barcode))
@@ -123,19 +125,6 @@ class UserRepository extends EntityRepository
                 ->setParameter('keyword', '%' . $keyword . '%')
                 ->setMaxResults(10);
 
-        return $qb->getQuery()->getResult();
-    }
-
-    public function findUserById($users = null)
-    {
-        $qb = $this->createQueryBuilder('u')
-                ->leftJoin('u.profile', 'p')
-                ->addSelect('p')
-                ->leftJoin('p.image', 'img')
-                ->addSelect('img');
-        if(!empty($users))
-            $qb->where('u.id IN (:id)')->setParameter('id', $users);
- 
         return $qb->getQuery()->getResult();
     }
 

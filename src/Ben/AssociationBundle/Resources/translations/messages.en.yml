@@ -101,6 +101,7 @@ event:
             show: View letters
             print: Print letters
             send: Send by email
+        ftp: Publish the calendar
     form:
         name: Subject
         type: Type

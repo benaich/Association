@@ -1,4 +1,7 @@
 {% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+{{ 'message.meta.main'|trans }} | {{ parent() }}
+{% endblock %}
 {% set route = app.request.attributes.get('_route') %} 
 {% block body %}
 <h2><span class="glyphicon glyphicon-envelope"></span> {{ 'message.meta.main'|trans }}</h2>

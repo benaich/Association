@@ -2,64 +2,51 @@
 {% block title %}
 Login - {{ parent() }}
 {% endblock %}
+{% block stylesheet %}
+    {{ parent() }}
+    <link href="{{ asset('css/login.css') }}" rel="stylesheet">
+{% endblock %}
 
 {% block container %}
-<body class="sign-in-bg">
-
-    <div class="sign-in">
-        <div class="sign-in-head text-center">
-            <h1>{{ app_config.org_name }}</h1>
+<body class="login-screen">
+    
+    {% include "BenAssociationBundle:Default:flashes.html.twig" %}
+    <form action="{{ path("fos_user_security_check") }}" method="post">
+    <div class="login-warper">
+        <div class="login-icon">
+            <img src="{{ asset(app_config.org_logo) }}" alt="Welcome to Mail App">
+            <h4>Welcome to <small>{{ app_config.org_name }}</small></h4>
         </div>
-        <div class="sign-in-form">
-        <h5></h5> 
-            <form action="{{ path("fos_user_security_check") }}" method="post">
-
+        <div class="login-form">
             {% if error %}
-                <div class="alert alert-error fade in">
-                {{ error|trans({}, 'FOSUserBundle') }}
-                </div>
+            <div class="form-group text-center"><span class="text-danger">{{ error|trans({}, 'FOSUserBundle') }}</span></div>
             {% endif %}
+            <div class="form-group">
+              <input type="text" name="_username" class="form-control login-field" value="{{ last_username }}" placeholder="{{ 'user.form.username'|trans }}" id="login-name">
+              <label class="login-field-icon fui-user" for="login-name"></label>
+            </div>
 
+            <div class="form-group">
+              <input type="password" class="form-control login-field" name="_password" required="required" placeholder="{{ 'user.form.plainpassword'|trans }}" id="login-pass">
+              <label class="login-field-icon fui-lock" for="login-pass"></label>
+            </div>
                 <div class="form-group">
-                    <div class="input-group input-group-lg">
-                      <span class="input-group-addon"><span class="fui-user"></span></span>
-                      <input type="text" class="form-control" placeholder="{{ 'user.form.username'|trans }}" name="_username" value="{{ last_username }}" required="required" autofocus="true" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="input-group input-group-lg">
-                      <span class="input-group-addon"><span class="fui-lock"></span></span>
-                       <input type="password" class="form-control" id="password" name="_password" required="required" placeholder="{{ 'user.form.plainpassword'|trans }}"/>
-                    </div>
-                </div>
-                <div class="row">
-                <div class="form-group col-xs-8">
                     <label class="checkbox primary checked" for="checkbox6">
                     <span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" checked="checked" name="_remember_me" value="on" id="checkbox6" data-toggle="checkbox">
                     {{ 'user.form.rememberme'|trans }}
                   </label>
                 </div>
-                <div class="col-xs-4">
-                    <select name="_locale" class="primary select-block">
-                        <option selected="selected" value="fr_FR">{{ 'config.form.local.fr'|trans }}</option>
-                        <option value="en">{{ 'config.form.local.en'|trans }}</option>
-                        <option value="ar">{{ 'config.form.local.ar'|trans }}</option>
-                    </select>
-                </div>
-                </div>
-              <p class="text-center btn-area">
-              <button type="submit" class="btn btn-primary btn-wide btn-huge">{{ 'user.action.login'|trans }}</button>
-              </p>
-            </form>
+
+            <button type="submit" class="btn btn-primary btn-lg btn-block">{{ 'user.action.login'|trans }}</button>
+            <a class="login-link" href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié ?</a>
         </div>
     </div>
+    </form>
   </body>
     <script src="{{ asset('js/jquery-1.8.3.min.js') }}"></script>
     <script src="{{ asset('js/jquery-ui-1.10.3.custom.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-select.js') }}"></script>
     <script src="{{ asset('js/flatui-checkbox.js') }}"></script>
-    <script src="{{ asset('js/application.js') }}"></script>
     <script type="text/javascript">
     (function($) {
 

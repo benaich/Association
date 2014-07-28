@@ -1,6 +1,6 @@
 {% extends "BenAssociationBundle::layout.html.twig" %}
 {% block title %}
-Tableau de bord | {{ parent() }}
+{{ 'event.meta.name'|trans }} | {{ parent() }}
 {% endblock %}
 {% block body %}
 <h2><span class="fui-time"></span>  {{ 'event.meta.name'|trans }}</h2>
@@ -42,7 +42,7 @@ Tableau de bord | {{ parent() }}
         </tbody>
     </table>
     </div> 
-{% if is_granted("ROLE_ADMIN") %}
+{% if is_granted("ROLE_MANAGER") %}
     <div class="col-xs-3">
         <form id="deleteForm" action="{{ path('event_delete', { 'id': entity.id }) }}" method="post">
         {{ form_widget(delete_form) }}
@@ -57,7 +57,9 @@ Tableau de bord | {{ parent() }}
         </a>
         <a class="btn btn-embossed btn-inverse btn-block" href="{{ path('event_send', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-envelope"></span> {{ 'event.action.letter.send'|trans }} </a>
         <a class="btn btn-embossed btn-inverse btn-block" href="{{ path('event') }}"><span class="fui-arrow-left"></span> {{ 'ben.action.backtolist'|trans }}</a>
+        {% if is_granted("ROLE_ADMIN") %}
         <button type="submit" class="btn btn-embossed btn-danger btn-block"><span class="fui-cross"></span> {{ 'ben.action.delete'|trans }} </button>
+        {% endif %}
     </form>
     </div>
 {% endif %}

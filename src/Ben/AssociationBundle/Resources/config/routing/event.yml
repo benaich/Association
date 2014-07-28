@@ -67,7 +67,3 @@ event_update_date:
 event_ftp:
     pattern:  /ftp/
     defaults: { _controller: "BenAssociationBundle:event:ftp"}
-
-event_html:
-    pattern:  /html
-    defaults: { _controller: "BenAssociationBundle:event:html" }

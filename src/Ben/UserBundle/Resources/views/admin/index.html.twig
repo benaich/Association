@@ -1,6 +1,6 @@
 {% extends "BenAssociationBundle::layout.html.twig" %}
 {% block title %}
-Tableau de bord | {{ parent() }}
+{{'user.title.main'|trans}} | {{ parent() }}
 {% endblock %}
 {% block body %}
 
@@ -39,9 +39,11 @@ Tableau de bord | {{ parent() }}
                     <li><a href="#" data-toggle="modal" data-target="#groupModal"><span class="glyphicon glyphicon-pushpin"></span> {{'user.action.group'|trans}}</a></li>
                     {% endif %}
                     <li class="divider"></li>
+                    <li><a href="#" id="js-mail"><span class="glyphicon glyphicon-envelope"></span> {{'message.action.mail'|trans}}</a></li>
+                    <li><a href="#" id="js-sms"><span class="glyphicon glyphicon-envelope"></span> {{'ben.action.sms'|trans}}</a></li>
                     <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> {{'ben.action.tocsv'|trans}}</a></li>
                     <li><a href="{{ path('ben_export_xml') }}"><span class="fui-export"></span> {{'ben.action.toxml'|trans}}</a></li>
-                    <li><a href="{{ path('ben_export_excel') }}"><span class="fui-export"></span> {{'ben.action.toxml'|trans}}</a></li>
+                    <li><a href="{{ path('ben_export_excel') }}"><span class="fui-export"></span> {{'ben.action.toexcel'|trans}}</a></li>
                     <li><a href="#" id="js-badge"><span class="fui-credit-card"></span> {{'user.action.carte.show'|trans}}</a></li>
                     <li><a href="#" id="js-tiquet"><span class="fui-tag"></span> {{'user.action.tiquet'|trans}}</a></li>
                     {% if is_granted("ROLE_ADMIN") %}
@@ -157,8 +159,11 @@ Tableau de bord | {{ parent() }}
           filterGroupBtn = form.find('#js-filter-group'),
           searchModal = form.find('#searchModal'),
           groupModal = form.find('#groupModal'),
-          modal = $('#myModal'),
-          modalBody = modal.find('.modal-body'),
+          callModal = form.find('#callModal'),
+          mailModal = form.find('#mailModal'),
+          mailBtn = form.find('#js-mail'),
+          smsBtn = form.find('#js-sms'),
+          modal = form.find('#myModal'),
           navBtn = modal.find('button'),
           moreBtn = modal.find('#more'),
           profiles = [],
@@ -168,11 +173,12 @@ Tableau de bord | {{ parent() }}
           jsFormUrl = '',
           checkboxBtn = form.find("input:checkbox");
 
-      form.on('click', '.showuser', function(){
+      form.on('click', '.js-show', function(){
         var id = $(this).data('id'),
             index = $(this).data('index')-1,
             data = profiles[index];
-        modalBody.html(data);
+        modal.find('.modal-body').html(data);
+        modal.modal('show');
         updateLink(id);
       });
 
@@ -180,7 +186,7 @@ Tableau de bord | {{ parent() }}
         var index = modal.find('.userinfo').data('index')-1,
             dir = $(this).data('dir');
         index = (dir == 'next') ? index+1 : index-1;
-        modalBody.hide().html(profiles[index]).fadeIn();
+        modal.find('.modal-body').hide().html(profiles[index]).fadeIn();
         updateLink(modal.find('.userinfo').data('id'));
       });
       /* keyboard navigation */
@@ -289,6 +295,73 @@ Tableau de bord | {{ parent() }}
             alert('Les adhérants séléctionnées ont été ajouté au groupe '+data.name);
           });
       });
+
+      /* send mail */
+      mailBtn.on('click', function(){
+        mailModal.find('.obj').parent().parent().show();
+        mailModal.find('h4').html($(this).text());
+        form.find('#logtype').val('mail');
+        mailModal.modal('show');
+      });
+      smsBtn.on('click', function(){
+        mailModal.find('.obj').parent().parent().hide();
+        mailModal.find('h4').html($(this).text());
+        form.find('#logtype').val('sms');
+        mailModal.modal('show');
+      });
+      mailModal.find('#js-sendmail').on('click', function(){
+        mailModal.modal('hide');
+        jsFormUrl = '{{ path('ben_mail') }}';
+        ajaxPost('mail');
+      });
+
+      /* call simulation */
+      var feedback = callModal.find('.feedback').hide(),
+          timerLabel = callModal.find('#timer').css('opacity', 0),
+          userInput = feedback.find('#user'),
+          seconds = 0, minutes = 0, hours = 0, myTimer;
+      callModal.find('#hangup').on('click', function(){
+          feedback.slideDown().prev().slideUp();
+      });
+      feedback.find('#sendFeedback').on('click', function(){
+          callModal.modal('hide');
+          jsFormUrl = '{{ path('add_users_log') }}';
+          ajaxPost('call');
+          feedback.hide().prev().show();
+          seconds = 0; minutes = 0; hours = 0;
+          timerLabel.text('00:00');
+          timerLabel.css('opacity', 0).prev().css('opacity', 1);
+          clearTimeout(myTimer);
+      });
+    form.on('click', '.js-call', function(){
+        form.find('#logtype').val('appel');
+        callModal.find('.number').html('+212'+$(this).data('call').substr(1));
+        userInput.val($(this).data('id'));
+        callModal.modal('show');
+        setTimeout(function(){
+          timer();
+          timerLabel.css('opacity', 1).prev().css('opacity', 0);
+        }, 3000);
+        
+    });
+
+    function add() {
+        seconds++;
+        if (seconds >= 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes >= 60) {
+                minutes = 0;
+                hours++;
+            }
+        }
+        time = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+        timerLabel.text(time);
+        timer();
+    }
+    function timer() {
+        myTimer = setTimeout(add, 1000);
+    }
 
     })(jQuery);
 </script>
