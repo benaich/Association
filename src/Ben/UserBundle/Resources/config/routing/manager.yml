@@ -92,42 +92,14 @@ ben_ticket_user:
     pattern:  /printTicket/{users}
     defaults: { _controller: "BenUserBundle:Admin:printTicket" }
 
-add_group_filter:
-    pattern:  /addgroupfilter
-    defaults: { _controller: BenUserBundle:Admin:addFilterGroup }
-    requirements: { _method: post }
-
-add_users_group:
-    pattern:  /addtogroup
-    defaults: { _controller: BenUserBundle:Admin:addToGroup }
-    requirements: { _method: post }
-
-ben_show_group:
-    pattern:  /groupe/{id}/{perPage}
-    defaults: { _controller: BenUserBundle:Admin:showGroup, perPage: 10}
-
-ben_remove_from_roup:
-    pattern:  /groupereject/{id}/{groupid}
-    defaults: { _controller: BenUserBundle:Admin:removeFromGroup}
-
 add_users_log:
     pattern:  /log
     defaults: { _controller: BenUserBundle:Admin:log }
     requirements: { _method: post }
 
-ben_log_group:
-    pattern:  /log/group/{id}
-    defaults: { _controller: BenUserBundle:Admin:logGroup }
-    requirements: { _method: post }
-
 ben_mail:
     pattern:  /mail
     defaults: { _controller: BenUserBundle:Admin:sendMail }
-    requirements: { _method: post }
-
-ben_mail_group:
-    pattern:  /mail/group/{id}
-    defaults: { _controller: BenUserBundle:Admin:sendMailGroup }
     requirements: { _method: post }
 
 ben_clear_log:

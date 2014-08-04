@@ -188,6 +188,13 @@ String.prototype.repeat = function(num) {
       return confirmation($(this).data('msg'));
     });
 
+
+    /* slidedown button */   
+    $('.js-toggle').on('click', function(){
+      $(this).toggleClass('glyphicon-chevron-down').closest('header').next().slideToggle();
+      return false;
+    }); 
+
     // make code pretty
     window.prettyPrint && prettyPrint();
   });

@@ -323,7 +323,7 @@ class eventController extends Controller
         }
         // return $this->render('BenAssociationBundle:event:print.html.twig', array('entity'=>$entity,'users'=>$users));
 
-        // log users who reseved letters
+        // log users who receved letters
         $log['type'] = 'lettre';
         $log['feedback'] = $entity->getName();
         foreach ($users as $user) {

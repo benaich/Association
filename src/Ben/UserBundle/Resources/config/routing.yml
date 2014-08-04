@@ -15,15 +15,16 @@ fos_autocomplete:
     pattern:   /users/autocomplete
     defaults:  { _controller: BenUserBundle:User:autocomplete }
 
-#Groups
-fos_user_group:
-    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
-    prefix: /group
 
 #admin section
 ben_user_profile:
     resource: "@BenUserBundle/Resources/config/routing/manager.yml"
     prefix: /
+
+#Groups
+ben_user_group:
+    resource: "@BenUserBundle/Resources/config/routing/group.yml"
+    prefix: /group
 
 fos_user_security_login:
     pattern:   /

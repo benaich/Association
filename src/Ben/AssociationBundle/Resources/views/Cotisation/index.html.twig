@@ -78,7 +78,7 @@
                 <div class="form-group">
                     <label class="col-md-5 control-label">{{ 'group.action.filter'|trans }}</label>
                     <div class="col-md-7">
-                      <select id="js-group" name="earchParam[group]" class="primary select-block">
+                      <select id="js-group" name="searchParam[group]" class="primary select-block">
                         <option value="0">Filtrer par groupe</option>
                         {% for group in groups %}
                         <option value="{{ group.id }}">{{ group.name }}</option>
@@ -122,7 +122,7 @@
 
 {% block javascripts %}
 {{ parent() }}
-    <script src="{{ asset('js/moment.js') }}"></script>
+    <script src="{{ asset('js/moment.min.js') }}"></script>
     <script src="{{ asset('js/daterangepicker.js') }}"></script>
 <script> 
     (function($) {
@@ -142,6 +142,7 @@
       }
       function ajaxPost(action) {
         form.addClass('working');
+        modalSearch.modal('hide');
         $.ajax({ 
           type: "POST", 
           data: form.serialize(),
@@ -154,7 +155,6 @@
             }else ajaxPost();
           },
           error:function(){
-              alert('service denied');
               form.removeClass('working');
           }
         });
@@ -183,10 +183,7 @@
         jsFormUrl='{{ path('ben_remove_events') }}';
         ajaxPost('delete');
       });
-      modalSearchBtn.on('click', function () {
-          modalSearch.modal('hide');
-          ajaxPost();
-      });
+      modalSearchBtn.on('click', ajaxPost);
       form.on('submit', ajaxPost);
 
       /* submit the form after loading the page*/

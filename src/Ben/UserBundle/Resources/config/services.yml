@@ -23,9 +23,3 @@ services:
         arguments: ["%kernel.default_locale%"]
         tags:
             - { name: kernel.event_subscriber }
-
-    ben_user.group.form.type:
-        class: Ben\UserBundle\Form\Type\GroupFormType
-        arguments: ["%fos_user.model.user.class%"]
-        tags:
-            - { name: form.type, alias: ben_user_group}

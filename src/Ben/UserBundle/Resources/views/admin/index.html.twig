@@ -39,13 +39,15 @@
                     <li><a href="#" data-toggle="modal" data-target="#groupModal"><span class="glyphicon glyphicon-pushpin"></span> {{'user.action.group'|trans}}</a></li>
                     {% endif %}
                     <li class="divider"></li>
-                    <li><a href="#" id="js-mail"><span class="glyphicon glyphicon-envelope"></span> {{'message.action.mail'|trans}}</a></li>
-                    <li><a href="#" id="js-sms"><span class="glyphicon glyphicon-envelope"></span> {{'ben.action.sms'|trans}}</a></li>
-                    <li><a href="{{ path('ben_users_export') }}"><span class="fui-export"></span> {{'ben.action.tocsv'|trans}}</a></li>
-                    <li><a href="{{ path('ben_export_xml') }}"><span class="fui-export"></span> {{'ben.action.toxml'|trans}}</a></li>
-                    <li><a href="{{ path('ben_export_excel') }}"><span class="fui-export"></span> {{'ben.action.toexcel'|trans}}</a></li>
                     <li><a href="#" id="js-badge"><span class="fui-credit-card"></span> {{'user.action.carte.show'|trans}}</a></li>
                     <li><a href="#" id="js-tiquet"><span class="fui-tag"></span> {{'user.action.tiquet'|trans}}</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#" id="js-mail"><span class="glyphicon glyphicon-envelope"></span> {{'message.action.mail'|trans}}</a></li>
+                    <li><a href="#" id="js-sms"><span class="glyphicon glyphicon-comment"></span> {{'ben.action.sms'|trans}}</a></li>
+                    <li><a href="{{ path('ben_users_export') }}"><span class="glyphicon glyphicon-export"></span> {{'ben.action.tocsv'|trans}}</a></li>
+                    <li><a href="{{ path('ben_export_xml') }}"><span class="glyphicon glyphicon-export"></span> {{'ben.action.toxml'|trans}}</a></li>
+                    <li><a href="{{ path('ben_export_excel') }}"><span class="glyphicon glyphicon-export"></span> {{'ben.action.toexcel'|trans}}</a></li>
+                    <li><a href="{{ path('ben_import_csv') }}"><span class="glyphicon glyphicon-import"></span> {{'ben.action.import'|trans}}</a></li>
                     {% if is_granted("ROLE_ADMIN") %}
                     <li class="divider"></li>
                     <li><a href="#" id="js-delete"><span class="glyphicon glyphicon-trash"></span> {{'ben.action.delete'|trans}}</a></li>
@@ -116,6 +118,7 @@
       }
       function ajaxPost(action, callback) {
         form.addClass('working');
+        searchModal.modal('hide');
         $.ajax({ 
           type: "POST", 
           data: form.serialize(),
@@ -133,7 +136,6 @@
             }
           },
           error:function(){
-              alert('service denied');
               form.removeClass('working');
           }
         });
@@ -226,7 +228,6 @@
       });
       /* advanced search */
       searchBtn.on('click', function () {
-        searchModal.modal('hide');
         ajaxPost();
       });
 
@@ -282,7 +283,6 @@
             else alert('This value should not be blank.');
             console.log(data);
           });
-          searchModal.modal('hide');
 
       });
 

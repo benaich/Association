@@ -132,4 +132,27 @@ class UserRepository extends EntityRepository
         $qb = $this->createQueryBuilder('u')->select('COUNT(u)');
         return $qb->getQuery()->getSingleScalarResult();
     }
+
+    public function statsByStatus()
+    {
+        $query = 'select s.name as label, count(*) as data from user u
+        left join avancement a on a.user_id = u.id
+        left join status s on s.id = a.status_id
+        group by s.id;';
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+        $stmt->execute();
+        return  $stmt->fetchAll();
+    }
+
+    public function statsByCity()
+    {
+        $query = 'select city , count(*) as data from user u
+        left join profile p on p.id = u.profile_id
+        group by city;';
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+        $stmt->execute();
+        return  $stmt->fetchAll();
+    }
 }

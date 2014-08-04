@@ -1,0 +1,65 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block title %}
+{{ 'group.title'|trans }} | {{ parent() }}
+{% endblock %}
+
+{% block fos_user_content %}
+     
+<h2><span class="fui-user"></span> {{ 'group.title'|trans }}</h2>
+<div class="row">
+    <div class="col-md-8">     
+     <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                    <th>{{ 'group.meta.name'|trans }}</th>
+                    <th>{{ 'group.form.type'|trans }}</th>
+                    <th>{{ 'group.meta.members'|trans }}</th>
+                    <th>{{ 'ben.meta.actions'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody id="dataContainer">
+        {% for entity in entities %}
+        <tr>
+            <td>{{ entity.getId() }} </td>
+            <td><img class="img-xs" src="{{ asset( entity.getImg )}}"> {{ entity.getName() }}</td>
+            <td>{{ entity.type }}</td>
+            <td>{{ entity.getUsers()|length }}</td>
+            <td>
+                <a class="btn btn-embossed btn-primary showuser btn-xs" href="{{ path('group_show', {id: entity.id, perPage: app_config.rows_per_page }) }}" data-toggle="tooltip" title="{{ 'ben.action.show'|trans }}"><span class="fui-search"></span></a>
+                <a class="btn btn-embossed btn-info btn-xs" href="{{ path('group_edit', {id: entity.id }) }}" data-toggle="tooltip" title="{{ 'ben.action.edit'|trans }}"><span class="fui-new"></span></a>
+                {% if is_granted("ROLE_ADMIN") %}
+                <a class="btn btn-embossed btn-danger btn-xs js-delete"  href="{{ path('group_delete', {id: entity.id }) }}" data-toggle="tooltip" title="{{ 'ben.action.delete'|trans }}" data-id="{{entity.name}}"><span class="fui-cross"></span></a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="caption"><strong>{{ 'ben.meta.total'|trans }}:</strong> <em>{{ 'group.meta.count'|transchoice(entities|length ) }}</em></div>
+    </div>
+    <form action="{{ path('group_create') }}" {{ form_enctype(form) }} method="POST" class="col-md-4 well special-form">
+    <h3 style="margin-top: 10px;"> {{ 'group.action.new'|trans }}</h3>
+    {{ form_row(form.image.file) }}
+    {{ form_row(form.name) }}
+
+    {{ form_rest(form)}}
+
+    <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-plus"></span> {{ 'ben.action.new'|trans }}</button>
+    </form>
+</div>
+
+
+{% endblock fos_user_content %}
+
+ {% block javascripts %}
+{{ parent() }}
+<script> 
+    (function($) {
+        $('.table').on('click', '.js-delete', function(){
+            return confirmation('voullez-vous vraiment supprimer le groupe '+$(this).data('id'));
+        });
+        $('#js-input').find('.col-md-4').removeClass('col-md-4');
+    })(jQuery);
+</script>
+{% endblock %}

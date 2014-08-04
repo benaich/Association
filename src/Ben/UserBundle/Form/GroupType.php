@@ -12,6 +12,7 @@ class GroupType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('type', 'choice', array('choices' => array('groupe' => 'Groupe','commission' => 'commission')))
             ->add('image' , new \Ben\AssociationBundle\Form\imageType())
         ;
     }

@@ -1,0 +1,60 @@
+group:
+    pattern:  /
+    defaults: { _controller: "BenUserBundle:Group:index" }
+
+group_show:
+    pattern:  /{id}/show
+    pattern:  /show/{id}/{perPage}
+    defaults: { _controller: BenUserBundle:Group:show, perPage: 10}
+
+group_create:
+    pattern:  /create
+    defaults: { _controller: "BenUserBundle:Group:create" }
+    requirements: { _method: post }
+
+group_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BenUserBundle:Group:edit" }
+
+group_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BenUserBundle:Group:update" }
+    requirements: { _method: post }
+
+group_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BenUserBundle:Group:delete" }
+
+group_add_user:
+    pattern:  /addtogroup
+    defaults: { _controller: "BenUserBundle:Group:addToGroup" }
+    requirements: { _method: post }
+
+add_group_filter:
+    pattern:  /addgroupfilter
+    defaults: { _controller: BenUserBundle:Group:addFilterGroup }
+    requirements: { _method: post }
+#duplicated
+add_users_group:
+    pattern:  /addtogroup
+    defaults: { _controller: BenUserBundle:Group:addToGroup }
+    requirements: { _method: post }
+
+ben_remove_from_roup:
+    pattern:  /groupereject/{id}/{groupid}
+    defaults: { _controller: BenUserBundle:Group:removeFromGroup}
+
+ben_log_group:
+    pattern:  /log/{id}
+    defaults: { _controller: BenUserBundle:Group:logGroup }
+    requirements: { _method: post }
+
+ben_mail_group:
+    pattern:  /mail/{id}
+    defaults: { _controller: BenUserBundle:Group:sendMailGroup }
+    requirements: { _method: post }
+
+group_send_letter:
+    pattern:  /letter/{id}
+    defaults: { _controller: BenUserBundle:Group:sendLetter }
+    requirements: { _method: post }

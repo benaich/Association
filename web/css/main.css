@@ -364,7 +364,7 @@ ul.social li {
 .js-barcode div{background: transparent!important;}
 .etiquette .js-barcode{padding-left: 10px;} 
 /* flat ui */
-.table .dropdown-menu{left:-48px;}
+.table .dropdown-menu{left:-50px;}
 .open > .dropdown-menu{overflow: hidden;}
 .fui-arrow-right:before{content: "\e02c"!important}
 .table .selected-row > td {background-color: #f2fbfa!important;}
@@ -387,6 +387,7 @@ p{font-size: inherit;line-height: inherit;}
 	padding-right: 15px;
 	padding-left: 15px;
 }
+.hideme{display: none;}
 /* colorpicker */
 .mycolorpicker .input-group-addon{background: rgb(238, 238, 238);}
 .daterangepicker.dropdown-menu, .colorpicker.dropdown-menu{
@@ -655,7 +656,8 @@ ul.threadslist {
 }
 .navbar .user-menu {
 	list-style: none;
-	margin: 0
+	margin: 0;
+	padding: 0px;
 }
 .navbar .user-menu li{
 	float: left;
@@ -683,18 +685,6 @@ ul.threadslist {
 }
 .navbar .user-menu a:focus, .navbar .user-menu a:hover {
 	color: #ffffff;
-}
-/* print */
-#btnPrint{cursor: pointer;}
-@media print {
-	body{background: #FFFFFF;}
-	body, .wrap, .container{margin:0!important;padding:0!important;}
-	.sf-toolbarreset, #adminmenu, .user-profile, .btn-group, .btn{display: none;}
-	.list-group-item{border:none;padding: 5px 15px;}
-	#adminbar #logo {display: none!important;}
-	#adminbar #logo-header{width:600px;height: 90px;display: block!important;float: none; }
-	#adminbar{position: static;height: inherit;}
-	a[href]:after {content: none !important;}
 }
 
 div[class*="col-"]{
@@ -733,6 +723,41 @@ th.sortable:hover .glyphicon-sort, th.sorted .glyphicon-sort{
 .qtip-bootstrap .qtip-content a{display: block;text-align: center;}
 .fc-grid .fc-event-time{display: none;}
 
+/* print */
+#btnPrint{cursor: pointer;}
+@media print {
+	body{background: #FFFFFF;}
+	body, .wrap, .container{margin:0!important;padding:0!important;}
+	.sf-toolbarreset, #adminmenu, .user-profile, .btn-group, .btn{display: none;}
+	.list-group-item{border:none;padding: 5px 15px;}
+	#adminbar #logo {display: none!important;}
+	#adminbar #logo-header{width:600px;height: 90px;display: block!important;float: none; }
+	#adminbar{position: static;height: inherit;}
+	a[href]:after {content: none !important;}
+}
+
+@media (max-width: 400px) {
+  .user-profile .fullname{display: none}
+  .col-md-2.col-xs-6{width: 100%;}
+}
 
 
 
+
+.graph {
+width: 100%;
+height: 400px;
+float: left;
+}
+.stats-warper{
+	padding: 5px;
+	border: 1px solid gainsboro;
+	background: white;
+}
+.list-group .progress{
+	margin: 0;
+}
+.list-group-item .mylabel{
+	color: rgb(10, 10, 10);
+	text-transform: capitalize;
+}

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+
 use Ben\UserBundle\Entity\User;
 use Ben\UserBundle\Form\userType;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -57,6 +58,7 @@ class AdminController extends Controller
     {
         $config = $this->getConfig();
         $entity = new User();
+        $entity->setPlainPassword('123');
         $form = $this->createForm(new userType($config), $entity);
         return $this->render('BenUserBundle:admin:new.html.twig', array('entity' => $entity, 'form' => $form->createView()));
     }
@@ -75,7 +77,6 @@ class AdminController extends Controller
         if ($form->isValid()) {
             $em->updateUser($entity, false);
             $entity->getProfile()->getImage()->upload();
-            $entity->addGroup($this->container->get('fos_user.group_manager')->findGroupByName('Adhérents'));
 
             $this->getDoctrine()->getManager()->flush();
             $this->get('session')->getFlashBag()->add('success', "ben.flash.success.user.created");
@@ -101,7 +102,7 @@ class AdminController extends Controller
             throw $this->createNotFoundException('Unable to find posts entity.');
         }
 
-        $logs = $em->getRepository('BenAssociationBundle:ActivityLog')->findBy(array('entity_id' => $id));
+        $logs = $em->getRepository('BenAssociationBundle:Config')->getLog($id);
         $deleteForm = $this->createDeleteForm($id);
         return $this->render('BenUserBundle:admin:show.html.twig', array(
             'entity' => $entity,
@@ -429,96 +430,6 @@ class AdminController extends Controller
     }
 
     /**
-     * ajouter un groupe de recherche
-     * @Secure(roles="ROLE_MANAGER")
-     */
-    public function addFilterGroupAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $searchParam = $request->get('searchParam');
-        $entities = $em->getRepository('BenUserBundle:user')->search($searchParam);
-        $blackConstraint = new \Symfony\Component\Validator\Constraints\NotBlank();
-        $errorList = $this->get('validator')->validateValue($searchParam['filterGroup'], $blackConstraint);
-
-        if (count($errorList) == 0) {
-            $group = new Group();
-            $group->setName($searchParam['filterGroup']);
-            $group->setRoles(array());
-            foreach ($entities as $entity) {
-                $entity->addGroup($group);
-            }
-            $em->persist($group);
-            $em->flush();
-        $response = new Response(json_encode($group->toArray()));
-        $response->headers->set('Content-Type', 'application/json');
-        } else {
-            $errorMessage = $errorList[0]->getMessage();
-            $response = new Response($errorMessage);
-        }
-
-        return $response;
-    }
-
-    /**
-     * associer les adhérants sélectionnés à un groupe
-     * @Secure(roles="ROLE_MANAGER")
-     */
-    public function addToGroupAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $users = $request->get('users');
-        $group_id = $request->get('group');
-        $group = $em->getRepository('BenUserBundle:Group')->find($group_id);
-        $userManager = $this->get('fos_user.user_manager');
-        foreach( $users as $id){
-            $user = $userManager->findUserBy(array('id' => $id));
-            $user->addGroup($group);
-        }
-        $em->persist($group);
-        $em->flush();
-
-        $response = new Response(json_encode($group->toArray()));
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
-    }
-
-    /**
-     * liste des utilisateurs d'un groupe
-     * @Secure(roles="ROLE_MANAGER")
-     */
-    public function showGroupAction(Request $request, Group $group, $perPage)
-    {
-        $em = $this->getDoctrine()->getManager();
-        if($request->getMethod()==='POST') $searchParam = $request->get('searchParam');
-        else $searchParam['page'] = 1;
-        $searchParam['perPage'] = $perPage;
-        $searchParam['group'] = $group->getId();
-        $entities = $em->getRepository('BenUserBundle:user')->search($searchParam);
-        $pagination = (new Paginator())->setItems(count($entities), $searchParam['perPage'])->setPage($searchParam['page'])->toArray();
-        return $this->render('BenUserBundle:group:call_list.html.twig', array(
-                    'group' => $group,
-                    'entities' => $entities,
-                    'pagination' => $pagination,
-                    ));
-    }
-
-    /**
-     * supprimer un utilisateur d'un groupe
-     * @Secure(roles="ROLE_MANAGER")
-     */
-    public function removeFromGroupAction(Request $request, User $user, $groupid)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $group = $em->getRepository('BenUserBundle:Group')->find($groupid);
-        $user->removeGroup($group);
-        $em->persist($group);
-        $em->flush();
-        $this->get('session')->getFlashBag()->add('success', "ben.flash.success.general");
-        return $this->redirect($this->generateUrl('ben_show_group', array('id' => $groupid)));
-    }
-
-    /**
      * log mail, sms, call for a user
      * @Secure(roles="ROLE_MANAGER")
      */
@@ -531,22 +442,6 @@ class AdminController extends Controller
         return new Response('1');
     }
 
-    /**
-     * log mail, sms, call fo a group
-     * @Secure(roles="ROLE_MANAGER")
-     */
-    public function logGroupAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('BenUserBundle:user')->search(array('group'=>$id));
-        foreach ($users as $user) {
-            $entity = $this->getLog($request->get('log'));
-            $entity->setEntityId($user->getId());
-            $em->persist($entity);
-        }
-        $em->flush();
-        return new Response('1');
-    }
 
     /**
      * liste des utilisateurs public
@@ -567,40 +462,8 @@ class AdminController extends Controller
     }
 
     /**
-     * send mail
-     * @Secure(roles="ROLE_MANAGER")
-     */
-    public function sendMailGroupAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $mail = $request->get('mail');
-        if($id == 0){ //send mail to one person
-            $recipients = $mail['email'];
-            $logEntity = $this->getLog($request->get('log'));
-            $logEntity->setMessage($mail['subject']);
-            $logEntity->setType('mail');
-            $em->persist($logEntity);
-        }
-        else{ //send mail to a group
-            $users = $em->getRepository('BenUserBundle:user')->search(array('group'=>$id));
-            $recipients = [];
-            foreach ($users as $user) {
-                $recipients[] = $user->getEmail();
-                $logEntity = $this->getLog($request->get('log'));
-                $logEntity->setMessage($mail['subject']);
-                $logEntity->setType('mail');
-                $logEntity->setEntityId($user->getId());
-                $em->persist($logEntity);
-            }
-        }
-        $this->sendMail($mail, $recipients);
-        $em->flush();
-        return new Response('1');
-    }
-
-    /**
      * send mail to selected users
-     * @Secure(roles="ROLE_ADMIN")
+     * @Secure(roles="ROLE_MANAGER")
      */    
     public function sendMailAction(Request $request)
     {
@@ -664,7 +527,7 @@ class AdminController extends Controller
         extract($log);
         if(!empty($sms)){
             $type = 'sms';
-            $feedback = $sms;
+            $feedback = '';
         }
         $entity = new \Ben\AssociationBundle\Entity\ActivityLog();
         $entity->setClassName('Ben\UserBundle\Entity\User');

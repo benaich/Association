@@ -25,6 +25,8 @@ class User extends BaseUser implements ParticipantInterface {
      */
     protected $id;
 
+    public static $PASS  = '123';
+
     /**
      * @var \DateTime $created
      *
@@ -163,61 +165,6 @@ class User extends BaseUser implements ParticipantInterface {
     public function getAvatar() {
         return $this->getProfile()->getImage()->getwebpath();
     }
-
-    /**
-     * Add reservation
-     *
-     * @param Ben\AssociationBundle\Entity\Reservation $reservation
-     * @return reservations
-     */
-    public function addReservation(\Ben\AssociationBundle\Entity\Reservation $reservation)
-    {
-        $this->reservations[] = $reservation;
-        $reservation->setUser($this);
-    
-        return $this;
-    }
-
-    /**
-     * Remove reservations
-     *
-     * @param Ben\AssociationBundle\Entity\Reservation $reservations
-     */
-    public function removeReservation(\Ben\AssociationBundle\Entity\Reservation $reservation)
-    {
-        $this->reservations->removeElement($reservation);
-    }
-
-    /**
-     * Get reservations
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getReservations()
-    {
-        return $this->reservations;
-    }  
-
-    /**
-     * already has a reservation
-     */
-    public function hasReservation()
-    {
-        if(!count($this->reservations)) return false;
-        return true ;
-        // return ($this->reservations->lastEelement()->status === 'valide') ;
-    }
-
-
-    /**
-     * Get reservations
-     *
-     * @return Ben\AssociationBundle\Entity\Reservation 
-     */
-    public function getReservation()
-    {
-        return $this->reservations->last();
-    }
     
     /**
      * Get the most significant role
@@ -290,10 +237,64 @@ class User extends BaseUser implements ParticipantInterface {
     public function get($value)
     {
         $value = 'get'.ucfirst($value);
-        if(in_array($value, array('getUsername', 'getEmail', 'getRole', 'getEtat', 'getGroupList'))) 
+        if(in_array($value, array('getUsername', 'getEmail', 'getRole', 'getEtat', 'getGroupList', 'getStatus'))) 
             $value = $this->$value();
         else $value = $this->profile->$value();
 
         return ($value instanceof \DateTime) ? $value->format('Y-m-d') : $value;
+    }
+
+    public function setData($data)
+    {
+       $this->setUsername($data['username']);
+       $this->setEmail($data['email']);
+       $this->setPlainPassword(User::$PASS);
+       $this->profile->setCin($data['cin']);
+       $this->profile->setFirstName($data['first_name']);
+       $this->profile->setFamilyName($data['family_name']);
+       $this->profile->setBirthday(date_create_from_format('d/m/Y', $data['birthday']));
+       $this->profile->setGender($data['gender']);
+       $this->profile->setPostCode($data['post_code']);
+       $this->profile->setCity($data['city']);
+       $this->profile->setContry($data['contry']);
+       $this->profile->setJob($data['job']);
+       $this->profile->setTel($data['tel']);
+       $this->profile->setGsm($data['gsm']);
+       $this->profile->setDiplome($data['diplome']);
+       $this->profile->setExpertise($data['tel']);
+       $this->setCreated(date_create_from_format('d/m/Y', $data['created']));
+
+       return $this;
+    }
+
+    /**
+     * Returns the user roles
+     *
+     * @return array The roles
+     */
+    public function getRoles()
+    {
+        $roles = $this->roles;
+        $roles[] = static::ROLE_DEFAULT;
+
+        return array_unique($roles);
+    }
+
+    public function groupAdd(Group $group)
+    {
+        if (!$this->getGroups()->contains($group)) {
+            $this->getGroups()->add($group);
+        }
+
+        return $this;
+    }
+
+    public function groupRemove(Group $group)
+    {
+        if ($this->getGroups()->contains($group)) {
+            $this->getGroups()->removeElement($group);
+        }
+
+        return $this;
     }
 }

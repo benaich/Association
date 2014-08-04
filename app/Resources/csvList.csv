@@ -1,0 +1,4 @@
+id,username,cin,email,first_name,family_name,birthday,gender,post_code,city,contry,job,tel,gsm,diplome,expertise,created,last_login_date
+1,@atik,FR605121,atul@gmail.com,issam,atih,04/03/1992,homme,11050,rabat,maroc,job,0644354522,0532155623,,,06/04/2014,29/07/2014
+1,@nassim,SV65125,nassim@gmail.com,islam,badili,05/03/1994,homme,11120,casablanca,maroc,job,0644354522,0532155623,,,06/04/2014,29/07/2014  
+1,@abdo,SV5625,n.abdo@gmail.com,abdo,adili,23/03/1994,homme,12500,fez,maroc,designer,0656254522,0521855623,,,06/04/2014,29/07/2014  

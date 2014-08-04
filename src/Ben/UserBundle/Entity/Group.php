@@ -2,7 +2,6 @@
 
 namespace Ben\UserBundle\Entity;
 
-use FOS\UserBundle\Entity\Group as BaseGroup;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -10,9 +9,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity
  * @ORM\Table(name="mygroup")
+ * @ORM\Entity(repositoryClass="Ben\UserBundle\Entity\GroupRepository")
  * @UniqueEntity("name")
  */
-class Group extends BaseGroup
+class Group
 {
     /**
      * @ORM\Id
@@ -20,6 +20,23 @@ class Group extends BaseGroup
      * @ORM\generatedValue(strategy="AUTO")
      */
      protected $id;
+
+    public static $SIMPLEGROUP  = 'groupe';
+    public static $COMMISSION  = 'commission';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="kind", type="string", length=20)
+     */
+    private $type;
 
     /**
      * @ORM\ManyToMany(targetEntity="Ben\UserBundle\Entity\User", mappedBy="groups", cascade={"persist"})
@@ -38,20 +55,79 @@ class Group extends BaseGroup
     * @Assert\Valid()
     */
     private $image;
+    
+    /************ constructeur ************/
 
     public function __construct() {
+        $this->type = Group::$SIMPLEGROUP;
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
         $this->image = new \Ben\AssociationBundle\Entity\image();
         $this->image->setPath('unknown.png');
     }
+    
+    /************ getters & setters  ************/
 
-     public function __toString()
-     {
-     	return $this->name;
-     }
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
+    public function __toString()
+    {
+    	return $this->name;
+    }
 
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return group
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return group
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 
     /**
      * Add user

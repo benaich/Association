@@ -1,3 +1,7 @@
 Ben_association_homepage:
     pattern:  /
     defaults: { _controller: BenAssociationBundle:Default:index }
+
+ben_import_csv:
+    pattern:  /import/csv
+    defaults: { _controller: BenAssociationBundle:Default:inmportFromCsv }

@@ -193,6 +193,8 @@ ben:
         show: اظهار
         edit: تحديث
         delete: حذف
+        empty:
+            history: حذف السجلات
         valide: تحقق
         send: ارسال
         done: انهاء

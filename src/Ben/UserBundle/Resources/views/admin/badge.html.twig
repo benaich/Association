@@ -33,7 +33,7 @@
     <div class="box mybadge printed-badge">
       <img class="pull-left pic" src="{{ addr ~ asset( entity.profile.image.getwebpath)}}"/>
       <img class="pull-right logo" src="{{ addr ~ asset(app_config.org_logo) }}"/>
-      <h2>Bayti</h2>
+      <h2>{{ app_config.org_name }}</h2>
       <ul class="list-unstyled">
           <li><strong>{{ entity.profile.firstName }} {{ entity.profile.familyName }}</strong></li>
           <li>{{ entity.email }}</li>

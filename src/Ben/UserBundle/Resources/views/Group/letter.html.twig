@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Badge</title>
+    {% set addr = 'http://' ~ app.request.server.get('SERVER_ADDR') %} 
+    <link href="{{ addr ~ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ addr ~ asset('css/main.css') }}" rel="stylesheet"><!-- Loading my css -->
+    <style type="text/css"> {{ app_config.org_carte_css}} </style>
+ </head>
+<body>
+  <div class="container">
+		{% for user in users %}
+		<div class="page">			
+        {{ letter|replace({'{org_name}': app_config.org_name, '{org_address}': app_config.org_address, '{fullname}': user.profile.familyname ~ ' ' ~ user.profile.firstname, '{address}': user.profile.address, '{firstname}': user.profile.firstname})|raw }}
+		</div>
+    {% endfor %}
+  </div>
+
+</body>
+</html>

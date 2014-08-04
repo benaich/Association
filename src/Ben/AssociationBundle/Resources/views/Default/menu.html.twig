@@ -1,8 +1,8 @@
 {% set route = app.request.attributes.get('_route') %} 
 
 {% set dashboardMenu = ['Ben_association_homepage'] %}
-{% set userMenu = ['ben_users','ben_show_user','ben_new_user','etudiant_new','ben_edit_user'] %} 
-{% set groupMenu = ['fos_user_group_list', 'fos_user_group_show', 'fos_user_group_edit', 'ben_show_group'] %} 
+{% set userMenu = ['ben_users','ben_show_user','ben_new_user','etudiant_new','ben_edit_user', 'ben_import_csv'] %} 
+{% set groupMenu = ['group', 'group_show', 'group_new', 'group_edit'] %}
 {% set statusMenu = ['status', 'status_show', 'status_new', 'status_edit'] %} 
 {% set roomMenu = ['room', 'room_show', 'room_new', 'room_edit'] %} 
 {% set eventMenu = ['event', 'event_show', 'event_new', 'event_edit', 'event_calendar', 'event_demo'] %} 
@@ -16,7 +16,7 @@
     {% if is_granted("ROLE_MANAGER") %}
         <li class="{% if route in dashboardMenu %}current{% endif %}"><a href="{{ path('Ben_association_homepage') }}" ><span class="glyphicon glyphicon-dashboard block"></span> <span>{{'ben.menu.dashboard'|trans}}</span></a></li>
         <li class="{% if route in userMenu %}current{% endif %}"><a href="{{ path('ben_users') }}" ><span class="fui-user block"></span> <span>{{'ben.menu.members'|trans}}</span></a></li>
-        <li class="{% if route in groupMenu %}current{% endif %}"><a href="{{ path('fos_user_group_list') }}" ><span class="fui-myspace block"></span> <span>{{'ben.menu.groups'|trans}}</span></a></li>
+        <li class="{% if route in groupMenu %}current{% endif %}"><a href="{{ path('group') }}" ><span class="fui-myspace block"></span> <span>{{'ben.menu.groups'|trans}}</span></a></li>
         <li class="{% if route in statusMenu %}current{% endif %}"><a href="{{ path('status') }}" ><span class="glyphicon glyphicon-tags block"></span> <span>{{'ben.menu.status'|trans}}</span></a></li>
         <li class="{% if route in cotisationMenu %}current{% endif %}"><a href="{{ path('cotisation') }}" ><span class="glyphicon glyphicon-usd block"></span> <span>{{'ben.menu.cotisation'|trans}}</span></a></li>
         

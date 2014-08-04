@@ -21,5 +21,20 @@ show tables;
 -- select * from fields;
 -- select * from activity_log;
 -- insert into config value (null, 'users_access', 1);
-select * from config;
+-- select * from config;
 -- update config set the_key = 'allowaccess' where the_key = 'users_access';
+-- insert into fields value (null, 'adherant', 'status', 1, 1, 13, 'Status');
+-- select log.*, u.username from activity_log log
+-- left join user u on u.id = log.user
+-- where entity_id = 8;
+-- update mygroup set kind = 'groupe de recherche' where 1=1;
+-- describe mygroup;
+-- select * from mygroup;
+
+/* stats by status */
+select s.name , count(*) from user u
+left join avancement a on a.user_id = u.id
+left join status s on s.id = a.status_id
+group by s.id;
+/* stats by city */
+select city, count(*) from user u left join profile p on p.id = u.profile_id group by city; 

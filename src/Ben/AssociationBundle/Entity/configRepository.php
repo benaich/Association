@@ -23,5 +23,13 @@ class configRepository extends EntityRepository
          
         return $qB->getQuery()->execute();
     }
+
+    public function getLog($id)
+    {
+        $query = "select log.*, u.username from activity_log log left join user u on u.id = log.user where entity_id = $id";
+        $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+        $stmt->execute();
+        return  $stmt->fetchAll();
+    }
 	
 }

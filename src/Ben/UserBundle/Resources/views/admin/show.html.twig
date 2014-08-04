@@ -58,7 +58,7 @@ Adherant | {{ parent() }}
       <div class="box mybadge hidden-print">
         <img class="pull-left pic" src="{{ asset( entity.profile.image.getwebpath)}}"/>
         <img class="pull-right logo" src="{{ asset(app_config.org_logo) }}"/>
-        <h2>Bayti</h2>
+        <h2>{{ app_config.org_name }}</h2>
         <ul class="list-unstyled">
             <li><strong>{{ entity.profile.firstName }} {{ entity.profile.familyName }}</strong></li>
             <li>{{ entity.email }}</li>
@@ -172,7 +172,7 @@ Adherant | {{ parent() }}
                   <td>{% if entity.dateFrom %}{{ entity.dateFrom|date('d/m/Y') }}{% endif %}</td>
                   <td>{% if entity.dateTo %}{{ entity.dateTo|date('d/m/Y') }}{% endif %}
                   {% if is_granted("ROLE_MANAGER") %} 
-                  <a class="btn btn-link btn-xs pull-right" href="{{ path('avancement_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="glyphicon glyphicon-edit"></span></a>
+                  <a class="btn btn-link btn-xs pull-right" href="{{ path('avancement_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="{{ 'ben.action.edit'|trans }}"><span class="glyphicon glyphicon-edit"></span></a>
                   {% endif %}
                   </td>
                 </tr>
@@ -205,7 +205,7 @@ Adherant | {{ parent() }}
                   <td>{% if entity.datefrom %}{{ entity.datefrom|date('Y-m-d') }}{% endif %}</td>
                   <td>{% if entity.dateto %}{{ entity.dateto|date('Y-m-d') }}{% endif %}
                   {% if is_granted("ROLE_MANAGER") %} 
-                  <a class="btn btn-link btn-xs pull-right" href="{{ path('cotisation_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="modifier"><span class="glyphicon glyphicon-edit"></span></a>
+                  <a class="btn btn-link btn-xs pull-right" href="{{ path('cotisation_edit', { 'id': entity.id }) }}" data-toggle="tooltip" title="{{ 'ben.action.edit'|trans }}"><span class="glyphicon glyphicon-edit"></span></a>
                   {% endif %}
                   </td>
                 </tr>
@@ -224,9 +224,13 @@ Adherant | {{ parent() }}
                   <tr>
                       <th>#</th>
                       <th>{{ 'ben.meta.datecall'|trans }}</th>
+                      <th>{{ 'user.title.user'|trans }}</th>
                       <th>{{ 'cotisation.form.type'|trans }}</th>
                       <th>{{ 'ben.meta.note'|trans }} 
-              <a href="{{ path('ben_clear_log', {'user': entity.id }) }}" class="btn btn-link btn-xs pull-right" data-toggle="tooltip" title="Suppromer l'hisorique"><span class="glyphicon glyphicon-trash"></span></a></th>
+                      {% if is_granted("ROLE_ADMIN") %}
+                      <a href="{{ path('ben_clear_log', {'user': entity.id }) }}" class="btn btn-link btn-xs pull-right js-delete delete-all" data-toggle="tooltip" title="{{ 'ben.action.empty.history'|trans }}"><span class="glyphicon glyphicon-trash"></span></a>
+                      {% endif %}
+                      </th>
                   </tr>
               </thead>
               <tbody>
@@ -234,8 +238,13 @@ Adherant | {{ parent() }}
                 <tr>
                   <td>{{ loop.index }}</td>
                   <td>{% if entity.date %}{{ entity.date|date('Y-m-d à H:i') }}{% endif %}</td>
+                  <td><a href="{{ path('ben_show_user', { 'id': entity.user }) }}">{{ entity.username }}</a></td>
                   <td>{{ entity.type }}</td>
-                  <td>{{ entity.message }} <a href="{{ path('ben_clear_log', { 'id': entity.id}) }}" class="btn btn-link btn-xs pull-right" data-toggle="tooltip" title="supprimer"><span class="fui-cross"></span></a></td>
+                  <td>{{ entity.message }} 
+                  {% if is_granted("ROLE_ADMIN") %}
+                  <a href="{{ path('ben_clear_log', { 'id': entity.id}) }}" class="btn btn-link btn-xs pull-right js-delete" data-toggle="tooltip" title="{{ 'ben.action.delete'|trans }}"><span class="fui-cross"></span></a>
+                  {% endif %}
+                  </td>
                 </tr>
               {% endfor %}
               </tbody>
@@ -262,14 +271,16 @@ Adherant | {{ parent() }}
           return false;
       });
 
-      $('.ajax').on('click', 'a', function(e){
+      $('.ajax').on('click', 'a.js-delete', function(e){
         $.ajax({ 
           type: "POST", 
           url: $(this).attr('href')
         });
-        $(this).closest('tr').fadeOut();
+        if($(this).hasClass('delete-all'))
+          $(this).closest('.box').fadeOut();
+        else $(this).closest('tr').fadeOut();
         return false;
-      })
+      });
           
     })(jQuery);
 </script>

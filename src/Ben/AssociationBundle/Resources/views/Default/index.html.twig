@@ -10,10 +10,44 @@
  {% endblock %}
 
 {% block body %}
-
-<h2><span class="glyphicon glyphicon-dashboard"></span> {{'ben.menu.dashboard'|trans}}</h2>
+<h2 style="margin-bottom: 5px;"><span class="glyphicon glyphicon-dashboard"></span> {{'ben.menu.dashboard'|trans}}</h2>			
 <div class="row">
-	<div class="col-md-2 col-xs-6">
+	<div class="col-md-4">
+		<div class="box widget-body">
+	        <header>
+	        	<h3><span class="glyphicon glyphicon-user"></span> Liste des commissions
+	        	<i class="js-toggle pull-right glyphicon glyphicon-chevron-up glyphicon-chevron-down"></i></h3>
+	        </header>
+            <ul class="list-group hideme">
+              {% for entity in groups %}
+              <li class="list-group-item">
+              <a href="{{ path('group_show', {id: entity.id, perPage: app_config.rows_per_page }) }}">
+              {{ entity.getName() }}</a> <span class="badge">{{ entity.getUsers()|length }}</span>
+              </li>
+              {% endfor %}
+            </ul>
+	    </div>
+		<div class="box widget-body">
+	        <header>
+	        	<h3><span class="glyphicon glyphicon-stats"></span> Statistiques par ville
+	        	<i class="js-toggle pull-right glyphicon glyphicon-chevron-up"></i></h3>
+	        </header>
+            <ul class="list-group">
+              {% for item in stats.city %}
+              <li class="list-group-item">
+              <span class="mylabel">{{ item.city }}</span> <span class="badge">{{ item.data }}</span>
+				<div class="progress">
+	            	<div class="progress-bar" style="width: {{ item.percentage }}%;"></div>
+	          	</div>
+              </li>
+              {% endfor %}
+            </ul>
+	    </div>
+	</div>
+	<div class="col-md-8">
+	<div class="row">
+		
+	<div class="col-md-3 col-xs-6">
 	<div class="stat-boxes widget-body">
 		<a href="{{ path('ben_users') }}"><span class="fui-user ben-icone"></span></a>
 		<h3 class="ticker--one">{{ counter.user }}</h3>
@@ -21,15 +55,15 @@
 		<div class="clearfix"></div>		
 	</div>
 	</div>
-	<div class="col-md-2 col-xs-6">
+	<div class="col-md-3 col-xs-6">
 		<div class="stat-boxes widget-body">
-			<a href="{{ path('fos_user_group_list') }}"><span class="fui-myspace ben-icone"></span></a>
+			<a href="{{ path('group') }}"><span class="fui-myspace ben-icone"></span></a>
 			<h3 class="ticker--one">{{ counter.group }}</h3>
 			<i>{{'ben.menu.groups'|trans}}</i>
 			<div class="clearfix"></div>		
 		</div>
 	</div>
-	<div class="col-md-2 col-xs-6">
+	<div class="col-md-3 col-xs-6">
 		<div class="stat-boxes widget-body">
 			<a href="{{ path('event') }}"><span class="fui-time ben-icone"></span></a>
 			<h3 class="ticker--one">{{ counter.event }}</h3>
@@ -37,7 +71,7 @@
 			<div class="clearfix"></div>		
 		</div>
 	</div>
-	<div class="col-md-2 col-xs-6">
+	<div class="col-md-3 col-xs-6">
 		<div class="stat-boxes widget-body">
 			<a href="{{ path('cotisation') }}"><span class="glyphicon glyphicon-usd ben-icone"></span></a>
 			<h3 class="ticker--one">{{ counter.cotisation }}</h3>
@@ -45,7 +79,7 @@
 			<div class="clearfix"></div>		
 		</div>
 	</div>
-	<div class="col-md-2 col-xs-6">
+	<div class="col-md-3 col-xs-6">
 		<div class="stat-boxes widget-body">
 			<a href="{{ path('status') }}"><span class="fui-tag ben-icone"></span></a>
 			<h3 class="ticker--one">{{ counter.status }}</h3>
@@ -53,7 +87,7 @@
 			<div class="clearfix"></div>		
 		</div>
 	</div>
-	<div class="col-md-2 col-xs-6">
+	<div class="col-md-3 col-xs-6">
 		<div class="stat-boxes widget-body">
 			<a href="{{ path('fos_message_inbox') }}"><span class="glyphicon glyphicon-envelope ben-icone"></span></a>
 			<h3 class="ticker--one">{{ fos_message_nb_unread() }}</h3>
@@ -61,16 +95,30 @@
 			<div class="clearfix"></div>		
 		</div>
 	</div>
-</div>			
-    <div class="box widget-body">
-        <header>
-        	<h3><span class="glyphicon glyphicon-globe"></span> {{'ben.meta.map'|trans}}
-        	<i class="js-toggle pull-right fui-arrow-right"></i></h3>
-        </header>
-		<div class="map-warper">
-			<div id="js-map"></div> 
-		</div>
-    </div>
+	</div>
+		<div class="box widget-body">
+	        <header>
+	        	<h3><span class="glyphicon glyphicon-stats"></span> Statistiques par status
+	        	<i class="js-toggle pull-right glyphicon glyphicon-chevron-up"></i></h3>
+	        </header>
+			<div class="stats-warper">
+				<div id="statsbystatus" class="graph"></div>
+				<div class="clearfix"></div>
+			</div>
+	    </div>
+	</div>
+	<div class="col-md-12">
+		<div class="box widget-body">
+	        <header>
+	        	<h3><span class="glyphicon glyphicon-globe"></span> {{'ben.meta.map'|trans}}
+	        	<i class="js-toggle pull-right glyphicon glyphicon-chevron-up"></i></h3>
+	        </header>
+			<div class="map-warper">
+				<div id="js-map"></div> 
+			</div>
+	    </div>
+	</div>
+</div>
 <div class="col-md-6">
 	<!-- Graph HTML -->
 <div id="graph-wrapper">
@@ -85,17 +133,10 @@
 
 {% block javascripts %}
 {{ parent() }}
-    <script src="{{ asset('js/flot/jquery.flot.js') }}"></script>
-    <script src="{{ asset('js/flot/jquery.flot.categories.js') }}"></script>
-    <script src="{{ asset('js/flot/jquery.flot.grow.js') }}"></script>
-    <script src="{{ asset('js/flot/jquery.flot.orderBars.js') }}"></script>
-    <script src="{{ asset('js/flot/jquery.flot.pie.js') }}"></script>
-    <script src="{{ asset('js/flot/jquery.flot.resize.js') }}"></script>
-    <script src="{{ asset('js/flot/jquery.flot.selection.js') }}"></script>
-    <script src="{{ asset('js/flot/jquery.flot.stack.js') }}"></script>
-    <script src="{{ asset('js/flot/jquery.flot.stackpercent.js') }}"></script>
-    <script src="{{ asset('js/flot/jquery.flot.time.js') }}"></script>
-    <script src="{{ asset('js/flot/demo.js') }}"></script>
+
+    <script src="{{ asset('js/flot/jquery.flot.min.js') }}"></script>
+    <script src="{{ asset('js/flot/jquery.flot.pie.min.js') }}"></script>
+
 
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> 
 
@@ -206,7 +247,19 @@
 //         previousPoint = null;
 //     }
 // });
+	
+	var data = {{ stats.status|json_encode|raw }};
 
+	$.plot('#statsbystatus', data, {
+	    series: {
+	        pie: {
+	            show: true
+	        }
+	    },
+	    legend: {
+	        show: false
+	    }
+	});
 
     var styles = [  
 	  //       {  
@@ -253,11 +306,6 @@
 		    map: map,
 		    animation: google.maps.Animation.DROP
 		});
-   
-   	$('.js-toggle').on('click', function(){
-   		$(this).toggleClass('fui-arrow-left').closest('header').next().slideToggle();
-   		return false;
-   	}); 
 
     })(jQuery);
 </script>

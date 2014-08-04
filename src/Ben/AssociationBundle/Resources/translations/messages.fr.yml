@@ -53,6 +53,7 @@ user:
     title:
         main: Gestion des membres
         profile: Profile
+        user: utilisateur
     meta:
         identity: Identité
         name: Adhérent
@@ -71,6 +72,7 @@ group:
         reject: Enlever de ce groupe
     form:
         name: Nom du groupe
+        type: type
         image.file: Icone
         placeholder:
             filter: Créer un groupe pour ce filtre
@@ -100,6 +102,7 @@ event:
         letter:
             show: Afficher les lettres
             print: Imprimer les lettres
+            sendletter: Envoyer une lettre
             send: Envoyer par mail
         ftp: Publier l'agenda
     form:
@@ -195,6 +198,8 @@ ben:
         show: afficher
         edit: Mettre à jour
         delete: Supprimer
+        empty:
+            history: Supprimer l'historique
         valide: Valider
         send: Envoyer
         done: Terminer
@@ -203,6 +208,7 @@ ben:
         tocsv: Exporter vers csv
         toxml: Exporter vers xml
         toexcel: Exporter vers excel
+        import: Importer
         topdf: imprimer
         enable: activer
         disable: désactiver
@@ -268,3 +274,5 @@ avancement:
            to: Date fin
         city: Province
         status: Status
+form:
+    submitFile: Fichier

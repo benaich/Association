@@ -25,7 +25,7 @@
               </div>    
             <div class="col-lg-7 col-xs-6">
               <div class="btn-group pull-right">              
-                <button class="btn btn-primary" href="#" data-toggle="modal" data-target="#myModal"><span class="fui-search"></span> {{'ben.action.advanced'|trans}}</button>
+                <button class="btn btn-primary" href="#" data-toggle="modal" data-target="#searchModal"><span class="fui-search"></span> {{'ben.action.advanced'|trans}}</button>
                 <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                   <span class="caret"></span>
                 </button>
@@ -59,7 +59,7 @@
         </div>
 
         <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -76,7 +76,7 @@
                 <div class="form-group">
                     <label class="col-md-5 control-label">{{ 'group.action.filter'|trans }}</label>
                     <div class="col-md-7">
-                      <select id="js-group" name="earchParam[group]" class="primary select-block">
+                      <select id="js-group" name="searchParam[group]" class="primary select-block">
                         <option value="0">Filtrer par groupe</option>
                         {% for group in groups %}
                         <option value="{{ group.id }}">{{ group.name }}</option>
@@ -98,7 +98,7 @@
                 <div class="clearfix"></div>
               </div>
               <div class="modal-footer">
-                <button type="button" id="modalSearch" class="btn btn-primary btn-embossed">{{ 'ben.action.search'|trans }}</button>
+                <button type="submit" class="btn btn-primary btn-embossed">{{ 'ben.action.search'|trans }}</button>
               </div>
             </div>
           </div>
@@ -110,7 +110,7 @@
 
 {% block javascripts %}
 {{ parent() }}
-    <script src="{{ asset('js/moment.js') }}"></script>
+    <script src="{{ asset('js/moment.min.js') }}"></script>
     <script src="{{ asset('js/daterangepicker.js') }}"></script>
 <script> 
     (function($) {
@@ -131,6 +131,7 @@
       }
       function ajaxPost(action) {
         form.addClass('working');
+        searchModal.modal('hide');
         $.ajax({ 
           type: "POST", 
           data: form.serialize(),
@@ -143,7 +144,6 @@
             }else ajaxPost();
           },
           error:function(){
-              alert('service denied');
               form.removeClass('working');
           }
         });
@@ -159,8 +159,7 @@
           perPageBtn = form.find('#js-perpage'),
           jsFormUrl = '',
           checkboxBtn = form.find("input:checkbox"),
-          modalSearchBtn = form.find('#modalSearch'),
-          closeModal = form.find('#closeModal');
+          searchModal = form.find('#searchModal');
 
 
       /* pagination */    
@@ -173,11 +172,10 @@
         jsFormUrl='{{ path('ben_remove_events') }}';
         ajaxPost('delete');
       });
-      modalSearchBtn.on('click', function () {
-          closeModal.trigger('click');
-          ajaxPost();
+      form.on('submit', function(){
+        ajaxPost();
+        return false;
       });
-      form.on('submit', ajaxPost);
 
       /* submit the form after loading the page*/
       init();

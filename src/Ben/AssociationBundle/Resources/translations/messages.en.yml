@@ -53,6 +53,7 @@ user:
     title:
         main: Membership Management
         profile: Profile
+        user: User
     meta:
         identity: Identity
         name: Member
@@ -100,6 +101,7 @@ event:
         letter:
             show: View letters
             print: Print letters
+            sendletter: send letter
             send: Send by email
         ftp: Publish the calendar
     form:
@@ -194,6 +196,8 @@ ben:
         show: Show
         edit: Update
         delete: Remove
+        empty:
+            history: Remove history
         valide: validate
         send: Send
         done: Submit
@@ -267,3 +271,5 @@ avancement:
            to: Date To
         city: City
         status: Status
+form:
+    submitFile: File

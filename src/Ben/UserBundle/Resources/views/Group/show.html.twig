@@ -1,18 +1,325 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 {% block title %}
-Paramètres - {{ parent() }}
+{{ group.getName() }} | {{ parent() }}
 {% endblock %}
+{% block stylesheet %}
+   {{ parent() }}   
+        <link href="{{ asset('css/froala_editor.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+{% endblock %}
+{% block fos_user_content %}     
+<h2>{{ 'group.form.name'|trans }} {{ group.getName() }}</h2>
+<form  id="jsForm" role="form" method="post" action="">
+    <input id="pagenumber" type="hidden" name="searchParam[page]" value="1"> 
+    <div class="row hidden-print">
+      <div class="col-md-5 col-xs-6">
+          <div class="form-group">
+             <div class="input-group">                                     
+                <input type="text" name="searchParam[keyword]" class="form-control" placeholder="{{ 'ben.action.search'|trans }}">
+               	<span class="input-group-btn">
+                     <button type="submit" class="btn"><span class="fui-search"></span></button>
+                </span>
+             </div>
+          </div>
+      </div>
+            <div class="col-lg-7 col-xs-6">
+              <div class="btn-group pull-right">              
+                <button class="btn btn-primary" href="#" data-toggle="modal" data-target="#myModal"><span class="fui-gear"></span> Actions groupées</button>
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                  <span class="caret"></span>
+                </button>
+                <span class="dropdown-arrow dropdown-arrow-inverse"></span>
+                <ul class="dropdown-menu dropdown-inverse">
+                      <li><a href="#" id="js-smsgroup"><span class="glyphicon glyphicon-share"></span> {{ 'ben.action.sms'|trans }}</a></li>
+                      <li><a href="#" id="js-mailgroup"><span class="glyphicon glyphicon-share"></span> {{ 'message.action.mail'|trans }}</a></li>
+                      <li><a href="#" id="js-letter"><span class="glyphicon glyphicon-share"></span> {{ 'event.action.letter.sendletter'|trans }}</a></li>
+                </ul>
+              </div>
+            </div>
+    </div><!-- /.row -->
+<table class="table table-hover table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>{{ 'user.form.profile.family.name'|trans }}</th>
+            <th>{{ 'user.form.profile.first.name'|trans }}</th>
+            <th>{{ 'user.form.profile.cin'|trans }}</th>
+            <th>{{ 'user.form.profile.tel'|trans }}</th>
+            <th>{{ 'ben.meta.actions'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+    	{% for entity in entities %}
+    	<tr>
+    		<td>{{loop.index}}</td>
+    		<td>{{ entity.profile.firstName }}</td>
+    		<td>{{ entity.profile.familyName }}</td>
+    		<td>{{ entity.profile.cin }}</td>
+    		<td><a href="callto://+212666343755">{{ entity.profile.tel }}</a></td>
+    		<td>
+          <a class="btn btn-embossed btn-primary btn-xs" href="{{ path('ben_show_user', { 'id': entity.id }) }}" data-toggle="tooltip" title="{{ 'ben.action.show'|trans }}"><span class="fui-search"></span></a>
+          <a class="btn btn-embossed btn-success btn-xs js-call" href="#" data-id="{{ entity.id }}" data-call="{{ entity.profile.tel }}" data-toggle="tooltip" title="{{ 'ben.action.call'|trans }}"><span class="glyphicon glyphicon-earphone"></span></a>
+          <a class="btn btn-embossed btn-info btn-xs js-sms" href="#" data-id="{{ entity.id }}" data-call="{{ entity.profile.tel }}" data-toggle="tooltip" title="{{ 'ben.action.sms'|trans }}"><span class="glyphicon glyphicon-envelope"></span></a>
+          <a class="btn btn-embossed btn-info btn-xs js-mail" href="#" data-id="{{ entity.id }}" data-email="{{ entity.email }}" data-toggle="tooltip" title="{{ 'event.action.letter.send'|trans }}"><span class="glyphicon glyphicon-send"></span></a>
+          <a class="btn btn-embossed btn-danger btn-xs js-delete"  href="{{ path('ben_remove_from_roup', {id: entity.id, groupid: group.id }) }}" data-toggle="tooltip" title="{{ 'group.action.reject'|trans }}" data-id="{{ entity.profile.fullName }}"><span class="fui-cross"></span></a>
+    		</td>
+    	</tr>
+    	{% endfor %}
+    </tbody>
+</table>
 
-{% block fos_user_content %}
-     
-<h2><span class="fui-myspace"></span> Groupe {{ group.getName() }}</h2>
-<div class="row">
-    {% for entity in group.getUsers() %}
-    <div class="col-md-4 col-xs-6">
-        {% include "BenUserBundle:admin:entity.html.twig" %}
+	{% include "BenAssociationBundle:Default:pagination.html.twig" %}
+
+<!-- call Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="myModalLabel">{{ 'ben.meta.call'|trans }}</h4>
+      </div>
+      <div class="modal-body">
+      <div class="row">
+          <div class="col-xs-3">
+              <img class="img-responsive img-circle" src="{{ asset(app.user.profile.image.getwebpath)}}"/>
+          </div>
+          <div class="col-xs-6 text-center">
+          <span class="throbber">Loading…</span>
+          <div id="timer"></div></div>
+          <div class="col-xs-3">
+              <img class="img-responsive" src="{{ asset('images/fixe.png')}}"/>
+              <small class="number">+212666343755</small>
+          </div>
+          <div class="col-md-12 text-center"><a href="#" id="hangup" data-toggle="tooltip" title="{{ 'ben.action.hangup'|trans }}" class="btn btn-danger btn-embossed"><span class="glyphicon glyphicon-earphone"></span></a></div>
+      </div>
+      <div class="feedback">
+          <label class="radio">
+            <span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span><input type="radio" name="log[feedback]" checked="checked" value="réponse" data-toggle="radio">
+            Réponse
+          </label>
+          <label class="radio">
+            <span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span><input type="radio" name="log[feedback]" value="occupé" data-toggle="radio">
+            Occupé
+          </label>
+          <label class="radio">
+            <span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span><input type="radio" name="log[feedback]" value="pas de réponse" data-toggle="radio">
+            Pas de réponse
+          </label>
+          <input type="hidden" name="log[type]" value="appel">
+          <input type="hidden" id="user" name="log[entity_id]" value="">
+          <input type="hidden" name="log[user]" value="{{app.user.id}}">
+          <a href="#" id="sendFeedback" class="btn btn-primary btn-embossed pull-right"><span class="glyphicon glyphicon-check"></span> {{ 'ben.action.done'|trans }}</a>
+        </div>
+      </div>
     </div>
-    {% endfor %}
+  </div>
 </div>
-
-
+<!-- sms Modal -->
+<div class="modal fade" id="smsModal" tabindex="-1" role="dialog" aria-labelledby="smsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="smsModalLabel">{{ 'ben.action.sms'|trans }}</h4>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <div class="form-group">
+              <input type="text" name="tel" class="form-control number" placeholder="Tél">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-group">
+              <textarea id="sms" name="log[sms]" rows="6" class="form-control" placeholder="{{ 'ben.meta.message'|trans }}"></textarea>
+            </div>
+          </div>
+          <button id="js-sendsms" type="button" class="btn btn-primary btn-block">{{ 'ben.action.send'|trans }}</button>
+          <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- mail Modal -->
+<div class="modal fade" id="mailModal" tabindex="-1" role="dialog" aria-labelledby="mailModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="mailModalLabel">{{ 'message.action.mail'|trans }}</h4>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <div class="form-group">
+              <input type="text" name="mail[email]" class="form-control email" placeholder="Email">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-group">
+              <input type="text" name="mail[subject]" class="form-control" placeholder="Objet">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-group">
+              <textarea id="body" name="mail[body]" rows="6" class="form-control" placeholder="{{ 'ben.meta.message'|trans }}"></textarea>
+            </div>
+          </div>
+          <button id="js-sendmail" type="button" class="btn btn-primary btn-block">{{ 'ben.action.send'|trans }}</button>
+          <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+<!-- letter Modal -->
+<div class="modal fade" id="letterModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" style="width: 900px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">{{ 'event.action.letter.sendletter'|trans }}</h4>
+      </div>
+      <div class="modal-body">
+        <form action="{{ path('group_send_letter', {id: group.id }) }}" method="POST">
+          <div class="form-group">
+            <div class="form-group">
+              <input type="hidden" name="log[user]" value="{{app.user.id}}">
+              <input type="hidden" name="log[type]" value="lettre">
+              <input type="hidden" name="log[feedback]" value="">
+              <textarea name="letter" class="form-control veditor">{{app_config.letter_header|raw}} {{app_config.letter_invitation|raw}}</textarea>
+            </div>
+          </div>
+          <button id="js-sendmail" type="submit" class="btn btn-primary">{{ 'ben.action.print'|trans }}</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock fos_user_content %}
+
+{% block javascripts %}
+{{ parent() }}
+    <script src="{{ asset('js/froala_editor.min.js') }}"></script>
+<script> 
+    (function($) {
+    	var	form = $('#jsForm'),
+    		  pageInput = form.find('#pagenumber'),
+          modal = form.find('#myModal'),
+          smsModal = form.find('#smsModal'),
+          mailModal = form.find('#mailModal'),
+          letterModal = $('#letterModal'),
+          feedback = modal.find('.feedback').hide(),
+          userInput = feedback.find('#user'),
+          jsFormUrl,
+          timerLabel = modal.find('#timer').css('opacity', 0),
+          seconds = 0, minutes = 0, hours = 0, t;
+
+      function ajaxPost(callback) {
+        $.ajax({ 
+          type: "POST", 
+          data: form.serialize(),
+          url: jsFormUrl
+        });
+        return false;
+      }
+
+      modal.find('#hangup').on('click', function(){
+          feedback.slideDown().prev().slideUp();
+      });
+      feedback.find('#sendFeedback').on('click', function(){
+          modal.modal('hide');
+          jsFormUrl = '{{ path('add_users_log') }}';
+          ajaxPost();
+          feedback.hide().prev().show();
+          seconds = 0; minutes = 0; hours = 0;
+          timerLabel.text('00:00');
+          timerLabel.css('opacity', 0).prev().css('opacity', 1);
+          clearTimeout(t);
+      });
+
+		/* pagination */    
+		form.on('click', '.js-page', function(){
+		    pageInput.val($(this).data('page'));
+		    form.trigger('submit');
+		});
+    /* call */
+    form.on('click', '.js-call', function(){
+        modal.find('.number').html('+212'+$(this).data('call').substr(1));
+        userInput.val($(this).data('id'));
+        modal.modal('show');
+        setTimeout(function(){
+          timer();
+          timerLabel.css('opacity', 1).prev().css('opacity', 0);
+        }, 3000);
+        
+    });
+    /* sms */
+    form.on('click', '.js-sms', function(){
+        smsModal.find('.number').val('+212'+$(this).data('call').substr(1));
+        userInput.val($(this).data('id'));
+        smsModal.modal('show');
+    });
+    $('#js-smsgroup').on('click', function(){
+        smsModal.find('.number').parent().parent().hide();
+        userInput.val('0');
+        smsModal.modal('show');
+    });
+    smsModal.find('#js-sendsms').on('click', function(){
+        smsModal.modal('hide');
+        if(userInput.val()==0) jsFormUrl = '{{ path('ben_log_group', {id: group.id}) }}';
+        else jsFormUrl = '{{ path('add_users_log') }}';
+        ajaxPost();
+        smsModal.find('#sms').val('');
+        smsModal.find('.number').parent().parent().show();
+    });
+
+    /* mail */
+    form.on('click', '.js-mail', function(){
+        smsModal.find('.email').val($(this).data('email'));
+        userInput.val($(this).data('id'));
+        mailModal.modal('show');
+    });
+    $('#js-mailgroup').on('click', function(){
+        mailModal.find('.email').parent().parent().hide();
+        userInput.val('0');
+        mailModal.modal('show');
+    });
+    mailModal.find('#js-sendmail').on('click', function(){
+        mailModal.modal('hide');
+        if(userInput.val()==0) jsFormUrl = '{{ path('ben_mail_group', {id: group.id}) }}';
+        else jsFormUrl = '{{ path('ben_mail_group', {id: 0}) }}';
+        ajaxPost();
+        mailModal.find('.email').parent().parent().show();
+    });
+    function add() {
+        seconds++;
+        if (seconds >= 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes >= 60) {
+                minutes = 0;
+                hours++;
+            }
+        }
+        time = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+        timerLabel.text(time);
+        timer();
+    }
+    function timer() {
+        t = setTimeout(add, 1000);
+    }
+
+    $('.table').on('click', '.js-delete', function(){
+      return confirmation('voullez-vous vraiment enlever l\'adherent '+$(this).data('id')+' de ce groupe');
+    });
+
+    $('#js-letter').on('click', function(){
+        letterModal.modal('show');
+    });
+    $('.veditor').editable({inlineMode: false});
+    $('.fr-dropdown').find('.fa-magic').parent().hide();
+
+
+    })(jQuery);
+</script>
+{% endblock %}
