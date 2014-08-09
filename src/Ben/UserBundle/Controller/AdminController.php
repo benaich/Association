@@ -101,6 +101,9 @@ class AdminController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find posts entity.');
         }
+        /* cotisation */
+        $daysleft = $em->getRepository('BenAssociationBundle:Cotisation')->daysleft($id);
+        $daysleft['user'] = $entity->getId();
 
         $logs = $em->getRepository('BenAssociationBundle:Config')->getLog($id);
         $deleteForm = $this->createDeleteForm($id);
@@ -108,6 +111,7 @@ class AdminController extends Controller
             'entity' => $entity,
             'logs' => $logs,
             'delete_form' => $deleteForm->createView(),
+            'daysleft' => $daysleft,
             ));
     }
 
@@ -118,10 +122,10 @@ class AdminController extends Controller
     public function editAction(User $user)
     {
         /* check if user has admin role */
-        if (in_array('ROLE_ADMIN', $user->getRoles()) !== false ){
-            $this->get('session')->getFlashBag()->add('error', "ben.flash.error.user.admin");
-            return $this->redirect($this->generateUrl('ben_users'));
-        }
+        // if (in_array('ROLE_ADMIN', $user->getRoles()) !== false ){
+        //     $this->get('session')->getFlashBag()->add('error', "ben.flash.error.user.admin");
+        //     return $this->redirect($this->generateUrl('ben_users'));
+        // }
         $config = $this->getConfig();
         $form = $this->createForm(new userType($config), $user);
         return $this->render('BenUserBundle:admin:edit.html.twig', array('entity' => $user, 'form' => $form->createView()));
@@ -137,10 +141,10 @@ class AdminController extends Controller
         $form = $this->createForm(new userType($config), $user);
         $form->bind($request);
         /* check if user has admin role */
-        if (in_array('ROLE_ADMIN', $user->getRoles()) !== false ){
-            $this->get('session')->getFlashBag()->add('error', "ben.flash.error.user.admin");
-            return $this->redirect($this->generateUrl('ben_users'));
-        }
+        // if (in_array('ROLE_ADMIN', $user->getRoles()) !== false ){
+        //     $this->get('session')->getFlashBag()->add('error', "ben.flash.error.user.admin");
+        //     return $this->redirect($this->generateUrl('ben_users'));
+        // }
         if ($form->isValid()) {
             $em->updateUser($user, false);
             $user->getProfile()->getImage()->manualRemove($user->getProfile()->getImage()->getAbsolutePath());
@@ -218,7 +222,7 @@ class AdminController extends Controller
             $userManager->deleteUser($user);
         }
 
-        $this->get('session')->getFlashBag()->add('success', "ben.flash.user.deleted");
+        $this->get('session')->getFlashBag()->add('success', "ben.flash.success.user.deleted");
         return $this->redirect($this->generateUrl('ben_users'));
     }
  
@@ -489,6 +493,69 @@ class AdminController extends Controller
 
 
     /**
+     * send mail to actif members
+     * @Secure(roles="ROLE_MANAGER")
+     */    
+    public function alertMailAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('BenUserBundle:user')->search(array('ids'=>array($id)));
+        $daysleft = $em->getRepository('BenAssociationBundle:Cotisation')->daysleft($id);
+        $view = $this->renderView('BenAssociationBundle:cotisation:letter.html.twig', array('daysleft'=>$daysleft,'users'=>$users));
+        $recipients = [];
+        foreach ($users as $user) {
+            $recipients[] = $user->getEmail();
+            $logEntity = $this->getLog(array(
+                'type'=>'mail',
+                'feedback'=>'cotisation',
+                'entity_id'=>$user->getId()
+                ));
+            $em->persist($logEntity);
+        }
+        $em->flush();
+
+
+        $this->sendMail(array('subject' => 'Retard de paiement','body' => $view), $recipients);
+        
+        $this->get('session')->getFlashBag()->add('success', "ben.flash.success.message.sent");
+        return $this->redirect($this->generateUrl('ben_show_user', array('id' => $id)));
+    }
+    /**
+     * send mail
+     * @Secure(roles="ROLE_MANAGER")
+     */
+    public function alertPrintAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('BenUserBundle:user')->search(array('ids'=>array($id)));
+        $daysleft = $em->getRepository('BenAssociationBundle:Cotisation')->daysleft($id);
+        $view = $this->renderView('BenAssociationBundle:cotisation:letter.html.twig', array('daysleft'=>$daysleft,'users'=>$users));
+        // echo $view;die;
+
+        // log users who receved letters
+        foreach ($users as $user) {
+            $logEntity = $this->getLog(array(
+                'type'=>'Lettre',
+                'feedback'=>'cotisation',
+                'entity_id'=>$user->getId()
+                ));
+            $em->persist($logEntity);
+        }
+        $em->flush();
+
+        $now = (new \DateTime)->format('d-m-Y_H-i');
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($view),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="letters'.$now.'.pdf"'
+            )
+        );
+    }
+
+
+    /**
      * send mail to selected users
      * @Secure(roles="ROLE_ADMIN")
      */    
@@ -529,6 +596,7 @@ class AdminController extends Controller
             $type = 'sms';
             $feedback = '';
         }
+        $user = (empty($user)) ? $this->container->get('security.context')->getToken()->getUser()->getId() : $user;
         $entity = new \Ben\AssociationBundle\Entity\ActivityLog();
         $entity->setClassName('Ben\UserBundle\Entity\User');
         $entity->setEntityId($entity_id);

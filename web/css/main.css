@@ -364,6 +364,7 @@ ul.social li {
 .js-barcode div{background: transparent!important;}
 .etiquette .js-barcode{padding-left: 10px;} 
 /* flat ui */
+.ui-datepicker{z-index: 9999!important;}
 .table .dropdown-menu{left:-50px;}
 .open > .dropdown-menu{overflow: hidden;}
 .fui-arrow-right:before{content: "\e02c"!important}
@@ -761,3 +762,40 @@ float: left;
 	color: rgb(10, 10, 10);
 	text-transform: capitalize;
 }
+
+/* mycalendar */
+span.month {
+	display: block;
+	width: 23%;
+	height: 70px;
+	line-height: 70px;
+	float: left;
+	margin: 1%;
+	cursor: pointer;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	text-align: center;
+	border: 1px solid #ddd!important;
+}
+span.month:hover {
+	background: rgb(238, 238, 238);
+}
+span.month.active{
+	color: white;
+	background: #48c9b0;
+	border-color: transparent;
+}
+.datetimepicker thead tr:first-child th, .datetimepicker tfoot tr:first-child th {
+	cursor: pointer;
+}
+.datetimepicker thead tr:first-child th:hover, .datetimepicker tfoot tr:first-child th:hover {
+	background: #eee;
+}
+.scrolldiv{
+	max-height: 291px;
+	overflow: auto;
+	border-bottom: 1px solid #ddd;
+}
+.scrolldiv .table{margin: 0;}
+/*.scrolldiv .tr:last-child{border-width: 0;}*/

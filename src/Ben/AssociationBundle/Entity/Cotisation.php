@@ -50,6 +50,13 @@ class Cotisation
     private $date_to;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="date")
+     */
+    private $created;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
@@ -67,6 +74,7 @@ class Cotisation
     public function __construct() {
         $this->date_from = new \DateTime;
         $this->date_to = new \DateTime;
+        $this->created = new \DateTime;
     }
     
     /************ getters & setters  ************/
@@ -174,6 +182,29 @@ class Cotisation
     }
 
     /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Cotisation
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
      * Set description
      *
      * @param string $description
@@ -227,5 +258,16 @@ class Cotisation
         else $value = $this->$value();
 
         return ($value instanceof \DateTime) ? $value->format('Y-m-d') : $value;
+    }
+
+    public function toArray()
+    {
+        return array(
+            'id'=>$this->id,
+            'description'=>$this->description,
+            'type'=>$this->type,
+            'start' => $this->date_from->format('Y-m-d H:i:s'), 
+            'end' => $this->date_to->format('Y-m-d H:i:s')
+            );
     }
 }

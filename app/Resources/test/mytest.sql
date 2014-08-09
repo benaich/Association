@@ -1,6 +1,25 @@
 use benassociation;
 show tables;
 
+select * from cotisation;
+update profile set method = 'Virement' where 1=1;
+select method from profile;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- insert into config(the_key, the_value) values('app_theme', 'theme1');
 
 -- describe profile;
@@ -30,11 +49,23 @@ show tables;
 -- update mygroup set kind = 'groupe de recherche' where 1=1;
 -- describe mygroup;
 -- select * from mygroup;
+-- update profile set frequence = 1, montant = 1000 where 1=1;
+-- select frequence, montant from profile;
+-- select now();
+-- select max(date_to), DATEDIFF(max(date_to) , now()) from cotisation where user_id = 18;
 
-/* stats by status */
-select s.name , count(*) from user u
-left join avancement a on a.user_id = u.id
-left join status s on s.id = a.status_id
-group by s.id;
-/* stats by city */
-select city, count(*) from user u left join profile p on p.id = u.profile_id group by city; 
+-- select user_id id, DATEDIFF(CURRENT_DATE(), max(date_to)) days from cotisation group by user_id;
+-- select * from cotisation group by user_id having DATEDIFF(max(date_to) , now()) < 0;
+-- SELECT u.username, c.* FROM user u
+-- LEFT JOIN profile p on p.id = u.profile_id
+-- LEFT JOIN user_group gu on gu.user_id = u.id
+-- LEFT JOIN mygroup g on g.id = gu.group_id
+-- LEFT JOIN avancement av on av.user_id = u.id
+-- LEFT JOIN status s on s.id = av.status_id
+-- LEFT JOIN cotisation c on c.user_id = u.id 
+-- where u.id in (select id from (select user_id id, DATEDIFF(max(date_to), CURRENT_DATE()) days from cotisation group by user_id)A where A.days < 0)
+-- GROUP BY u.id
+-- HAVING DATEDIFF(max(c.date_to), CURRENT_DATE()) < 0
+-- ;
+-- select id from (select user_id as id, DATEDIFF(max(date_to), CURRENT_DATE()) days from cotisation group by user_id having days < 0 )A ;
+-- select u.id from user u  LEFT JOIN cotisation c on c.user_id = u.id  group by user_id having DATEDIFF(max(c.date_to), CURRENT_DATE()) >= 0 ; 

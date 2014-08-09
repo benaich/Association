@@ -49,4 +49,14 @@ class CotisationRepository extends EntityRepository
         $qb = $this->createQueryBuilder('c')->select('COUNT(c)');
         return $qb->getQuery()->getSingleScalarResult();
     }
+
+    public function daysleft($id)
+    {
+        $query = "select DATE_FORMAT(max(date_to),'%d-%m-%Y') date, DATEDIFF(max(date_to) , now()) days from cotisation where user_id = $id";
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+        $stmt->execute();
+        // var_dump($stmt->fetchAll()[0]);die;
+        return  $stmt->fetchAll()[0];
+    }
 }

@@ -168,6 +168,27 @@ class profile
      * @ORM\Column(name="twitter", type="string", length=255, nullable=true)
      */
     private $twitter;
+
+    /**
+     * @var integer $frequence
+     *
+     * @ORM\Column(name="frequence", type="integer", nullable=true)
+     */
+    private $frequence;
+
+    /**
+     * @var string $method
+     *
+     * @ORM\Column(name="method", type="string", length=255, nullable=true)
+     */
+    private $method;
+
+    /**
+     * @var float $montant
+     *
+     * @ORM\Column(name="montant", type="float")
+     */
+    private $montant;
     
     /**
     * @ORM\OneToOne(targetEntity="Ben\AssociationBundle\Entity\image", cascade={"remove", "persist"})
@@ -690,5 +711,85 @@ class profile
     public function getExpertise()
     {
         return $this->expertise;
+    }
+
+    /**
+     * Set frequence
+     *
+     * @param integer $frequence
+     * @return profile
+     */
+    public function setFrequence($frequence)
+    {
+        $this->frequence = $frequence;
+    
+        return $this;
+    }
+
+    /**
+     * Get frequence
+     *
+     * @return integer 
+     */
+    public function getFrequence()
+    {
+        return $this->frequence;
+    }    
+
+    /**
+     * Get frequence
+     *
+     * @return integer 
+     */
+    public function getFrequenceLabel()
+    {
+        $labels = array(1=>'mensuel',3=>'Trimestriel',6=>'Semestriel',12=>'Annuel');
+        return (in_array($this->frequence, array_keys($labels))) ? $labels[$this->frequence] : '';
+    }
+
+    /**
+     * Set method
+     *
+     * @param string $method
+     * @return profile
+     */
+    public function setMethod($method)
+    {
+        $this->method = $method;
+    
+        return $this;
+    }
+
+    /**
+     * Get method
+     *
+     * @return string 
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    /**
+     * Set montant
+     *
+     * @param float $montant
+     * @return Cotisation
+     */
+    public function setMontant($montant)
+    {
+        $this->montant = $montant;
+    
+        return $this;
+    }
+
+    /**
+     * Get montant
+     *
+     * @return float 
+     */
+    public function getMontant()
+    {
+        return $this->montant;
     }
 }

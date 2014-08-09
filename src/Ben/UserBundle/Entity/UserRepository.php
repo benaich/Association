@@ -42,16 +42,16 @@ class UserRepository extends EntityRepository
             $qb->andWhere('p.birthday < :date_to')->setParameter('date_to', $date_to);
         if(!empty($city))
             $qb->andWhere('p.city = :city')->setParameter('city', $city);
-        if(!empty($cotisation)){
-            $current=new \DateTime("now");
-            $current->setDate(DATE_FORMAT($current, 'Y'),01,01);
-            if($cotisation==1)
-                $qb->leftJoin('u.cotisations', 'c')
-                    // ->andWhere('c.date_from > :current')->setParameter('current', $current)
-                    ->andWhere($qb->expr()->andx($qb->expr()->isNotNull('c.user')));
-            else $qb->leftJoin('u.cotisations', 'c')
-                    // ->andWhere('c.date_from < :current')->setParameter('current', $current)
-                    ->andWhere($qb->expr()->andx($qb->expr()->isNull('c.user')));
+        if(!empty($cotisation)){            
+            $qb2 = $this->_em->createQueryBuilder()
+                ->select('usr.id')
+                ->from('Ben\UserBundle\Entity\User', 'usr')
+                ->leftJoin('usr.cotisations', 'c')
+                ->groupBy('usr.id')
+                ->having('DATE_DIFF(max(c.date_to), CURRENT_DATE()) >= 0');
+            if($cotisation == 1)
+                $qb->andWhere($qb->expr()->in('u.id', $qb2->getDQL()));
+            else $qb->andWhere($qb->expr()->notIn('u.id', $qb2->getDQL()));
         }
 
         if(!empty($sortBy)){
@@ -62,11 +62,9 @@ class UserRepository extends EntityRepository
             $qb->orderBy('p.' . $sortBy, $sortDir);
         }
         if(!empty($perPage)) $qb->setFirstResult(($page - 1) * $perPage)->setMaxResults($perPage);
-        // var_dump($qb->getQuery()->getDql());die;
        return new Paginator($qb->getQuery());
     }
-
-
+   
     public function getUsersByEvent($id, $obj=false) {       
        $qb = $this->createQueryBuilder('u')
                 ->leftJoin('u.profile', 'p')
@@ -106,12 +104,8 @@ class UserRepository extends EntityRepository
         $qb = $this->createQueryBuilder('u')
                 ->leftJoin('u.profile', 'p')
                 ->addSelect('p')
-                ->leftJoin('p.image', 'img')
-                ->addSelect('img')
-                ->leftJoin('u.groups', 'g')
-                ->addSelect('g')
-                ->leftJoin('u.reservations', 'r')
-                ->addSelect('r')
+                ->leftJoin('u.cotisations', 'c')
+                ->addSelect('c')
                 ->where('u.id = :id')
                 ->setParameter('id', $id)
         ;

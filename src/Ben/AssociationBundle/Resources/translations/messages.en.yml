@@ -50,6 +50,9 @@ user:
             facebook: Facebook
             twitter: Twitter
             description: Description
+            frequence: Payement frequence
+            montant: Montant
+            method: Payement method
     title:
         main: Membership Management
         profile: Profile
@@ -125,6 +128,7 @@ cotisation:
         date:
            from: Date From
            to: Date To
+           created: Created
         description: Description
         periode: Date range 
         user: Member

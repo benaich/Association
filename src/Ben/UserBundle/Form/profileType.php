@@ -24,8 +24,7 @@ class profileType extends AbstractType
             ->add('family_name')
             ->add('first_name')
             ->add('birthday', 'date', array('widget' => 'single_text'))
-            ->add('gender', 'choice', array('choices' => array('homme' => 'Homme','femme' => 'Femme'),
-                    'required' => false,))
+            ->add('gender', 'choice', array('choices' => array('homme' => 'Homme','femme' => 'Femme'),'required' => false,))
             ->add('cin')
             ->add('barcode')
             ->add('address')
@@ -38,10 +37,9 @@ class profileType extends AbstractType
             ->add('description')
             ->add('diplome', 'choice', array('choices' => $this->diplome,'required' => false,))
             ->add('expertise', 'choice', array('choices' => $this->expertise,'required' => false,))
-            // ->add('website')
-            // ->add('facebook')
-            // ->add('google')
-            // ->add('twitter')
+            ->add('frequence', 'choice', array('choices' => array('1' => 'mensuel','3' => 'Trimestriel','6' => 'Semestriel','12' => 'Annuel')))
+            ->add('method', 'choice', array('choices' => array('Espèces' => 'Espèces','Chèque' => 'Chèque','Virement' => 'Virement')))
+            ->add('montant')
             ->add('image' , new \Ben\AssociationBundle\Form\imageType())
         ;
     }

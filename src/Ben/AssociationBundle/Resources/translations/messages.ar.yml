@@ -50,6 +50,8 @@ user:
             facebook: Facebook
             twitter: Twitter
             description: معلومات أخرى
+            frequence: Fréquence de payement
+            montant: Montant
     title:
         main: قائمة الاعضاء
         profile: الملف الشخصي

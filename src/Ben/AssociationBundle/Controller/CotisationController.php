@@ -3,6 +3,7 @@
 namespace Ben\AssociationBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Httpfoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Ben\AssociationBundle\Entity\Cotisation;
@@ -77,15 +78,29 @@ class CotisationController extends Controller
      * @Secure(roles="ROLE_MANAGER")
      *
      */
-    public function newAction(User $user)
+    public function newAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
         $entity = new Cotisation();
+        $user = $em->getRepository('BenUserBundle:User')->findUser($id);
         $entity->setUser($user);
+        $entity->setPrice($user->getProfile()->getMontant());
+        $entity->setType($user->getProfile()->getMethod());
         $form   = $this->createForm(new CotisationType(), $entity);
+        $cotisations = $user->getCotisations();
+        $total = 0;
+        foreach ($cotisations as $item) {
+            $total += $item->getPrice();
+        }
+        $daysleft = $em->getRepository('BenAssociationBundle:Cotisation')->daysleft($id);
+        $daysleft['user'] = $id;
 
         return $this->render('BenAssociationBundle:Cotisation:new.html.twig', array(
             'entity' => $entity,
+            'total' => $total,
             'form'   => $form->createView(),
+            'cotisations' => $cotisations,
+            'daysleft' => $daysleft,
         ));
     }
 
@@ -104,12 +119,12 @@ class CotisationController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
-            $this->get('session')->getFlashBag()->add('success', "ben.flash.success.contribution.created");
-            return $this->redirect($this->generateUrl('cotisation_show', array('id' => $entity->getId())));
+            return new Response('1');
+            // $this->get('session')->getFlashBag()->add('success', "ben.flash.success.contribution.created");
+            // return $this->redirect($this->generateUrl('cotisation_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('BenAssociationBundle:Cotisation:new.html.twig', array(
+        return $this->render('BenAssociationBundle:Cotisation:form.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));

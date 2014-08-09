@@ -14,6 +14,11 @@ String.prototype.repeat = function(num) {
     msg=(typeof msg === 'string')?msg:'voullez-vous vraiment effectué cette action';
     return window.confirm(msg, 'Alert');
   }
+  function findById (data, id) {
+    return $.grep(data, function(obj) {
+      return obj.id == id;
+    })[0];
+  }
   
 (function($) { 
   /* helper functions*/

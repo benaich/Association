@@ -102,6 +102,14 @@ ben_mail:
     defaults: { _controller: BenUserBundle:Admin:sendMail }
     requirements: { _method: post }
 
+ben_mail_alert:
+    pattern:  /{id}/alert/mail
+    defaults: { _controller: BenUserBundle:Admin:alertMail }
+
+ben_print_alert:
+    pattern:  /{id}/alert/print
+    defaults: { _controller: BenUserBundle:Admin:alertPrint }
+
 ben_clear_log:
     pattern:  /log/clear/{id}/{user}
     defaults: { _controller: BenUserBundle:Admin:clearLog, id: 0, user: 0 }

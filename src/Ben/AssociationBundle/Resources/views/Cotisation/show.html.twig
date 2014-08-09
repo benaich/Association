@@ -27,12 +27,16 @@
             <td>{{ entity.type }}</td>
         </tr>
         <tr>
+            <th>{{ 'cotisation.form.date.created'|trans }}</th>
+            <td>{{ entity.created|date('d/m/Y') }}</td>
+        </tr>
+        <tr>
             <th>{{ 'cotisation.form.date.from'|trans }}</th>
-            <td>{{ entity.datefrom|date('Y-m-d') }}</td>
+            <td>{{ entity.datefrom|date('d/m/Y') }}</td>
         </tr>
         <tr>
             <th>{{ 'cotisation.form.date.to'|trans }}</th>
-            <td>{{ entity.dateto|date('Y-m-d') }}</td>
+            <td>{{ entity.dateto|date('d/m/Y') }}</td>
         </tr>
         <tr>
             <th>{{ 'cotisation.form.description'|trans }}</th>

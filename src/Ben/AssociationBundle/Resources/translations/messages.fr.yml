@@ -50,6 +50,9 @@ user:
             facebook: Facebook
             twitter: Twitter
             description: Autres informations
+            frequence: Fréquence de paiement
+            montant: Montant
+            method: Méthode de paimenent
     title:
         main: Gestion des membres
         profile: Profile
@@ -126,6 +129,7 @@ cotisation:
         date:
            from: Date début
            to: Date fin
+           created: Date de paimenent
         description: Description
         periode: Periode
         user: Adhérent

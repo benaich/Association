@@ -32,21 +32,19 @@
               {{ form_row(form.profile.tel) }}
               {{ form_row(form.profile.gsm) }}
               {{ form_row(form.email) }}
-             {#
-              {{ form_row(form.profile.facebook) }}
-              {{ form_row(form.profile.twitter) }}
-              {{ form_row(form.profile.google) }}
-              {{ form_row(form.profile.website) }} #}
 				</div><!-- /tab2 -->
 
         <div class="tab-pane" id="tab3">
               {{ form_row(form.enabled) }}
               {{ form_row(form.username) }}
               {{ form_row(form.plainpassword) }}
+              {{ form_row(form.profile.method) }}
+              {{ form_row(form.profile.frequence) }}
+              {{ form_row(form.profile.montant) }}
               {{ form_row(form.profile.description) }}
               {{ form_row(form.groups) }}
-       {{ form_rest(form) }}
-      </div><!-- /tab3 -->
+              {{ form_rest(form) }}
+        </div><!-- /tab3 -->
 
    	</div> <!-- /tab-content -->
 </div>

@@ -4,26 +4,6 @@
 		"selected_items":
 		[
 			[
-				"date",
-				"date_to"
-			],
-			[
-				"z",
-				"z-index"
-			],
-			[
-				"dat",
-				"datefrom"
-			],
-			[
-				"array",
-				"array_map"
-			],
-			[
-				"get",
-				"getUTCFullYear"
-			],
-			[
 				"for",
 				"foreach	foreach …"
 			],
@@ -186,6 +166,14 @@
 			[
 				"da",
 				"dateTo  (variable)"
+			],
+			[
+				"dat",
+				"dateFrom"
+			],
+			[
+				"date",
+				"dateTo"
 			],
 			[
 				"u",
@@ -514,59 +502,23 @@
 			[
 				"er",
 				"error_email"
+			],
+			[
+				"error_",
+				"error_message"
+			],
+			[
+				"fu",
+				"fun	function …"
+			],
+			[
+				"be",
+				"ben_plugin_options"
 			]
 		]
 	},
 	"buffers":
 	[
-		{
-			"file": "src/Ben/AssociationBundle/Resources/views/Cotisation/new.html.twig",
-			"settings":
-			{
-				"buffer_size": 4338,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/Ben/AssociationBundle/Controller/CotisationController.php",
-			"settings":
-			{
-				"buffer_size": 7734,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/Ben/UserBundle/Controller/AdminController.php",
-			"settings":
-			{
-				"buffer_size": 21790,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/Ben/AssociationBundle/Resources/views/Default/flashes.html.twig",
-			"settings":
-			{
-				"buffer_size": 461,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/Ben/AssociationBundle/Entity/CotisationRepository.php",
-			"settings":
-			{
-				"buffer_size": 2191,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/Resources/test/mytest.sql",
-			"settings":
-			{
-				"buffer_size": 1536,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -768,60 +720,18 @@
 	},
 	"file_history":
 	[
-		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/views/admin/search.html.twig",
-		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/views/admin/show.html.twig",
-		"/C/wamp/www/Association/src/Ben/UserBundle/Controller/AdminController.php",
 		"/C/wamp/www/Association/web/js/application.js",
-		"/C/wamp/www/Association/src/Ben/AssociationBundle/Resources/translations/flashes.fr.yml",
-		"/C/wamp/www/Association/vendor/twig/twig/lib/Twig/Node/ForLoop.php",
-		"/C/wamp/www/Association/src/Ben/AssociationBundle/Resources/views/Form/fields.html.twig",
-		"/C/Users/home/Downloads/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js",
-		"/C/wamp/www/Association/web/css/main.css",
-		"/C/wamp/www/Association/web/js/mycalendar.js",
-		"/C/wamp/www/Association/src/Ben/UserBundle/Entity/UserRepository.php",
 		"/C/wamp/www/Association/src/Ben/UserBundle/Entity/User.php",
-		"/C/wamp/www/Association/src/Ben/AssociationBundle/Entity/Cotisation.php",
-		"/C/wamp/www/Association/src/Ben/AssociationBundle/Entity/Cotisation.php~",
-		"/C/wamp/www/Association/src/Ben/AssociationBundle/Resources/views/event/calendar.html.twig",
-		"/C/wamp/www/Association/vendor/twig/twig/lib/Twig/Test.php",
-		"/C/wamp/www/Association/src/Ben/AssociationBundle/Twig/TimeAgoExtension.php",
-		"/C/wamp/www/Association/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/DependencyInjection/Compiler/ResourceOptimizationPass.php",
-		"/C/wamp/www/Association/vendor/gedmo/doctrine-extensions/lib/Gedmo/Mapping/Annotation/TreePathSource.php",
-		"/C/wamp/www/Association/vendor/symfony/symfony/src/Symfony/Component/Console/Output/StreamOutput.php",
-		"/C/wamp/www/Association/src/Ben/AssociationBundle/Entity/Status.php",
-		"/C/wamp/www/Association/app/Resources/test/mytest.sql",
-		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/views/Group/show.html.twig",
-		"/C/wamp/www/Association/src/Ben/UserBundle/Entity/Group.php",
-		"/C/wamp/www/Association/src/Ben/AssociationBundle/Controller/CotisationController.php",
-		"/C/Users/home/Desktop/hamza/index.htm",
-		"/C/Users/home/Desktop/Tableau de bord   Chis.htm",
-		"/C/wamp/www/Association/web/calendar.html",
-		"/C/wamp/www/Association/web/images/icons/calculator.svg",
-		"/C/wamp/www/Association/web/images/icons/calendar.svg",
-		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/views/Group/call_list.html.twig",
-		"/C/wamp/www/Association/src/Ben/AssociationBundle/Entity/event.php",
-		"/C/wamp/www/Association/src/Ben/AssociationBundle/Controller/eventController.php",
 		"/C/wamp/www/Association/src/Ben/AssociationBundle/Entity/CotisationRepository.php",
-		"/C/Users/home/Downloads/bootstrap-datetimepicker-master/sample in bootstrap v3/index.html",
-		"/C/wamp/www/Association/vendor/symfony/symfony/src/Symfony/Component/Form/Exception/NotInitializedException.php",
-		"/C/wamp/www/Association/app/cache/dev/jms_diextra/controller_injectors/SymfonyBundleWebProfilerBundleControllerExceptionController.php",
-		"/C/wamp/www/Association/vendor/symfony/symfony/src/Symfony/Bridge/Doctrine/Validator/Constraints/UniqueEntity.php",
-		"/C/wamp/www/Association/vendor/doctrine/orm/lib/Doctrine/ORM/Tools/Console/ConsoleRunner.php",
-		"/C/wamp/www/Association/app/console",
-		"/C/wamp/www/Association/src/Ben/AssociationBundle/Entity/configRepository.php",
-		"/C/Users/home/Downloads/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.fr.js",
-		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/views/admin/index.html.twig",
-		"/C/wamp/www/Association/src/Ben/UserBundle/Form/userType.php",
-		"/C/wamp/www/Association/vendor/symfony/symfony/src/Symfony/Component/Security/Http/Event/SwitchUserEvent.php",
-		"/C/wamp/www/Association/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Propel/UserPeer.php",
+		"/C/wamp/www/Association/src/Ben/AssociationBundle/Entity/Cotisation.php",
+		"/C/wamp/www/Association/src/Ben/AssociationBundle/Resources/views/event/calendar.html.twig",
+		"/C/wamp/www/Association/src/Ben/AssociationBundle/Controller/eventController.php",
 		"/C/wamp/www/Association/src/Ben/UserBundle/Entity/profile.php",
 		"/C/wamp/www/Association/src/Ben/UserBundle/Form/profileType.php",
-		"/C/wamp/www/Association/vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Document/MappedSuperclass/AbstractPersonalTranslation.php",
-		"/C/wamp/www/Association/vendor/doctrine/common/lib/Doctrine/Common/Persistence/PersistentObject.php",
-		"/C/wamp/www/Association/vendor/doctrine/orm/lib/Doctrine/ORM/PersistentCollection.php",
-		"/C/wamp/www/Association/src/Ben/UserBundle/Entity/profileRepository.php",
-		"/C/wamp/www/Association/vendor/symfony/symfony/src/Symfony/Component/Templating/PhpEngine.php",
 		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/views/admin/form.html.twig",
+		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/views/admin/show.html.twig",
+		"/C/wamp/www/Association/src/Ben/UserBundle/Controller/AdminController.php",
+		"/C/wamp/www/Association/app/Resources/test/mytest.sql",
 		"/C/wamp/www/Association/src/Ben/AssociationBundle/Resources/translations/messages.ar.yml",
 		"/C/wamp/www/Association/app/cache/dev/annotations/FOS-MessageBundle-Model-MessageMetadata$isRead.cache.php",
 		"/C/wamp/www/Association/vendor/swiftmailer/swiftmailer/doc/messages.rst",
@@ -834,17 +744,27 @@
 		"/C/wamp/www/Association/vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/ClassMetadataInfo.php",
 		"/C/wamp/www/Association/app/cache/dev/annotations/Ben-UserBundle-Controller-AdminController#createDeleteForm.cache.php",
 		"/C/wamp/www/Association/src/Ben/AssociationBundle/Resources/views/event/public.html.twig",
+		"/C/wamp/www/Association/src/Ben/AssociationBundle/Entity/Cotisation.php~",
+		"/C/wamp/www/Association/src/Ben/AssociationBundle/Controller/CotisationController.php",
 		"/C/wamp/www/Association/app/cache/dev/annotations/Ben-AssociationBundle-Controller-CotisationController#ajaxListAction.cache.php",
 		"/C/wamp/www/Association/vendor/phpoffice/phpexcel/Classes/PHPExcel/CachedObjectStorageFactory.php",
+		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/views/Group/call_list.html.twig",
+		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/views/Group/show.html.twig",
+		"/C/wamp/www/Association/src/Ben/UserBundle/Entity/Group.php",
 		"/C/wamp/www/Association/src/Ben/AssociationBundle/Resources/views/Cotisation/show.html.twig",
 		"/C/wamp/www/Association/vendor/gedmo/doctrine-extensions/lib/Gedmo/Mapping/Annotation/SlugHandlerOption.php",
 		"/C/wamp/www/Association/vendor/gedmo/doctrine-extensions/lib/Gedmo/Mapping/Annotation/SlugHandler.php",
+		"/C/wamp/www/Association/src/Ben/AssociationBundle/Entity/Status.php",
+		"/C/wamp/www/Association/web/css/main.css",
 		"/C/wamp/www/Association/src/Ben/AssociationBundle/Resources/views/Default/index.html.twig",
 		"/C/wamp/www/Association/vendor/symfony/symfony/src/Symfony/Component/DependencyInjection/Definition.php",
 		"/C/wamp/www/Association/src/Ben/AssociationBundle/Controller/DefaultController.php",
 		"/C/wamp/www/Association/vendor/gedmo/doctrine-extensions/lib/Gedmo/DoctrineExtensions.php",
+		"/C/wamp/www/Association/src/Ben/UserBundle/Entity/UserRepository.php",
 		"/C/wamp/www/Association/src/Ben/AssociationBundle/Resources/views/Cotisation/index.html.twig",
 		"/C/wamp/www/Association/app/config/config.yml",
+		"/C/wamp/www/Association/vendor/twig/twig/lib/Twig/Test.php",
+		"/C/wamp/www/Association/src/Ben/AssociationBundle/Twig/TimeAgoExtension.php",
 		"/C/Users/home/Downloads/Chart.js-master/samples/pie.html",
 		"/C/wamp/www/Association/app/Resources/test/mytest.php",
 		"/C/wamp/www/Association/src/Ben/AssociationBundle/Resources/views/layout.html.twig",
@@ -863,6 +783,7 @@
 		"/C/wamp/www/Association/vendor/monolog/monolog/src/Monolog/Formatter/GelfMessageFormatter.php",
 		"/C/wamp/www/Association/src/Ben/MessageBundle/Entity/Message.php",
 		"/C/wamp/www/Association/src/Ben/AssociationBundle/Resources/views/event/print.html.twig",
+		"/C/wamp/www/Association/src/Ben/AssociationBundle/Entity/event.php",
 		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/views/Resetting/passwordAlreadyRequested.html.twig",
 		"/C/wamp/www/Association/src/Ben/AssociationBundle/Form/ReservationType.php",
 		"/C/wamp/www/Association/src/Ben/AssociationBundle/Resources/views/Reservation/new.html.twig",
@@ -872,6 +793,7 @@
 		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/config/routing/group.yml",
 		"/C/wamp/www/Association/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/Metadata/Driver/ConfiguredControllerInjectionsDriver.php",
 		"/C/wamp/www/Association/vendor/symfony/symfony/src/Symfony/Component/Form/FormConfigInterface.php",
+		"/C/wamp/www/Association/src/Ben/AssociationBundle/Entity/configRepository.php",
 		"/C/wamp/www/Association/vendor/gedmo/doctrine-extensions/lib/Gedmo/Exception/UploadableIniSizeException.php",
 		"/C/wamp/www/Association/vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/RepositoryUtils.php",
 		"/C/wamp/www/Association/vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/RepositoryUtilsInterface.php",
@@ -895,11 +817,41 @@
 		"/C/wamp/www/Association/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Propel/GroupPeer.php",
 		"/C/wamp/www/Association/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Model/Group.php",
 		"/C/wamp/www/Association/app/cache/dev/annotations/FOS-UserBundle-Model-Group$name.cache.php",
-		"/C/wamp/www/Association/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Form/Handler/GroupFormHandler.php"
+		"/C/wamp/www/Association/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Form/Handler/GroupFormHandler.php",
+		"/C/wamp/www/Association/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Resources/config/doctrine/Group.mongodb.xml",
+		"/C/wamp/www/Association/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/CouchDocument/GroupManager.php",
+		"/C/wamp/www/Association/app/cache/dev/annotations/FOS-UserBundle-Model-User$email.cache.php",
+		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/views/admin/search.html.twig",
+		"/C/wamp/www/Association/app/cache/dev/annotations/ArrayAccess.cache.php",
+		"/C/wamp/www/Association/app/cache/dev/annotations/Ben-AssociationBundle-Entity-ActivityLog$classname.cache.php",
+		"/C/wamp/www/Association/src/Ben/AssociationBundle/Resources/views/Default/menu.html.twig",
+		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/config/routing.yml",
+		"/C/wamp/www/Association/vendor/doctrine/dbal/lib/Doctrine/DBAL/Schema/Visitor/CreateSchemaSqlCollector.php",
+		"/C/wamp/www/Association/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/EventListener/TestSessionListener.php",
+		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/views/Group/list.html.twig",
+		"/C/wamp/www/Association/app/cache/dev/annotations/Ben-UserBundle-Entity-User#getGroupList.cache.php",
+		"/C/wamp/www/Association/vendor/symfony/symfony/src/Symfony/Component/Form/Extension/Core/ChoiceList/ChoiceListInterface.php",
+		"/C/wamp/www/Association/web/fonts/lato/lato-italic-webfont.svg",
+		"/C/wamp/www/Association/src/Ben/AssociationBundle/Form/StatusType.php",
+		"/C/wamp/www/Association/src/Ben/UserBundle/Entity/GroupRepository.php",
+		"/C/wamp/www/Association/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Entity/User.php",
+		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/config/services.yml",
+		"/C/wamp/www/Association/src/Ben/UserBundle/Controller/Group2Controller.php",
+		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/views/admin/list.xml.twig",
+		"/C/wamp/www/Association/src/Ben/UserBundle/Resources/views/admin/list.csv.twig",
+		"/C/Users/home/AppData/Roaming/Sublime Text 3/Packages/User/Git.sublime-settings",
+		"/C/wamp/www/Association/app/cache/dev/sessions/sess_fd7mgi5mvtgj7htfchuuh9rq84",
+		"/C/wamp/www/Association/vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity/MappedSuperclass/AbstractLogEntry.php",
+		"/C/wamp/www/Association/vendor/gedmo/doctrine-extensions/lib/Gedmo/Exception/TreeLockingException.php",
+		"/C/wamp/www/Association/vendor/gedmo/doctrine-extensions/lib/Gedmo/IpTraceable/IpTraceableListener.php",
+		"/C/wamp/www/Association/vendor/gedmo/doctrine-extensions/doc/ip_traceable.md",
+		"/C/Users/home/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/wamp/www/Association/app/cache/dev/annotations/FOS-UserBundle-Model-Group.cache.php",
+		"/C/wamp/www/Association/app/cache/dev/annotations/FOS-UserBundle-Model-Group$id.cache.php"
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 23.0
 	},
 	"find_in_files":
 	{
@@ -915,78 +867,6 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"dayleft",
-			"cotisations",
-			"left",
-			"/",
-			"flat",
-			"new",
-			"entity",
-			"Response",
-			"entity",
-			"length",
-			"href",
-			"obj",
-			"postForm",
-			"workingArea",
-			"form",
-			"Form",
-			"./Tableau de bord   Chis_files",
-			"tab",
-			"./Tableau de bord   Chis_files",
-			"<img src=\"./Tableau de bord   Chis_files",
-			"./Tableau de bord   Chis_files",
-			"img",
-			"http://127.0.0.1/stage/web/",
-			"entity",
-			"console",
-			"json",
-			"entity",
-			"monthsShort",
-			"this",
-			"dates",
-			"span",
-			"myCalendar",
-			"Template",
-			"template",
-			"DPGlobal",
-			"Template",
-			"span",
-			"prev",
-			"getUTCFullYear",
-			"changeYear",
-			"changeY",
-			"click",
-			"right",
-			"click:",
-			"check",
-			"click",
-			"elem",
-			"div",
-			"this",
-			"datetimepicker",
-			"Datetimepicker",
-			"fill:",
-			"fill",
-			"fillY",
-			"active",
-			"May",
-			"click:",
-			"clcik:",
-			"_setDate",
-			"setUTC",
-			"setUTCDate",
-			"viewDate",
-			"date",
-			"viewDate",
-			"date:",
-			"viewDate",
-			"click",
-			"dates",
-			"month",
-			"year",
-			"searchParam",
-			"rchParam[date_to]\" id=\"date_to\" placeholder=\"{{ 'user.form.profile.birthday'|trans }}\">",
 			"findUser(",
 			"findUser",
 			"frequence",
@@ -1042,7 +922,79 @@
 			"group",
 			"Group",
 			"group",
-			"Group"
+			"Group",
+			"group",
+			"addGroup",
+			"ben_show_",
+			"GroupInterface",
+			"Admin",
+			"groupe",
+			"group",
+			"fos_user_",
+			"status",
+			"Agent",
+			"roles",
+			"Roles",
+			"roles",
+			"Roles",
+			"roles",
+			"setName",
+			"group",
+			"name",
+			"$this->setFlash",
+			"{\n",
+			"createDeleteForm",
+			"Agent",
+			"agent",
+			"Agent",
+			"ROLE_USER",
+			"group",
+			"type",
+			"femme",
+			"homme",
+			"BaseController",
+			"GroupType",
+			"Name",
+			"name",
+			"Name",
+			"name",
+			"Name",
+			"name",
+			"Name",
+			"name",
+			"counter",
+			"ajaxPost",
+			"modalSearchBtn",
+			"callModal",
+			"groupModal",
+			"span",
+			"groupModal",
+			"modal",
+			"Modal",
+			"searchModal",
+			"action",
+			"ajax",
+			"utili",
+			"ROLE_MANAGER",
+			"fui",
+			"str",
+			"new \\DateTime($data['birthday'])",
+			"plainPassword",
+			"PlainPassword",
+			"plainPassword",
+			"ben.flash",
+			"amily",
+			", ",
+			"firstName",
+			"entity.profile",
+			"getPathname",
+			"modifier",
+			"@media",
+			"@max",
+			"sortByInput",
+			"sortBy",
+			"too",
+			"qtip"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1061,815 +1013,14 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "src/Ben/AssociationBundle/Resources/views/Cotisation/new.html.twig",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4338,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1991,
-								1990
-							]
-						],
-						"settings":
-						{
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"sublime_auto_complete": true,
-							"syntax": "Packages/PHP-Twig/Syntaxes/HTML (Twig).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 554.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "src/Ben/AssociationBundle/Controller/CotisationController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7734,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3333,
-								3333
-							]
-						],
-						"settings":
-						{
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"sublime_auto_complete": true,
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 988.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "src/Ben/UserBundle/Controller/AdminController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 21790,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4103,
-								4081
-							]
-						],
-						"settings":
-						{
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"sublime_auto_complete": true,
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 928.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "src/Ben/AssociationBundle/Resources/views/Default/flashes.html.twig",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 461,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								361,
-								292
-							]
-						],
-						"settings":
-						{
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"sublime_auto_complete": true,
-							"syntax": "Packages/PHP-Twig/Syntaxes/HTML (Twig).tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "src/Ben/AssociationBundle/Entity/CotisationRepository.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2191,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2144,
-								2144
-							]
-						],
-						"settings":
-						{
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"sublime_auto_complete": true,
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 442.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "app/Resources/test/mytest.sql",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1536,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1364,
-								1450
-							]
-						],
-						"settings":
-						{
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"sublime_auto_complete": true,
-							"syntax": "Packages/SQL/SQL.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 34.0
+		"height": 23.0
 	},
 	"input":
 	{
@@ -1898,26 +1049,14 @@
 		]
 	},
 	"menu_visible": true,
-	"output.exec":
-	{
-		"height": 258.0
-	},
 	"output.find_results":
 	{
 		"height": 0.0
 	},
-	"output.git":
-	{
-		"height": 100.0
-	},
-	"output.variable_get":
-	{
-		"height": 100.0
-	},
-	"project": "benbundle.sublime-project",
+	"project": "doctors.sublime-project",
 	"replace":
 	{
-		"height": 62.0
+		"height": 42.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1926,140 +1065,12 @@
 		"selected_items":
 		[
 			[
-				"admincon",
+				"adminc",
 				"Ben\\UserBundle\\Controller\\AdminController.php"
-			],
-			[
-				"flas",
-				"views\\Default\\flashes.html.twig"
-			],
-			[
-				"userre",
-				"Ben\\UserBundle\\Entity\\UserRepository.php"
-			],
-			[
-				"cotisare",
-				"Ben\\AssociationBundle\\Entity\\CotisationRepository.php"
 			],
 			[
 				"userrep",
 				"Ben\\UserBundle\\Entity\\UserRepository.php"
-			],
-			[
-				"testsq",
-				"Association\\app\\Resources\\test\\mytest.sql"
-			],
-			[
-				"main",
-				"Association\\web\\css\\main.css"
-			],
-			[
-				"mycal",
-				"Association\\web\\js\\mycalendar.js"
-			],
-			[
-				"cotiscontr",
-				"Ben\\AssociationBundle\\Controller\\CotisationController.php"
-			],
-			[
-				"groupshow",
-				"Ben\\UserBundle\\Resources\\views\\Group\\show.html.twig"
-			],
-			[
-				"maincs",
-				"Association\\web\\css\\main.css"
-			],
-			[
-				"admin",
-				"Ben\\UserBundle\\Controller\\AdminController.php"
-			],
-			[
-				"admic",
-				"Ben\\UserBundle\\Controller\\AdminController.php"
-			],
-			[
-				"cotic",
-				"Ben\\AssociationBundle\\Controller\\CotisationController.php"
-			],
-			[
-				"mai",
-				"Association\\web\\css\\main.css"
-			],
-			[
-				"coticon",
-				"Ben\\AssociationBundle\\Controller\\CotisationController.php"
-			],
-			[
-				"user",
-				"Ben\\UserBundle\\Entity\\User.php"
-			],
-			[
-				"ap",
-				"Association\\web\\js\\application.js"
-			],
-			[
-				"calen",
-				"views\\event\\calendar.html.twig"
-			],
-			[
-				"calendar",
-				"views\\event\\calendar.html.twig"
-			],
-			[
-				"cale",
-				"views\\event\\calendar.html.twig"
-			],
-			[
-				"cal",
-				"views\\event\\calendar.html.twig"
-			],
-			[
-				"event",
-				"Ben\\AssociationBundle\\Entity\\event.php"
-			],
-			[
-				"cotisation",
-				"Ben\\AssociationBundle\\Entity\\Cotisation.php"
-			],
-			[
-				"cotisc",
-				"Ben\\AssociationBundle\\Controller\\CotisationController.php"
-			],
-			[
-				"cotisa",
-				"Ben\\AssociationBundle\\Entity\\Cotisation.php"
-			],
-			[
-				"cotinew",
-				"views\\Cotisation\\new.html.twig"
-			],
-			[
-				"consunew",
-				"Association\\app\\cache\\dev\\jms_diextra\\controller_injectors\\SymfonyBundleWebProfilerBundleControllerExceptionController.php"
-			],
-			[
-				"caleda",
-				"views\\event\\calendar.html.twig"
-			],
-			[
-				"admindex",
-				"Ben\\UserBundle\\Resources\\views\\admin\\index.html.twig"
-			],
-			[
-				"adminsear",
-				"Ben\\UserBundle\\Resources\\views\\admin\\search.html.twig"
-			],
-			[
-				"profil",
-				"Ben\\UserBundle\\Entity\\profile.php"
-			],
-			[
-				"group",
-				"Ben\\UserBundle\\Entity\\Group.php"
-			],
-			[
-				"adminc",
-				"Ben\\UserBundle\\Controller\\AdminController.php"
 			],
 			[
 				"cotisationcon",
@@ -2106,12 +1117,20 @@
 				"Ben\\AssociationBundle\\Controller\\eventController.php"
 			],
 			[
+				"groupshow",
+				"Ben\\UserBundle\\Resources\\views\\Group\\show.html.twig"
+			],
+			[
 				"messa",
 				"Ben\\AssociationBundle\\Resources\\translations\\messages.fr.yml"
 			],
 			[
 				"call",
 				"Ben\\UserBundle\\Resources\\views\\Group\\call_list.html.twig"
+			],
+			[
+				"main",
+				"Association\\web\\css\\main.css"
 			],
 			[
 				"defindex",
@@ -2134,8 +1153,16 @@
 				"Ben\\AssociationBundle\\Controller\\DefaultController.php"
 			],
 			[
+				"userre",
+				"Ben\\UserBundle\\Entity\\UserRepository.php"
+			],
+			[
 				"myt",
 				"Association\\app\\Resources\\test\\mytest.sql"
+			],
+			[
+				"mai",
+				"Association\\web\\css\\main.css"
 			],
 			[
 				"eventc",
@@ -2178,6 +1205,10 @@
 				"Association\\web\\js\\application.js"
 			],
 			[
+				"maincs",
+				"Association\\web\\css\\main.css"
+			],
+			[
 				"grouedit",
 				"Ben\\UserBundle\\Resources\\views\\Group\\edit.html.twig"
 			],
@@ -2200,6 +1231,14 @@
 			[
 				"message/la",
 				"Ben\\MessageBundle\\Resources\\views\\layout.html.twig"
+			],
+			[
+				"group",
+				"Ben\\UserBundle\\Entity\\Group.php"
+			],
+			[
+				"user",
+				"Ben\\UserBundle\\Entity\\User.php"
 			],
 			[
 				"modeluser",
@@ -2234,6 +1273,10 @@
 				"views\\Default\\menu.html.twig"
 			],
 			[
+				"admincon",
+				"Ben\\UserBundle\\Controller\\AdminController.php"
+			],
+			[
 				"tessq",
 				"Association\\app\\Resources\\test\\mytest.sql"
 			],
@@ -2264,6 +1307,10 @@
 			[
 				"list",
 				"Ben\\UserBundle\\Resources\\views\\Group\\list.html.twig"
+			],
+			[
+				"admin",
+				"Ben\\UserBundle\\Controller\\AdminController.php"
 			],
 			[
 				"model/group.php",
@@ -2328,6 +1375,10 @@
 			[
 				"cotisinde",
 				"views\\Cotisation\\index.html.twig"
+			],
+			[
+				"admindex",
+				"Ben\\UserBundle\\Resources\\views\\admin\\index.html.twig"
 			],
 			[
 				"statuindex",
@@ -2436,6 +1487,94 @@
 			[
 				"defyml",
 				"Ben\\AssociationBundle\\Resources\\config\\routing\\default.yml"
+			],
+			[
+				"usert",
+				"Ben\\UserBundle\\Form\\userType.php"
+			],
+			[
+				"flash",
+				"Ben\\AssociationBundle\\Resources\\translations\\flashes.fr.yml"
+			],
+			[
+				"list.cs",
+				"Ben\\UserBundle\\Resources\\views\\admin\\list.csv.twig"
+			],
+			[
+				"csv.",
+				"Ben\\UserBundle\\Resources\\views\\admin\\list.csv.twig"
+			],
+			[
+				"symfony/component/httpfoundation/file/uploadedfile",
+				"Association\\vendor\\symfony\\symfony\\src\\Symfony\\Component\\HttpFoundation\\File\\UploadedFile.php"
+			],
+			[
+				"defultyml",
+				"Ben\\AssociationBundle\\Resources\\config\\routing\\default.yml"
+			],
+			[
+				"statedi",
+				"views\\Status\\edit.html.twig"
+			],
+			[
+				"sttussho",
+				"views\\Status\\show.html.twig"
+			],
+			[
+				"adc",
+				"Ben\\UserBundle\\Controller\\AdminController.php"
+			],
+			[
+				"admiajax",
+				"Ben\\UserBundle\\Resources\\views\\admin\\ajax_list.html.twig"
+			],
+			[
+				"messaf",
+				"Ben\\AssociationBundle\\Resources\\translations\\messages.fr.yml"
+			],
+			[
+				"eventind",
+				"views\\event\\index.html.twig"
+			],
+			[
+				"calenda",
+				"views\\event\\calendar.html.twig"
+			],
+			[
+				"cotisindex",
+				"views\\Cotisation\\index.html.twig"
+			],
+			[
+				"adminindex",
+				"Ben\\UserBundle\\Resources\\views\\admin\\index.html.twig"
+			],
+			[
+				"avance",
+				"Ben\\AssociationBundle\\Entity\\Avancement.php"
+			],
+			[
+				"testsq",
+				"Association\\app\\Resources\\test\\mytest.sql"
+			],
+			[
+				"adminsear",
+				"Ben\\UserBundle\\Resources\\views\\admin\\search.html.twig"
+			],
+			[
+				"search",
+				"Association\\web\\images\\icons\\search.svg"
+			],
+			[
+				"userrepo",
+				"Ben\\UserBundle\\Entity\\UserRepository.php"
+			],
+			[
+				"la",
+				"views\\layout.html.twig"
+			],
+			[
+				"bootcs",
+				"Association\\web\\bootstrap\\css\\bootstrap.css"
 			]
 		],
 		"width": 0.0
@@ -2462,7 +1601,7 @@
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": false,
+	"side_bar_visible": true,
 	"side_bar_width": 277.0,
 	"status_bar_visible": true,
 	"template_settings":

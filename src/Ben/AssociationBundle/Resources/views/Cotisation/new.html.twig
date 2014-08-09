@@ -5,25 +5,171 @@
 {% block body %}
 <h2>{{ 'cotisation.action.new'|trans }}</h2>
 
-<form class="form-horizontal" action="{{ path('cotisation_create') }}" method="post" {{ form_enctype(form) }}>
+<div class="row">
+  <div class="col-md-6">
+    <div id="myCalendar" class="datetimepicker"></div>
+  </div>
+  <div class="col-md-6">
+    <table class="table table-bordered">
+      <tr>
+        <th colspan="2" class="text-center">Informations sur l'adhérant</th>
+      </tr>
+      <tr>
+        <th>Nom</th>
+        <td><a href="{{ path('ben_show_user', { 'id': entity.user.id }) }}">{{ entity.user.profile.fullName }}</a></td>
+      </tr>
+      <tr>
+        <th>CIN</th>
+        <td>{{ entity.user.profile.cin }}</td>
+      </tr>
+      <tr>
+        <th>Status</th>
+        <td>{{ entity.user.status }}</td>
+      </tr>
+      <tr>
+        <th>Date d'adhésion</th>
+        <td>{{ entity.user.created|date('d/m/Y') }}</td>
+      </tr>
+      <tr>
+        <th>Methode de paiement</th>
+        <td>{{ entity.user.profile.method }}</td>
+      </tr>
+      <tr>
+        <th>Frequence de paiement</th>
+        <td>{{ entity.user.profile.frequenceLabel }}</td>
+      </tr>
+      <tr>
+        <th>Montant</th>
+        <td>{{ entity.user.profile.montant }} DH</td>
+      </tr>
+      <tr>
+        <th>Total payé</th>
+        <td>{{ total }} DH</td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-md-12">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+              <th colspan="6" class="text-center">Historiques des cotisations</th>
+            </tr>
+            <tr>
+                <th>#</th>
+                <th>{{ 'cotisation.form.price'|trans }}</th>
+                <th>{{ 'cotisation.form.type'|trans }}</th>
+                <th>{{ 'cotisation.form.date.created'|trans }}</th>
+                <th>{{ 'cotisation.form.date.from'|trans }}</th>
+                <th>{{ 'cotisation.form.date.from'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in cotisations %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ entity.price }} DH</td>
+            <td>{{ entity.type }}</td>
+            <td>{% if entity.created %}{{ entity.created|date('d/m/Y') }}{% endif %}</td>
+            <td>{% if entity.datefrom %}{{ entity.datefrom|date('d/m/Y') }}{% endif %}</td>
+            <td>{% if entity.dateto %}{{ entity.dateto|date('d/m/Y') }}{% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  </div>
+</div>
 
-{% include "BenAssociationBundle:Cotisation:form.html.twig" %}
-	
-    <div class="form-group">
-      <div class="col-md-offset-4 col-md-4">
-        <button type="submit" name="subvalider" class="btn btn-primary btn-embossed"><span class="fui-check-inverted"></span> {{ 'ben.action.new'|trans }}</button>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form class="form-horizontal" action="{{ path('cotisation_create') }}" method="post" {{ form_enctype(form) }}>
+      <div class="modal-header">
+        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title"><span class="glyphicon glyphicon-calendar"></span> {{ 'cotisation.action.new'|trans }}</h4>
       </div>
+      <div class="modal-body">
+      {% include "BenAssociationBundle:Cotisation:form.html.twig" %}
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-embossed">{{ 'ben.action.valide'|trans }}</button>
+        <input id="js-source" type="hidden" name="source">
+      </div>
+      </form>
     </div>
-</form>
+  </div>
+</div>
 
 {% endblock body %}
 {% block javascripts %}
 {{ parent() }}
+<script src="{{ asset('js/mycalendar.js') }}"></script>
 <script> 
-    (function($) {
-    	
+(function($) {
+    var myModal = $('#myModal'),
+        form = myModal.find('form'),
+        dateFrom = form.find('#cotisation_form_date_from'),
+        dateTo = form.find('#cotisation_form_date_to'),
+        sourceEvent = form.find('#js-source');
+
+        function ajaxPost() {
+          form.addClass('working');
+          $.ajax({ 
+            type: "POST", 
+            data: form.serialize(),
+            url: form.attr('action'), 
+            success: function(data){ 
+              form.removeClass('working');
+              if(data === '1') {
+                myModal.modal('hide');
+                // alert('Cotisation ajouté avec succées');
+                $("[data-date='"+sourceEvent.val()+"']").addClass('active')
+              }
+              else form.find('.modal-body').html(data);
+              console.log(data);
+            },
+            error:function(){
+                form.removeClass('working');
+            }
+          });
+          return false;
+        }
+
+        form.on('submit', ajaxPost);
+
+        myModal.find('div.col-md-4').removeClass('col-md-4').addClass('col-md-6')
         $('#cotisation_form_user').closest('.form-group').hide();
+        $('#myCalendar').calendar({
+          data: [
+        {% for item in cotisations %}
+          {
+            id: {{ item.id }},
+            type: '{{ item.type }}',
+            description: hereDoc(function() {/*!"{{ item.description | replace({"\n":" "}) }}"*/}),
+            start: new Date('{{ item.datefrom|date('Y-m-d H:i:s') }}'),
+            end: new Date('{{ item.dateto|date('Y-m-d H:i:s') }}'),
+            url: '{{ path('cotisation_show', { 'id': item.id }) }}'
+          }{{ loop.last ? '' : ',' }}
+        {% endfor %}
+        ],
+        monthClick: function(e){
+          var elem = $(e.target),
+              data = findById(this.data, elem.data('id')),
+              paiementFrequence = {{ entity.user.profile.frequence }};
+
+              if(data) window.location.href = data.url;
+              else {
+                strDate = elem.data('date');
+                d = new Date(strDate);
+                dateFrom.val(d.getFullYear()+'-'+(d.getMonth()+1)+'-'+(d.getDate()-1));
+                dateTo.val(d.getFullYear()+'-'+(d.getMonth()+paiementFrequence+1)+'-'+(d.getDate()-1));
+                sourceEvent.val(elem.data('date'))
+                myModal.modal('show');
+              }
+        }
+        });
     })(jQuery);
 </script>
 {% endblock %}

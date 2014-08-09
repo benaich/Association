@@ -1,10 +1,25 @@
 <section class="flashbag">
 {% for type, flashMessages in app.session.flashbag.all() %}
 {% for flashMessage in flashMessages %}
-            <div class="alert alert-{{ type }} fade in">
-            <button type="button" class="close fui-cross" data-dismiss="alert"></button>
-                <strong>{{ 'ben.flash.success.info'|trans({}, 'flashes')}} </strong>  {{ flashMessage|trans({}, 'flashes')}} 
-            </div>
+    <div class="alert alert-{{ type }} fade in">
+    <button type="button" class="close fui-cross" data-dismiss="alert"></button>
+        {# <strong>{{ 'ben.flash.success.info'|trans({}, 'flashes')}} </strong>  #} {{ flashMessage|trans({}, 'flashes')}} 
+    </div>
 {% endfor %}
 {% endfor %}
+
+    {% if daysleft is defined %}
+		{% if daysleft.days < 0  %}
+	    <div class="alert alert-error fade in">
+	    <button type="button" class="close fui-cross" data-dismiss="alert"></button>
+	    	<p>Cet adhérent est en retard de {{ daysleft.days|abs }}  jours depuis le {{ daysleft.date }}, envoyer lui une alerte par <a href="{{ path('ben_mail_alert', { 'id': daysleft.user }) }}">mail</a>, ou imprimer la <a href="{{ path('ben_print_alert', { 'id': daysleft.user }) }}">lettre</a> pour envoie postal
+	    	</p>
+	    </div>
+		{% else %} 
+	    <div class="alert alert-info fade in">
+	    <button type="button" class="close fui-cross" data-dismiss="alert"></button>
+	    	Adhérent à jour, {{ daysleft.days }}  jours restants (depuis le {{ daysleft.date }})
+	    </div>
+		{% endif %} 
+    {% endif %}
 </section>
