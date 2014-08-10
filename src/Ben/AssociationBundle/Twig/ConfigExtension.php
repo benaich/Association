@@ -15,7 +15,7 @@ class ConfigExtension extends \Twig_Extension {
     public function getGlobals()
     {
         $config = $this->em->getRepository('BenAssociationBundle:config')->findAll();
-        $fields = $this->em->getRepository('BenAssociationBundle:fields')->findAll();
+        $fields = $this->em->getRepository('BenAssociationBundle:Fields')->findAll();
         $userTable = array_filter($fields, function($obj){
             return ($obj->getTableName() === 'adherant');
         });

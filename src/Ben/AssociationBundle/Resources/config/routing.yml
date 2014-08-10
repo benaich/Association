@@ -2,10 +2,6 @@ BenAssociationBundle_Default:
     resource: "@BenAssociationBundle/Resources/config/routing/default.yml"
     prefix:   /default
 
-BenAssociationBundle_rooms:
-    resource: "@BenAssociationBundle/Resources/config/routing/rooms.yml"
-    prefix:   /rooms
-
 BenAssociationBundle_config:
         resource: "@BenAssociationBundle/Resources/config/routing/config.yml"
         prefix:   /config
@@ -13,14 +9,6 @@ BenAssociationBundle_config:
 BenAssociationBundle_event:
         resource: "@BenAssociationBundle/Resources/config/routing/event.yml"
         prefix:   /event
-
-BenAssociationBundle_hotels:
-        resource: "@BenAssociationBundle/Resources/config/routing/hotels.yml"
-        prefix:   /hotels
-
-BenAssociationBundle_reservation:
-        resource: "@BenAssociationBundle/Resources/config/routing/reservation.yml"
-        prefix:   /reservation
 
 BenAssociationBundle_status:
         resource: "@BenAssociationBundle/Resources/config/routing/status.yml"

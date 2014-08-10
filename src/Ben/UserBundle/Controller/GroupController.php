@@ -281,7 +281,7 @@ class GroupController extends Controller
             $this->get('session')->getFlashBag()->add('danger', "ben.flash.error.group.empty");
             return $this->redirect($this->generateUrl('group_show', array('id' => $id)));
         }
-        // return $this->render('BenUserBundle:group:letter.html.twig', array('letter'=>$letter,'users'=>$users));
+        // return $this->render('BenUserBundle:Group:letter.html.twig', array('letter'=>$letter,'users'=>$users));
 
         // log users who receved letters
         $letter = $request->get('letter');
@@ -293,7 +293,7 @@ class GroupController extends Controller
         $em->flush();
 
         $now = (new \DateTime)->format('d-m-Y_H-i');
-        $html = $this->renderView('BenUserBundle:group:letter.html.twig', array(
+        $html = $this->renderView('BenUserBundle:Group:letter.html.twig', array(
             'letter'      => $letter,
             'users'      => $users,
             ));

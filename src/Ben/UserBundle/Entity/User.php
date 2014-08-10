@@ -59,11 +59,6 @@ class User extends BaseUser implements ParticipantInterface {
     protected $groups;
 
     /**
-    * @ORM\OneToMany(targetEntity="Ben\AssociationBundle\Entity\Reservation", mappedBy="user", cascade={"remove", "persist"})
-    */
-    protected $reservations;
-
-    /**
     * @ORM\OneToMany(targetEntity="Ben\AssociationBundle\Entity\Cotisation", mappedBy="user", cascade={"remove", "persist"})
     */
     protected $cotisations;

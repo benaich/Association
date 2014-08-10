@@ -60,10 +60,10 @@ swiftmailer:
     # host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
-    # spool:     { type: memory }
-    spool:
-        type: file
-        path: "%kernel.root_dir%/swiftmailer/spool"
+    spool:     { type: memory }
+    # spool:
+    #     type: file
+    #     path: "%kernel.root_dir%/swiftmailer/spool"
     logging: "%kernel.debug%"
 
 #knp_snappy pdf bundle

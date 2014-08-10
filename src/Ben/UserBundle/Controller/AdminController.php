@@ -42,7 +42,7 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $searchParam = $request->get('searchParam');
         $template='BenUserBundle:admin:ajax_list.html.twig';
-        $entities = $em->getRepository('BenUserBundle:user')->search($searchParam);
+        $entities = $em->getRepository('BenUserBundle:User')->search($searchParam);
         $pagination = (new Paginator())->setItems(count($entities), $searchParam['perPage'])->setPage($searchParam['page'])->toArray();
         return $this->render($template, array(
                     'entities' => $entities,
@@ -97,7 +97,7 @@ class AdminController extends Controller
         $security = $this->container->get('security.context');
         if(!$security->isGranted('ROLE_MANAGER'))
             $id = $security->getToken()->getUser()->getId();
-        $entity = $em->getRepository('BenUserBundle:user')->findUser($id);
+        $entity = $em->getRepository('BenUserBundle:User')->findUser($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find posts entity.');
         }
@@ -105,7 +105,7 @@ class AdminController extends Controller
         $daysleft = $em->getRepository('BenAssociationBundle:Cotisation')->daysleft($id);
         $daysleft['user'] = $entity->getId();
 
-        $logs = $em->getRepository('BenAssociationBundle:Config')->getLog($id);
+        $logs = $em->getRepository('BenAssociationBundle:config')->getLog($id);
         $deleteForm = $this->createDeleteForm($id);
         return $this->render('BenUserBundle:admin:show.html.twig', array(
             'entity' => $entity,
@@ -286,7 +286,7 @@ class AdminController extends Controller
     public function toCsvAction()
     {
         $em = $this->getDoctrine()->getEntityManager();        
-        $entities = $em->getRepository('BenUserBundle:user')->getUsers();
+        $entities = $em->getRepository('BenUserBundle:User')->getUsers();
         $response = $this->render('BenUserBundle:admin:list.csv.twig',array('entities' => $entities));
         $response->headers->set('Content-Type', 'text/csv');
         $response->headers->set('Content-Disposition', 'attachment; filename="contacts.csv"');
@@ -300,7 +300,7 @@ class AdminController extends Controller
     public function toXmlAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $entities = $em->getRepository('BenUserBundle:user')->getUsers();
+        $entities = $em->getRepository('BenUserBundle:User')->getUsers();
         $response = $this->render('BenUserBundle:admin:list.xml.twig',array('entities' => $entities));
         $response->headers->set('Content-Type', 'text/xml');
         return $response;
@@ -320,7 +320,7 @@ class AdminController extends Controller
         elseif($users !== 'all')$ids = explode(',', $users);
         else $ids = null;
 
-        $entities = $em->getRepository('BenUserBundle:user')->search(array('ids'=>$ids));
+        $entities = $em->getRepository('BenUserBundle:User')->search(array('ids'=>$ids));
         // return $this->render('BenUserBundle:admin:badge.html.twig', array('entities' => $entities));
 
         $now = (new \DateTime)->format('d-m-Y_H-i');
@@ -344,7 +344,7 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         if($users !== 'all')$ids = explode(',', $users);
         else $ids = null;
-        $entities = $em->getRepository('BenUserBundle:user')->search(array('ids'=>$ids));
+        $entities = $em->getRepository('BenUserBundle:User')->search(array('ids'=>$ids));
         // return $this->render('BenUserBundle:admin:etiquette.html.twig', array('entities' => $entities));
 
         $now = (new \DateTime)->format('d-m-Y_H-i');
@@ -366,7 +366,7 @@ class AdminController extends Controller
     public function toExcelAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('BenUserBundle:user')->search(array());
+        $entities = $em->getRepository('BenUserBundle:User')->search(array());
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
         $phpExcelObject->getProperties()->setCreator("ben");
@@ -457,7 +457,7 @@ class AdminController extends Controller
         if($request->getMethod()==='POST') $searchParam = $request->get('searchParam');
         else $searchParam['page'] = 1;
         $searchParam['perPage'] = $perPage;
-        $entities = $em->getRepository('BenUserBundle:user')->search($searchParam);
+        $entities = $em->getRepository('BenUserBundle:User')->search($searchParam);
         $pagination = (new Paginator())->setItems(count($entities), $searchParam['perPage'])->setPage($searchParam['page'])->toArray();
         return $this->render('BenUserBundle:admin:public.html.twig', array(
                     'entities' => $entities,
@@ -474,7 +474,7 @@ class AdminController extends Controller
         $ids = $request->get('users');
         $mail = $request->get('mail');
         $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('BenUserBundle:user')->search(array('ids'=>$ids));
+        $users = $em->getRepository('BenUserBundle:User')->search(array('ids'=>$ids));
         $recipients = [];
         foreach ($users as $user) {
             $recipients[] = $user->getEmail();
@@ -499,9 +499,9 @@ class AdminController extends Controller
     public function alertMailAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('BenUserBundle:user')->search(array('ids'=>array($id)));
+        $users = $em->getRepository('BenUserBundle:User')->search(array('ids'=>array($id)));
         $daysleft = $em->getRepository('BenAssociationBundle:Cotisation')->daysleft($id);
-        $view = $this->renderView('BenAssociationBundle:cotisation:letter.html.twig', array('daysleft'=>$daysleft,'users'=>$users));
+        $view = $this->renderView('BenAssociationBundle:Cotisation:letter.html.twig', array('daysleft'=>$daysleft,'users'=>$users));
         $recipients = [];
         foreach ($users as $user) {
             $recipients[] = $user->getEmail();
@@ -527,9 +527,9 @@ class AdminController extends Controller
     public function alertPrintAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('BenUserBundle:user')->search(array('ids'=>array($id)));
+        $users = $em->getRepository('BenUserBundle:User')->search(array('ids'=>array($id)));
         $daysleft = $em->getRepository('BenAssociationBundle:Cotisation')->daysleft($id);
-        $view = $this->renderView('BenAssociationBundle:cotisation:letter.html.twig', array('daysleft'=>$daysleft,'users'=>$users));
+        $view = $this->renderView('BenAssociationBundle:Cotisation:letter.html.twig', array('daysleft'=>$daysleft,'users'=>$users));
         // echo $view;die;
 
         // log users who receved letters

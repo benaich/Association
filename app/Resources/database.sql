@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Mer 30 Juillet 2014 à 12:20
+-- Généré le: Dim 10 Août 2014 à 14:44
 -- Version du serveur: 5.5.24-log
 -- Version de PHP: 5.4.3
 
@@ -37,89 +37,68 @@ CREATE TABLE IF NOT EXISTS `activity_log` (
   `date` datetime NOT NULL,
   `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=196 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=210 ;
 
 --
 -- Contenu de la table `activity_log`
 --
 
 INSERT INTO `activity_log` (`id`, `classname`, `entity_id`, `user`, `message`, `date`, `type`) VALUES
-(72, 'Ben\\UserBundle\\Entity\\User', 1, 1, 'réponse', '2014-07-21 11:39:55', 'appel'),
-(74, 'Ben\\UserBundle\\Entity\\User', 14, 1, 'réponse', '2014-07-21 11:40:52', 'appel'),
-(75, 'Ben\\UserBundle\\Entity\\User', 14, 1, 'pas de réponse', '2014-07-21 11:41:03', 'appel'),
 (76, 'Ben\\UserBundle\\Entity\\User', 17, 1, 'test sms', '2014-07-21 11:41:14', 'sms'),
-(79, 'Ben\\UserBundle\\Entity\\User', 2, 1, 'ddede', '2014-07-26 12:13:31', 'sms'),
 (80, 'Ben\\UserBundle\\Entity\\User', 8, 1, 'ddede', '2014-07-26 12:13:31', 'sms'),
 (81, 'Ben\\UserBundle\\Entity\\User', 11, 1, 'ddede', '2014-07-26 12:13:31', 'sms'),
 (82, 'Ben\\UserBundle\\Entity\\User', 12, 1, 'ddede', '2014-07-26 12:13:31', 'sms'),
-(83, 'Ben\\UserBundle\\Entity\\User', 14, 1, 'ddede', '2014-07-26 12:13:31', 'sms'),
 (86, 'Ben\\UserBundle\\Entity\\User', 17, 1, 'ddede', '2014-07-26 12:13:31', 'sms'),
 (87, 'Ben\\UserBundle\\Entity\\User', 18, 1, 'ddede', '2014-07-26 12:13:31', 'sms'),
-(88, 'Ben\\UserBundle\\Entity\\User', 19, 1, 'ddede', '2014-07-26 12:13:31', 'sms'),
 (89, 'Ben\\UserBundle\\Entity\\User', 20, 1, 'ddede', '2014-07-26 12:13:31', 'sms'),
-(90, 'Ben\\UserBundle\\Entity\\User', 21, 1, 'ddede', '2014-07-26 12:13:31', 'sms'),
 (91, 'Ben\\UserBundle\\Entity\\User', 22, 1, 'ddede', '2014-07-26 12:13:31', 'sms'),
-(92, 'Ben\\UserBundle\\Entity\\User', 23, 1, 'ddede', '2014-07-26 12:13:31', 'sms'),
 (93, 'Ben\\UserBundle\\Entity\\User', 24, 1, 'ddede', '2014-07-26 12:13:31', 'sms'),
 (94, 'Ben\\UserBundle\\Entity\\User', 25, 1, 'ddede', '2014-07-26 12:13:31', 'sms'),
-(95, 'Ben\\UserBundle\\Entity\\User', 2, 1, 'hi how''re u doing', '2014-07-26 12:15:18', 'sms'),
-(97, 'Ben\\UserBundle\\Entity\\User', 2, 1, 'sms groupe test', '2014-07-26 12:16:47', 'sms'),
 (98, 'Ben\\UserBundle\\Entity\\User', 8, 1, 'sms groupe test', '2014-07-26 12:16:47', 'sms'),
 (99, 'Ben\\UserBundle\\Entity\\User', 11, 1, 'sms groupe test', '2014-07-26 12:16:47', 'sms'),
 (100, 'Ben\\UserBundle\\Entity\\User', 12, 1, 'sms groupe test', '2014-07-26 12:16:47', 'sms'),
-(101, 'Ben\\UserBundle\\Entity\\User', 14, 1, 'sms groupe test', '2014-07-26 12:16:47', 'sms'),
 (103, 'Ben\\UserBundle\\Entity\\User', 16, 1, 'sms groupe test', '2014-07-26 12:16:47', 'sms'),
 (104, 'Ben\\UserBundle\\Entity\\User', 17, 1, 'sms groupe test', '2014-07-26 12:16:47', 'sms'),
 (105, 'Ben\\UserBundle\\Entity\\User', 18, 1, 'sms groupe test', '2014-07-26 12:16:47', 'sms'),
 (106, 'Ben\\UserBundle\\Entity\\User', 19, 1, 'sms groupe test', '2014-07-26 12:16:47', 'sms'),
 (107, 'Ben\\UserBundle\\Entity\\User', 20, 1, 'sms groupe test', '2014-07-26 12:16:47', 'sms'),
-(108, 'Ben\\UserBundle\\Entity\\User', 21, 1, 'sms groupe test', '2014-07-26 12:16:47', 'sms'),
 (109, 'Ben\\UserBundle\\Entity\\User', 22, 1, 'sms groupe test', '2014-07-26 12:16:47', 'sms'),
-(110, 'Ben\\UserBundle\\Entity\\User', 23, 1, 'sms groupe test', '2014-07-26 12:16:47', 'sms'),
 (111, 'Ben\\UserBundle\\Entity\\User', 24, 1, 'sms groupe test', '2014-07-26 12:16:47', 'sms'),
 (112, 'Ben\\UserBundle\\Entity\\User', 25, 1, 'sms groupe test', '2014-07-26 12:16:47', 'sms'),
-(114, 'Ben\\UserBundle\\Entity\\User', 2, 1, 'test mail', '2014-07-26 13:05:17', 'mail'),
-(116, 'Ben\\UserBundle\\Entity\\User', 1, 1, 'one person', '2014-07-26 13:06:36', 'mail'),
-(118, 'Ben\\UserBundle\\Entity\\User', 2, 1, 'google meeting', '2014-07-26 13:11:19', 'email'),
-(121, 'Ben\\UserBundle\\Entity\\User', 2, 1, 'google meeting', '2014-07-26 13:11:56', 'email'),
-(124, 'Ben\\UserBundle\\Entity\\User', 2, 1, 'google meeting', '2014-07-26 13:14:13', 'email'),
-(127, 'Ben\\UserBundle\\Entity\\User', 2, 1, 'google meeting', '2014-07-26 13:16:31', 'email'),
-(130, 'Ben\\UserBundle\\Entity\\User', 2, 1, 'google meeting', '2014-07-26 13:19:21', 'email'),
-(133, 'Ben\\UserBundle\\Entity\\User', 2, 1, 'google meeting', '2014-07-26 13:23:36', 'email'),
-(136, 'Ben\\UserBundle\\Entity\\User', 2, 1, 'google meeting', '2014-07-26 13:27:28', 'email'),
-(138, 'Ben\\UserBundle\\Entity\\User', 2, 1, 'mail from dashbord', '2014-07-26 15:37:31', 'mail'),
 (139, 'Ben\\UserBundle\\Entity\\User', 11, 1, '', '2014-07-26 16:05:38', 'sms'),
 (140, 'Ben\\UserBundle\\Entity\\User', 12, 1, '', '2014-07-26 16:11:55', 'sms'),
 (141, 'Ben\\UserBundle\\Entity\\User', 17, 1, 'occupé', '2014-07-26 17:32:06', 'appel'),
 (142, 'Ben\\UserBundle\\Entity\\User', 17, 1, 'mail', '2014-07-26 17:33:25', 'appel'),
-(144, 'Ben\\UserBundle\\Entity\\User', 2, 1, 'groupe sms', '2014-07-26 17:41:45', 'sms'),
-(145, 'Ben\\UserBundle\\Entity\\User', 2, 1, 'pas de réponse', '2014-07-26 17:49:18', 'appel'),
 (146, 'Ben\\UserBundle\\Entity\\User', 0, 1, 'pas de réponse', '2014-07-26 17:49:51', 'appel'),
-(148, 'Ben\\UserBundle\\Entity\\User', 2, 1, 'dad', '2014-07-26 17:51:55', 'mail'),
-(150, 'Ben\\UserBundle\\Entity\\User', 1, 8, 'agenda day', '2014-07-26 20:39:09', 'lettre'),
-(151, 'Ben\\UserBundle\\Entity\\User', 2, 8, 'agenda day', '2014-07-26 20:39:09', 'lettre'),
-(152, 'Ben\\UserBundle\\Entity\\User', 15, 8, 'agenda day', '2014-07-26 20:39:09', 'lettre'),
-(154, 'Ben\\UserBundle\\Entity\\User', 14, 1, 'Reunion', '2014-07-29 10:24:08', 'lettre'),
 (155, 'Ben\\UserBundle\\Entity\\User', 19, 1, 'Reunion', '2014-07-29 10:24:08', 'lettre'),
 (156, 'Ben\\UserBundle\\Entity\\User', 21, 1, 'Reunion', '2014-07-29 10:24:08', 'lettre'),
 (157, 'Ben\\UserBundle\\Entity\\User', 23, 1, 'Reunion', '2014-07-29 10:24:08', 'lettre'),
 (158, 'Ben\\UserBundle\\Entity\\User', 24, 1, 'Reunion', '2014-07-29 10:24:08', 'lettre'),
 (159, 'Ben\\UserBundle\\Entity\\User', 25, 1, 'Reunion', '2014-07-29 10:24:08', 'lettre'),
-(160, 'Ben\\UserBundle\\Entity\\User', 1, 8, 'occupé', '2014-07-29 17:18:17', 'appel'),
 (161, 'Ben\\UserBundle\\Entity\\User', 19, 8, 'réponse', '2014-07-29 17:18:54', 'appel'),
-(183, 'Ben\\UserBundle\\Entity\\User', 14, 8, '', '2014-07-29 18:00:53', 'sms'),
-(184, 'Ben\\UserBundle\\Entity\\User', 19, 8, '', '2014-07-29 18:00:53', 'sms'),
 (185, 'Ben\\UserBundle\\Entity\\User', 21, 8, '', '2014-07-29 18:00:53', 'sms'),
 (186, 'Ben\\UserBundle\\Entity\\User', 23, 8, '', '2014-07-29 18:00:53', 'sms'),
 (187, 'Ben\\UserBundle\\Entity\\User', 24, 8, '', '2014-07-29 18:00:53', 'sms'),
 (188, 'Ben\\UserBundle\\Entity\\User', 25, 8, '', '2014-07-29 18:00:53', 'sms'),
-(189, 'Ben\\UserBundle\\Entity\\User', 14, 8, 'objet', '2014-07-29 18:01:35', 'mail'),
 (190, 'Ben\\UserBundle\\Entity\\User', 19, 8, 'objet', '2014-07-29 18:01:35', 'mail'),
 (191, 'Ben\\UserBundle\\Entity\\User', 21, 8, 'objet', '2014-07-29 18:01:35', 'mail'),
 (192, 'Ben\\UserBundle\\Entity\\User', 23, 8, 'objet', '2014-07-29 18:01:35', 'mail'),
 (193, 'Ben\\UserBundle\\Entity\\User', 24, 8, 'objet', '2014-07-29 18:01:35', 'mail'),
 (194, 'Ben\\UserBundle\\Entity\\User', 25, 8, 'objet', '2014-07-29 18:01:35', 'mail'),
-(195, 'Ben\\UserBundle\\Entity\\User', 25, 8, 'occupé', '2014-07-29 18:02:17', 'appel');
+(195, 'Ben\\UserBundle\\Entity\\User', 25, 8, 'occupé', '2014-07-29 18:02:17', 'appel'),
+(196, 'Ben\\UserBundle\\Entity\\User', 2, 1, '', '2014-08-03 14:20:49', 'sms'),
+(197, 'Ben\\UserBundle\\Entity\\User', 19, 1, '', '2014-08-03 14:20:49', 'sms'),
+(198, 'Ben\\UserBundle\\Entity\\User', 20, 1, '', '2014-08-03 14:20:49', 'sms'),
+(199, 'Ben\\UserBundle\\Entity\\User', 2, 1, 'adam mail', '2014-08-03 14:22:18', 'mail'),
+(200, 'Ben\\UserBundle\\Entity\\User', 19, 1, 'adam mail', '2014-08-03 14:22:18', 'mail'),
+(201, 'Ben\\UserBundle\\Entity\\User', 20, 1, 'adam mail', '2014-08-03 14:22:18', 'mail'),
+(202, 'Ben\\UserBundle\\Entity\\User', 2, 1, '', '2014-08-03 14:28:48', 'lettre'),
+(203, 'Ben\\UserBundle\\Entity\\User', 19, 1, '', '2014-08-03 14:28:48', 'lettre'),
+(204, 'Ben\\UserBundle\\Entity\\User', 20, 1, '', '2014-08-03 14:28:48', 'lettre'),
+(206, 'Ben\\UserBundle\\Entity\\User', 8, 1, 'cotisation', '2014-08-09 20:52:34', 'mail'),
+(207, 'Ben\\UserBundle\\Entity\\User', 8, 1, 'cotisation', '2014-08-09 20:54:15', 'mail'),
+(208, 'Ben\\UserBundle\\Entity\\User', 8, 1, 'cotisation', '2014-08-09 20:57:13', 'mail'),
+(209, 'Ben\\UserBundle\\Entity\\User', 8, 1, 'cotisation', '2014-08-09 21:04:27', 'Lettre');
 
 -- --------------------------------------------------------
 
@@ -137,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `avancement` (
   PRIMARY KEY (`id`),
   KEY `IDX_6D2A7A2AA76ED395` (`user_id`),
   KEY `IDX_6D2A7A2A6BF700BD` (`status_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
 
 --
 -- Contenu de la table `avancement`
@@ -154,7 +133,17 @@ INSERT INTO `avancement` (`id`, `user_id`, `status_id`, `date_from`, `date_to`, 
 (9, 14, 4, '2014-07-09', '2014-07-09', ''),
 (11, 19, 4, '2014-07-09', '2015-07-09', ''),
 (12, 20, 7, '2009-07-10', '2014-07-10', 'Agadir'),
-(13, 25, 7, '2014-07-20', '2014-07-20', 'Taza');
+(13, 25, 7, '2014-07-20', '2014-07-20', 'Taza'),
+(14, 21, 8, '2014-07-30', '2014-07-30', 'casablaca'),
+(15, 22, 4, '2014-07-30', '2015-07-30', 'rabat'),
+(16, 23, 4, '2014-07-30', '2014-07-30', 'rabat'),
+(17, 28, 5, '2014-07-30', '2014-07-30', 'rabat'),
+(18, 42, 9, '2014-07-30', '2014-07-30', 'agadir'),
+(19, 41, 4, '2014-07-30', '2015-07-30', 'agadir'),
+(20, 24, 8, '2014-07-30', '2014-07-30', 'agadir'),
+(21, 29, 3, '2014-07-30', '2014-07-30', 'oujda'),
+(22, 40, 2, '2014-07-30', '2014-07-30', 'oujda'),
+(23, 45, 7, '2014-07-30', '2014-07-30', 'oujda');
 
 -- --------------------------------------------------------
 
@@ -199,7 +188,7 @@ INSERT INTO `config` (`id`, `the_key`, `the_value`) VALUES
 (23, 'org_map_lat', '34.007836'),
 (24, 'org_map_lng', '-6.837305'),
 (25, 'letter_invitation', '<p>Bonjour {firstname}</p><p><strong></strong>Nous avons pris note de votre volonté de rejoindre notre association et à ce titre, nous avons l''honneur de vous inviter à une réunion d''informations qui aura lieu le {date} à {time}.</p><p>	<br></p><p><em><span style="color: rgb(106, 168, 79);">{body}</span></em></p><p><em><br></em></p><p>Nous vous prions d’agréer, Madame, Mademoiselle, Monsieur et Cher(e) adhérent(e), l’assurance de nos salutations les meilleures.</p>'),
-(26, 'letter_cotisation', '<p><br></p>'),
+(26, 'letter_cotisation', '<p><span><div>Bonjour,</div><div><br></div><div>Votre adhésion à <span>{org_name}</span> a expiré depuis {days_expired} jours.</div><div><br></div><div>A bientôt!</div><div><br></div><div>(ce courriel est un envoi automatique)</div></span><br></p>'),
 (27, 'org_diplome', 'bac,dut,licence,master,doctorat'),
 (28, 'org_expertise', 'Informatique,Medcine,Mécanique,Physique,mathématique,autres'),
 (29, 'letter_header', '<p>{org_name}</p><p>{org_address}</p><h1 style="text-align: center;">A</h1><p style="text-align: right;">{fullname}</p><p style="text-align: right;">{address}</p>'),
@@ -224,20 +213,39 @@ CREATE TABLE IF NOT EXISTS `cotisation` (
   `date_from` date NOT NULL,
   `date_to` date NOT NULL,
   `description` longtext COLLATE utf8_unicode_ci,
+  `created` date NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_E139D13DA76ED395` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=30 ;
 
 --
 -- Contenu de la table `cotisation`
 --
 
-INSERT INTO `cotisation` (`id`, `user_id`, `price`, `type`, `date_from`, `date_to`, `description`) VALUES
-(1, 2, 1500, 'Chèque', '2014-07-09', '2015-07-09', 'Description'),
-(2, 8, 1200, 'Chèque', '2010-07-09', '2011-07-09', 'Fiche contribution'),
-(3, 14, 2500, 'Chèque', '2014-07-09', '2015-07-09', 'Cotisation'),
-(5, 11, 1000, 'Virement', '2013-07-10', '2014-07-10', 'no thanks'),
-(6, 25, 3500, 'Virement', '2014-07-17', '2015-07-29', '3500 dh per year');
+INSERT INTO `cotisation` (`id`, `user_id`, `price`, `type`, `date_from`, `date_to`, `description`, `created`) VALUES
+(2, 8, 1200, 'Chèque', '2010-07-09', '2011-07-09', 'Fiche contribution', '2014-07-24'),
+(3, 14, 2500, 'Chèque', '2014-07-09', '2015-07-09', 'Cotisation', '2014-07-24'),
+(5, 11, 1000, 'Virement', '2013-07-10', '2014-07-10', 'no thanks', '2014-07-24'),
+(6, 25, 3500, 'Virement', '2014-07-17', '2015-07-29', '3500 dh per year', '2014-07-24'),
+(7, 40, 3500, 'Chèque', '2014-07-30', '2015-07-30', 'cotisation anuelle', '2014-07-24'),
+(8, 45, 1200, 'Espèces', '2014-01-01', '2014-12-31', '2014', '2014-07-24'),
+(10, 2, 1000, 'Virement', '2014-01-01', '2014-02-01', 'no', '2014-08-08'),
+(11, 8, 1000, 'Espèces', '2014-05-01', '2014-06-01', NULL, '2014-08-08'),
+(14, 8, 1000, 'Virement', '2014-03-01', '2014-04-01', 'mars', '2014-08-08'),
+(15, 2, 1000, 'Espèces', '2014-02-01', '2014-03-01', 'janvier', '2014-08-08'),
+(16, 1, 1000, 'Espèces', '2014-01-01', '2014-02-01', NULL, '2014-08-09'),
+(17, 1, 1000, 'Espèces', '2014-02-01', '2014-03-01', NULL, '2014-08-09'),
+(18, 1, 1000, 'Espèces', '2014-03-01', '2014-04-01', NULL, '2014-08-09'),
+(19, 1, 1000, 'Espèces', '2014-04-01', '2014-05-01', NULL, '2014-08-09'),
+(21, 22, 1000, 'Espèces', '2014-08-01', '2014-09-01', NULL, '2014-08-09'),
+(22, 8, 1000, 'Espèces', '2014-06-01', '2014-07-01', NULL, '2014-08-09'),
+(23, 8, 1000, 'Virement', '2014-04-01', '2014-05-01', NULL, '2014-08-09'),
+(24, 8, 1000, 'Virement', '2014-07-01', '2014-08-01', NULL, '2014-08-09'),
+(25, 2, 1000, 'Virement', '2014-03-01', '2014-04-01', NULL, '2014-08-09'),
+(26, 2, 1000, 'Virement', '2014-04-01', '2014-05-01', NULL, '2014-08-09'),
+(27, 2, 1000, 'Virement', '2014-05-01', '2014-07-01', NULL, '2014-08-09'),
+(28, 2, 1000, 'Virement', '2014-06-01', '2014-09-01', NULL, '2014-08-09'),
+(29, 8, 1000, 'Virement', '2014-08-01', '2014-09-01', NULL, '2014-08-09');
 
 -- --------------------------------------------------------
 
@@ -253,7 +261,7 @@ CREATE TABLE IF NOT EXISTS `event` (
   `description` longtext COLLATE utf8_unicode_ci NOT NULL,
   `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=34 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=36 ;
 
 --
 -- Contenu de la table `event`
@@ -273,7 +281,9 @@ INSERT INTO `event` (`id`, `name`, `date_from`, `date_to`, `description`, `type`
 (30, 'Evenement #1', '2014-07-18 00:00:00', '2014-07-19 00:00:00', 'every thing', 'réunion d’information'),
 (31, 'event', '2014-06-08 00:00:00', '2014-06-09 00:00:00', 'all i need', 'réunion d’échanges'),
 (32, 'soutenance de stage', '2014-07-31 00:00:00', '2014-08-01 00:00:00', 'Après le stage vient la soutenance de stage. Contrairement aux idées reçues, c''est un exercice délicat, et il faut se préparer pour le réussir.', 'réunion d’information'),
-(33, 'soutenance de pfe', '2014-07-31 09:00:00', '2014-07-31 11:30:00', 'theme: gestion d''une association en ligne', 'réunion d’échanges');
+(33, 'soutenance de pfe', '2014-07-31 09:00:00', '2014-07-31 11:30:00', 'theme: gestion d''une association en ligne', 'réunion d’échanges'),
+(34, 'eded', '2014-08-06 00:00:00', '2014-08-07 00:00:00', 'sdsds', 'réunion d’information'),
+(35, 'tzst', '2014-08-02 00:00:00', '2014-08-03 00:00:00', 'test', 'réunion d’échanges');
 
 -- --------------------------------------------------------
 
@@ -313,7 +323,10 @@ INSERT INTO `event_group` (`event_id`, `group_id`) VALUES
 (31, 1),
 (32, 2),
 (32, 27),
-(33, 1);
+(33, 1),
+(34, 2),
+(35, 2),
+(35, 27);
 
 -- --------------------------------------------------------
 
@@ -366,31 +379,6 @@ INSERT INTO `fields` (`id`, `table_name`, `field_name`, `required`, `visible`, `
 -- --------------------------------------------------------
 
 --
--- Structure de la table `hotels`
---
-
-CREATE TABLE IF NOT EXISTS `hotels` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `category` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `post_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `description` longtext COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
-
---
--- Contenu de la table `hotels`
---
-
-INSERT INTO `hotels` (`id`, `name`, `category`, `address`, `city`, `post_code`, `description`) VALUES
-(1, 'cité universitaire 2', 'universitaire', 'al irfane rue yassamina', 'rabat', '12005', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
-(2, 'Hotel farah', 'hotel', 'agdal avenue Atlass - Rabat', 'rabat', '11006', 'WebPractice est un blog consacré au développement de site Internet. Vous y trouverez de nombreux tutoriaux vidéo, astuces et ressources sur la création de site Web.');
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `image`
 --
 
@@ -398,7 +386,7 @@ CREATE TABLE IF NOT EXISTS `image` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `path` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=76 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=84 ;
 
 --
 -- Contenu de la table `image`
@@ -436,7 +424,10 @@ INSERT INTO `image` (`id`, `path`) VALUES
 (65, 'anonymous.jpg'),
 (66, 'anonymous.jpg'),
 (67, 'anonymous.jpg'),
-(75, '7ef3ebeaf739452883c437b5e3029eae8e1686d1.jpeg');
+(75, '7ef3ebeaf739452883c437b5e3029eae8e1686d1.jpeg'),
+(81, 'unknown.png'),
+(82, 'unknown.png'),
+(83, 'unknown.png');
 
 -- --------------------------------------------------------
 
@@ -611,7 +602,7 @@ INSERT INTO `message_metadata` (`id`, `message_id`, `participant_id`, `is_read`)
 (80, 42, 2, 0),
 (81, 42, 1, 0),
 (82, 43, 11, 1),
-(83, 43, 1, 0),
+(83, 43, 1, 1),
 (84, 44, 2, 0),
 (85, 44, 1, 1),
 (86, 45, 11, 0),
@@ -630,24 +621,26 @@ INSERT INTO `message_metadata` (`id`, `message_id`, `participant_id`, `is_read`)
 CREATE TABLE IF NOT EXISTS `mygroup` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `roles` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
   `image_id` int(11) DEFAULT NULL,
+  `kind` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_F0C21D8A5E237E06` (`name`),
   UNIQUE KEY `UNIQ_F0C21D8A3DA5256D` (`image_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=33 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=41 ;
 
 --
 -- Contenu de la table `mygroup`
 --
 
-INSERT INTO `mygroup` (`id`, `name`, `roles`, `image_id`) VALUES
-(1, 'Adhérents', 'a:0:{}', 29),
-(2, 'administrateurs', 'a:0:{}', 30),
-(27, 'actif membe', 'a:0:{}', 31),
-(29, 'Apple', 'a:0:{}', 33),
-(30, 'Femme', 'a:0:{}', 34),
-(32, 'Homme', 'a:0:{}', 36);
+INSERT INTO `mygroup` (`id`, `name`, `image_id`, `kind`) VALUES
+(1, 'Adhérents', 29, 'groupe'),
+(2, 'administrateurs', 30, 'groupe'),
+(27, 'actif membe', 31, 'groupe'),
+(29, 'Apple', 33, 'groupe'),
+(30, 'Femme', 34, 'groupe'),
+(32, 'Homme', 36, 'groupe'),
+(38, 'commision', 81, 'commission'),
+(39, 'Comission A', 82, 'commission'),
+(40, 'commision2', 83, 'commission');
 
 -- --------------------------------------------------------
 
@@ -678,6 +671,9 @@ CREATE TABLE IF NOT EXISTS `profile` (
   `barcode` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `diplome` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `expertise` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `frequence` int(11) DEFAULT NULL,
+  `montant` double NOT NULL,
+  `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_8157AA0F3DA5256D` (`image_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=61 ;
@@ -686,90 +682,28 @@ CREATE TABLE IF NOT EXISTS `profile` (
 -- Contenu de la table `profile`
 --
 
-INSERT INTO `profile` (`id`, `image_id`, `family_name`, `first_name`, `birthday`, `gender`, `address`, `post_code`, `city`, `contry`, `job`, `tel`, `gsm`, `description`, `website`, `facebook`, `google`, `twitter`, `cin`, `barcode`, `diplome`, `expertise`) VALUES
-(1, 1, 'benaich', 'med', '1992-03-04', 'homme', 'lot charaf n42 salé', 11060, 'rabat', 'maroc', 'web developer', '0644354522', '0532155623', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat.	 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitu sollicitudin ve din venenatis ipsum action.', 'http://fb.com', 'http://fb.com/med.ben', 'http://plus.google.com', 'http://twitter.com/med_benaich', 'AE60561', '936562895', NULL, NULL),
-(2, 2, 'abdelilah', 'saif', '1992-12-01', 'homme', 'nice 007 casablaca', 11060, 'casablaca', 'maroc', 'designer', '0644354522', '0532155623', 'heee', 'http://fb.com', 'http://fb.com/med.ben', 'http://plus.google.com', 'http://twitter.com/med_benaich', 'AZ20130', '690254796', NULL, NULL),
-(8, 10, 'jeffrey', 'lise', '1990-04-11', 'homme', 'agdal avenue Atlass - Rabat', NULL, 'rabat', NULL, 'designer', NULL, '0532155623', 'I recently released my latest book, which covers the ins and outs of testing in PHP and, more specifically, Laravel.', NULL, NULL, NULL, NULL, 'BH50786', '954674278', NULL, NULL),
-(11, 15, 'Chris', 'Brown', '1993-04-12', 'homme', 'nice 007 casablaca', 11060, 'new york', 'usa', 'designer', '0644354555', '0532155623', 'hi', NULL, NULL, NULL, NULL, 'BH28888', '1255723804', NULL, NULL),
-(12, 16, 'ely', 'john', '1992-04-18', 'homme', 'lot charaf n42 salé', 1106, 'salé', 'maroc', 'superman', '0622354515', '0541265412', 'hi', NULL, NULL, NULL, NULL, 'AZ20654', '556931090', NULL, NULL),
-(14, 18, 'maldan', 'abir', '1990-04-19', 'femme', 'nice 007 casablaca', 25009, 'fez', 'maroc', 'designer', '0644354522', '0541265412', 'abire-nane :)', 'http://fb.com', 'http://fb.com/abir', 'http://plus.google.com', 'http://twitter.com/abir_nane', 'EZ77940', '1111393039', NULL, NULL),
-(15, 19, 'el arabi', 'yasser', '1992-06-22', 'homme', 'lot said hajji n1978', 11060, 'salé', 'maroc', 'Prof', '0645981830', '0537654113', NULL, NULL, NULL, NULL, NULL, 'AZ4563', '425282827', 'licence', 'Physique'),
-(16, 20, 'bougerr', 'hatim', '1991-06-24', 'homme', 'lot said hajji n1978', 15902, 'rabat', 'maroc', 'etudiant', '0645981830', '0537654113', NULL, NULL, NULL, NULL, NULL, 'AE5132', '1019650613', NULL, NULL),
-(19, 23, 'el amrani', 'nahid', '1993-07-09', 'femme', 'hay nahda n1956 rabat', 12060, 'rabat', 'maroc', 'webmaster', '0644972133', '0537563215', NULL, NULL, NULL, NULL, NULL, 'AB45635', '749584944', NULL, NULL),
-(20, 24, 'el hajji', 'anoire', '1990-07-10', 'homme', 'agdal avenue Atlass - Rabat', 12050, 'rabat', 'maroc', 'Acteur', '0644354522', '0537654113', NULL, NULL, NULL, NULL, NULL, 'AZ20156', '540809317', 'DEUG', 'génie informatique'),
-(21, 25, 'nadir', 'siham', '1995-07-13', 'femme', 'agdal avenue Atlass - Rabat', 156201, 'rabat', 'maroc', 'designer', '0622354515', '0537654113', 'nothing', NULL, NULL, NULL, NULL, 'AZ20155', '1200811083', 'dut', 'Informatique'),
-(22, 26, 'aznag', 'salim', '1980-07-14', 'homme', 'nice 007 casablaca', 11103, 'el jadida', 'maroc', 'medecin', '0644972133', '0537563215', NULL, NULL, NULL, NULL, NULL, 'ED4563', '647722108', 'doctorat', 'Medcine'),
-(23, 27, 'sarah', 'houda', '1993-07-18', 'femme', 'lot tam n788 fez', 154602, 'fez', 'maroc', 'web designer', '0645412462', NULL, 'nothing to say !', NULL, NULL, NULL, NULL, 'AV7850', '270565059', 'master', 'Informatique'),
-(24, 39, 'Arich', 'sihame', '1990-07-10', 'femme', 'agdal avenue Atlass - Rabat', NULL, 'rabat', 'maroc', 'psychologue', '0645981830', '0532155623', NULL, NULL, NULL, NULL, NULL, 'AS0561', '865662066', 'master', 'autres'),
-(25, 40, 'Arich', 'houda', '1990-07-10', 'femme', 'agdal avenue Atlass - Rabat', NULL, 'rabat', 'maroc', 'psychologue', '0645981830', '0532155623', NULL, NULL, NULL, NULL, NULL, 'BH8080', '865662089', 'master', 'autres'),
-(30, 45, 'benaich', 'issam', '1992-04-03', 'homme', NULL, 11050, 'rabat', 'maroc', 'job', '0644354522', '0532155623', NULL, NULL, NULL, NULL, NULL, 'As605121', '729572105', '', '0644354522'),
-(31, 46, 'nidal', 'affaf', '1994-04-03', 'homme', NULL, 11120, 'casablanca', 'maroc', 'job', '0644354522', '0532155623', NULL, NULL, NULL, NULL, NULL, 'AS605121', '12088015', '', '0644354522'),
-(50, 65, 'atih', 'issam', '1992-03-04', 'homme', NULL, 11050, 'rabat', 'maroc', 'job', '0644354522', '0532155623', NULL, NULL, NULL, NULL, NULL, 'FR605121', '736496234', '', '0644354522'),
-(51, 66, 'badili', 'islam', '1994-03-05', 'homme', NULL, 11120, 'casablanca', 'maroc', 'job', '0644354522', '0532155623', NULL, NULL, NULL, NULL, NULL, 'SV65125', '1060641394', '', '0644354522'),
-(52, 67, 'adili', 'abdo', '1994-03-23', 'homme', NULL, 12500, 'fez', 'maroc', 'designer', '0656254522', '0521855623', NULL, NULL, NULL, NULL, NULL, 'SV5625', '390360619', '', '0656254522'),
-(60, 75, 'semouni', 'youssef', '1992-11-12', 'homme', 'atyto nasa n245', 221555, 'sefrou', 'maroc', 'pilote', '637546212', '0537562202', NULL, NULL, NULL, NULL, NULL, 'as5122', '923218000', 'doctorat', 'mathématique');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `reservation`
---
-
-CREATE TABLE IF NOT EXISTS `reservation` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `room_id` int(11) NOT NULL,
-  `date_from` date NOT NULL,
-  `date_to` date NOT NULL,
-  `status` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_C454C682A76ED395` (`user_id`),
-  KEY `IDX_C454C68254177093` (`room_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
-
---
--- Contenu de la table `reservation`
---
-
-INSERT INTO `reservation` (`id`, `user_id`, `room_id`, `date_from`, `date_to`, `status`) VALUES
-(1, 1, 1, '2014-04-07', '2014-04-11', 'valide'),
-(4, 14, 3, '2014-04-22', '2014-04-25', 'valide'),
-(5, 12, 1, '2014-04-22', '2014-06-19', 'valide'),
-(6, 1, 5, '2014-07-02', '2014-07-02', 'valide'),
-(8, 15, 1, '2014-07-06', '2014-07-06', 'valide');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `rooms`
---
-
-CREATE TABLE IF NOT EXISTS `rooms` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `hotel_id` int(11) NOT NULL,
-  `number` int(11) NOT NULL,
-  `floor` int(11) NOT NULL,
-  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `max` int(11) NOT NULL,
-  `free` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_BD6035923243BB18` (`hotel_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
-
---
--- Contenu de la table `rooms`
---
-
-INSERT INTO `rooms` (`id`, `hotel_id`, `number`, `floor`, `type`, `max`, `free`) VALUES
-(1, 1, 43, 1, 'homme', 5, 2),
-(2, 1, 42, 1, 'homme', 4, 4),
-(3, 2, 203, 2, 'femme', 1, 0),
-(4, 2, 12, 2, 'homme', 4, 4),
-(5, 2, 4, 2, 'homme', 4, 3),
-(7, 2, 101, 1, 'femme', 2, 2),
-(8, 2, 102, 1, 'femme', 2, 2),
-(9, 2, 201, 2, 'femme', 4, 4),
-(10, 2, 202, 2, 'femme', 4, 4);
+INSERT INTO `profile` (`id`, `image_id`, `family_name`, `first_name`, `birthday`, `gender`, `address`, `post_code`, `city`, `contry`, `job`, `tel`, `gsm`, `description`, `website`, `facebook`, `google`, `twitter`, `cin`, `barcode`, `diplome`, `expertise`, `frequence`, `montant`, `method`) VALUES
+(1, 1, 'benaich', 'med', '1992-03-04', 'homme', 'lot charaf n42 salé', 11060, 'rabat', 'maroc', 'web developer', '0644354522', '0532155623', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat.	 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitu sollicitudin ve din venenatis ipsum action.', 'http://fb.com', 'http://fb.com/med.ben', 'http://plus.google.com', 'http://twitter.com/med_benaich', 'AE60561', '936562895', NULL, NULL, 1, 1000, 'Virement'),
+(2, 2, 'abdelilah', 'saif', '1992-12-01', 'homme', 'nice 007 casablaca', 11060, 'casablaca', 'maroc', 'designer', '0644354522', '0532155623', 'heee', 'http://fb.com', 'http://fb.com/med.ben', 'http://plus.google.com', 'http://twitter.com/med_benaich', 'AZ20130', '690254796', NULL, NULL, 3, 1000, 'Virement'),
+(8, 10, 'jeffrey', 'lise', '1990-04-11', 'homme', 'agdal avenue Atlass - Rabat', NULL, 'rabat', NULL, 'designer', NULL, '0532155623', 'I recently released my latest book, which covers the ins and outs of testing in PHP and, more specifically, Laravel.', NULL, NULL, NULL, NULL, 'BH50786', '954674278', NULL, NULL, 1, 1000, 'Virement'),
+(11, 15, 'Chris', 'Brown', '1993-04-12', 'homme', 'nice 007 casablaca', 11060, 'new york', 'usa', 'designer', '0644354555', '0532155623', 'hi', NULL, NULL, NULL, NULL, 'BH28888', '1255723804', NULL, NULL, 1, 1000, 'Virement'),
+(12, 16, 'ely', 'john', '1992-04-18', 'homme', 'lot charaf n42 salé', 1106, 'salé', 'maroc', 'superman', '0622354515', '0541265412', 'hi', NULL, NULL, NULL, NULL, 'AZ20654', '556931090', NULL, NULL, 1, 1000, 'Virement'),
+(14, 18, 'maldan', 'abir', '1990-04-19', 'femme', 'nice 007 casablaca', 25009, 'fez', 'maroc', 'designer', '0644354522', '0541265412', 'abire-nane :)', 'http://fb.com', 'http://fb.com/abir', 'http://plus.google.com', 'http://twitter.com/abir_nane', 'EZ77940', '1111393039', NULL, NULL, 1, 1000, 'Virement'),
+(15, 19, 'el arabi', 'yasser', '1992-06-22', 'homme', 'lot said hajji n1978', 11060, 'salé', 'maroc', 'Prof', '0645981830', '0537654113', NULL, NULL, NULL, NULL, NULL, 'AZ4563', '425282827', 'licence', 'Physique', 1, 1000, 'Virement'),
+(16, 20, 'bougerr', 'hatim', '1991-06-24', 'homme', 'lot said hajji n1978', 15902, 'rabat', 'maroc', 'etudiant', '0645981830', '0537654113', NULL, NULL, NULL, NULL, NULL, 'AE5132', '1019650613', NULL, NULL, 1, 1000, 'Virement'),
+(19, 23, 'el amrani', 'nahid', '1993-07-09', 'femme', 'hay nahda n1956 rabat', 12060, 'rabat', 'maroc', 'webmaster', '0644972133', '0537563215', NULL, NULL, NULL, NULL, NULL, 'AB45635', '749584944', NULL, NULL, 1, 1000, 'Virement'),
+(20, 24, 'el hajji', 'anoire', '1990-07-10', 'homme', 'agdal avenue Atlass - Rabat', 12050, 'rabat', 'maroc', 'Acteur', '0644354522', '0537654113', NULL, NULL, NULL, NULL, NULL, 'AZ20156', '540809317', 'DEUG', 'génie informatique', 1, 1000, 'Virement'),
+(21, 25, 'nadir', 'siham', '1995-07-13', 'femme', 'agdal avenue Atlass - Rabat', 156201, 'rabat', 'maroc', 'designer', '0622354515', '0537654113', 'nothing', NULL, NULL, NULL, NULL, 'AZ20155', '1200811083', 'dut', 'Informatique', 1, 1000, 'Virement'),
+(22, 26, 'aznag', 'salim', '1980-07-14', 'homme', 'nice 007 casablaca', 11103, 'el jadida', 'maroc', 'medecin', '0644972133', '0537563215', NULL, NULL, NULL, NULL, NULL, 'ED4563', '647722108', 'doctorat', 'Medcine', 1, 1000, 'Virement'),
+(23, 27, 'sarah', 'houda', '1993-07-18', 'femme', 'lot tam n788 fez', 154602, 'fez', 'maroc', 'web designer', '0645412462', NULL, 'nothing to say !', NULL, NULL, NULL, NULL, 'AV7850', '270565059', 'master', 'Informatique', 1, 1000, 'Virement'),
+(24, 39, 'Arich', 'sihame', '1990-07-10', 'femme', 'agdal avenue Atlass - Rabat', NULL, 'rabat', 'maroc', 'psychologue', '0645981830', '0532155623', NULL, NULL, NULL, NULL, NULL, 'AS0561', '865662066', 'master', 'autres', 1, 1000, 'Virement'),
+(25, 40, 'Arich', 'houda', '1990-07-10', 'femme', 'agdal avenue Atlass - Rabat', NULL, 'rabat', 'maroc', 'psychologue', '0645981830', '0532155623', NULL, NULL, NULL, NULL, NULL, 'BH8080', '865662089', 'master', 'autres', 1, 1000, 'Virement'),
+(30, 45, 'benaich', 'issam', '1992-04-03', 'homme', NULL, 11050, 'rabat', 'maroc', 'job', '0644354522', '0532155623', NULL, NULL, NULL, NULL, NULL, 'As605121', '729572105', '', '0644354522', 1, 1000, 'Virement'),
+(31, 46, 'nidal', 'affaf', '1994-04-03', 'homme', NULL, 11120, 'casablanca', 'maroc', 'job', '0644354522', '0532155623', NULL, NULL, NULL, NULL, NULL, 'AS605121', '12088015', '', '0644354522', 1, 1000, 'Virement'),
+(50, 65, 'atih', 'issam', '1992-03-04', 'homme', NULL, 11050, 'rabat', 'maroc', 'job', '0644354522', '0532155623', NULL, NULL, NULL, NULL, NULL, 'FR605121', '736496234', '', '0644354522', 1, 1000, 'Virement'),
+(51, 66, 'badili', 'islam', '1994-03-05', 'homme', NULL, 11120, 'casablanca', 'maroc', 'job', '0644354522', '0532155623', NULL, NULL, NULL, NULL, NULL, 'SV65125', '1060641394', '', '0644354522', 1, 1000, 'Virement'),
+(52, 67, 'adili', 'abdo', '1994-03-23', 'homme', NULL, 12500, 'fez', 'maroc', 'designer', '0656254522', '0521855623', NULL, NULL, NULL, NULL, NULL, 'SV5625', '390360619', '', '0656254522', 1, 1000, 'Virement'),
+(60, 75, 'semouni', 'youssef', '1992-11-12', 'homme', 'atyto nasa n245', 221555, 'sefrou', 'maroc', 'pilote', '637546212', '0537562202', NULL, NULL, NULL, NULL, NULL, 'as5122', '923218000', 'doctorat', 'mathématique', 1, 1000, 'Virement');
 
 -- --------------------------------------------------------
 
@@ -951,7 +885,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `profile_id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `locked`, `expired`, `expires_at`, `confirmation_token`, `password_requested_at`, `roles`, `credentials_expired`, `credentials_expire_at`, `created`, `lastActivity`) VALUES
-(1, 1, 'admin', 'admin', 'benaich.med@gmail.com', 'benaich.med@gmail.com', 1, 'i1tqgxrnlb4gwgoc48gck0okck4g80o', 'vxYZkKcA0OIWRwrn5L8cqb8q9IoOT0jXyM6MtuHddozsGAYEsKXwOP85CPLUmWn2ri234KMKeQUUtb530bLvNw==', '2014-07-30 01:07:26', 0, 0, NULL, '65h6wbc7ors4ccc8cw080sc4gk4kkcs848g00wo000k4so04kw', '2014-07-29 10:21:14', 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 0, NULL, '2014-04-06 12:50:31', '2014-07-30 02:40:04'),
+(1, 1, 'admin', 'admin', 'benaich.med@gmail.com', 'benaich.med@gmail.com', 1, 'i1tqgxrnlb4gwgoc48gck0okck4g80o', 'vxYZkKcA0OIWRwrn5L8cqb8q9IoOT0jXyM6MtuHddozsGAYEsKXwOP85CPLUmWn2ri234KMKeQUUtb530bLvNw==', '2014-08-09 23:49:12', 0, 0, NULL, '65h6wbc7ors4ccc8cw080sc4gk4kkcs848g00wo000k4so04kw', '2014-07-29 10:21:14', 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 0, NULL, '2014-04-06 12:50:31', '2014-08-09 23:49:15'),
 (2, 2, 'ben', 'ben', 'benaich@gmail.com', 'benaich@gmail.com', 1, 'm9tlvb01d5w4scc888g0o88wso448wk', 'WsVZ/nZ+K1nZhuyZpn7HWV4w4sx6gpzeMTNlQnBvgViEcOtfrM9L5lP3qER6+emNzbQDSbGSCM0eUJM+9Of/Uw==', '2014-07-06 22:22:30', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 0, NULL, '2014-04-06 12:50:57', '2014-07-06 22:37:02'),
 (8, 8, 'jeffrey', 'jeffrey', 'jefway@yahoo.fr', 'jefway@yahoo.fr', 1, 'clkdz5g0xrcok4k0w84ss404oc888s8', '9lIUx9hVq9Ix6NIcrtZqAZXR0yGCMCKiQf/tiihiMoy47hlgcx3YN4s4miBGwyywXfb/O7lQtjAsS0Om62nHRA==', '2014-07-29 17:15:51', 0, 0, NULL, '9b974arbrkkc08kwwcsg8osscwwog0kok004ogssg0wwgckok', '2014-07-10 23:45:01', 'a:1:{i:0;s:12:"ROLE_MANAGER";}', 0, NULL, '2014-04-11 20:23:02', '2014-07-29 18:10:14'),
 (11, 11, '@chris', '@chris', 'jefway_way@yahoo.fr', 'jefway_way@yahoo.fr', 1, 'tbobjn6qafkc0cgk0w0k4kkc8ssksk8', 'FW5RA2S1j18w4Zs9fZnnaDTMTQ6CCbeFqi+cf345RS4wrHWdPcbZnIv8V3lAJMXsktShYErUYxy3pv17eg5WzA==', '2014-07-29 18:16:12', 0, 0, NULL, '5ktqe48513goskoc0oswc0gs80c00080o8woo80s4k8c4o44kg', '2014-07-29 18:16:27', 'a:0:{}', 0, NULL, '2014-04-12 09:38:36', '2014-07-29 18:14:23'),
@@ -996,17 +930,23 @@ INSERT INTO `user_group` (`user_id`, `group_id`) VALUES
 (1, 2),
 (2, 1),
 (2, 2),
+(2, 39),
 (8, 1),
+(8, 38),
 (11, 1),
 (12, 1),
 (14, 1),
 (14, 30),
+(14, 40),
 (15, 1),
 (15, 2),
+(15, 40),
 (16, 1),
 (19, 1),
 (19, 30),
+(19, 39),
 (20, 1),
+(20, 39),
 (21, 1),
 (21, 30),
 (22, 1),
@@ -1014,9 +954,8 @@ INSERT INTO `user_group` (`user_id`, `group_id`) VALUES
 (23, 30),
 (24, 1),
 (24, 30),
-(25, 1),
 (25, 30),
-(45, 1);
+(45, 40);
 
 --
 -- Contraintes pour les tables exportées
@@ -1067,19 +1006,6 @@ ALTER TABLE `mygroup`
 --
 ALTER TABLE `profile`
   ADD CONSTRAINT `FK_8157AA0F3DA5256D` FOREIGN KEY (`image_id`) REFERENCES `image` (`id`);
-
---
--- Contraintes pour la table `reservation`
---
-ALTER TABLE `reservation`
-  ADD CONSTRAINT `FK_C454C68254177093` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`),
-  ADD CONSTRAINT `FK_C454C682A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
-
---
--- Contraintes pour la table `rooms`
---
-ALTER TABLE `rooms`
-  ADD CONSTRAINT `FK_BD6035923243BB18` FOREIGN KEY (`hotel_id`) REFERENCES `hotels` (`id`);
 
 --
 -- Contraintes pour la table `thread`

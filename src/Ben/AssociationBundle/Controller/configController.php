@@ -96,7 +96,7 @@ class configController extends Controller
         if($request->getMethod() === 'POST'){         
             $config = $request->get('config');
             foreach ($config as $cfg) {
-                $em->getRepository('BenAssociationBundle:fields')->updateFields($cfg);
+                $em->getRepository('BenAssociationBundle:Fields')->updateFields($cfg);
             }
         }
 

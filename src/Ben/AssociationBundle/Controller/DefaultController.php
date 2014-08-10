@@ -21,8 +21,8 @@ class DefaultController extends Controller
         $counter['user'] = $em->getRepository('BenUserBundle:User')->counter();
         $counter['group'] = count($this->container->get('fos_user.group_manager')->findGroups());
         $counter['event'] = $em->getRepository('BenAssociationBundle:event')->counter();
-        $counter['cotisation'] = $em->getRepository('BenAssociationBundle:cotisation')->counter();
-        $counter['status'] = $em->getRepository('BenAssociationBundle:status')->counter();
+        $counter['cotisation'] = $em->getRepository('BenAssociationBundle:Cotisation')->counter();
+        $counter['status'] = $em->getRepository('BenAssociationBundle:Status')->counter();
 
         $stats['status'] = $em->getRepository('BenUserBundle:User')->statsByStatus();
         $stats['city'] = $em->getRepository('BenUserBundle:User')->statsByCity();

@@ -1,9 +1,9 @@
 use benassociation;
 show tables;
 
-select * from cotisation;
-update profile set method = 'Virement' where 1=1;
-select method from profile;
+-- select * from cotisation;
+-- update profile set method = 'Virement' where 1=1;
+-- select method from profile;
 
 
 

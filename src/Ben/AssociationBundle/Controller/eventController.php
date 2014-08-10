@@ -45,7 +45,7 @@ class eventController extends Controller
 
         $entities = $em->getRepository('BenAssociationBundle:event')->search($searchParam);
         $pagination = (new Paginator())->setItems(count($entities), $searchParam['perPage'])->setPage($searchParam['page'])->toArray();
-        return $this->render('BenAssociationBundle:Event:ajax_list.html.twig', array(
+        return $this->render('BenAssociationBundle:event:ajax_list.html.twig', array(
                     'entities' => $entities,
                     'pagination' => $pagination,
                     ));

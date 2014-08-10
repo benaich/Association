@@ -27,6 +27,13 @@ Wkhtmltopdf un outil qui permet de générer des PDF, il est utilisé dans l'app
 # apt-get install wkhtmltopdf
 Âpres l'installation modifier le fichier de configuration app/config/config.yml afin de spécifier le chemin absolue de wkhtmltopdf.
 
+configurer selinux
+yum -y install policycoreutils-python
+grep httpd_t /var/log/audit/audit.log | audit2allow -m httpdlocal > httpd.te
+checkmodule -M -m -o httpdlocal.mod httpd.te
+semodule_package -o httpdlocal.pp -m httpdlocal.mod
+semodule -i httpdlocal.pp
+
 4) Envoyer les fichiers sur le serveur
 -----------------------------------------------
 
@@ -88,4 +95,3 @@ Ensuit vous devez modifier le fichier de configuration app/config/config.yml afi
 -------------------
 
 Placez ensuite le répertoire de l’application dans votre répertoire web (par défaut C:/WAMP/www/ ) et rendez-vous à l’adresse : http://localhost/association/app/check.php
-
