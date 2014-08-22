@@ -189,6 +189,20 @@ class profile
      * @ORM\Column(name="montant", type="float")
      */
     private $montant;
+
+    /**
+     * @var boolean $archived
+     *
+     * @ORM\Column(name="archived", type="boolean")
+     */
+    private $archived;
+
+    /**
+     * @var string $cause
+     *
+     * @ORM\Column(name="cause", type="text", nullable=true)
+     */
+    private $cause;
     
     /**
     * @ORM\OneToOne(targetEntity="Ben\AssociationBundle\Entity\image", cascade={"remove", "persist"})
@@ -204,6 +218,7 @@ class profile
         $this->barcode =  str_pad(mt_rand(0, 9999999999), 6, '0', STR_PAD_LEFT);
         $this->image = new \Ben\AssociationBundle\Entity\image();
         $this->image->setPath("anonymous.jpg");
+        $this->archived =  0;
     }
     
     /************ Les setters et getters ************/
@@ -791,5 +806,52 @@ class profile
     public function getMontant()
     {
         return $this->montant;
+    }
+
+
+    /**
+     * Set boolean
+     *
+     * @param boolean $archived
+     * @return profile
+     */
+    public function setArchived($archived)
+    {
+        $this->archived = $archived;
+    
+        return $this;
+    }
+
+    /**
+     * Get archived
+     *
+     * @return boolean 
+     */
+    public function isArchived()
+    {
+        return $this->archived;
+    }
+
+    /**
+     * Set cause
+     *
+     * @param integer $cause
+     * @return profile
+     */
+    public function setCause($cause)
+    {
+        $this->cause = $cause;
+    
+        return $this;
+    }
+
+    /**
+     * Get cause
+     *
+     * @return string 
+     */
+    public function getCause()
+    {
+        return $this->cause;
     }
 }

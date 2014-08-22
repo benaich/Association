@@ -24,22 +24,9 @@ class DefaultController extends Controller
         $counter['cotisation'] = $em->getRepository('BenAssociationBundle:Cotisation')->counter();
         $counter['status'] = $em->getRepository('BenAssociationBundle:Status')->counter();
 
-        $stats['status'] = $em->getRepository('BenUserBundle:User')->statsByStatus();
-        $stats['city'] = $em->getRepository('BenUserBundle:User')->statsByCity();
-        $total = 0;
-        foreach ($stats['city'] as $obj) {
-            $total += $obj['data'];
-        }
-
-        $stats['city'] = array_map(function($obj) use ($total){
-            $obj['percentage'] = $obj['data'] * 100 / $total;
-            return $obj;
-        }, $stats['city']);
-        
         $groups = $em->getRepository('BenUserBundle:Group')->findByType(Group::$COMMISSION);
         return $this->render('BenAssociationBundle:Default:index.html.twig', array(
                 'groups' => $groups,
-                'stats' => $stats,
                 'counter' => $counter));
     }
 
@@ -50,8 +37,8 @@ class DefaultController extends Controller
     public function inmportFromCsvAction(Request $request)
     {
         $form = $this->createFormBuilder()
-        ->add('submitFile', 'file')
-        ->getForm();
+            ->add('submitFile', 'file')
+            ->getForm();
 
         if ($request->getMethod('post') == 'POST') {
             $form->bindRequest($request);
@@ -89,4 +76,61 @@ class DefaultController extends Controller
             array('form' => $form->createView(),)
         );
     }
+
+    /**
+     * @Secure(roles="ROLE_MANAGER")
+     */
+    public function statsAction()
+    {
+        $statsHandler = $this->get('ben.stats_handler');
+
+        $stats['city'] = $statsHandler->setDataColumn('city')->processData();
+        $stats['gender'] = $statsHandler->setDataColumn('gender')->processData();
+        $stats['status'] = $statsHandler->setDataColumn('status')->processData();
+        $stats['created'] = $statsHandler->setDataColumn('created')->processData();
+        $stats['created'] = array_map(function($item){
+                return array((new \DateTime($item['x']))->getTimestamp()*1000, 0+$item['y']);
+            }, $stats['created']);
+        
+        $stats['revenu'] = $statsHandler->setDataColumn('revenu')->processData();
+        $stats['revenu'] = array_map(function($item){
+                return array((new \DateTime($item['x']))->getTimestamp()*1000, 0+$item['y']);
+            }, $stats['revenu']);
+
+        $cot = $statsHandler->setDataColumn('cotisation')->processData();
+        $stats['cotisation'] = array(
+                array('label' => 'A jour', 'data' => $cot['yes'], 'color' => '#93b40f'),
+                array('label' => 'En retard', 'data' => $cot['no'], 'color' => '#e1ab0b'),
+                array('label' => 'N\'a jamais cotisé', 'data' => $cot['never'], 'color' => '#b94a48')
+                );
+        // var_dump($stats);die;
+
+
+        $em = $this->getDoctrine()->getManager();
+        $status = $em->getRepository('BenAssociationBundle:Status')->findAll();
+        $groups = $em->getRepository('BenUserBundle:Group')->findAll();
+        return $this->render('BenAssociationBundle:Default:stats.html.twig', array(
+            'status' => $status,
+            'groups' => $groups,
+            'stats' => $stats));
+    }
+
+    /**
+     * @Secure(roles="ROLE_MANAGER")
+     */
+    public function jsonStatsAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $searchParam = $request->get('searchParam');
+        $all = $em->getRepository('BenUserBundle:User')->counter();
+        $result = $em->getRepository('BenUserBundle:User')->counter(0, $searchParam);
+        $response = new Response(json_encode(array(
+                array('label' => $searchParam['label'], 'data' => $result, 'color' => '#058dc7'),
+                array('label' => 'Autres', 'data' => ($all-$result), 'color' => '#E9E9E9')
+                )));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
 }

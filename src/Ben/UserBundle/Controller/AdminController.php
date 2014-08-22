@@ -51,6 +51,22 @@ class AdminController extends Controller
     }
 
     /**
+     * la page des adhérants archive
+     * @Secure(roles="ROLE_MANAGER")
+     */
+    public function archiveAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $groups = $em->getRepository('BenUserBundle:Group')->findAll();
+        $status = $em->getRepository('BenAssociationBundle:Status')->findAll();
+        $entitiesLength = $em->getRepository('BenUserBundle:User')->counter(1);
+        return $this->render('BenUserBundle:admin:archive.html.twig', array(
+                'groups' => $groups,
+                'status' => $status,
+                'entitiesLength' => $entitiesLength));
+    }
+
+    /**
      * formulaire d'ajout d'un adhérant
      * @Secure(roles="ROLE_MANAGER")
      */
@@ -240,6 +256,25 @@ class AdminController extends Controller
         }
         return new Response('supression effectué avec succès');
     } 
+
+    /**
+     * archiver les adhérants sélectionnés - ajax
+     * @Secure(roles="ROLE_MANAGER")
+     */
+    public function setArchiveAction(Request $request, $stat)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('BenUserBundle:User')->search(array('ids'=>$request->get('users')));
+        $cause = $request->get('cause');
+        foreach( $entities as $entity){
+            $profile = $entity->getProfile();
+            $profile->setArchived($stat);
+            $profile->setCause($cause);
+            $em->persist($profile);
+        }
+        $em->flush();
+        return new Response('10');
+    }
 
     /**
      * activer ou désactiver les adhérants sélectionnés - ajax

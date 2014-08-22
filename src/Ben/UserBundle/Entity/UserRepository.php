@@ -9,6 +9,7 @@ class UserRepository extends EntityRepository
 {
     /* advanced search */
     public function search($searchParam) {
+        // var_dump($searchParam);die;
         extract($searchParam);        
         $qb = $this->createQueryBuilder('u')
                 ->leftJoin('u.profile', 'p')
@@ -34,14 +35,18 @@ class UserRepository extends EntityRepository
             $qb->andWhere('p.barcode = :barcode')->setParameter('barcode', $barcode);
         if(!empty($gender))
             $qb->andWhere('p.gender = :gender')->setParameter('gender', $gender);
-        if(!empty($status))
-            $qb->andWhere('status.id = :status')->setParameter('status', $status);
+            if(!empty($group))
+                $qb->andWhere('g.id = :group')->setParameter('group', $group);
         if(!empty($date_from))
             $qb->andWhere('p.birthday > :date_from')->setParameter('date_from', $date_from);
         if(!empty($date_to))
             $qb->andWhere('p.birthday < :date_to')->setParameter('date_to', $date_to);
+        if(!empty($status))
+            $qb->andWhere('status.id = :status')->setParameter('status', $status);
         if(!empty($city))
             $qb->andWhere('p.city = :city')->setParameter('city', $city);
+        if(isset($archive))
+            $qb->andWhere('p.archived = :archive')->setParameter('archive', $archive);
         if(!empty($cotisation)){            
             $qb2 = $this->_em->createQueryBuilder()
                 ->select('usr.id')
@@ -122,29 +127,73 @@ class UserRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function counter() {
-        $qb = $this->createQueryBuilder('u')->select('COUNT(u)');
+    public function counter($archive = 0, $searchParam = NULL) {
+        $qb = $this->createQueryBuilder('u')->select('COUNT(u)')
+                ->leftJoin('u.profile', 'p')
+                ->andWhere('p.archived = :archive')->setParameter('archive', $archive);
+        if(isset($searchParam)){
+            extract($searchParam);
+            if(!empty($group))
+                $qb->leftJoin('u.groups', 'g')->andWhere('g.id = :group')->setParameter('group', $group);
+            if(!empty($status))
+                $qb->leftJoin('u.avancements', 'av')->leftJoin('av.status', 'status')->andWhere('status.id = :status')->setParameter('status', $status);
+            if(!empty($city))
+                $qb->andWhere('p.city = :city')->setParameter('city', $city);
+            if(!empty($gender))
+                $qb->andWhere('p.gender = :gender')->setParameter('gender', $gender);
+            if(!empty($age)){
+                $age = explode("-",$age);
+                $qb->andWhere('DATEDIFF(Cast(CURRENT_DATE() as Date), Cast(p.birthday as Date)) between :from and :to ')
+                ->setParameter('from', $age[0] * 365)
+                ->setParameter('to', $age[1] * 365);
+            }
+        }
         return $qb->getQuery()->getSingleScalarResult();
     }
 
     public function statsByStatus()
     {
-        $query = 'select s.name as label, count(*) as data from user u
-        left join avancement a on a.user_id = u.id
-        left join status s on s.id = a.status_id
-        group by s.id;';
-
-        $stmt = $this->getEntityManager()->getConnection()->prepare($query);
-        $stmt->execute();
-        return  $stmt->fetchAll();
+        return  $this->fetch('select s.name as label, count(*) as data from user u
+            left join avancement a on a.user_id = u.id
+            left join status s on s.id = a.status_id
+            group by s.id');
     }
 
     public function statsByCity()
     {
-        $query = 'select city , count(*) as data from user u
-        left join profile p on p.id = u.profile_id
-        group by city;';
+        return  $this->fetch('select city as label, count(*) as data from profile p group by city');
+    }
 
+    public function statsByGender()
+    {
+        return  $this->fetch('select gender as label, count(*) as data from profile group by gender');
+    }
+
+    public function statsByCotisation()
+    {
+        return  $this->fetch('select * from 
+            (select count(*) as yes from (select u.id from user u  LEFT JOIN cotisation c on c.user_id = u.id  group by user_id having DATEDIFF(max(c.date_to), CURRENT_DATE()) >= 0) A) A,
+            (select count(*) as no from (select u.id from user u  LEFT JOIN cotisation c on c.user_id = u.id  group by user_id having DATEDIFF(max(c.date_to), CURRENT_DATE()) < 0) A) B,
+            (select count(*) as never from user u left join cotisation c on c.user_id = u.id where c.id is NULL) C')[0];
+    }
+
+    public function statsByCreated()
+    {
+        return  $this->fetch('select DATE(created) as x ,COUNT(id) as y from user group by x order by x');
+    }
+
+    public function statsByAge()
+    {
+        return  $this->fetch('select DATE(created) as x ,sum(price) as y from cotisation group by x order by x');
+    }
+
+    public function statsByRevenu()
+    {
+        return  $this->fetch('select DATE(created) as x ,sum(price) as y from cotisation group by x order by x');
+    }
+
+    private function fetch($query)
+    {
         $stmt = $this->getEntityManager()->getConnection()->prepare($query);
         $stmt->execute();
         return  $stmt->fetchAll();

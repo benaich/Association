@@ -213,7 +213,7 @@ class CotisationController extends Controller
         }
 
         $this->get('session')->getFlashBag()->add('success', "ben.flash.success.contribution.deleted");
-        return $this->redirect($this->generateUrl('cotisation'));
+        return $this->redirect($this->generateUrl('cotisation_new', array('id' => $entity->getUser()->getId())));
     }
 
     private function createDeleteForm($id)

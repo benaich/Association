@@ -3,11 +3,11 @@
 {{'user.title.main'|trans}} | {{ parent() }}
 {% endblock %}
 {% block body %}
-<a class="btn btn-inverse pull-right btn-sm" href="{{ path('ben_archive')}}"> {{'user.title.archive'|trans}} <span class="fui-arrow-right"></span></a>
-<h2><span class="fui-user"></span> {{'user.title.main'|trans}}</h2>
+<a class="btn btn-inverse pull-right btn-sm" href="{{ path('ben_users')}}"> {{'user.title.main'|trans}} <span class="fui-arrow-right"></span></a>
+<h2><span class="fui-user"></span> {{'user.title.archive'|trans}}</h2>
         <form  id="jsForm" role="form" method="post" action="">
           <input id="pagenumber" type="hidden" name="searchParam[page]" value="1"> 
-          <input type="hidden" name="searchParam[archive]" value="0"> 
+          <input type="hidden" name="searchParam[archive]" value="1"> 
           <input id="sortBy" type="hidden" name="searchParam[sortBy]"> 
           <input id="sortDir" type="hidden" name="searchParam[sortDir]"> 
             <div class="row hidden-print">
@@ -29,29 +29,15 @@
                   </button>
                   <span class="dropdown-arrow dropdown-arrow-inverse"></span>
                   <ul class="dropdown-menu dropdown-inverse">
-                    <li><a href="{{ path('ben_new_user') }}"><span class="fui-plus"></span> {{'user.action.new'|trans}}</a></li>
-                    {% if is_granted("ROLE_ADMIN") %}
-                    <li><a href="#" class="js-enable" data-action="1"><span class="fui-check"></span> {{'ben.action.enable'|trans}}</a></li>
-                    <li><a href="#" class="js-enable" data-action="0"><span class="glyphicon glyphicon-ban-circle"></span> {{'ben.action.disable'|trans}}</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#" class="js-promote" data-action="admin"><span class="fui-user text-warning"></span> {{'user.action.promote.admin'|trans}}</a></li>
-                    <li><a href="#" class="js-promote" data-action="manager"><span class="fui-user text-success"></span> {{'user.action.promote.manager'|trans}}</a></li>
-                    <li><a href="#" class="js-promote" data-action="user"><span class="fui-user"></span> {{'user.action.promote.user'|trans}}</a></li>
-                    <li><a href="#" data-toggle="modal" data-target="#groupModal"><span class="glyphicon glyphicon-pushpin"></span> {{'user.action.group'|trans}}</a></li>
-                    {% endif %}
-                    <li class="divider"></li>
-                    <li><a href="#" id="js-badge"><span class="fui-credit-card"></span> {{'user.action.carte.show'|trans}}</a></li>
-                    <li><a href="#" id="js-tiquet"><span class="fui-tag"></span> {{'user.action.tiquet'|trans}}</a></li>
-                    <li class="divider"></li>
                     <li><a href="#" id="js-mail"><span class="glyphicon glyphicon-envelope"></span> {{'message.action.mail'|trans}}</a></li>
                     <li><a href="#" id="js-sms"><span class="glyphicon glyphicon-comment"></span> {{'ben.action.sms'|trans}}</a></li>
                     <li><a href="{{ path('ben_users_export') }}"><span class="glyphicon glyphicon-export"></span> {{'ben.action.tocsv'|trans}}</a></li>
                     <li><a href="{{ path('ben_export_xml') }}"><span class="glyphicon glyphicon-export"></span> {{'ben.action.toxml'|trans}}</a></li>
                     <li><a href="{{ path('ben_export_excel') }}"><span class="glyphicon glyphicon-export"></span> {{'ben.action.toexcel'|trans}}</a></li>
-                    <li><a href="{{ path('ben_import_csv') }}"><span class="glyphicon glyphicon-import"></span> {{'ben.action.import'|trans}}</a></li>
                     {% if is_granted("ROLE_ADMIN") %}
                     <li class="divider"></li>
-                    <li><a href="#" data-toggle="modal" data-target="#confirmationModal"><span class="glyphicon glyphicon-trash"></span> {{'ben.action.delete'|trans}}</a></li>
+                    <li><a href="#" id="js-restore"><span class="fui-check"></span> {{'ben.action.restore'|trans}}</a></li>
+                    <li><a href="#" id="js-delete"><span class="glyphicon glyphicon-trash"></span> {{'ben.action.delete'|trans}}</a></li>
                     {% endif %}
                   </ul>
                 </div>
@@ -62,15 +48,11 @@
                 <thead>
                     <tr>
                         <th><label class="checkbox no-label toggle-all" for="checkbox-table-1"><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><span class="icons"><span class="first-icon fui-checkbox-unchecked"></span><span class="second-icon fui-checkbox-checked"></span></span><input type="checkbox" value="" id="checkbox-table-1" data-toggle="checkbox"></label></th>
-                        {% for item in app_config.userTable %}
-                          {% if item.visible %}
-                          {% if item.fieldName in ['firstname','birthday','familyname'] %}
-                          <th class="sortable"><a href="#" class="js-sort" data-order="{{ item.fieldname }}">{{ item.nicename }}<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
-                          {% else %}
-                          <th>{{ item.nicename }}</th>
-                          {% endif %}
-                          {% endif %}
-                        {% endfor %}
+                        <th>Identifiant</th>
+                        <th class="sortable"><a href="#" class="js-sort" data-order="familyname">Nom<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
+                        <th class="sortable"><a href="#" class="js-sort" data-order="firstname">Prénom<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
+                        <th>Cin</th>
+                        <th>Remarque</th>
                         <th>{{'ben.meta.actions'|trans}}</th>
                     </tr>
                 </thead>
@@ -149,6 +131,7 @@
           dataContainer = form.find('#dataContainer');
           promoteBtn = form.find('.js-promote'),
           deleteBtn = form.find('#js-delete'),
+          restoreBtn = form.find('#js-restore'),
           groupInput = form.find('#js-group'),
           groupSetBtnt = form.find('#js-group-set'),
           pageInput = form.find('#pagenumber'),
@@ -162,7 +145,6 @@
           filterGroupBtn = form.find('#js-filter-group'),
           searchModal = form.find('#searchModal'),
           groupModal = form.find('#groupModal'),
-          confirmationModal = form.find('#confirmationModal'),
           callModal = form.find('#callModal'),
           mailModal = form.find('#mailModal'),
           mailBtn = form.find('#js-mail'),
@@ -205,24 +187,6 @@
         }
       });
 
-
-
-      /* print badge */    
-      printBadgeBtn.on('click', function(){
-          var url = '{{ path('ben_pdf', {'users': 1111 }) }}',
-              users = getCheckedRows();
-          users = (users==='')? 'all':users; 
-          url = url.replace("1111", users);
-          window.location.href = url;
-      });
-      printTiquetBtn.on('click', function(){
-          var url = '{{ path('ben_ticket_user', {'users': 1111 }) }}',
-              users = getCheckedRows();
-          users = (users==='')? 'all':users; 
-          url = url.replace("1111", users);
-          window.location.href = url;
-      });
-
       /* pagination */    
       form.on('click', '.js-page', function(){
           pageInput.val($(this).data('page'));
@@ -254,22 +218,20 @@
         return false;
       });
 
-      /* promote a user */
-      promoteBtn.on('click', function(){
-        var url='{{ path('ben_promote_users', {'role': 1111 }) }}',
-            etat = $(this).data('action');
-        if (!isSelected()) return false;
-        jsFormUrl = url.replace("1111", etat);
-        ajaxPost('promote');
+
+      /* restore a user */
+      restoreBtn.on('click', function(){
+        jsFormUrl='{{ path('ben_archive_set', {stat: 0}) }}';
+        ajaxPost('restore');
       });
 
       /* delete a user */
       deleteBtn.on('click', function(){
-        // if (!isSelected() || !confirmation('voullez-vous vraiment supprimer les adhérants séléctionnées')) return false;
-        jsFormUrl='{{ path('ben_archive_set', {stat: 1}) }}';
+        if (!isSelected() || !confirmation('voullez-vous vraiment supprimer les adhérants séléctionnées')) return false;
+        jsFormUrl='{{ path('ben_remove_users') }}';
         ajaxPost('delete');
-        confirmationModal.modal('hide');
       });
+
       form.on('submit', ajaxPost);
       /* submit the form after loading the page*/
       init();
@@ -369,4 +331,3 @@
     })(jQuery);
 </script>
 {% endblock %}
-

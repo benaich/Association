@@ -1,0 +1,198 @@
+{% extends "BenAssociationBundle::layout.html.twig" %}
+{% block title %}
+{{'ben.menu.dashboard'|trans}} | {{ parent() }}
+{% endblock %}
+
+
+ {% block stylesheet %}
+ 	{{ parent() }}
+    <link href="{{ asset('css/graph.css') }}" rel="stylesheet"><!-- Loading my css -->
+    {# <link href="{{ asset('css/stats.css') }}" rel="stylesheet"><!-- Loading my css --> #}
+ {% endblock %}
+
+{% block body %}
+<h2 style="margin-bottom: 5px;"><span class="glyphicon glyphicon-stats"></span> Statistiques</h2>			
+<div class="row">
+	<div class="col-md-12">
+		<div class="box widget-body">
+	        <header>
+	        	<h3>Statistiques des adhérants inscrits
+	        	<i class="js-toggle pull-right glyphicon glyphicon-chevron-up"></i></h3>
+	        </header>
+			<div class="stats-warper">
+				<div id="createdstats" class="graph"></div>
+				<div class="clearfix"></div>
+			</div>
+	    </div>
+		<div class="box widget-body">
+	        <header>
+	        	<h3>Statistiques des adhérants inscrits
+	        	<i class="js-toggle pull-right glyphicon glyphicon-chevron-up"></i></h3>
+	        </header>
+			<div class="stats-warper">
+				<div id="revenustats" class="graph"></div>
+				<div class="clearfix"></div>
+			</div>
+	    </div>
+	</div>
+	<div class="col-md-6">
+		<div class="box widget-body">
+	        <header>
+	        	<h3>Statistiques par ville
+	        	<i class="js-toggle pull-right glyphicon glyphicon-chevron-up"></i></h3>
+	        </header>
+			<div class="stats-warper">
+				<div id="statsbycity" class="graph"></div>
+				<div class="clearfix"></div>
+			</div>
+	    </div>
+		<div class="box widget-body">
+	        <header>
+	        	<h3>Statistiques par status
+	        	<i class="js-toggle pull-right glyphicon glyphicon-chevron-up"></i></h3>
+	        </header>
+			<div class="stats-warper">
+				<div id="statsbystatus" class="graph"></div>
+				<div class="clearfix"></div>
+			</div>
+	    </div>
+	</div>
+	<div class="col-md-6">
+		<div class="box widget-body">
+	        <header>
+	        	<h3>Statistiques par cotisation
+	        	<i class="js-toggle pull-right glyphicon glyphicon-chevron-up"></i></h3>
+	        </header>
+			<div class="stats-warper">
+				<div id="statsbycotisation" class="graph"></div>
+				<div class="clearfix"></div>
+			</div>
+	    </div>
+		<div class="box widget-body">
+	        <header>
+	        	<h3>Statistiques par sexe
+	        	<i class="js-toggle pull-right glyphicon glyphicon-chevron-up"></i></h3>
+	        </header>
+			<div class="stats-warper">
+				<div id="statsbygender" class="graph"></div>
+				<div class="clearfix"></div>
+			</div>
+	    </div>
+	</div>
+	<div class="col-md-12">
+				
+		<div class="box widget-body">
+	        <header>
+	        	<h3> Autres statistiques
+	        	<i class="js-toggle pull-right glyphicon glyphicon-chevron-up glyphicon-chevron-down"></i></h3>
+	        </header>
+			<div class="stats-warper hideme">
+			<div class="row">
+				<div class="col-md-4">
+					<form id="jsForm" action="{{ path('ben_stats_json') }}" class="well">
+						<div class="">
+				            <label for="" class="control-label">label</label>
+				            <div class="form-group ">
+				              <input type="text" name="searchParam[label]" class="form-control">
+				            </div>
+				        </div>
+						<div class="">
+				            <label for="" class="control-label">age</label>
+				            <div class="form-group ">
+				              <input type="text" name="searchParam[age]" class="form-control">
+				            </div>
+				        </div>
+						<div class="">
+				            <label for="" class="control-label">Sexe</label>
+				            <div class="">
+				              <select name="searchParam[gender]" class="primary select-block">
+				                <option value=""></option>
+				                <option value="homme">{{ 'user.meta.man'|trans }}</option>
+				                <option value="femme">{{ 'user.meta.woman'|trans }}</option>
+				              </select>
+				            </div>
+				        </div>
+						<div class="">
+				            <label for="" class="control-label">Groupe</label>
+				            <div class="">
+				              <select name="searchParam[group]" class="primary select-block">
+				                <option value="0"></option>
+				                {% for entity in groups %}
+				                <option value="{{ entity.id }}">{{ entity.name }}</option>
+				                {% endfor %}
+				            </div>
+				        </div>
+						<div class="">
+				            <label for="" class="control-label">status</label>
+				            <div class="">
+				              <select name="searchParam[status]" class="primary select-block">
+				                <option value="0"></option>
+				                {% for entity in status %}
+				                <option value="{{ entity.id }}">{{ entity.name }}</option>
+				                {% endfor %}
+				            </div>
+				        </div>
+						<div class="">
+				            <label for="" class="control-label">Ville</label>
+				            <div class="form-group ">
+				              <input type="text" name="searchParam[city]" class="form-control">
+				            </div>
+				        </div>
+				        <button type="submit" class="btn btn-primary btn-embossed btn-block"><span class="glyphicon glyphicon-edit"></span> {{'ben.action.send'|trans}}</button>
+					</form>
+				</div>
+				<div class="col-md-8">
+					<div id="configstats" class="graph"></div>
+				</div>
+			</div>
+				<div class="clearfix"></div>
+			</div>
+	    </div>
+	</div>
+</div>
+
+<div class="col-md-6">
+	<!-- Graph HTML -->
+<div id="graph-wrapper">
+	<div id="statChartFlotLineA"></div>
+</div>
+<!-- end Graph HTML -->
+</div>
+
+
+<div class="clearfix"></div>
+{% endblock body %}
+
+{% block javascripts %}
+{{ parent() }}
+
+    <script src="{{ asset('js/flot/jquery.flot.min.js') }}"></script>
+    <script src="{{ asset('js/flot/jquery.flot.pie.min.js') }}"></script>
+    <script src="{{ asset('js/flot/jquery.flot.time.js') }}"></script>
+    <script src="{{ asset('js/flot/flot.tooltip.js') }}"></script>
+
+<script> 
+    window.data = {
+    		city: {{ stats.city|json_encode|raw }},
+    		status: {{ stats.status|json_encode|raw }},
+    		gender: {{ stats.gender|json_encode|raw }},
+    		cotisation: {{ stats.cotisation|json_encode|raw }},
+    		created: [
+    		{
+    			data: {{ stats.created|json_encode|raw }},
+    			color: '#058dc7',
+    			label: 'Nombre d\'adéhrants'
+    		}
+    		],
+    		revenu: [
+    		{
+    			data: {{ stats.revenu|json_encode|raw }},
+    			color: '#058dc7',
+    			label: 'Revenus de l\'association'
+    		}
+    		]
+    	};
+
+</script>
+    <script src="{{ asset('js/stats.js') }}"></script>
+{% endblock %}

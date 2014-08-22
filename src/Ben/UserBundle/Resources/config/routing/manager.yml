@@ -1,9 +1,3 @@
-contact:
-    pattern:   /{_locale}/contact
-    defaults:  { _controller: AcmeDemoBundle:Contact:index, _locale: en }
-    requirements:
-        _locale: en|fr|de
-
 ben_users_public:
     pattern:  /public/{perPage}
     defaults: { _controller: BenUserBundle:Admin:public, perPage: 10}
@@ -15,6 +9,15 @@ ben_users:
 ben_users_ajax:
     pattern:  /userslist
     defaults: { _controller: BenUserBundle:Admin:ajaxList }
+    requirements: { _method: post }
+
+ben_archive:
+    pattern:  /archive
+    defaults: { _controller: BenUserBundle:Admin:archive }
+
+ben_archive_set:
+    pattern:  /archive/set/{stat}
+    defaults: { _controller: BenUserBundle:Admin:setArchive }
     requirements: { _method: post }
 
 ben_show_user:

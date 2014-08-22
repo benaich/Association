@@ -1,15 +1,13 @@
 use benassociation;
-show tables;
+-- show tables;
 
--- select * from cotisation;
--- update profile set method = 'Virement' where 1=1;
--- select method from profile;
+-- select DATE(created) as x ,sum(price) as y from cotisation group by x order by x;
 
+-- select cin, cause, archived from profile;
 
+SELECT  ROUND(DATEDIFF(Cast(NOW() as Date), Cast(birthday as Date)) / 365, 0) as age from profile;
 
-
-
-
+select count(*) from profile where DATEDIFF(Cast(NOW() as Date), Cast(birthday as Date)) / 365 between 19 and 20 ;
 
 
 
@@ -18,6 +16,17 @@ show tables;
 
 
 
+
+
+
+
+
+
+
+
+-- select gender , count(*) as data from profile group by gender;
+
+-- select created from user;
 
 
 -- insert into config(the_key, the_value) values('app_theme', 'theme1');
@@ -69,3 +78,20 @@ show tables;
 -- ;
 -- select id from (select user_id as id, DATEDIFF(max(date_to), CURRENT_DATE()) days from cotisation group by user_id having days < 0 )A ;
 -- select u.id from user u  LEFT JOIN cotisation c on c.user_id = u.id  group by user_id having DATEDIFF(max(c.date_to), CURRENT_DATE()) >= 0 ; 
+
+
+-- select user_id as id, DATEDIFF(max(date_to), CURRENT_DATE()) days from cotisation group by user_id having days < 0 ;
+-- select count(*) as id from cotisation c having  DATEDIFF(max(c.date_to), CURRENT_DATE()) >= 0 ;
+-- select count(*) as ids from cotisation c having  DATEDIFF(max(c.date_to), CURRENT_DATE()) < 0 ;
+-- select count(*) from user;
+-- select count(*) from cotisation group by user_id;
+
+-- select count(*) from user;
+-- select u.id from user u  LEFT JOIN cotisation c on c.user_id = u.id 
+-- where u.id in (select id from (select user_id id, DATEDIFF(max(date_to), CURRENT_DATE()) days from cotisation group by user_id)A where A.days < 0)
+
+-- select * from 
+-- (select count(*) as yes from (select u.id from user u  LEFT JOIN cotisation c on c.user_id = u.id  group by user_id having DATEDIFF(max(c.date_to), CURRENT_DATE()) >= 0) A) A,
+-- (select count(*) as no from (select u.id from user u  LEFT JOIN cotisation c on c.user_id = u.id  group by user_id having DATEDIFF(max(c.date_to), CURRENT_DATE()) < 0) A) B,
+-- (select count(*) as never from user u left join cotisation c on c.user_id = u.id where c.id is NULL) C;
+

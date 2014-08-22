@@ -12,3 +12,6 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
         - { name: twig.extension }
+    ben.stats_handler:
+        class: Ben\AssociationBundle\Stats\StatsHandler
+        arguments: ["@doctrine.orm.entity_manager"]

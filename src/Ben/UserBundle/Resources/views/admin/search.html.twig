@@ -237,3 +237,24 @@
     </div>
   </div>
 </div>
+
+<!-- confirmation modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close fui-cross" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="confirmationModalLabel">Raison du reject</h4>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <div class="form-group">
+              <textarea rows="3" name="cause" placeholder="raison du reject..." class="form-control"></textarea>
+            </div>
+          </div>
+          <button id="js-delete" type="button" class="btn btn-primary btn-block">{{ 'ben.action.send'|trans }}</button>
+          <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>

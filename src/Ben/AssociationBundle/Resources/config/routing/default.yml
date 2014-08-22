@@ -5,3 +5,12 @@ Ben_association_homepage:
 ben_import_csv:
     pattern:  /import/csv
     defaults: { _controller: BenAssociationBundle:Default:inmportFromCsv }
+
+ben_stats:
+    pattern:  /stats
+    defaults: { _controller: BenAssociationBundle:Default:stats }
+
+ben_stats_json:
+    pattern:  /stats/json
+    defaults: { _controller: BenAssociationBundle:Default:jsonStats }
+    requirements: { _method: post }

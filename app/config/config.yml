@@ -53,6 +53,10 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+        dql:
+            datetime_functions:
+                DATEDIFF: Ben\UserBundle\DQL\DateDiff 
+                Cast: Ben\UserBundle\DQL\Cast 
 
 # Swiftmailer Configuration
 swiftmailer:

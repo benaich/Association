@@ -751,7 +751,7 @@ height: 400px;
 float: left;
 }
 .stats-warper{
-	padding: 5px;
+	padding: 10px;
 	border: 1px solid gainsboro;
 	background: white;
 }
@@ -799,3 +799,9 @@ span.month.active{
 }
 .scrolldiv .table{margin: 0;}
 /*.scrolldiv .tr:last-child{border-width: 0;}*/
+.legendLabel{padding-left: 5px;}
+
+#flotTip{
+	border: 1px solid rgb(197, 197, 197)!important;
+	border-radius: 2px!important;
+}

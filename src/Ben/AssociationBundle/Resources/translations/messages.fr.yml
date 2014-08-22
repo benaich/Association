@@ -57,6 +57,7 @@ user:
         main: Gestion des membres
         profile: Profile
         user: utilisateur
+        archive: Archive
     meta:
         identity: Identité
         name: Adhérent
@@ -202,6 +203,7 @@ ben:
         show: afficher
         edit: Mettre à jour
         delete: Supprimer
+        restore: rétaurer
         empty:
             history: Supprimer l'historique
         valide: Valider
