@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.1
+-- version 4.1.14
 -- http://www.phpmyadmin.net
 --
--- Client: localhost
--- Généré le: Dim 10 Août 2014 à 14:44
--- Version du serveur: 5.5.24-log
--- Version de PHP: 5.4.3
+-- Client :  127.0.0.1
+-- Généré le :  Sam 30 Août 2014 à 00:54
+-- Version du serveur :  5.6.17
+-- Version de PHP :  5.5.12
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -17,10 +17,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données: `benassociation`
+-- Base de données :  `benassociation`
 --
-CREATE DATABASE `benassociation` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `benassociation`;
 
 -- --------------------------------------------------------
 
@@ -37,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `activity_log` (
   `date` datetime NOT NULL,
   `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=210 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=215 ;
 
 --
 -- Contenu de la table `activity_log`
@@ -98,7 +96,12 @@ INSERT INTO `activity_log` (`id`, `classname`, `entity_id`, `user`, `message`, `
 (206, 'Ben\\UserBundle\\Entity\\User', 8, 1, 'cotisation', '2014-08-09 20:52:34', 'mail'),
 (207, 'Ben\\UserBundle\\Entity\\User', 8, 1, 'cotisation', '2014-08-09 20:54:15', 'mail'),
 (208, 'Ben\\UserBundle\\Entity\\User', 8, 1, 'cotisation', '2014-08-09 20:57:13', 'mail'),
-(209, 'Ben\\UserBundle\\Entity\\User', 8, 1, 'cotisation', '2014-08-09 21:04:27', 'Lettre');
+(209, 'Ben\\UserBundle\\Entity\\User', 8, 1, 'cotisation', '2014-08-09 21:04:27', 'Lettre'),
+(210, 'Ben\\UserBundle\\Entity\\User', 15, 1, 'cotisation', '2014-08-12 09:23:00', 'Lettre'),
+(211, 'Ben\\UserBundle\\Entity\\User', 15, 1, 'cotisation', '2014-08-12 09:32:26', 'Lettre'),
+(212, 'Ben\\UserBundle\\Entity\\User', 1, 1, 'cotisation', '2014-08-12 09:56:38', 'mail'),
+(213, 'Ben\\UserBundle\\Entity\\User', 1, 1, 'cotisation', '2014-08-12 09:56:54', 'Lettre'),
+(214, 'Ben\\UserBundle\\Entity\\User', 1, 1, 'cotisation', '2014-08-15 10:06:21', 'Lettre');
 
 -- --------------------------------------------------------
 
@@ -138,7 +141,6 @@ INSERT INTO `avancement` (`id`, `user_id`, `status_id`, `date_from`, `date_to`, 
 (15, 22, 4, '2014-07-30', '2015-07-30', 'rabat'),
 (16, 23, 4, '2014-07-30', '2014-07-30', 'rabat'),
 (17, 28, 5, '2014-07-30', '2014-07-30', 'rabat'),
-(18, 42, 9, '2014-07-30', '2014-07-30', 'agadir'),
 (19, 41, 4, '2014-07-30', '2015-07-30', 'agadir'),
 (20, 24, 8, '2014-07-30', '2014-07-30', 'agadir'),
 (21, 29, 3, '2014-07-30', '2014-07-30', 'oujda'),
@@ -216,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `cotisation` (
   `created` date NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_E139D13DA76ED395` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=43 ;
 
 --
 -- Contenu de la table `cotisation`
@@ -224,7 +226,6 @@ CREATE TABLE IF NOT EXISTS `cotisation` (
 
 INSERT INTO `cotisation` (`id`, `user_id`, `price`, `type`, `date_from`, `date_to`, `description`, `created`) VALUES
 (2, 8, 1200, 'Chèque', '2010-07-09', '2011-07-09', 'Fiche contribution', '2014-07-24'),
-(3, 14, 2500, 'Chèque', '2014-07-09', '2015-07-09', 'Cotisation', '2014-07-24'),
 (5, 11, 1000, 'Virement', '2013-07-10', '2014-07-10', 'no thanks', '2014-07-24'),
 (6, 25, 3500, 'Virement', '2014-07-17', '2015-07-29', '3500 dh per year', '2014-07-24'),
 (7, 40, 3500, 'Chèque', '2014-07-30', '2015-07-30', 'cotisation anuelle', '2014-07-24'),
@@ -237,7 +238,6 @@ INSERT INTO `cotisation` (`id`, `user_id`, `price`, `type`, `date_from`, `date_t
 (17, 1, 1000, 'Espèces', '2014-02-01', '2014-03-01', NULL, '2014-08-09'),
 (18, 1, 1000, 'Espèces', '2014-03-01', '2014-04-01', NULL, '2014-08-09'),
 (19, 1, 1000, 'Espèces', '2014-04-01', '2014-05-01', NULL, '2014-08-09'),
-(21, 22, 1000, 'Espèces', '2014-08-01', '2014-09-01', NULL, '2014-08-09'),
 (22, 8, 1000, 'Espèces', '2014-06-01', '2014-07-01', NULL, '2014-08-09'),
 (23, 8, 1000, 'Virement', '2014-04-01', '2014-05-01', NULL, '2014-08-09'),
 (24, 8, 1000, 'Virement', '2014-07-01', '2014-08-01', NULL, '2014-08-09'),
@@ -245,7 +245,18 @@ INSERT INTO `cotisation` (`id`, `user_id`, `price`, `type`, `date_from`, `date_t
 (26, 2, 1000, 'Virement', '2014-04-01', '2014-05-01', NULL, '2014-08-09'),
 (27, 2, 1000, 'Virement', '2014-05-01', '2014-07-01', NULL, '2014-08-09'),
 (28, 2, 1000, 'Virement', '2014-06-01', '2014-09-01', NULL, '2014-08-09'),
-(29, 8, 1000, 'Virement', '2014-08-01', '2014-09-01', NULL, '2014-08-09');
+(30, 16, 1000, 'Virement', '2014-06-01', '2014-07-01', NULL, '2014-08-11'),
+(32, 16, 1000, 'Virement', '2014-07-01', '2014-08-01', NULL, '2014-08-11'),
+(33, 16, 1000, 'Virement', '2014-08-01', '2014-09-01', NULL, '2014-08-11'),
+(34, 15, 1000, 'Virement', '2014-07-01', '2014-08-01', NULL, '2014-08-12'),
+(35, 15, 1000, 'Virement', '2014-06-01', '2014-07-01', NULL, '2014-08-12'),
+(36, 14, 3000, 'Virement', '2014-06-01', '2014-09-01', NULL, '2014-08-12'),
+(37, 22, 6000, 'Virement', '2014-05-01', '2014-11-01', NULL, '2014-08-12'),
+(38, 21, 1000, 'Virement', '2014-07-01', '2014-08-01', NULL, '2014-08-12'),
+(39, 21, 1000, 'Virement', '2014-08-01', '2014-09-01', NULL, '2014-08-12'),
+(40, 21, 1000, 'Virement', '2014-09-01', '2014-10-01', NULL, '2014-08-12'),
+(41, 21, 1000, 'Virement', '2014-06-01', '2014-07-01', NULL, '2014-08-12'),
+(42, 1, 1000, 'Virement', '2014-05-01', '2014-06-01', NULL, '2014-08-15');
 
 -- --------------------------------------------------------
 
@@ -423,7 +434,6 @@ INSERT INTO `image` (`id`, `path`) VALUES
 (46, 'anonymous.jpg'),
 (65, 'anonymous.jpg'),
 (66, 'anonymous.jpg'),
-(67, 'anonymous.jpg'),
 (75, '7ef3ebeaf739452883c437b5e3029eae8e1686d1.jpeg'),
 (81, 'unknown.png'),
 (82, 'unknown.png'),
@@ -674,6 +684,8 @@ CREATE TABLE IF NOT EXISTS `profile` (
   `frequence` int(11) DEFAULT NULL,
   `montant` double NOT NULL,
   `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `archived` tinyint(1) NOT NULL,
+  `cause` longtext COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_8157AA0F3DA5256D` (`image_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=61 ;
@@ -682,28 +694,27 @@ CREATE TABLE IF NOT EXISTS `profile` (
 -- Contenu de la table `profile`
 --
 
-INSERT INTO `profile` (`id`, `image_id`, `family_name`, `first_name`, `birthday`, `gender`, `address`, `post_code`, `city`, `contry`, `job`, `tel`, `gsm`, `description`, `website`, `facebook`, `google`, `twitter`, `cin`, `barcode`, `diplome`, `expertise`, `frequence`, `montant`, `method`) VALUES
-(1, 1, 'benaich', 'med', '1992-03-04', 'homme', 'lot charaf n42 salé', 11060, 'rabat', 'maroc', 'web developer', '0644354522', '0532155623', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat.	 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitu sollicitudin ve din venenatis ipsum action.', 'http://fb.com', 'http://fb.com/med.ben', 'http://plus.google.com', 'http://twitter.com/med_benaich', 'AE60561', '936562895', NULL, NULL, 1, 1000, 'Virement'),
-(2, 2, 'abdelilah', 'saif', '1992-12-01', 'homme', 'nice 007 casablaca', 11060, 'casablaca', 'maroc', 'designer', '0644354522', '0532155623', 'heee', 'http://fb.com', 'http://fb.com/med.ben', 'http://plus.google.com', 'http://twitter.com/med_benaich', 'AZ20130', '690254796', NULL, NULL, 3, 1000, 'Virement'),
-(8, 10, 'jeffrey', 'lise', '1990-04-11', 'homme', 'agdal avenue Atlass - Rabat', NULL, 'rabat', NULL, 'designer', NULL, '0532155623', 'I recently released my latest book, which covers the ins and outs of testing in PHP and, more specifically, Laravel.', NULL, NULL, NULL, NULL, 'BH50786', '954674278', NULL, NULL, 1, 1000, 'Virement'),
-(11, 15, 'Chris', 'Brown', '1993-04-12', 'homme', 'nice 007 casablaca', 11060, 'new york', 'usa', 'designer', '0644354555', '0532155623', 'hi', NULL, NULL, NULL, NULL, 'BH28888', '1255723804', NULL, NULL, 1, 1000, 'Virement'),
-(12, 16, 'ely', 'john', '1992-04-18', 'homme', 'lot charaf n42 salé', 1106, 'salé', 'maroc', 'superman', '0622354515', '0541265412', 'hi', NULL, NULL, NULL, NULL, 'AZ20654', '556931090', NULL, NULL, 1, 1000, 'Virement'),
-(14, 18, 'maldan', 'abir', '1990-04-19', 'femme', 'nice 007 casablaca', 25009, 'fez', 'maroc', 'designer', '0644354522', '0541265412', 'abire-nane :)', 'http://fb.com', 'http://fb.com/abir', 'http://plus.google.com', 'http://twitter.com/abir_nane', 'EZ77940', '1111393039', NULL, NULL, 1, 1000, 'Virement'),
-(15, 19, 'el arabi', 'yasser', '1992-06-22', 'homme', 'lot said hajji n1978', 11060, 'salé', 'maroc', 'Prof', '0645981830', '0537654113', NULL, NULL, NULL, NULL, NULL, 'AZ4563', '425282827', 'licence', 'Physique', 1, 1000, 'Virement'),
-(16, 20, 'bougerr', 'hatim', '1991-06-24', 'homme', 'lot said hajji n1978', 15902, 'rabat', 'maroc', 'etudiant', '0645981830', '0537654113', NULL, NULL, NULL, NULL, NULL, 'AE5132', '1019650613', NULL, NULL, 1, 1000, 'Virement'),
-(19, 23, 'el amrani', 'nahid', '1993-07-09', 'femme', 'hay nahda n1956 rabat', 12060, 'rabat', 'maroc', 'webmaster', '0644972133', '0537563215', NULL, NULL, NULL, NULL, NULL, 'AB45635', '749584944', NULL, NULL, 1, 1000, 'Virement'),
-(20, 24, 'el hajji', 'anoire', '1990-07-10', 'homme', 'agdal avenue Atlass - Rabat', 12050, 'rabat', 'maroc', 'Acteur', '0644354522', '0537654113', NULL, NULL, NULL, NULL, NULL, 'AZ20156', '540809317', 'DEUG', 'génie informatique', 1, 1000, 'Virement'),
-(21, 25, 'nadir', 'siham', '1995-07-13', 'femme', 'agdal avenue Atlass - Rabat', 156201, 'rabat', 'maroc', 'designer', '0622354515', '0537654113', 'nothing', NULL, NULL, NULL, NULL, 'AZ20155', '1200811083', 'dut', 'Informatique', 1, 1000, 'Virement'),
-(22, 26, 'aznag', 'salim', '1980-07-14', 'homme', 'nice 007 casablaca', 11103, 'el jadida', 'maroc', 'medecin', '0644972133', '0537563215', NULL, NULL, NULL, NULL, NULL, 'ED4563', '647722108', 'doctorat', 'Medcine', 1, 1000, 'Virement'),
-(23, 27, 'sarah', 'houda', '1993-07-18', 'femme', 'lot tam n788 fez', 154602, 'fez', 'maroc', 'web designer', '0645412462', NULL, 'nothing to say !', NULL, NULL, NULL, NULL, 'AV7850', '270565059', 'master', 'Informatique', 1, 1000, 'Virement'),
-(24, 39, 'Arich', 'sihame', '1990-07-10', 'femme', 'agdal avenue Atlass - Rabat', NULL, 'rabat', 'maroc', 'psychologue', '0645981830', '0532155623', NULL, NULL, NULL, NULL, NULL, 'AS0561', '865662066', 'master', 'autres', 1, 1000, 'Virement'),
-(25, 40, 'Arich', 'houda', '1990-07-10', 'femme', 'agdal avenue Atlass - Rabat', NULL, 'rabat', 'maroc', 'psychologue', '0645981830', '0532155623', NULL, NULL, NULL, NULL, NULL, 'BH8080', '865662089', 'master', 'autres', 1, 1000, 'Virement'),
-(30, 45, 'benaich', 'issam', '1992-04-03', 'homme', NULL, 11050, 'rabat', 'maroc', 'job', '0644354522', '0532155623', NULL, NULL, NULL, NULL, NULL, 'As605121', '729572105', '', '0644354522', 1, 1000, 'Virement'),
-(31, 46, 'nidal', 'affaf', '1994-04-03', 'homme', NULL, 11120, 'casablanca', 'maroc', 'job', '0644354522', '0532155623', NULL, NULL, NULL, NULL, NULL, 'AS605121', '12088015', '', '0644354522', 1, 1000, 'Virement'),
-(50, 65, 'atih', 'issam', '1992-03-04', 'homme', NULL, 11050, 'rabat', 'maroc', 'job', '0644354522', '0532155623', NULL, NULL, NULL, NULL, NULL, 'FR605121', '736496234', '', '0644354522', 1, 1000, 'Virement'),
-(51, 66, 'badili', 'islam', '1994-03-05', 'homme', NULL, 11120, 'casablanca', 'maroc', 'job', '0644354522', '0532155623', NULL, NULL, NULL, NULL, NULL, 'SV65125', '1060641394', '', '0644354522', 1, 1000, 'Virement'),
-(52, 67, 'adili', 'abdo', '1994-03-23', 'homme', NULL, 12500, 'fez', 'maroc', 'designer', '0656254522', '0521855623', NULL, NULL, NULL, NULL, NULL, 'SV5625', '390360619', '', '0656254522', 1, 1000, 'Virement'),
-(60, 75, 'semouni', 'youssef', '1992-11-12', 'homme', 'atyto nasa n245', 221555, 'sefrou', 'maroc', 'pilote', '637546212', '0537562202', NULL, NULL, NULL, NULL, NULL, 'as5122', '923218000', 'doctorat', 'mathématique', 1, 1000, 'Virement');
+INSERT INTO `profile` (`id`, `image_id`, `family_name`, `first_name`, `birthday`, `gender`, `address`, `post_code`, `city`, `contry`, `job`, `tel`, `gsm`, `description`, `website`, `facebook`, `google`, `twitter`, `cin`, `barcode`, `diplome`, `expertise`, `frequence`, `montant`, `method`, `archived`, `cause`) VALUES
+(1, 1, 'benaich', 'med', '1992-03-04', 'homme', 'lot charaf n42 salé', 11060, 'rabat', 'maroc', 'web developer', '0644354522', '0532155623', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat.	 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitu sollicitudin ve din venenatis ipsum action.', 'http://fb.com', 'http://fb.com/med.ben', 'http://plus.google.com', 'http://twitter.com/med_benaich', 'AE60561', '936562895', NULL, NULL, 1, 1000, 'Virement', 0, NULL),
+(2, 2, 'abdelilah', 'saif', '1992-12-01', 'homme', 'nice 007 casablaca', 11060, 'casablaca', 'maroc', 'designer', '0644354522', '0532155623', 'heee', 'http://fb.com', 'http://fb.com/med.ben', 'http://plus.google.com', 'http://twitter.com/med_benaich', 'AZ20130', '690254796', NULL, NULL, 3, 1000, 'Virement', 0, NULL),
+(8, 10, 'jeffrey', 'lise', '1990-04-11', 'homme', 'agdal avenue Atlass - Rabat', NULL, 'rabat', NULL, 'designer', NULL, '0532155623', 'I recently released my latest book, which covers the ins and outs of testing in PHP and, more specifically, Laravel.', NULL, NULL, NULL, NULL, 'BH50786', '954674278', NULL, NULL, 1, 1000, 'Virement', 1, 'az'),
+(11, 15, 'Chris', 'Brown', '1993-04-12', 'homme', 'nice 007 casablaca', 11060, 'new york', 'usa', 'designer', '0644354555', '0532155623', 'hi', NULL, NULL, NULL, NULL, 'BH28888', '1255723804', NULL, NULL, 1, 1000, 'Virement', 0, ''),
+(12, 16, 'ely', 'john', '1992-04-18', 'homme', 'lot charaf n42 salé', 1106, 'salé', 'maroc', 'superman', '0622354515', '0541265412', 'hi', NULL, NULL, NULL, NULL, 'AZ20654', '556931090', NULL, NULL, 1, 1000, 'Virement', 0, ''),
+(14, 18, 'maldan', 'abir', '1990-04-19', 'femme', 'nice 007 casablaca', 25009, 'fez', 'maroc', 'designer', '0644354522', '0541265412', 'abire-nane :)', 'http://fb.com', 'http://fb.com/abir', 'http://plus.google.com', 'http://twitter.com/abir_nane', 'EZ77940', '1111393039', NULL, NULL, 3, 3000, 'Virement', 0, NULL),
+(15, 19, 'el arabi', 'yasser', '1992-06-22', 'homme', 'lot said hajji n1978', 11060, 'salé', 'maroc', 'Prof', '0645981830', '0537654113', NULL, NULL, NULL, NULL, NULL, 'AZ4563', '425282827', 'licence', 'Physique', 1, 1000, 'Virement', 0, NULL),
+(16, 20, 'bougerr', 'hatim', '1991-06-24', 'homme', 'lot said hajji n1978', 15902, 'rabat', 'maroc', 'etudiant', '0645981830', '0537654113', NULL, NULL, NULL, NULL, NULL, 'AE5132', '1019650613', NULL, NULL, 1, 1000, 'Virement', 0, NULL),
+(19, 23, 'el amrani', 'nahid', '1993-07-09', 'femme', 'hay nahda n1956 rabat', 12060, 'rabat', 'maroc', 'webmaster', '0644972133', '0537563215', NULL, NULL, NULL, NULL, NULL, 'AB45635', '749584944', NULL, NULL, 1, 1000, 'Virement', 0, NULL),
+(20, 24, 'el hajji', 'anoire', '1990-07-10', 'homme', 'agdal avenue Atlass - Rabat', 12050, 'rabat', 'maroc', 'Acteur', '0644354522', '0537654113', NULL, NULL, NULL, NULL, NULL, 'AZ20156', '540809317', 'DEUG', 'génie informatique', 1, 1000, 'Virement', 1, 'raison du rejet'),
+(21, 25, 'nadir', 'siham', '1995-07-13', 'femme', 'agdal avenue Atlass - Rabat', 156201, 'rabat', 'maroc', 'designer', '0622354515', '0537654113', 'nothing', NULL, NULL, NULL, NULL, 'AZ20155', '1200811083', 'dut', 'Informatique', 1, 1000, 'Virement', 1, 'raison du rejet'),
+(22, 26, 'aznag', 'salim', '1980-07-14', 'homme', 'nice 007 casablaca', 11103, 'el jadida', 'maroc', 'medecin', '0644972133', '0537563215', NULL, NULL, NULL, NULL, NULL, 'ED4563', '647722108', 'doctorat', 'Medcine', 6, 6000, 'Virement', 0, NULL),
+(23, 27, 'sarah', 'houda', '1993-07-18', 'femme', 'lot tam n788 fez', 154602, 'fez', 'maroc', 'web designer', '0645412462', NULL, 'nothing to say !', NULL, NULL, NULL, NULL, 'AV7850', '270565059', 'master', 'Informatique', 1, 1000, 'Virement', 0, NULL),
+(24, 39, 'Arich', 'sihame', '1990-07-10', 'femme', 'agdal avenue Atlass - Rabat', NULL, 'rabat', 'maroc', 'psychologue', '0645981830', '0532155623', NULL, NULL, NULL, NULL, NULL, 'AS0561', '865662066', 'master', 'autres', 1, 1000, 'Virement', 0, NULL),
+(25, 40, 'Arich', 'houda', '1990-07-10', 'femme', 'agdal avenue Atlass - Rabat', NULL, 'rabat', 'maroc', 'psychologue', '0645981830', '0532155623', NULL, NULL, NULL, NULL, NULL, 'BH8080', '865662089', 'master', 'autres', 1, 1000, 'Virement', 0, NULL),
+(30, 45, 'benaich', 'issam', '1992-04-03', 'homme', NULL, 11050, 'rabat', 'maroc', 'job', '0644354522', '0532155623', NULL, NULL, NULL, NULL, NULL, 'As605121', '729572105', '', '0644354522', 1, 1000, 'Virement', 0, NULL),
+(31, 46, 'nidal', 'affaf', '1994-04-03', 'homme', NULL, 11120, 'casablanca', 'maroc', 'job', '0644354522', '0532155623', NULL, NULL, NULL, NULL, NULL, 'AS605121', '12088015', '', '0644354522', 1, 1000, 'Virement', 0, NULL),
+(50, 65, 'atih', 'issam', '1992-03-04', 'homme', NULL, 11050, 'rabat', 'maroc', 'job', '0644354522', '0532155623', NULL, NULL, NULL, NULL, NULL, 'FR605121', '736496234', '', '0644354522', 1, 1000, 'Virement', 0, NULL),
+(51, 66, 'badili', 'islam', '1994-03-05', 'homme', NULL, 11120, 'casablanca', 'maroc', 'job', '0644354522', '0532155623', NULL, NULL, NULL, NULL, NULL, 'SV65125', '1060641394', '', '0644354522', 1, 1000, 'Virement', 0, NULL),
+(60, 75, 'semouni', 'youssef', '1992-11-12', 'homme', 'atyto nasa n245', 221555, 'sefrou', 'maroc', 'pilote', '637546212', '0537562202', NULL, NULL, NULL, NULL, NULL, 'as5122', '923218000', 'doctorat', 'mathématique', 1, 1000, 'Virement', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -885,7 +896,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `profile_id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `locked`, `expired`, `expires_at`, `confirmation_token`, `password_requested_at`, `roles`, `credentials_expired`, `credentials_expire_at`, `created`, `lastActivity`) VALUES
-(1, 1, 'admin', 'admin', 'benaich.med@gmail.com', 'benaich.med@gmail.com', 1, 'i1tqgxrnlb4gwgoc48gck0okck4g80o', 'vxYZkKcA0OIWRwrn5L8cqb8q9IoOT0jXyM6MtuHddozsGAYEsKXwOP85CPLUmWn2ri234KMKeQUUtb530bLvNw==', '2014-08-09 23:49:12', 0, 0, NULL, '65h6wbc7ors4ccc8cw080sc4gk4kkcs848g00wo000k4so04kw', '2014-07-29 10:21:14', 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 0, NULL, '2014-04-06 12:50:31', '2014-08-09 23:49:15'),
+(1, 1, 'admin', 'admin', 'benaich.med@gmail.com', 'benaich.med@gmail.com', 1, 'i1tqgxrnlb4gwgoc48gck0okck4g80o', 'vxYZkKcA0OIWRwrn5L8cqb8q9IoOT0jXyM6MtuHddozsGAYEsKXwOP85CPLUmWn2ri234KMKeQUUtb530bLvNw==', '2014-08-27 11:57:11', 0, 0, NULL, '65h6wbc7ors4ccc8cw080sc4gk4kkcs848g00wo000k4so04kw', '2014-07-29 10:21:14', 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 0, NULL, '2014-04-06 12:50:31', '2014-08-27 11:57:15'),
 (2, 2, 'ben', 'ben', 'benaich@gmail.com', 'benaich@gmail.com', 1, 'm9tlvb01d5w4scc888g0o88wso448wk', 'WsVZ/nZ+K1nZhuyZpn7HWV4w4sx6gpzeMTNlQnBvgViEcOtfrM9L5lP3qER6+emNzbQDSbGSCM0eUJM+9Of/Uw==', '2014-07-06 22:22:30', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 0, NULL, '2014-04-06 12:50:57', '2014-07-06 22:37:02'),
 (8, 8, 'jeffrey', 'jeffrey', 'jefway@yahoo.fr', 'jefway@yahoo.fr', 1, 'clkdz5g0xrcok4k0w84ss404oc888s8', '9lIUx9hVq9Ix6NIcrtZqAZXR0yGCMCKiQf/tiihiMoy47hlgcx3YN4s4miBGwyywXfb/O7lQtjAsS0Om62nHRA==', '2014-07-29 17:15:51', 0, 0, NULL, '9b974arbrkkc08kwwcsg8osscwwog0kok004ogssg0wwgckok', '2014-07-10 23:45:01', 'a:1:{i:0;s:12:"ROLE_MANAGER";}', 0, NULL, '2014-04-11 20:23:02', '2014-07-29 18:10:14'),
 (11, 11, '@chris', '@chris', 'jefway_way@yahoo.fr', 'jefway_way@yahoo.fr', 1, 'tbobjn6qafkc0cgk0w0k4kkc8ssksk8', 'FW5RA2S1j18w4Zs9fZnnaDTMTQ6CCbeFqi+cf345RS4wrHWdPcbZnIv8V3lAJMXsktShYErUYxy3pv17eg5WzA==', '2014-07-29 18:16:12', 0, 0, NULL, '5ktqe48513goskoc0oswc0gs80c00080o8woo80s4k8c4o44kg', '2014-07-29 18:16:27', 'a:0:{}', 0, NULL, '2014-04-12 09:38:36', '2014-07-29 18:14:23'),
@@ -904,7 +915,6 @@ INSERT INTO `user` (`id`, `profile_id`, `username`, `username_canonical`, `email
 (29, 31, '@affaf', '@affaf', 'affaf@gmail.com', 'affaf@gmail.com', 0, 'jrg32m9rmbkw4kggo4gc4o08gs884gc', '+bh8Azt92xr71smwTbZ6U6ZRx574dnwLHdVc6d1DgiW/mJlp4XZvlvU15aUv6rSBBcgqwPWSPcdYYyCR5rHR8A==', NULL, 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '2014-06-04 00:00:00', '2014-07-29 14:35:56'),
 (40, 50, '@atik', '@atik', 'atul@gmail.com', 'atul@gmail.com', 0, 'dpwn84h2wn40o88c8g8wg0ook8oogs8', '6ZoSm1pvYoepd33LviSn9FtJW/AivpFDVe84+whFmoApiFEUUvPDHsEMrlkgwZQIloCErwOz5VzeocNARLglNw==', NULL, 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '2014-04-06 14:59:59', '2014-07-29 14:59:59'),
 (41, 51, '@nassim', '@nassim', 'nassim@gmail.com', 'nassim@gmail.com', 0, 'cu4ov9v48rw448kk0gw0wg84kgkw4w4', 'DFYGf4u0Xt4eVtXwcdBkjdznVYkaAvSGdAcjkC/h7lI4JYGEG7YsZq/9XdoBycqrJ9Bu396yuBPK8t8vXIBUTg==', NULL, 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '2014-04-06 15:00:00', '2014-07-29 15:00:00'),
-(42, 52, '@abdo', '@abdo', 'n.abdo@gmail.com', 'n.abdo@gmail.com', 0, '8ephah1ikocowg448w0k4wwwo4ss84g', '1wkgmOtoi9NCAyOe9ngLFg+xbhpskvyBjK7fT/l5zbOHjU/b43QJL/3nbnGcekx7AYP23sxqIQf08BTh+Q+oSQ==', NULL, 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '2014-04-06 15:00:00', '2014-07-29 15:00:00'),
 (45, 60, '@sefrou', '@sefrou', 'y.semouni@yahoo.fr', 'y.semouni@yahoo.fr', 0, 'eqyc1subprswswog8wwsck4k0o84w0c', 'GLhwOgepoAqWgizs/R/cK7VrPLIrPh7TUN8AWtncTUn5xCGx7RwkvCp93uEykgK/5sK+uIOLmdSv98XvU1vbIA==', NULL, 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '2014-07-29 18:09:27', '2014-07-29 18:09:27');
 
 -- --------------------------------------------------------
