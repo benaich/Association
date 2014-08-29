@@ -17,8 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données :  `benassociation`
+-- Base de données: `benassociation`
 --
+CREATE DATABASE `benassociation` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `benassociation`;
 
 -- --------------------------------------------------------
 
