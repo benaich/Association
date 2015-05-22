@@ -1,0 +1,34 @@
+<ul class="dropdown-menu popup-messages">
+    <li>
+        <div class="navbar-content">
+            <ul class="threadslist">
+                {% for thread in threads %}
+                {% set sender = thread.getParticipant(app.user) %}
+                <li class="thread-item row {% if not fos_message_is_read(thread)%}unread{% endif %}" id="message_{{ thread.id }}">
+                        <div class="col-md-2">
+                        <strong>{{ sender }}</strong>
+                    </div>
+                    <div class="col-md-10">
+                        <a href="{{  path('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}"><p class="muted"><small>{{ thread.lastMessage.excerpt }}</small></p>
+                        </a>
+                    </div>
+                </li>
+                {% else %}
+                <li class="thread-item">
+                    <div class="col-right">
+                        <div class="body-content" >
+                            <p>{{ 'message.meta.no'|trans }}</p>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="navbar-footer">
+            <div class="navbar-footer-content text-center">
+                <a href="{{ path('fos_message_inbox') }}" class="btn btn-default btn-sm">see all messages</a>
+            </div>
+        </div>
+    </li>
+</ul>

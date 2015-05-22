@@ -1,0 +1,30 @@
+
+fos_message_unread:
+    pattern:   /unread
+    defaults:  { _controller: FOSMessageBundle:Message:unread }
+
+fos_message_inbox:
+    pattern:   /
+    defaults:  { _controller: FOSMessageBundle:Message:inbox }
+fos_message_sent:
+    pattern:   /sent
+    defaults:  { _controller: FOSMessageBundle:Message:sent }
+fos_message_deleted:
+    pattern:   /deleted
+    defaults:  { _controller: FOSMessageBundle:Message:deleted }
+fos_message_search:
+    pattern:   /search
+    defaults:  { _controller: FOSMessageBundle:Message:search }
+fos_message_thread_new:
+    pattern:   /new
+    defaults:  { _controller: FOSMessageBundle:Message:newThread }
+fos_message_thread_delete:
+    pattern:   /{threadId}/delete
+    defaults:  { _controller: FOSMessageBundle:Message:delete }
+fos_message_thread_undelete:
+    pattern:   /{threadId}/undelete
+    defaults:  { _controller: FOSMessageBundle:Message:undelete }
+fos_message_thread_view:
+    pattern:   /{threadId}
+    defaults:  { _controller: FOSMessageBundle:Message:thread }
+

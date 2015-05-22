@@ -1,15 +1,13 @@
-use benassociation;
+-- use benassociation;
 -- show tables;
 
 -- select DATE(created) as x ,sum(price) as y from cotisation group by x order by x;
 
 -- select cin, cause, archived from profile;
 
-SELECT  ROUND(DATEDIFF(Cast(NOW() as Date), Cast(birthday as Date)) / 365, 0) as age from profile;
+-- SELECT  ROUND(DATEDIFF(Cast(NOW() as Date), Cast(birthday as Date)) / 365, 0) as age from profile;
 
-select count(*) from profile where DATEDIFF(Cast(NOW() as Date), Cast(birthday as Date)) / 365 between 19 and 20 ;
-
-
+-- select count(*) from profile where DATEDIFF(Cast(NOW() as Date), Cast(birthday as Date)) / 365 between 19 and 20 ;
 
 
 
@@ -17,6 +15,9 @@ select count(*) from profile where DATEDIFF(Cast(NOW() as Date), Cast(birthday a
 
 
 
+use `membership`;
+show tables;
+select * from t_user;
 
 
 

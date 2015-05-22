@@ -25,6 +25,14 @@ class MessageController extends Controller
         ));
     }
 
+    public function unreadAction()
+    {
+        $threads = $this->getProvider()->getInboxThreads();
+         return $this->render('FOSMessageBundle:Message:unread.html.twig', array(
+            'threads' => $threads
+        ));
+    }
+
     /**
      * Displays the authenticated participant sent mails
      *

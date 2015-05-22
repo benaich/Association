@@ -25,5 +25,5 @@ parameters:
 
     ftp_server: curios.onlinewebshop.net
     ftp_user: 1631669
-    ftp_password: Azerty.123
+    ftp_password: ftp_password
     ftp_dir: curios.onlinewebshop.net

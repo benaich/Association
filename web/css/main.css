@@ -629,7 +629,7 @@ ul.threadslist {
 	padding: 0;
 }
 .threadslist .thread-item, .thread-form-wrapper{
-	padding: 10px;
+	padding: 10px 0;
 	border-bottom: #EEE 1px solid;
 	position: relative;
 	border-left: 1px solid transparent;
@@ -660,7 +660,7 @@ ul.threadslist {
 	margin: 0;
 	padding: 0px;
 }
-.navbar .user-menu li{
+.navbar .user-menu > li{
 	float: left;
 }
 .navbar .user-menu > li > a {
@@ -804,4 +804,14 @@ span.month.active{
 #flotTip{
 	border: 1px solid rgb(197, 197, 197)!important;
 	border-radius: 2px!important;
+}
+
+.popup-messages .navbar-footer-content {
+  padding: 5px;
+}
+.popup-messages .navbar-content{
+	padding: 0 15px;
+}
+.popup-messages .thread-item a{
+	color: #444!important;
 }

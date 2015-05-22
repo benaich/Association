@@ -5,5 +5,5 @@ ben_user:
     resource: "@BenUserBundle/Resources/config/routing.yml"
     prefix:   /
 fos_message:
-    resource: "@FOSMessageBundle/Resources/config/routing.xml"
+    resource: "@FOSMessageBundle/Resources/config/routing.yml"
     prefix: /messages
